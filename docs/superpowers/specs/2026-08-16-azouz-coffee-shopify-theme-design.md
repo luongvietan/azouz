@@ -316,14 +316,16 @@ Success and error states are rendered inline from `form.posted_successfully?` an
   |---|---|---|
   | Jet `#303030` on Off White | 12.8:1 | AAA |
   | Muted `#6B6B6B` on Off White | 5.2:1 | AA |
-  | White on Asparagus `#67985E` | 3.4:1 | **large text only** (≥24px, or ≥18.66px bold) |
+  | White on Asparagus `#67985E` | 3.4:1 | **large text only** — WCAG large scale is ≥24px, or ≥18.66px at weight 700. Semibold at 18px does **not** qualify. |
   | Jet on Asparagus | 3.9:1 | **large text only** |
   | Taupe Beige on Off White | 1.9:1 | **fails — non-text use only** |
   | White on Deep Green `#4F7748` | 5.2:1 | AA |
   | Deep Green on Off White | 5.0:1 | AA |
   | Deep Green on Warm Cream | 4.6:1 | AA |
 
-  Neither white nor Jet reaches 4.5:1 on the primary green, so **green is never a background for small text**. Two derived tokens resolve this without leaving the brand hue: `--color-accent` (`#67985E`, the guideline primary) for fills, large display type and button labels; `--color-accent-deep` (`#4F7748`, a darkened primary) wherever green must carry or sit behind body-size text. An automated test (§10) reads the token file and fails the build if any of these relationships regress.
+  Neither white nor Jet reaches 4.5:1 on the primary green, so **green is never a background for small text**. Two derived tokens resolve this without leaving the brand hue: `--color-accent` (`#67985E`, the guideline primary) for non-text fills and display type at 24px and above; `--color-accent-deep` (`#4F7748`, a darkened primary) wherever green must carry or sit behind anything smaller. **Buttons use the deep green** — their labels are 18px semibold, which is not large-scale text and so needs the full 4.5:1.
+
+Two automated tests (§10) enforce this: one reads the token file and fails if any documented pairing regresses; the other parses the `.button` rule, derives its actual pixel size and weight, and asserts the correct threshold for that size. The first implementation of the button got this wrong — white on primary green at 18px semibold — and the test is what caught it.
 - Every image gets meaningful `alt`, sourced from a section setting
 - `<meta>` title/description, Open Graph, Twitter card via `meta-tags.liquid`
 - JSON-LD: `Organization` on all pages, `Product` with offers on product pages, `BreadcrumbList` on collection/product

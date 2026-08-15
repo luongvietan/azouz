@@ -1,0 +1,42 @@
+{%- comment -%}
+  Document head metadata. Rendered once from layout/theme.liquid.
+{%- endcomment -%}
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+{%- liquid
+  assign meta_title = page_title | default: shop.name
+  assign meta_description = page_description | default: shop.description
+-%}
+
+<title>{{ meta_title }}{% unless page_title contains shop.name %} &middot; {{ shop.name }}{% endunless %}</title>
+
+{%- if meta_description != blank -%}
+  <meta name="description" content="{{ meta_description | escape }}">
+{%- endif -%}
+
+{%- if canonical_url != blank -%}
+  <link rel="canonical" href="{{ canonical_url }}">
+{%- endif -%}
+
+<meta property="og:site_name" content="{{ shop.name | escape }}">
+<meta property="og:title" content="{{ meta_title | escape }}">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:type" content="{% if request.page_type == 'product' %}product{% else %}website{% endif %}">
+{%- if meta_description != blank -%}
+  <meta property="og:description" content="{{ meta_description | escape }}">
+{%- endif -%}
+{%- if request.page_type == 'product' and product.featured_image -%}
+  <meta property="og:image" content="{{ product.featured_image | image_url: width: 1200 }}">
+{%- else -%}
+  <meta property="og:image" content="{{ 'logo-primary.svg' | asset_url }}">
+{%- endif -%}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ meta_title | escape }}">
+{%- if meta_description != blank -%}
+  <meta name="twitter:description" content="{{ meta_description | escape }}">
+{%- endif -%}
+
+<meta name="theme-color" content="{{ settings.color_accent | default: '#67985E' }}">

@@ -1,0 +1,47 @@
+<!doctype html>
+{%- liquid
+  assign locale_code = request.locale.iso_code | default: 'en'
+  assign rtl_locales = 'ar,he,fa,ur'
+  assign text_direction = 'ltr'
+  if rtl_locales contains locale_code
+    assign text_direction = 'rtl'
+  endif
+-%}
+<html lang="{{ locale_code }}" dir="{{ text_direction }}" class="no-js">
+  <head>
+    {%- render 'meta-tags' -%}
+
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="icon" type="image/svg+xml" href="{{ 'logomark.svg' | asset_url }}">
+
+    {%- comment -%}
+      Only the regular-weight Latin face is preloaded. It carries the body copy
+      and is needed for first paint; the other faces load on demand via swap.
+    {%- endcomment -%}
+    <link rel="preload" href="{{ 'baloo-latin-400.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
+
+    {{ 'tokens.css' | asset_url | stylesheet_tag }}
+    {{ 'fonts.css' | asset_url | stylesheet_tag }}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    <script>document.documentElement.classList.replace('no-js', 'js');</script>
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+
+    {%- render 'structured-data' -%}
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="template-{{ request.page_type | default: 'index' }}">
+    <a class="skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+    {% section 'announcement-bar' %}
+    {% section 'header' %}
+
+    <main id="MainContent" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% section 'footer' %}
+  </body>
+</html>

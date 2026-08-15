@@ -1,0 +1,107 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Azouz",
+    "theme_version": "1.0.0",
+    "theme_author": "Viet An Luong",
+    "theme_documentation_url": "https://www.azouzcoffee.com",
+    "theme_support_url": "https://www.azouzcoffee.com"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo",
+        "info": "SVG recommended. The brand guidelines set a minimum display height of 57 px for the full lockup."
+      },
+      {
+        "type": "range",
+        "id": "logo_height",
+        "label": "Logo height",
+        "min": 57,
+        "max": 120,
+        "step": 1,
+        "unit": "px",
+        "default": 64,
+        "info": "Cannot go below 57 px — that is the brand guidelines minimum."
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "Uses the logomark. Square image, at least 96 x 96 px."
+      }
+    ]
+  },
+  {
+    "name": "Colours",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Primary green",
+        "default": "#67985E",
+        "info": "PANTONE 7731 C. Used for fills, large headings and buttons."
+      },
+      {
+        "type": "color",
+        "id": "color_accent_deep",
+        "label": "Deep green",
+        "default": "#4F7748",
+        "info": "Darker shade used wherever green sits behind body-size text, so the contrast passes WCAG AA. Changing this can break accessibility."
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Page background",
+        "default": "#FFFBF8"
+      },
+      {
+        "type": "color",
+        "id": "color_background_alt",
+        "label": "Alternate band background",
+        "default": "#F6F1E8"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text",
+        "default": "#303030"
+      }
+    ]
+  },
+  {
+    "name": "Enquiries",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Enquiry forms are delivered to the store's sender email, set in Shopify admin under Settings → Notifications."
+      },
+      {
+        "type": "url",
+        "id": "sample_page_url",
+        "label": "Request a sample page"
+      },
+      {
+        "type": "url",
+        "id": "quote_page_url",
+        "label": "Get a quote page"
+      }
+    ]
+  },
+  {
+    "name": "Social",
+    "settings": [
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_facebook", "label": "Facebook" },
+      {
+        "type": "text",
+        "id": "social_whatsapp",
+        "label": "WhatsApp number",
+        "info": "International format, e.g. 962790000000"
+      }
+    ]
+  }
+]

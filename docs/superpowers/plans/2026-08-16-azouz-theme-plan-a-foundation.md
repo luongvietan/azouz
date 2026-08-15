@@ -76,10 +76,10 @@ git config user.email "luongvietan.231123@gmail.com"
   "type": "module",
   "description": "Custom Shopify Online Store 2.0 theme for Azouz Coffee",
   "scripts": {
-    "test": "node --test tests/",
+    "test": "node --test tests/*.test.js",
     "preview": "node preview/server.js",
     "validate": "node scripts/validate-all.js",
-    "check": "shopify theme check azouz-theme",
+    "check": "shopify theme check --path azouz-theme",
     "package": "node scripts/package-theme.js"
   },
   "devDependencies": {
@@ -3934,7 +3934,7 @@ Expected: `Theme validation passed.`
 
 - [ ] **Step 8: Run Shopify's own linter**
 
-Run: `npx shopify theme check azouz-theme`
+Run: `npx shopify theme check --path azouz-theme`
 Expected: no errors. Warnings about missing templates are expected at this stage — Plan B and Plan C add them. Record any **error**-level finding and fix it before committing.
 
 - [ ] **Step 9: Start the preview and confirm it renders**
@@ -3964,7 +3964,7 @@ git commit -m "feat: add preview server and aggregate theme validator"
 
 - [ ] `npm test` passes with no failures
 - [ ] `npm run validate` prints `Theme validation passed.`
-- [ ] `npx shopify theme check azouz-theme` reports no error-level findings
+- [ ] `npx shopify theme check --path azouz-theme` reports no error-level findings
 - [ ] `npm run preview` serves a styled document at `http://localhost:4321` with brand fonts, brand colours, working skip link and favicon
 - [ ] The contrast guard is green, encoding the finding that primary green cannot carry body-size text
 - [ ] Four vector logo variants exist, visually verified, normalised to `#67985E`

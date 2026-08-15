@@ -1,0 +1,344 @@
+/*
+  Azouz Coffee — foundation styles.
+  Tokens live in tokens.css; this file must not contain colour literals.
+  All directional properties are logical so the theme flips for Arabic.
+*/
+
+/* ---------- Reset ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body,
+h1, h2, h3, h4, h5, h6,
+p, figure, blockquote, dl, dd {
+  margin: 0;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* ---------- Document ---------- */
+
+body {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- Typography ---------- */
+
+h1, h2, h3, h4 {
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--text-display); line-height: var(--leading-display); }
+h2 { font-size: var(--text-3xl); }
+h3 { font-size: var(--text-xl); }
+h4 { font-size: var(--text-lg); }
+
+p {
+  text-wrap: pretty;
+  max-width: 68ch;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+/*
+  The eyebrow label, lifted from the packaging ("SPECIALTY COFFEE ROASTERS").
+  Uses muted grey — Taupe Beige is 1.9:1 here and must never carry text.
+*/
+.eyebrow {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-block-end: var(--space-md);
+}
+
+.lead {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Layout primitives ---------- */
+
+.container {
+  inline-size: 100%;
+  max-inline-size: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.container--wide { max-inline-size: var(--content-wide); }
+.container--narrow { max-inline-size: var(--content-narrow); }
+
+.section {
+  padding-block: var(--space-section);
+}
+
+.section--alt { background-color: var(--color-bg-alt); }
+.section--tint { background-color: var(--color-bg-tint); }
+
+/* The one deliberate green band per page. Body text inside uses the deep
+   green so white copy clears AA rather than AA-large. */
+.section--accent {
+  background-color: var(--color-accent-deep);
+  color: var(--color-on-accent);
+}
+
+.section--accent .eyebrow,
+.section--accent .lead {
+  color: var(--color-on-accent);
+}
+
+.stack > * + * { margin-block-start: var(--space-md); }
+.stack--lg > * + * { margin-block-start: var(--space-lg); }
+
+.grid {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.grid--2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+.grid--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); }
+.grid--4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
+
+.rule {
+  border: 0;
+  border-block-start: var(--hairline);
+  margin-block: var(--space-md);
+}
+
+/* ---------- Buttons ---------- */
+
+.button {
+  --button-bg: var(--color-accent-deep);
+  --button-fg: var(--color-on-accent);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-block-size: 3rem;
+  padding-inline: var(--space-lg);
+  padding-block: var(--space-sm);
+
+  /* 18px at weight 600 is NOT "large scale text" by WCAG — that needs 24px, or
+     18.66px at weight 700. So this label requires the full 4.5:1, which the
+     primary green cannot give (3.37:1 on white). Hence the deep green above.
+     Enforced by tests/base-css.test.js. */
+  font-size: 1.125rem;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+
+  color: var(--button-fg);
+  background-color: var(--button-bg);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+}
+
+/* Hover only ever darkens, so contrast can only improve on the base ratio. */
+.button:hover { --button-bg: color-mix(in srgb, var(--color-accent-deep) 85%, black); }
+
+.button--secondary {
+  --button-bg: transparent;
+  --button-fg: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.button--secondary:hover {
+  --button-bg: var(--color-text);
+  --button-fg: var(--color-bg);
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+/* ---------- The packaging label block ----------
+   The signature component, taken directly from the coffee bags: a solid
+   colour panel, a tight title, a hairline, then a spec grid. Its fill comes
+   from the product's label_color metafield via the --label-bg custom property.
+   Titles inside are >=24px, which is why they may sit on the primary green. */
+
+.label-block {
+  --label-bg: var(--color-accent);
+  --label-fg: var(--color-on-accent);
+
+  padding: var(--space-lg);
+  color: var(--label-fg);
+  background-color: var(--label-bg);
+  border-radius: var(--radius);
+}
+
+.label-block__title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-heading);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.label-block__subtitle {
+  font-size: var(--text-sm);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.label-block__rule {
+  border: 0;
+  border-block-start: 1px solid currentColor;
+  opacity: 0.35;
+  margin-block: var(--space-md);
+}
+
+.label-block__specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm) var(--space-md);
+  font-size: var(--text-sm);
+}
+
+/* ---------- Roast meter ---------- */
+
+.roast-meter {
+  display: inline-flex;
+  gap: 0.4em;
+  align-items: center;
+}
+
+.roast-meter__dot {
+  inline-size: 0.6em;
+  block-size: 0.6em;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+}
+
+.roast-meter__dot--filled { background-color: currentColor; }
+
+/* ---------- Texture ---------- */
+
+.texture-kufi {
+  background-image: url('pattern-kufi.svg');
+  background-repeat: repeat;
+  background-size: 120px 120px;
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+/* ---------- Accessibility ---------- */
+
+.visually-hidden:not(:focus):not(:active) {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  inset-block-start: var(--space-xs);
+  inset-inline-start: var(--space-xs);
+  z-index: 100;
+  padding: var(--space-sm) var(--space-md);
+  color: var(--color-on-accent);
+  background-color: var(--color-accent-deep);
+  border-radius: var(--radius);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus { transform: translateY(0); }
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* ---------- Motion ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  /*
+    The hidden state is gated on :defined, so it applies only after
+    customElements.define('reveal-on-scroll') has actually run. If theme.js is
+    blocked, fails to load, or throws before that point, the selector never
+    matches and every .reveal stays visible. Content is never hidden by CSS
+    that only JavaScript can undo.
+  */
+  reveal-on-scroll:defined .reveal:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+
+  .reveal {
+    transition:
+      opacity var(--duration-slow) var(--ease),
+      transform var(--duration-slow) var(--ease);
+  }
+
+  .button {
+    transition:
+      background-color var(--duration-fast) var(--ease),
+      color var(--duration-fast) var(--ease);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

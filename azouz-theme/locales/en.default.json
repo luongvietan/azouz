@@ -1,0 +1,88 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Skip to content",
+      "close": "Close",
+      "menu": "Menu",
+      "open_cart": "Open cart",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "search": {
+      "title": "Search",
+      "placeholder": "Search coffee",
+      "submit": "Search",
+      "no_results": "No results for \"{{ terms }}\"."
+    },
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "newsletter": {
+      "label": "Email",
+      "submit": "Subscribe",
+      "success": "Thanks for subscribing."
+    },
+    "404": {
+      "title": "Page not found",
+      "subtext": "The page you were looking for does not exist.",
+      "link": "Back to home"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "quantity": "Quantity",
+      "price": "Price",
+      "from_price": "From {{ price }}",
+      "roast_level": "Roast level",
+      "tasting_notes": "Tasting notes",
+      "origin": "Origin",
+      "process": "Process",
+      "altitude": "Altitude",
+      "brew_methods": "Brewing methods",
+      "view_details": "View details"
+    }
+  },
+  "collections": {
+    "general": {
+      "no_products": "No products in this collection yet.",
+      "product_count": "{{ count }} products"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Your cart is empty.",
+      "continue_shopping": "Continue shopping",
+      "subtotal": "Subtotal",
+      "checkout": "Check out",
+      "remove": "Remove",
+      "taxes_note": "Taxes and shipping calculated at checkout."
+    }
+  },
+  "contact": {
+    "form": {
+      "heading": "Tell us what you are looking for",
+      "name": "Name",
+      "company": "Company",
+      "email": "Email",
+      "phone": "Phone",
+      "business_type": "Business type",
+      "coffee_type": "Coffee type",
+      "volume": "Expected monthly volume",
+      "message": "Message",
+      "send": "Send enquiry",
+      "success": "Thanks — we have your enquiry and will be in touch shortly.",
+      "error": "Please check the highlighted fields and try again."
+    }
+  },
+  "layout": {
+    "footer": {
+      "copyright": "Azouz Coffee",
+      "rights": "All rights reserved."
+    }
+  }
+}

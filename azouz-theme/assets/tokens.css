@@ -1,0 +1,92 @@
+/*
+  Azouz Coffee — design tokens
+  Source of truth: Azouz Brand Guidelines (17pp), Colour Scheme Guide.
+
+  ACCESSIBILITY CONTRACT — enforced by tests/contrast.test.js.
+  Measured WCAG 2.1 ratios:
+    Jet        on Off White  12.8:1  AAA
+    Muted grey on Off White   5.2:1  AA
+    White      on Asparagus   3.4:1  LARGE TEXT ONLY (>=24px, or >=18.66px bold)
+    Jet        on Asparagus   3.9:1  LARGE TEXT ONLY
+    Taupe      on Off White   1.9:1  NEVER FOR TEXT — borders and rules only
+    White      on Deep Green  5.2:1  AA
+    Deep Green on Off White   5.0:1  AA
+
+  Therefore: --color-accent is for fills, large display type and button labels.
+  Wherever green must carry or sit behind body-size text, use --color-accent-deep.
+*/
+
+:root {
+  /* --- Brand palette, verbatim from the guidelines --- */
+  --azouz-asparagus: #67985e;  /* PRIMARY   — PANTONE 7731 C */
+  --azouz-warm-cream: #f6f1e8; /* SECONDARY */
+  --azouz-taupe: #c5b7a4;      /* ACCENT            — non-text */
+  --azouz-sage: #dee6d5;       /* SUPPORTING ACCENT — non-text */
+  --azouz-off-white: #fffbf8;  /* BASE */
+  --azouz-jet: #303030;        /* TEXT */
+
+  /* --- Derived for accessibility, same hue family --- */
+  --azouz-asparagus-deep: #4f7748;
+  --azouz-grey: #6b6b6b;
+
+  /* --- Semantic --- */
+  --color-bg: var(--azouz-off-white);
+  --color-bg-alt: var(--azouz-warm-cream);
+  --color-bg-tint: var(--azouz-sage);
+  --color-text: var(--azouz-jet);
+  --color-text-muted: var(--azouz-grey);
+  --color-accent: var(--azouz-asparagus);
+  --color-accent-deep: var(--azouz-asparagus-deep);
+  --color-on-accent: #ffffff;
+  --color-hairline: var(--azouz-taupe);
+  --color-focus: var(--azouz-asparagus-deep);
+
+  /* --- Typography --- */
+  --font-body: 'Baloo Bhaijaan 2', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1.0625rem;           /* 17px — guideline digital body minimum */
+  --text-lg: 1.25rem;
+  --text-xl: clamp(1.5rem, 2.2vw, 1.875rem);
+  --text-2xl: clamp(1.875rem, 3.2vw, 2.75rem);
+  --text-3xl: clamp(2.25rem, 4.4vw, 3.5rem);
+  --text-display: clamp(2.75rem, 6vw, 5rem);
+
+  --leading-display: 1.02;
+  --leading-heading: 1.12;
+  --leading-body: 1.65;
+  --tracking-display: -0.02em;
+  --tracking-eyebrow: 0.18em;
+
+  /* --- Space --- */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4.5rem;
+  --space-section: clamp(4rem, 9vw, 8rem);
+
+  /* --- Layout --- */
+  --content-max: 80rem;      /* 1280px */
+  --content-wide: 90rem;     /* 1440px */
+  --content-narrow: 44rem;
+  --gutter: clamp(1.25rem, 4vw, 2rem);
+
+  /* --- Surface --- */
+  --radius: 4px;
+  --radius-lg: 8px;
+  --hairline: 1px solid color-mix(in srgb, var(--color-hairline) 40%, transparent);
+  --shadow-card: 0 1px 2px rgb(48 48 48 / 4%), 0 8px 24px rgb(48 48 48 / 6%);
+
+  /* --- Motion --- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --duration-fast: 160ms;
+  --duration: 280ms;
+  --duration-slow: 560ms;
+}

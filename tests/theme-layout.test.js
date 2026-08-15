@@ -1,0 +1,68 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { createEngine, renderThemeFile } from '../preview/engine.js';
+import { THEME_DIR } from '../scripts/theme-paths.js';
+
+const renderLayout = async (scope = {}) => {
+  const engine = await createEngine(THEME_DIR);
+  return renderThemeFile(engine, THEME_DIR, 'layout/theme.liquid', scope);
+};
+
+test('the layout renders a complete html document', async () => {
+  const out = await renderLayout();
+  assert.match(out, /^<!doctype html>/i);
+  assert.match(out, /<\/html>\s*$/i);
+});
+
+test('the html element carries lang and dir from the request locale', async () => {
+  const out = await renderLayout();
+  assert.match(out, /<html[^>]+lang="en"/);
+  assert.match(out, /<html[^>]+dir="ltr"/);
+});
+
+test('the html element flips to rtl for a right-to-left locale', async () => {
+  const out = await renderLayout({ request: { locale: { iso_code: 'ar' }, page_type: 'index' } });
+  assert.match(out, /<html[^>]+lang="ar"/);
+  assert.match(out, /<html[^>]+dir="rtl"/);
+});
+
+test('the layout links the token, font and base stylesheets in that order', async () => {
+  const out = await renderLayout();
+  const order = ['tokens.css', 'fonts.css', 'base.css'].map((name) => out.indexOf(name));
+  assert.ok(order.every((index) => index > -1), 'all three stylesheets must be linked');
+  assert.deepEqual(order, [...order].sort((a, b) => a - b), 'tokens must load before base');
+});
+
+test('the layout preloads the regular-weight latin font', async () => {
+  const out = await renderLayout();
+  assert.match(out, /<link rel="preload"[^>]+baloo-latin-400\.woff2[^>]+as="font"/);
+});
+
+test('the layout renders a skip link before the header', async () => {
+  const out = await renderLayout();
+  assert.ok(out.indexOf('skip-link') < out.indexOf('<!-- section: header -->') ||
+            out.indexOf('skip-link') < out.indexOf('<header'));
+});
+
+test('the layout has a main landmark with the skip-link target id', async () => {
+  const out = await renderLayout();
+  assert.match(out, /<main[^>]+id="MainContent"/);
+  assert.match(out, /href="#MainContent"/);
+});
+
+test('the layout yields content_for_layout inside main', async () => {
+  const out = await renderLayout({ content_for_layout: '<p>PAGE BODY</p>' });
+  const main = /<main[\s\S]*?<\/main>/.exec(out)[0];
+  assert.match(main, /<p>PAGE BODY<\/p>/);
+});
+
+test('the layout renders the meta tags and structured data snippets', async () => {
+  const out = await renderLayout();
+  assert.match(out, /<title>/);
+  assert.match(out, /application\/ld\+json/);
+});
+
+test('theme.js is deferred so it never blocks rendering', async () => {
+  const out = await renderLayout();
+  assert.match(out, /theme\.js[^>]*defer/);
+});
