@@ -1,0 +1,12 @@
+/*
+  Azouz Coffee — commerce styles.
+
+  Layout primitives, buttons, the .label-block component and the roast meter
+  live in base.css; marketing sections live in sections.css. This file holds
+  the shop surface: product, collection, cart, drawer, search and account.
+
+  Same rules as the other two, enforced by tests/commerce-css.test.js:
+    - no colour literals; every colour comes from tokens.css
+    - no physical direction properties; logical only, so the theme flips for Arabic
+    - never place body-size text on --color-accent (3.37:1); use --color-accent-deep
+*/
