@@ -1,0 +1,55 @@
+{%- comment -%}
+  JSON-LD. Organization on every page; Product and BreadcrumbList where relevant.
+{%- endcomment -%}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "logo": {{ 'logo-primary.svg' | asset_url | json }},
+  "description": {{ shop.description | json }}
+  {%- if shop.address.country != blank -%},
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": {{ shop.address.city | json }},
+    "addressCountry": {{ shop.address.country | json }}
+  }
+  {%- endif -%}
+}
+</script>
+
+{%- if request.page_type == 'product' and product -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "description": {{ product.description | strip_html | json }},
+  "url": {{ product.url | json }},
+  "image": {{ product.featured_image | json }},
+  "brand": { "@type": "Brand", "name": {{ product.vendor | default: shop.name | json }} },
+  "offers": {
+    "@type": "Offer",
+    "price": {{ product.price | divided_by: 100.0 | json }},
+    "priceCurrency": {{ shop.currency | json }},
+    "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+    "url": {{ product.url | json }}
+  }
+}
+</script>
+{%- endif -%}
+
+{%- if request.page_type == 'collection' and collection -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ shop.url | json }} },
+    { "@type": "ListItem", "position": 2, "name": {{ collection.title | json }} }
+  ]
+}
+</script>
+{%- endif -%}
