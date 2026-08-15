@@ -1,0 +1,27 @@
+{
+  "settings_schema": {
+    "brand": {
+      "name": "Brand",
+      "settings": {
+        "logo": { "label": "Logo", "info": "SVG recommended. Never display below 57 px tall." },
+        "logo_width": { "label": "Logo width" },
+        "favicon": { "label": "Favicon" }
+      }
+    },
+    "colors": {
+      "name": "Colours",
+      "settings": {
+        "color_accent": { "label": "Primary green" },
+        "color_accent_deep": { "label": "Deep green" }
+      }
+    },
+    "social": {
+      "name": "Social",
+      "settings": {
+        "instagram": { "label": "Instagram URL" },
+        "facebook": { "label": "Facebook URL" },
+        "whatsapp": { "label": "WhatsApp number" }
+      }
+    }
+  }
+}
