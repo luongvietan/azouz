@@ -1,0 +1,164 @@
+/**
+ * Maps a preview URL to what Shopify would render there: a page_type, a JSON
+ * template, and the context object that template's sections read.
+ *
+ * Anything unrecognised resolves to the 404 template rather than null, so the
+ * preview always renders the theme rather than a bare server error page.
+ */
+import { buildFixtures, buildSearchFixture, buildCustomerFixture } from './fixtures.js';
+import { buildCart } from './cart-api.js';
+
+/** Static marketing routes. `page` supplies the Liquid `page` object. */
+export const ROUTES = {
+  '/': { page_type: 'index', template: 'templates/index.json' },
+  '/pages/private-label': {
+    page_type: 'page',
+    template: 'templates/page.private-label.json',
+    page: { title: 'Private Label', handle: 'private-label', content: '' },
+  },
+  '/pages/wholesale': {
+    page_type: 'page',
+    template: 'templates/page.wholesale.json',
+    page: { title: 'Wholesale', handle: 'wholesale', content: '' },
+  },
+  '/pages/our-brands': {
+    page_type: 'page',
+    template: 'templates/page.our-brands.json',
+    page: { title: 'Our Brands', handle: 'our-brands', content: '' },
+  },
+  '/pages/request-a-sample': {
+    page_type: 'page',
+    template: 'templates/page.enquiry.json',
+    page: { title: 'Request a Sample', handle: 'request-a-sample', content: '' },
+  },
+  '/pages/get-a-quote': {
+    page_type: 'page',
+    template: 'templates/page.enquiry.json',
+    page: { title: 'Get a Quote', handle: 'get-a-quote', content: '' },
+  },
+};
+
+/** Which JSON template a static route renders. */
+export function templateForRoute(route) {
+  if (route.template) return route.template;
+  return route.page_type === 'index' ? 'templates/index.json' : 'templates/page.json';
+}
+
+const ACCOUNT_ROUTES = {
+  '/account': { page_type: 'customers/account', template: 'templates/customers/account.json' },
+  '/account/login': { page_type: 'customers/login', template: 'templates/customers/login.json' },
+  '/account/register': {
+    page_type: 'customers/register',
+    template: 'templates/customers/register.json',
+  },
+  '/account/addresses': {
+    page_type: 'customers/addresses',
+    template: 'templates/customers/addresses.json',
+  },
+  '/account/recover': {
+    page_type: 'customers/reset_password',
+    template: 'templates/customers/reset_password.json',
+  },
+  '/account/activate': {
+    page_type: 'customers/activate_account',
+    template: 'templates/customers/activate_account.json',
+  },
+};
+
+const notFound = () => ({ page_type: '404', template: 'templates/404.json', scope: {} });
+
+/**
+ * @param {string} pathname
+ * @param {URLSearchParams} [query]
+ * @returns {{page_type: string, template: string, scope: object}}
+ */
+export function resolveRoute(pathname, query = new URLSearchParams()) {
+  const path = pathname.replace(/\/+$/, '') || '/';
+  const fixtures = buildFixtures();
+
+  const marketing = ROUTES[path];
+  if (marketing) {
+    return {
+      page_type: marketing.page_type,
+      template: templateForRoute(marketing),
+      scope: { page: marketing.page ?? null },
+    };
+  }
+
+  const product = /^\/products\/([\w-]+)$/.exec(path);
+  if (product) {
+    const found = fixtures.products.find((item) => item.handle === product[1]);
+    if (!found) return notFound();
+    return {
+      page_type: 'product',
+      template: 'templates/product.json',
+      scope: { product: found, collection: fixtures.collections.all },
+    };
+  }
+
+  const collection = /^\/collections\/([\w-]+)$/.exec(path);
+  if (collection) {
+    const found = fixtures.collections[collection[1]];
+    if (!found) return notFound();
+    return { page_type: 'collection', template: 'templates/collection.json', scope: { collection: found } };
+  }
+
+  if (path === '/collections') {
+    return {
+      page_type: 'list-collections',
+      template: 'templates/list-collections.json',
+      scope: { collections: Object.values(fixtures.collections) },
+    };
+  }
+
+  if (path === '/cart') {
+    return { page_type: 'cart', template: 'templates/cart.json', scope: { cart: buildCart() } };
+  }
+
+  if (path === '/search') {
+    return {
+      page_type: 'search',
+      template: 'templates/search.json',
+      scope: { search: buildSearchFixture(query.get('q') ?? '') },
+    };
+  }
+
+  if (path === '/password') {
+    return { page_type: 'password', template: 'templates/password.json', scope: {} };
+  }
+
+  const order = /^\/account\/orders\/(\d+)$/.exec(path);
+  if (order) {
+    const customer = buildCustomerFixture();
+    const found = customer.orders.find((item) => String(item.order_number) === order[1]);
+    if (!found) return notFound();
+    return {
+      page_type: 'customers/order',
+      template: 'templates/customers/order.json',
+      scope: { customer, order: found },
+    };
+  }
+
+  const account = ACCOUNT_ROUTES[path];
+  if (account) {
+    return { ...account, scope: { customer: buildCustomerFixture() } };
+  }
+
+  return notFound();
+}
+
+/** Every path the preview advertises on startup and the route test walks. */
+export function listPreviewPaths() {
+  return [
+    ...Object.keys(ROUTES),
+    '/collections',
+    '/collections/all',
+    '/products/wadi-rum-blend',
+    '/cart',
+    '/search',
+    '/password',
+    ...Object.keys(ACCOUNT_ROUTES),
+    '/account/orders/1002',
+    '/404',
+  ];
+}

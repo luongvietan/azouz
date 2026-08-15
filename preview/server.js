@@ -28,44 +28,7 @@ const MIME = {
   '.txt': 'text/plain; charset=utf-8',
 };
 
-/**
- * URL path -> what Shopify would render there.
- * `page` supplies the Liquid `page` object; `template` overrides the default.
- */
-export const ROUTES = {
-  '/': { page_type: 'index', template: 'templates/index.json' },
-  '/pages/private-label': {
-    page_type: 'page',
-    template: 'templates/page.private-label.json',
-    page: { title: 'Private Label', handle: 'private-label', content: '' },
-  },
-  '/pages/wholesale': {
-    page_type: 'page',
-    template: 'templates/page.wholesale.json',
-    page: { title: 'Wholesale', handle: 'wholesale', content: '' },
-  },
-  '/pages/our-brands': {
-    page_type: 'page',
-    template: 'templates/page.our-brands.json',
-    page: { title: 'Our Brands', handle: 'our-brands', content: '' },
-  },
-  '/pages/request-a-sample': {
-    page_type: 'page',
-    template: 'templates/page.enquiry.json',
-    page: { title: 'Request a Sample', handle: 'request-a-sample', content: '' },
-  },
-  '/pages/get-a-quote': {
-    page_type: 'page',
-    template: 'templates/page.enquiry.json',
-    page: { title: 'Get a Quote', handle: 'get-a-quote', content: '' },
-  },
-};
-
-/** Which JSON template a route renders. */
-export function templateForRoute(route) {
-  if (route.template) return route.template;
-  return route.page_type === 'index' ? 'templates/index.json' : 'templates/page.json';
-}
+export { ROUTES, templateForRoute } from './route-context.js';
 
 async function serveAsset(response, urlPath) {
   const relative = normalize(urlPath.replace(/^\/assets\//, '')).replace(/^(\.\.[/\\])+/, '');
