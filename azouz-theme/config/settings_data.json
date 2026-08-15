@@ -1,0 +1,15 @@
+{
+  "current": {
+    "logo_height": 64,
+    "color_accent": "#67985E",
+    "color_accent_deep": "#4F7748",
+    "color_background": "#FFFBF8",
+    "color_background_alt": "#F6F1E8",
+    "color_text": "#303030",
+    "sample_page_url": "/pages/request-a-sample",
+    "quote_page_url": "/pages/get-a-quote",
+    "social_instagram": "",
+    "social_facebook": "",
+    "social_whatsapp": ""
+  }
+}
