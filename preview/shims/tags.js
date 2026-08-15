@@ -141,7 +141,7 @@ export function registerShopifyTags(engine, options = {}) {
       }
       const file = join(sectionsDir, `${name}.liquid`);
       if (!existsSync(file)) {
-        emitter.write(`<!-- missing section: ${name} -->`);
+        emitter.write(`<!-- section: ${name} -->`);
         return;
       }
       const source = readFileSync(file, 'utf8');
