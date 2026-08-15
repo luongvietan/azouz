@@ -6,30 +6,55 @@
 
 const metafield = (value, type) => ({ value, type });
 
-function makeBlend({ handle, title, roast, notes, labelColor, description }) {
+function makeBlend({ handle, title, roast, notes, labelColor, description, soldOut, saleOn }) {
+  const url = `/products/${handle}`;
+
+  const variant = ({ id, weight, grind, price, compareAt = null }) => ({
+    id,
+    title: `${weight} / ${grind}`,
+    option1: weight,
+    option2: grind,
+    options: [weight, grind],
+    price,
+    compare_at_price: compareAt,
+    available: id !== soldOut,
+    url: `${url}?variant=${id}`,
+    featured_image: `/preview-media/${handle}.jpg`,
+    inventory_quantity: id === soldOut ? 0 : 25,
+  });
+
   const variants = [
-    { id: `${handle}-250-wb`, title: '250g / Whole Bean', option1: '250g', option2: 'Whole Bean', price: 750, available: true },
-    { id: `${handle}-1kg-wb`, title: '1kg / Whole Bean', option1: '1kg', option2: 'Whole Bean', price: 2600, available: true },
-    { id: `${handle}-1kg-esp`, title: '1kg / Espresso', option1: '1kg', option2: 'Espresso', price: 2600, available: true },
+    variant({
+      id: `${handle}-250-wb`,
+      weight: '250g',
+      grind: 'Whole Bean',
+      price: 750,
+      compareAt: saleOn === `${handle}-250-wb` ? 900 : null,
+    }),
+    variant({ id: `${handle}-1kg-wb`, weight: '1kg', grind: 'Whole Bean', price: 2600 }),
+    variant({ id: `${handle}-1kg-esp`, weight: '1kg', grind: 'Espresso', price: 2600 }),
   ];
+
+  const available = variants.filter((item) => item.available);
+
   return {
     id: handle,
     handle,
     title,
     description,
-    url: `/products/${handle}`,
-    available: true,
+    url,
+    available: available.length > 0,
     price: variants[0].price,
     price_min: 750,
     price_max: 2600,
-    compare_at_price: null,
+    compare_at_price: variants[0].compare_at_price,
     options: ['Weight', 'Grind'],
     options_with_values: [
       { name: 'Weight', values: ['250g', '1kg'] },
       { name: 'Grind', values: ['Whole Bean', 'Espresso'] },
     ],
     variants,
-    selected_or_first_available_variant: variants[0],
+    selected_or_first_available_variant: available[0] ?? variants[0],
     featured_image: `/preview-media/${handle}.jpg`,
     images: [`/preview-media/${handle}.jpg`],
     tags: ['espresso', 'arabica'],
@@ -66,6 +91,7 @@ export function buildFixtures() {
       notes: ['Dark Chocolate', 'Toffee', 'Balanced'],
       labelColor: '#BFDDD3',
       description: 'Balanced and rounded, with dark chocolate and toffee through the cup.',
+      soldOut: 'dead-sea-blend-1kg-esp',
     }),
     makeBlend({
       handle: 'downtown-blend',
@@ -74,6 +100,7 @@ export function buildFixtures() {
       notes: ['Chocolate', 'Caramel', 'Smooth'],
       labelColor: '#7C7F44',
       description: 'Smooth and approachable — chocolate and caramel, made for milk drinks.',
+      saleOn: 'downtown-blend-250-wb',
     }),
     {
       id: 'filtered-coffee-bags',
@@ -92,10 +119,32 @@ export function buildFixtures() {
         { name: 'Grind', values: ['Filter'] },
       ],
       variants: [
-        { id: 'fcb-box10', title: 'Box of 10 / Filter', option1: 'Box of 10', option2: 'Filter', price: 900, available: true },
+        {
+          id: 'fcb-box10',
+          title: 'Box of 10 / Filter',
+          option1: 'Box of 10',
+          option2: 'Filter',
+          options: ['Box of 10', 'Filter'],
+          price: 900,
+          compare_at_price: null,
+          available: true,
+          url: '/products/filtered-coffee-bags?variant=fcb-box10',
+          featured_image: '/preview-media/filtered-coffee-bags.jpg',
+          inventory_quantity: 40,
+        },
       ],
       selected_or_first_available_variant: {
-        id: 'fcb-box10', title: 'Box of 10 / Filter', option1: 'Box of 10', option2: 'Filter', price: 900, available: true,
+        id: 'fcb-box10',
+        title: 'Box of 10 / Filter',
+        option1: 'Box of 10',
+        option2: 'Filter',
+        options: ['Box of 10', 'Filter'],
+        price: 900,
+        compare_at_price: null,
+        available: true,
+        url: '/products/filtered-coffee-bags?variant=fcb-box10',
+        featured_image: '/preview-media/filtered-coffee-bags.jpg',
+        inventory_quantity: 40,
       },
       featured_image: '/preview-media/filtered-coffee-bags.jpg',
       images: ['/preview-media/filtered-coffee-bags.jpg'],
@@ -177,5 +226,112 @@ export function buildFixtures() {
     content_for_header: '',
     content_for_layout: '',
     powered_by_link: '',
+  };
+}
+
+/**
+ * A Shopify `search` drop. Matching is a plain substring test over the title
+ * and the tasting notes — enough to review the results, empty and no-results
+ * states. Predictive search is a server-side Shopify API with no local
+ * equivalent and is out of scope.
+ *
+ * @param {string} terms
+ */
+export function buildSearchFixture(terms = '') {
+  const query = String(terms).trim().toLowerCase();
+  if (query === '') {
+    return { performed: false, terms: '', results: [], results_count: 0, types: ['product'] };
+  }
+
+  const { products } = buildFixtures();
+  const results = products.filter((product) => {
+    const notes = (product.metafields.custom.tasting_notes.value ?? []).join(' ');
+    return `${product.title} ${notes}`.toLowerCase().includes(query);
+  });
+
+  return {
+    performed: true,
+    terms: String(terms),
+    results,
+    results_count: results.length,
+    types: ['product'],
+  };
+}
+
+const ADDRESS = {
+  id: 'addr-1',
+  first_name: 'Layla',
+  last_name: 'Haddad',
+  company: 'Rainbow Street Coffee',
+  address1: '12 Rainbow Street',
+  address2: '',
+  city: 'Amman',
+  province: '',
+  zip: '11181',
+  country: 'Jordan',
+  phone: '+962 7 9000 0000',
+};
+
+/**
+ * A logged-in customer with one past order, for previewing the account pages.
+ * There is no authentication in preview — the account routes always render as
+ * though this customer is signed in.
+ */
+export function buildCustomerFixture() {
+  const { products } = buildFixtures();
+
+  const order = {
+    id: 1002,
+    name: '#1002',
+    order_number: 1002,
+    created_at: '2026-07-28T09:15:00Z',
+    financial_status: 'paid',
+    fulfillment_status: 'fulfilled',
+    subtotal_price: 4100,
+    total_price: 4400,
+    shipping_price: 300,
+    customer_url: '/account/orders/1002',
+    shipping_address: ADDRESS,
+    billing_address: ADDRESS,
+    line_items: [
+      {
+        id: 'line-1',
+        title: 'Wadi Rum Blend — 1kg / Whole Bean',
+        product: products[0],
+        variant: products[0].variants[1],
+        quantity: 1,
+        price: 2600,
+        line_price: 2600,
+        image: products[0].featured_image,
+        url: products[0].url,
+      },
+      {
+        id: 'line-2',
+        title: 'Dead Sea Blend — 250g / Whole Bean',
+        product: products[1],
+        variant: products[1].variants[0],
+        quantity: 2,
+        price: 750,
+        line_price: 1500,
+        image: products[1].featured_image,
+        url: products[1].url,
+      },
+    ],
+  };
+
+  return {
+    id: 'cust-1',
+    first_name: 'Layla',
+    last_name: 'Haddad',
+    name: 'Layla Haddad',
+    email: 'layla@example.com',
+    phone: ADDRESS.phone,
+    accepts_marketing: false,
+    orders_count: 1,
+    total_spent: 4400,
+    orders: [order],
+    default_address: ADDRESS,
+    addresses: [ADDRESS],
+    addresses_count: 1,
   };
 }
