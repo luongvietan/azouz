@@ -76,7 +76,7 @@ git config user.email "luongvietan.231123@gmail.com"
   "type": "module",
   "description": "Custom Shopify Online Store 2.0 theme for Azouz Coffee",
   "scripts": {
-    "test": "node --test tests/",
+    "test": "node --test tests/*.test.js",
     "preview": "node preview/server.js",
     "validate": "node scripts/validate-all.js",
     "check": "shopify theme check azouz-theme",
