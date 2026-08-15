@@ -163,7 +163,7 @@ a {
 /* ---------- Buttons ---------- */
 
 .button {
-  --button-bg: var(--color-accent);
+  --button-bg: var(--color-accent-deep);
   --button-fg: var(--color-on-accent);
 
   display: inline-flex;
@@ -174,8 +174,10 @@ a {
   padding-inline: var(--space-lg);
   padding-block: var(--space-sm);
 
-  /* 18px semibold clears WCAG's large-text threshold, which is what makes
-     white-on-primary-green (3.4:1) permissible here. */
+  /* 18px at weight 600 is NOT "large scale text" by WCAG — that needs 24px, or
+     18.66px at weight 700. So this label requires the full 4.5:1, which the
+     primary green cannot give (3.37:1 on white). Hence the deep green above.
+     Enforced by tests/base-css.test.js. */
   font-size: 1.125rem;
   font-weight: var(--font-weight-semibold);
   line-height: 1.2;
@@ -188,7 +190,8 @@ a {
   border-radius: var(--radius);
 }
 
-.button:hover { --button-bg: var(--color-accent-deep); }
+/* Hover only ever darkens, so contrast can only improve on the base ratio. */
+.button:hover { --button-bg: color-mix(in srgb, var(--color-accent-deep) 85%, black); }
 
 .button--secondary {
   --button-bg: transparent;
@@ -311,17 +314,22 @@ a {
 /* ---------- Motion ---------- */
 
 @media (prefers-reduced-motion: no-preference) {
-  .reveal {
+  /*
+    The hidden state is gated on :defined, so it applies only after
+    customElements.define('reveal-on-scroll') has actually run. If theme.js is
+    blocked, fails to load, or throws before that point, the selector never
+    matches and every .reveal stays visible. Content is never hidden by CSS
+    that only JavaScript can undo.
+  */
+  reveal-on-scroll:defined .reveal:not(.is-visible) {
     opacity: 0;
     transform: translateY(1.25rem);
+  }
+
+  .reveal {
     transition:
       opacity var(--duration-slow) var(--ease),
       transform var(--duration-slow) var(--ease);
-  }
-
-  .reveal.is-visible {
-    opacity: 1;
-    transform: none;
   }
 
   .button {
