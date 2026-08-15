@@ -4,6 +4,7 @@ import { Liquid } from 'liquidjs';
 import { registerShopifyFilters } from './shims/filters.js';
 import { registerShopifyTags } from './shims/tags.js';
 import { buildFixtures } from './fixtures.js';
+import { resolveSettings } from './settings-resolver.js';
 
 async function readTranslations(themeDir) {
   try {
@@ -58,11 +59,18 @@ export async function renderThemeFile(engine, themeDir, relativePath, extraScope
     const schema = extractSchema(source, relativePath);
     scope.section = {
       id: relativePath.replace('sections/', '').replace('.liquid', ''),
-      settings: { ...defaultSettings(schema), ...(extraScope.section?.settings ?? {}) },
+      settings: resolveSettings(
+        schema,
+        { ...defaultSettings(schema), ...(extraScope.section?.settings ?? {}) },
+        scope,
+      ),
       blocks: extraScope.section?.blocks ?? defaultBlocks(schema),
       shopify_attributes: '',
     };
   }
 
-  return engine.parseAndRender(source, scope);
+  // LiquidJS `{% render %}` isolates local scope. Shopify still exposes
+  // global drops (shop, request, page_title, …) inside snippets — pass the
+  // same object as `globals` so preview matches that contract.
+  return engine.parseAndRender(source, scope, { globals: scope });
 }

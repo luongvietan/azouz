@@ -62,6 +62,13 @@ test('the layout renders the meta tags and structured data snippets', async () =
   assert.match(out, /application\/ld\+json/);
 });
 
+test('rendered snippets see Shopify globals — title is the shop name, not a bare middot', async () => {
+  const out = await renderLayout();
+  assert.match(out, /<title>[^<]*Azouz Coffee[^<]*<\/title>/);
+  assert.match(out, /property="og:site_name" content="Azouz Coffee"/);
+  assert.match(out, /"name":\s*"Azouz Coffee"/);
+});
+
 test('theme.js is deferred so it never blocks rendering', async () => {
   const out = await renderLayout();
   assert.match(out, /theme\.js[^>]*defer/);

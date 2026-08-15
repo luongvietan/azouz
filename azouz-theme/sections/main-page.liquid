@@ -1,0 +1,21 @@
+<section class="section main-page"{{ section.shopify_attributes }}>
+  <div class="container container--narrow main-page__inner">
+    {%- if section.settings.show_title -%}
+      <h1 class="main-page__title">{{ page.title }}</h1>
+    {%- endif -%}
+
+    {%- if page.content != blank -%}
+      <div class="rte">{{ page.content }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page content",
+  "tag": "div",
+  "settings": [
+    { "type": "checkbox", "id": "show_title", "label": "Show page title", "default": true }
+  ]
+}
+{% endschema %}

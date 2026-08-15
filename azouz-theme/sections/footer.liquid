@@ -1,0 +1,87 @@
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <img
+        class="footer__logo"
+        src="{{ 'logo-black.svg' | asset_url }}"
+        alt="{{ shop.name | escape }}"
+        width="83"
+        height="56"
+        loading="lazy">
+      {%- if section.settings.tagline != blank -%}
+        <p class="footer__tagline">{{ section.settings.tagline }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.menu.links.size > 0 -%}
+      <nav class="footer__column" aria-label="{{ 'layout.footer.menu' | t }}">
+        <h2 class="eyebrow">{{ 'layout.footer.menu' | t }}</h2>
+        <ul class="footer__menu" role="list">
+          {%- for link in section.settings.menu.links -%}
+            <li><a class="footer__link" href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
+    {%- if section.settings.show_contact -%}
+      <div class="footer__column">
+        <h2 class="eyebrow">{{ 'layout.footer.contact' | t }}</h2>
+        <ul class="footer__menu" role="list">
+          {%- if shop.email != blank -%}
+            <li><a class="footer__link" href="mailto:{{ shop.email }}">{{ shop.email }}</a></li>
+          {%- endif -%}
+          {%- if section.settings.phone != blank -%}
+            <li><a class="footer__link" href="tel:{{ section.settings.phone | remove: ' ' }}">{{ section.settings.phone }}</a></li>
+          {%- endif -%}
+          {%- if section.settings.address != blank -%}
+            <li class="footer__address">{{ section.settings.address }}</li>
+          {%- endif -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if settings.social_instagram != blank or settings.social_facebook != blank or settings.social_whatsapp != blank -%}
+      <div class="footer__column">
+        <h2 class="eyebrow">{{ 'layout.footer.follow' | t }}</h2>
+        <ul class="footer__social" role="list">
+          {%- if settings.social_instagram != blank -%}
+            <li><a class="footer__link" href="{{ settings.social_instagram }}">{{ 'general.accessibility.instagram' | t }}</a></li>
+          {%- endif -%}
+          {%- if settings.social_facebook != blank -%}
+            <li><a class="footer__link" href="{{ settings.social_facebook }}">{{ 'general.accessibility.facebook' | t }}</a></li>
+          {%- endif -%}
+          {%- if settings.social_whatsapp != blank -%}
+            <li><a class="footer__link" href="https://wa.me/{{ settings.social_whatsapp }}">{{ 'general.accessibility.whatsapp' | t }}</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="container footer__legal">
+    <hr class="rule">
+    <p class="footer__copyright">
+      &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'layout.footer.rights' | t }}
+    </p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Specialty coffee roasters. Private label, wholesale and retail coffee, roasted in Jordan."
+    },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" },
+    { "type": "checkbox", "id": "show_contact", "label": "Show contact details", "default": true },
+    { "type": "text", "id": "phone", "label": "Phone" },
+    { "type": "text", "id": "address", "label": "Address" }
+  ],
+  "presets": [{ "name": "Footer" }]
+}
+{% endschema %}

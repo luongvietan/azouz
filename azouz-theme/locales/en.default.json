@@ -6,7 +6,13 @@
       "menu": "Menu",
       "open_cart": "Open cart",
       "previous": "Previous",
-      "next": "Next"
+      "next": "Next",
+      "announcement": "Announcement",
+      "primary_navigation": "Primary",
+      "cart_count": "items in cart",
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "whatsapp": "WhatsApp"
     },
     "search": {
       "title": "Search",
@@ -74,6 +80,9 @@
       "coffee_type": "Coffee type",
       "volume": "Expected monthly volume",
       "message": "Message",
+      "optional": "optional",
+      "business_type_prompt": "Select a business type",
+      "coffee_type_prompt": "Select a coffee type",
       "send": "Send enquiry",
       "success": "Thanks — we have your enquiry and will be in touch shortly.",
       "error": "Please check the highlighted fields and try again."
@@ -82,7 +91,10 @@
   "layout": {
     "footer": {
       "copyright": "Azouz Coffee",
-      "rights": "All rights reserved."
+      "rights": "All rights reserved.",
+      "menu": "Explore",
+      "contact": "Contact",
+      "follow": "Follow"
     }
   }
 }

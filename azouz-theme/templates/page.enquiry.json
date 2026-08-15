@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-split",
+      "settings": {
+        "eyebrow": "Get in touch",
+        "heading": "Let's Create Your Coffee.",
+        "body": "<p>Tell us what type of coffee you are looking for, your expected quantity and your target market — we'll come back with a recommendation or a sample.</p>",
+        "background": "default"
+      }
+    },
+    "form": {
+      "type": "enquiry-form",
+      "settings": {
+        "eyebrow": "Enquiry",
+        "heading": "Tell us what you are looking for",
+        "require_volume": false,
+        "background": "alt"
+      }
+    }
+  },
+  "order": ["hero", "form"]
+}

@@ -1,0 +1,107 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-split",
+      "settings": {
+        "eyebrow": "Coffee Roasting · Custom Blends · Private Label · Specialty Coffee",
+        "heading": "Your Coffee. Your Brand. Our Roastery.",
+        "body": "<p>We roast and produce coffee for cafés, hotels, retailers, distributors and growing coffee brands.</p><p>From selecting the coffee to roasting, blending and packaging — we help you create the right product for your business.</p>",
+        "cta_primary_label": "Request a Sample",
+        "cta_primary_link": "/pages/request-a-sample",
+        "cta_secondary_label": "Start Your Private Label",
+        "cta_secondary_link": "/pages/private-label",
+        "background": "default"
+      }
+    },
+    "services": {
+      "type": "service-cards",
+      "settings": { "eyebrow": "What We Do", "heading": "Three ways we work with you.", "background": "default" },
+      "blocks": {
+        "private_label": {
+          "type": "service",
+          "settings": {
+            "title": "Private Label Coffee",
+            "body": "Create coffee under your own brand.",
+            "detail": "Custom blends, roasting, grinding and packaging",
+            "label_color": "#C4562E",
+            "link_label": "Learn More",
+            "link": "/pages/private-label"
+          }
+        },
+        "wholesale": {
+          "type": "service",
+          "settings": {
+            "title": "Wholesale Coffee",
+            "body": "Reliable coffee for cafés, restaurants, hotels and businesses.",
+            "detail": "Espresso · Turkish · Filter · Specialty",
+            "label_color": "#7C7F44",
+            "link_label": "View Wholesale",
+            "link": "/pages/wholesale"
+          }
+        },
+        "specialty": {
+          "type": "service",
+          "settings": {
+            "title": "Specialty Coffee",
+            "body": "Single origins and specialty coffees selected for quality and flavour.",
+            "detail": "Selected for quality and flavour",
+            "label_color": "#67985E",
+            "link_label": "Discover Our Coffee",
+            "link": "/collections/all"
+          }
+        }
+      },
+      "block_order": ["private_label", "wholesale", "specialty"]
+    },
+    "process": {
+      "type": "process-steps",
+      "settings": {
+        "eyebrow": "How it works",
+        "heading": "From Bean to Bag.",
+        "body": "We manage the coffee production process so you can focus on growing your business.",
+        "show_numbers": true,
+        "layout": "flow",
+        "background": "alt"
+      },
+      "blocks": {
+        "source": { "type": "step", "settings": { "title": "Source" } },
+        "blend": { "type": "step", "settings": { "title": "Blend" } },
+        "roast": { "type": "step", "settings": { "title": "Roast" } },
+        "grind": { "type": "step", "settings": { "title": "Grind" } },
+        "pack": { "type": "step", "settings": { "title": "Pack" } }
+      },
+      "block_order": ["source", "blend", "roast", "grind", "pack"]
+    },
+    "audience": {
+      "type": "audience-strip",
+      "settings": {
+        "heading": "Coffee Made for Your Business.",
+        "intro": "We work with:",
+        "footnote": "Whether you need one house blend or a complete private-label range, we can help.",
+        "background": "default"
+      },
+      "blocks": {
+        "cafes": { "type": "audience", "settings": { "title": "Cafés" } },
+        "hotels": { "type": "audience", "settings": { "title": "Hotels" } },
+        "restaurants": { "type": "audience", "settings": { "title": "Restaurants" } },
+        "retailers": { "type": "audience", "settings": { "title": "Retailers" } },
+        "distributors": { "type": "audience", "settings": { "title": "Distributors" } },
+        "brands": { "type": "audience", "settings": { "title": "Coffee Brands" } }
+      },
+      "block_order": ["cafes", "hotels", "restaurants", "retailers", "distributors", "brands"]
+    },
+    "closing": {
+      "type": "cta-band",
+      "settings": {
+        "heading": "Let's Create Your Coffee.",
+        "body": "<p>Tell us what you are looking for and we'll help you find or develop the right coffee.</p>",
+        "cta_primary_label": "Request a Sample",
+        "cta_primary_link": "/pages/request-a-sample",
+        "cta_secondary_label": "Get a Quote",
+        "cta_secondary_link": "/pages/get-a-quote",
+        "background": "accent"
+      }
+    }
+  },
+  "order": ["hero", "services", "process", "audience", "closing"]
+}

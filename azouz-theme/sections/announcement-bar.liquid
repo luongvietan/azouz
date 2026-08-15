@@ -1,0 +1,32 @@
+{%- if section.settings.text != blank -%}
+  <div class="announcement" role="region" aria-label="{{ 'general.accessibility.announcement' | t }}">
+    <div class="container announcement__inner">
+      <p class="announcement__text">{{ section.settings.text }}</p>
+      {%- if section.settings.link_label != blank and section.settings.link != blank -%}
+        <a class="announcement__link" href="{{ section.settings.link }}">
+          {{ section.settings.link_label }}
+          {%- render 'icon', name: 'arrow-right' -%}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "tag": "aside",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Announcement",
+      "default": "Specialty coffee, roasted in Jordan.",
+      "info": "Leave empty to hide the bar entirely."
+    },
+    { "type": "text", "id": "link_label", "label": "Link label" },
+    { "type": "url", "id": "link", "label": "Link" }
+  ],
+  "presets": [{ "name": "Announcement bar" }]
+}
+{% endschema %}

@@ -1,0 +1,91 @@
+{%- liquid
+  assign section_class = 'section process-steps'
+  if section.settings.background == 'alt'
+    assign section_class = 'section section--alt process-steps'
+  endif
+-%}
+
+<section class="{{ section_class }}"{{ section.shopify_attributes }}>
+  <div class="container">
+    <div class="process-steps__head">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="process-steps__heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.body != blank -%}
+        <p class="process-steps__intro lead">{{ section.settings.body }}</p>
+      {%- endif -%}
+    </div>
+
+    <reveal-on-scroll>
+      <ol class="process-steps__list process-steps__list--{{ section.settings.layout }}" role="list">
+        {%- for block in section.blocks -%}
+          <li class="process-step reveal"{{ block.shopify_attributes }}>
+            {%- if section.settings.show_numbers -%}
+              <span class="process-step__number" aria-hidden="true">{{ forloop.index }}</span>
+            {%- endif -%}
+            <h3 class="process-step__title">{{ block.settings.title }}</h3>
+            {%- if block.settings.body != blank -%}
+              <p class="process-step__body">{{ block.settings.body }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ol>
+    </reveal-on-scroll>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Process steps",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "From Bean to Bag." },
+    { "type": "text", "id": "body", "label": "Intro" },
+    { "type": "checkbox", "id": "show_numbers", "label": "Show step numbers", "default": true },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "flow", "label": "Horizontal flow" },
+        { "value": "cards", "label": "Cards with descriptions" }
+      ],
+      "default": "flow"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "default", "label": "Page" },
+        { "value": "alt", "label": "Warm cream" }
+      ],
+      "default": "alt"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Source" },
+        { "type": "text", "id": "body", "label": "Description" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Process steps",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Source" } },
+        { "type": "step", "settings": { "title": "Blend" } },
+        { "type": "step", "settings": { "title": "Roast" } },
+        { "type": "step", "settings": { "title": "Grind" } },
+        { "type": "step", "settings": { "title": "Pack" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

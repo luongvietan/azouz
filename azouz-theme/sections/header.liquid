@@ -1,0 +1,88 @@
+{%- liquid
+  assign logo_height = settings.logo_height | default: 64
+  assign logo_source = section.settings.logo
+-%}
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="header__logo" href="{{ routes.root_url }}">
+      {%- if logo_source -%}
+        <img
+          class="header__logo-image"
+          src="{{ logo_source | image_url: width: 400 }}"
+          alt="{{ shop.name | escape }}"
+          style="block-size: {{ logo_height }}px;"
+          width="400"
+          height="270">
+      {%- else -%}
+        <img
+          class="header__logo-image"
+          src="{{ 'logo-black.svg' | asset_url }}"
+          alt="{{ shop.name | escape }}"
+          style="block-size: {{ logo_height }}px;"
+          width="83"
+          height="56">
+      {%- endif -%}
+    </a>
+
+    <nav class="header__nav" aria-label="{{ 'general.accessibility.primary_navigation' | t }}">
+      <ul class="header__menu" role="list">
+        {%- for link in section.settings.menu.links -%}
+          <li>
+            <a class="header__link{% if link.active %} is-active{% endif %}" href="{{ link.url }}">
+              {{ link.title }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <a class="header__action" href="{{ routes.search_url }}">
+        {%- render 'icon', name: 'search' -%}
+        <span class="visually-hidden">{{ 'general.search.title' | t }}</span>
+      </a>
+
+      <a class="header__action" href="{{ routes.cart_url }}">
+        {%- render 'icon', name: 'cart' -%}
+        <span class="visually-hidden">{{ 'cart.general.title' | t }}</span>
+        <span class="header__cart-count" aria-hidden="true">{{ cart.item_count | default: 0 }}</span>
+        <span class="visually-hidden">{{ cart.item_count | default: 0 }} {{ 'general.accessibility.cart_count' | t }}</span>
+      </a>
+    </div>
+
+    {%- comment -%}
+      A <details> disclosure rather than a scripted toggle, so the menu opens
+      even if theme.js never loads.
+    {%- endcomment -%}
+    <details class="header__mobile">
+      <summary class="header__action header__mobile-toggle">
+        {%- render 'icon', name: 'menu' -%}
+        <span class="visually-hidden">{{ 'general.accessibility.menu' | t }}</span>
+      </summary>
+      <div class="header__mobile-panel">
+        <ul class="header__mobile-menu" role="list">
+          {%- for link in section.settings.menu.links -%}
+            <li><a class="header__mobile-link" href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    </details>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Leave empty to use the bundled vector logo. Never display the full lockup below 57 px tall."
+    },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ],
+  "presets": [{ "name": "Header" }]
+}
+{% endschema %}

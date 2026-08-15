@@ -1,0 +1,104 @@
+{%- comment -%}
+  Liquid evaluates `and` / `or` right to left with no operator precedence, so
+  `a and b or c and d` silently becomes `a and (b or (c and d))`. Compute each
+  side into its own variable rather than writing a compound condition.
+{%- endcomment -%}
+{%- liquid
+  assign background = section.settings.background
+  assign section_class = 'section hero'
+  if background == 'alt'
+    assign section_class = 'section section--alt hero'
+  elsif background == 'accent'
+    assign section_class = 'section section--accent hero'
+  endif
+
+  assign has_primary = false
+  if section.settings.cta_primary_label != blank and section.settings.cta_primary_link != blank
+    assign has_primary = true
+  endif
+
+  assign has_secondary = false
+  if section.settings.cta_secondary_label != blank and section.settings.cta_secondary_link != blank
+    assign has_secondary = true
+  endif
+-%}
+
+<section class="{{ section_class }}"{{ section.shopify_attributes }}>
+  <div class="container hero__inner{% unless section.settings.image %} hero__inner--full{% endunless %}">
+    <div class="hero__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+
+      <h1 class="hero__heading">{{ section.settings.heading }}</h1>
+
+      {%- if section.settings.body != blank -%}
+        <div class="hero__body lead">{{ section.settings.body }}</div>
+      {%- endif -%}
+
+      {%- if has_primary or has_secondary -%}
+        <div class="button-group">
+          {%- if has_primary -%}
+            <a class="button" href="{{ section.settings.cta_primary_link }}">{{ section.settings.cta_primary_label }}</a>
+          {%- endif -%}
+          {%- if has_secondary -%}
+            <a class="button button--secondary" href="{{ section.settings.cta_secondary_link }}">{{ section.settings.cta_secondary_label }}</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.image -%}
+      <div class="hero__media">
+        <img
+          class="hero__image"
+          src="{{ section.settings.image | image_url: width: 1200 }}"
+          alt="{{ section.settings.image_alt | escape }}"
+          width="1200"
+          height="1500"
+          fetchpriority="high"
+          decoding="async">
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Coffee. Your Brand. Our Roastery."
+    },
+    { "type": "richtext", "id": "body", "label": "Body" },
+    { "type": "text", "id": "cta_primary_label", "label": "Primary button label" },
+    { "type": "url", "id": "cta_primary_link", "label": "Primary button link" },
+    { "type": "text", "id": "cta_secondary_label", "label": "Secondary button label" },
+    { "type": "url", "id": "cta_secondary_link", "label": "Secondary button link" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image description",
+      "info": "Describe the image for screen readers and for when it fails to load."
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "default", "label": "Page" },
+        { "value": "alt", "label": "Warm cream" },
+        { "value": "accent", "label": "Green" }
+      ],
+      "default": "default"
+    }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

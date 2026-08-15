@@ -1,0 +1,77 @@
+{%- liquid
+  assign section_class = 'section audience-strip'
+  if section.settings.background == 'alt'
+    assign section_class = 'section section--alt audience-strip'
+  endif
+-%}
+
+<section class="{{ section_class }}"{{ section.shopify_attributes }}>
+  <div class="container audience-strip__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+
+    <h2 class="audience-strip__heading">{{ section.settings.heading }}</h2>
+
+    {%- if section.settings.intro != blank -%}
+      <p class="audience-strip__intro">{{ section.settings.intro }}</p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <reveal-on-scroll>
+        <ul class="audience-strip__list" role="list">
+          {%- for block in section.blocks -%}
+            <li class="audience-strip__chip reveal"{{ block.shopify_attributes }}>{{ block.settings.title }}</li>
+          {%- endfor -%}
+        </ul>
+      </reveal-on-scroll>
+    {%- endif -%}
+
+    {%- if section.settings.footnote != blank -%}
+      <p class="audience-strip__footnote">{{ section.settings.footnote }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Audience strip",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Coffee Made for Your Business." },
+    { "type": "text", "id": "intro", "label": "Intro line", "default": "We work with:" },
+    { "type": "text", "id": "footnote", "label": "Footnote" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "default", "label": "Page" },
+        { "value": "alt", "label": "Warm cream" }
+      ],
+      "default": "alt"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "audience",
+      "name": "Business type",
+      "settings": [{ "type": "text", "id": "title", "label": "Name", "default": "Cafés" }]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Audience strip",
+      "blocks": [
+        { "type": "audience", "settings": { "title": "Cafés" } },
+        { "type": "audience", "settings": { "title": "Hotels" } },
+        { "type": "audience", "settings": { "title": "Restaurants" } },
+        { "type": "audience", "settings": { "title": "Retailers" } },
+        { "type": "audience", "settings": { "title": "Distributors" } },
+        { "type": "audience", "settings": { "title": "Coffee Brands" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
