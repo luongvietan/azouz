@@ -12,13 +12,13 @@
     {%- for item in cart.items -%}
       <li class="cart-line">
         {%- if item.image -%}
-          <img
-            class="cart-line__image"
-            src="{{ item.image | image_url: width: 160 }}"
-            alt="{{ item.product_title | escape }}"
-            width="80"
-            height="100"
-            loading="lazy">
+          {%- render 'responsive-image',
+            image: item.image,
+            alt: item.product_title,
+            class: 'cart-line__image',
+            width: 160,
+            sizes: '80px'
+          -%}
         {%- endif -%}
 
         <div class="cart-line__info">

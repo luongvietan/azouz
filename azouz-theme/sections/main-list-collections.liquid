@@ -9,13 +9,13 @@
         {%- for item in collections -%}
           <article class="collection-card">
             {%- if item.image -%}
-              <img
-                class="collection-card__image"
-                src="{{ item.image | image_url: width: 600 }}"
-                alt="{{ item.title | escape }}"
-                width="600"
-                height="400"
-                loading="lazy">
+              {%- render 'responsive-image',
+                image: item.image,
+                alt: item.title,
+                class: 'collection-card__image',
+                width: 600,
+                sizes: '(min-width: 56em) 30vw, (min-width: 48em) 45vw, 90vw'
+              -%}
             {%- endif -%}
             <h2 class="collection-card__title">
               <a href="{{ item.url }}">{{ item.title }}</a>

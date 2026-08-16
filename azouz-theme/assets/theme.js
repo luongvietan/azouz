@@ -133,13 +133,21 @@ window.AzouzTheme.handleCartRemoveClick = async function handleCartRemoveClick(e
 
 /**
  * Copy the cart count out of a rendered header section.
+ *
+ * There are two of them: the badge, which is aria-hidden and purely visual, and
+ * the visually-hidden sentence a screen reader actually announces. Both have to
+ * move together or the page shows one total and announces another.
+ *
  * @param {string} headerHtml
  */
 window.AzouzTheme.syncCartCount = function syncCartCount(headerHtml) {
   const header = new DOMParser().parseFromString(headerHtml ?? '', 'text/html');
-  const freshCount = header.querySelector('[data-cart-count]');
-  const currentCount = document.querySelector('[data-cart-count]');
-  if (freshCount && currentCount) currentCount.textContent = freshCount.textContent;
+
+  for (const hook of ['[data-cart-count]', '[data-cart-count-label]']) {
+    const fresh = header.querySelector(hook);
+    const current = document.querySelector(hook);
+    if (fresh && current) current.textContent = fresh.textContent;
+  }
 };
 
 /**

@@ -58,7 +58,10 @@ test('every line carries the url and image the drawer renders', () => {
   addLine('wadi-rum-blend-250-wb', 1);
   const [line] = buildCart().items;
   assert.match(line.url, /^\/products\/wadi-rum-blend/);
-  assert.equal(typeof line.image, 'string');
+  // An image drop, matching Shopify — the cart line reads width and height off it.
+  assert.equal(typeof line.image, 'object');
+  assert.match(line.image.src, /wadi-rum-blend\.jpg$/);
+  assert.ok(line.image.width > 0 && line.image.height > 0);
   assert.equal(line.key, 'wadi-rum-blend-250-wb');
 });
 

@@ -6,6 +6,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { THEME_DIR } from '../scripts/theme-paths.js';
+import { imageDrop } from './media-drops.js';
 
 function themeSettings() {
   try {
@@ -31,7 +32,7 @@ function makeBlend({ handle, title, roast, notes, labelColor, description, soldO
     compare_at_price: compareAt,
     available: id !== soldOut,
     url: `${url}?variant=${id}`,
-    featured_image: `/preview-media/${handle}.jpg`,
+    featured_image: imageDrop(`/preview-media/${handle}.jpg`, title),
     inventory_quantity: id === soldOut ? 0 : 25,
   });
 
@@ -53,6 +54,10 @@ function makeBlend({ handle, title, roast, notes, labelColor, description, soldO
     id: handle,
     handle,
     title,
+    // Shopify stamps object_type on every drop that can appear in search
+    // results. main-search relies on it to keep pages and articles out of the
+    // product grid, so the fixture has to carry it too.
+    object_type: 'product',
     description,
     url,
     available: available.length > 0,
@@ -67,8 +72,8 @@ function makeBlend({ handle, title, roast, notes, labelColor, description, soldO
     ],
     variants,
     selected_or_first_available_variant: available[0] ?? variants[0],
-    featured_image: `/preview-media/${handle}.jpg`,
-    images: [`/preview-media/${handle}.jpg`, ...extraImages],
+    featured_image: imageDrop(`/preview-media/${handle}.jpg`, title),
+    images: [`/preview-media/${handle}.jpg`, ...extraImages].map((path) => imageDrop(path, title)),
     tags: ['espresso', 'arabica'],
     type: 'Coffee',
     vendor: 'Azouz Coffee',
@@ -142,7 +147,7 @@ export function buildFixtures() {
           compare_at_price: null,
           available: true,
           url: '/products/filtered-coffee-bags?variant=fcb-box10',
-          featured_image: '/preview-media/filtered-coffee-bags.jpg',
+          featured_image: imageDrop('/preview-media/filtered-coffee-bags.jpg', 'Filtered Coffee Bags'),
           inventory_quantity: 40,
         },
       ],
@@ -156,11 +161,11 @@ export function buildFixtures() {
         compare_at_price: null,
         available: true,
         url: '/products/filtered-coffee-bags?variant=fcb-box10',
-        featured_image: '/preview-media/filtered-coffee-bags.jpg',
+        featured_image: imageDrop('/preview-media/filtered-coffee-bags.jpg', 'Filtered Coffee Bags'),
         inventory_quantity: 40,
       },
-      featured_image: '/preview-media/filtered-coffee-bags.jpg',
-      images: ['/preview-media/filtered-coffee-bags.jpg'],
+      featured_image: imageDrop('/preview-media/filtered-coffee-bags.jpg', 'Filtered Coffee Bags'),
+      images: [imageDrop('/preview-media/filtered-coffee-bags.jpg', 'Filtered Coffee Bags')],
       tags: ['filter'],
       type: 'Coffee',
       vendor: 'Azouz Coffee',

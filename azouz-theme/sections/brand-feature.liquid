@@ -25,14 +25,13 @@
 
     {%- if section.settings.image -%}
       <div class="brand-feature__media">
-        <img
-          class="brand-feature__image"
-          src="{{ section.settings.image | image_url: width: 1000 }}"
-          alt="{{ section.settings.image_alt | escape }}"
-          width="1000"
-          height="1250"
-          loading="lazy"
-          decoding="async">
+        {%- render 'responsive-image',
+          image: section.settings.image,
+          alt: section.settings.image_alt,
+          class: 'brand-feature__image',
+          width: 1000,
+          sizes: '(min-width: 56em) 48vw, 92vw'
+        -%}
       </div>
     {%- endif -%}
   </div>

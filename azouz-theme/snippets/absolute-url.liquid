@@ -1,0 +1,28 @@
+{%- comment -%}
+  Emits an absolute URL, for JSON-LD and anywhere else a consumer outside the
+  browser has to resolve the link without a base.
+
+  Accepts: url (required)
+
+  Three shapes reach this snippet:
+    //cdn.shopify.com/...   image_url and asset_url are protocol-relative
+    /products/wadi-rum      Liquid route and object URLs are site-relative
+    https://...             already absolute; passed through untouched
+
+  Liquid has no startswith, so the prefix is read with `slice`. Checking the
+  two-character prefix first matters: every protocol-relative URL also starts
+  with a single slash.
+{%- endcomment -%}
+{%- liquid
+  assign scheme = url | slice: 0, 2
+  assign leading = url | slice: 0, 1
+
+  if scheme == '//'
+    assign absolute = url | prepend: 'https:'
+  elsif leading == '/'
+    assign absolute = url | prepend: shop.url
+  else
+    assign absolute = url
+  endif
+-%}
+{{- absolute -}}

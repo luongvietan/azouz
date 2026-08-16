@@ -32,15 +32,17 @@
 
     <div class="main-product__inner">
       <div class="main-product__media">
+      {%- comment -%} The product shot is the LCP element on this template. {%- endcomment -%}
       {%- if product.featured_image -%}
-        <img
-          class="main-product__image"
-          src="{{ product.featured_image | image_url: width: 1200 }}"
-          alt="{{ product.title | escape }}"
-          width="1200"
-          height="1500"
-          fetchpriority="high"
-          decoding="async">
+        {%- render 'responsive-image',
+          image: product.featured_image,
+          alt: product.title,
+          class: 'main-product__image',
+          width: 1200,
+          sizes: '(min-width: 56em) 45vw, 92vw',
+          loading: 'eager',
+          fetchpriority: 'high'
+        -%}
       {%- endif -%}
       </div>
 

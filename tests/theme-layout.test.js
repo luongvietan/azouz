@@ -69,6 +69,47 @@ test('rendered snippets see Shopify globals — title is the shop name, not a ba
   assert.match(out, /"name":\s*"Azouz Coffee"/);
 });
 
+test('an unconfigured store emits no colour override block at all', async () => {
+  const out = await renderLayout({ settings: {} });
+  assert.equal(/--color-accent:/.test(out), false, 'the guideline palette in tokens.css must stand alone');
+});
+
+test('theme editor colours reach the semantic tokens', async () => {
+  const out = await renderLayout({
+    settings: {
+      color_background: '#FFFFFF',
+      color_background_alt: '#EEEEEE',
+      color_text: '#111111',
+      color_accent: '#67985E',
+      color_accent_deep: '#4F7748',
+    },
+  });
+
+  const style = /<style>([\s\S]*?)<\/style>/.exec(out);
+  assert.ok(style, 'a colour override style block must be emitted');
+
+  for (const [token, value] of [
+    ['--color-bg', '#FFFFFF'],
+    ['--color-bg-alt', '#EEEEEE'],
+    ['--color-text', '#111111'],
+    ['--color-accent', '#67985E'],
+    ['--color-accent-deep', '#4F7748'],
+  ]) {
+    assert.match(style[1], new RegExp(`${token}:\\s*${value};`), `${token} not wired`);
+  }
+});
+
+test('the focus ring follows the deep accent so it never loses contrast', async () => {
+  const out = await renderLayout({ settings: { color_accent_deep: '#123456' } });
+  const style = /<style>([\s\S]*?)<\/style>/.exec(out);
+  assert.match(style[1], /--color-focus:\s*#123456;/);
+});
+
+test('colour overrides land after tokens.css so they win', async () => {
+  const out = await renderLayout({ settings: { color_accent: '#67985E' } });
+  assert.ok(out.indexOf('tokens.css') < out.indexOf('<style>'), 'tokens.css must load first');
+});
+
 test('theme.js is deferred so it never blocks rendering', async () => {
   const out = await renderLayout();
   assert.match(out, /theme\.js[^>]*defer/);

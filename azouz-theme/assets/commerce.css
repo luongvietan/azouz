@@ -107,6 +107,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
   padding-inline: var(--space-sm);
   color: var(--color-text);
   background: none;
@@ -405,9 +407,14 @@
   gap: var(--space-sm);
 }
 
+/* Icon-only, so the box has to be declared: the glyph is 1.125rem but the
+   target must clear 44px (PRODUCT.md floor; WCAG 2.2 SC 2.5.8 asks 24px). */
 .cart-line__remove {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
   color: var(--color-text-muted);
   text-decoration: none;
 }
@@ -602,6 +609,14 @@ cart-drawer[inert] {
   font-size: var(--text-lg);
   font-weight: var(--font-weight-semibold);
   font-variant-numeric: tabular-nums;
+}
+
+.cart-drawer__checkout-form {
+  margin-block-start: var(--space-md);
+}
+
+.cart-drawer__checkout {
+  inline-size: 100%;
 }
 
 .cart-drawer__foot {

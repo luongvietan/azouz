@@ -20,14 +20,13 @@
 
 <article class="product-card">
   {%- if product.featured_image -%}
-    <img
-      class="product-card__image"
-      src="{{ product.featured_image | image_url: width: 600 }}"
-      alt="{{ product.title | escape }}"
-      width="600"
-      height="750"
-      loading="lazy"
-      decoding="async">
+    {%- render 'responsive-image',
+      image: product.featured_image,
+      alt: product.title,
+      class: 'product-card__image',
+      width: 600,
+      sizes: '(min-width: 56em) 30vw, (min-width: 48em) 45vw, 90vw'
+    -%}
   {%- endif -%}
 
   {%- unless product.available -%}

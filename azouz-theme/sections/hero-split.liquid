@@ -50,14 +50,19 @@
 
     {%- if section.settings.image -%}
       <div class="hero__media">
-        <img
-          class="hero__image"
-          src="{{ section.settings.image | image_url: width: 1200 }}"
-          alt="{{ section.settings.image_alt | escape }}"
-          width="1200"
-          height="1500"
-          fetchpriority="high"
-          decoding="async">
+        {%- comment -%}
+          Almost always the LCP element, so it loads eagerly at high priority —
+          and its box is reserved from the image's own ratio, not a constant.
+        {%- endcomment -%}
+        {%- render 'responsive-image',
+          image: section.settings.image,
+          alt: section.settings.image_alt,
+          class: 'hero__image',
+          width: 1200,
+          sizes: '(min-width: 56em) 48vw, 92vw',
+          loading: 'eager',
+          fetchpriority: 'high'
+        -%}
       </div>
     {%- endif -%}
   </div>

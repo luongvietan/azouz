@@ -1,4 +1,5 @@
 import { defaultSettings, defaultBlocks } from '../scripts/schema-parser.js';
+import { imageDrop } from './media-drops.js';
 
 /**
  * Shopify stores a setting's *reference* (a handle or filename) but hands Liquid
@@ -23,12 +24,15 @@ export function resolveSettings(schema, settings, fixtures) {
         break;
 
       case 'image_picker':
+        // Shopify hands Liquid an image drop carrying width, height and alt.
+        // The theme reads all three to size every <img>, so the preview has to
+        // supply them rather than a bare path.
         if (!value) {
           resolved[id] = null;
         } else if (String(value).startsWith('/') || String(value).startsWith('http')) {
-          resolved[id] = value;
+          resolved[id] = imageDrop(value);
         } else {
-          resolved[id] = `/assets/${value}`;
+          resolved[id] = imageDrop(`/assets/${value}`);
         }
         break;
 

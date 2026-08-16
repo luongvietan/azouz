@@ -1,6 +1,15 @@
 {%- comment -%}
   JSON-LD. Organization on every page; Product and BreadcrumbList where relevant.
+
+  Every url, item, image and logo goes through the absolute-url snippet. A
+  crawler reads this markup without a page context, so a site-relative path like
+  "/products/wadi-rum-blend" or a protocol-relative "//cdn.shopify.com/…" is not
+  resolvable and the property is dropped.
 {%- endcomment -%}
+
+{%- comment -%} Filters do not chain inside a render argument — resolve first. {%- endcomment -%}
+{%- assign logo_asset = 'logo-primary.svg' | asset_url -%}
+{%- capture logo_url %}{% render 'absolute-url', url: logo_asset %}{% endcapture -%}
 
 <script type="application/ld+json">
 {
@@ -8,7 +17,7 @@
   "@type": "Organization",
   "name": {{ shop.name | json }},
   "url": {{ shop.url | json }},
-  "logo": {{ 'logo-primary.svg' | asset_url | json }},
+  "logo": {{ logo_url | strip | json }},
   "description": {{ shop.description | json }}
   {%- if shop.address.country != blank -%},
   "address": {
@@ -21,48 +30,54 @@
 </script>
 
 {%- if request.page_type == 'product' and product -%}
+  {%- capture product_url %}{% render 'absolute-url', url: product.url %}{% endcapture -%}
+  {%- assign product_image = product.featured_image | image_url: width: 1200 -%}
+  {%- capture product_image_url %}{% render 'absolute-url', url: product_image %}{% endcapture -%}
+  {%- capture shop_url %}{% render 'absolute-url', url: routes.all_products_collection_url %}{% endcapture -%}
+  {%- assign product_url = product_url | strip -%}
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Product",
   "name": {{ product.title | json }},
   "description": {{ product.description | strip_html | json }},
-  "url": {{ product.url | json }},
-  "image": {{ product.featured_image | json }},
+  "url": {{ product_url | json }},
+  "image": {{ product_image_url | strip | json }},
   "brand": { "@type": "Brand", "name": {{ product.vendor | default: shop.name | json }} },
   "offers": {
     "@type": "Offer",
     "price": {{ product.price | divided_by: 100.0 | json }},
     "priceCurrency": {{ shop.currency | json }},
     "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
-    "url": {{ product.url | json }}
+    "url": {{ product_url | json }}
   }
 }
 </script>
-{%- endif -%}
 
-{%- if request.page_type == 'collection' and collection -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": {{ 'general.meta.home' | t | json }}, "item": {{ shop.url | json }} },
-    { "@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": {{ collection.url | json }} }
+    { "@type": "ListItem", "position": 2, "name": {{ 'general.meta.shop' | t | json }}, "item": {{ shop_url | strip | json }} },
+    { "@type": "ListItem", "position": 3, "name": {{ product.title | json }}, "item": {{ product_url | json }} }
   ]
 }
 </script>
 {%- endif -%}
 
-{%- if request.page_type == 'product' and product -%}
+{%- if request.page_type == 'collection' and collection -%}
+  {%- capture collection_url %}{% render 'absolute-url', url: collection.url %}{% endcapture -%}
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": {{ 'general.meta.home' | t | json }}, "item": {{ shop.url | json }} },
-    { "@type": "ListItem", "position": 2, "name": {{ 'general.meta.shop' | t | json }}, "item": {{ routes.all_products_collection_url | json }} },
-    { "@type": "ListItem", "position": 3, "name": {{ product.title | json }}, "item": {{ product.url | json }} }
+    { "@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": {{ collection_url | strip | json }} }
   ]
 }
 </script>

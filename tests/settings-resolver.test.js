@@ -37,13 +37,26 @@ test('an empty image_picker resolves to null so {% if %} guards work', () => {
   assert.equal(resolveSettings(schema, { image: '' }, fixtures).image, null);
 });
 
-test('an image_picker path that is already a URL is left alone', () => {
+test('an image_picker path becomes a drop keeping the original src', () => {
   const resolved = resolveSettings(
     schema,
     { image: '/preview-media/wadi-rum-blend.jpg' },
     fixtures,
   );
-  assert.equal(resolved.image, '/preview-media/wadi-rum-blend.jpg');
+  assert.equal(resolved.image.src, '/preview-media/wadi-rum-blend.jpg');
+});
+
+test('an image_picker drop carries the real pixel dimensions', () => {
+  // The theme sizes every <img> from these, so a wrong number is layout shift.
+  const { image } = resolveSettings(schema, { image: '/preview-media/wadi-rum-blend.jpg' }, fixtures);
+  assert.equal(image.width, 1122);
+  assert.equal(image.height, 1402);
+});
+
+test('a portrait hero is not silently reported as the 4:5 bag crop', () => {
+  const { image } = resolveSettings(schema, { image: '/preview-media/hero-azouz-coffee-cup.jpg' }, fixtures);
+  assert.equal(image.width, 1024);
+  assert.equal(image.height, 1536);
 });
 
 test('a collection handle becomes the collection object', () => {

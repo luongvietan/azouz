@@ -90,3 +90,19 @@ test('the drawer opens only when add-to-cart marks the event', async () => {
   assert.match(js, /openDrawer/);
   assert.match(js, /event\.detail\?\.openDrawer/);
 });
+
+test('syncCartCount updates the screen-reader count, not only the visible one', async () => {
+  // Updating just [data-cart-count] leaves the visually-hidden span announcing
+  // a stale total — the visible number says 13 while a screen reader says 6.
+  const js = await source();
+  const start = js.indexOf('function syncCartCount');
+  assert.ok(start > -1, 'syncCartCount must exist');
+  const body = js.slice(start, js.indexOf('\n};', start));
+  assert.match(body, /data-cart-count\]/, 'the visible badge must be synced');
+  assert.match(body, /data-cart-count-label\]/, 'the labelled span must be synced too');
+});
+
+test('syncCartCount is driven by the freshly rendered header markup', async () => {
+  const { AzouzTheme } = await loadThemeJs();
+  assert.equal(typeof AzouzTheme.syncCartCount, 'function');
+});

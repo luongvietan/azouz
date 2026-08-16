@@ -68,7 +68,11 @@ export function registerShopifyFilters(engine, options = {}) {
   engine.registerFilter('file_url', (value) => `${assetBase}${value}`);
   engine.registerFilter('shopify_asset_url', (value) => `${assetBase}${value}`);
 
-  engine.registerFilter('image_url', (source, ...args) => {
+  engine.registerFilter('image_url', (input, ...args) => {
+    if (!input) return PLACEHOLDER;
+    // Shopify applies this to an image drop; the preview wraps its media in a
+    // drop too, so unwrap to the path before building the query.
+    const source = typeof input === 'object' ? input.src : input;
     if (!source) return PLACEHOLDER;
     const { width, height, crop } = keywordArgs(args);
     const params = new URLSearchParams();

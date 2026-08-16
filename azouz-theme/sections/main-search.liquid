@@ -11,6 +11,13 @@
     <h1 class="search__heading">{{ 'general.search.title' | t }}</h1>
 
     <form class="search__form" method="get" action="{{ routes.search_url }}" role="search">
+      {%- comment -%}
+        Restrict the search to products. Left open, Shopify also returns pages
+        and articles, which have no price, image or variants — product-card
+        would render them as empty tiles.
+      {%- endcomment -%}
+      <input type="hidden" name="type" value="product">
+
       <div class="field">
         <label class="field__label" for="SearchInput">{{ 'general.search.title' | t }}</label>
         <input
@@ -37,11 +44,21 @@
 
   {%- if search.results_count > 0 -%}
     <div class="container">
-      <div class="grid grid--3 search__grid">
-        {%- for item in search.results -%}
-          {%- render 'product-card', product: item -%}
-        {%- endfor -%}
-      </div>
+      {%- paginate search.results by 12 -%}
+        <div class="grid grid--3 search__grid">
+          {%- comment -%}
+            The hidden type field above keeps this to products, but a hand-typed
+            ?type=article would still reach here — so only products become cards.
+          {%- endcomment -%}
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {%- render 'product-card', product: item -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        {%- render 'pagination', paginate: paginate -%}
+      {%- endpaginate -%}
     </div>
   {%- endif -%}
 </section>

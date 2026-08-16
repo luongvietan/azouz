@@ -1,0 +1,47 @@
+{%- comment -%}
+  One <img>, sized from the image itself.
+
+  Accepts:
+    image         - required, a Shopify image drop
+    alt           - required, may be an empty string for decorative art
+    class         - optional class list
+    width         - optional intrinsic width to render at (default 1200)
+    sizes         - optional sizes attribute (default: full viewport width)
+    loading       - optional, 'lazy' (default) or 'eager'
+    fetchpriority - optional, set 'high' on the LCP image
+
+  Two things this fixes and must keep fixing:
+
+  Aspect ratio. The width/height attributes come off the drop, never a constant.
+  Hard-coding 1200x1500 for a 1024x1536 photograph makes the browser reserve the
+  wrong box and the page jumps when the image decodes — worst on a hero, which
+  is usually the LCP element.
+
+  Bandwidth. Without a srcset a phone downloads the desktop rendition. The
+  candidate widths are capped at the image's own width so Shopify is never asked
+  to upscale.
+{%- endcomment -%}
+
+{%- liquid
+  assign target = width | default: 1200 | at_most: image.width
+  assign loading_attr = loading | default: 'lazy'
+  assign sizes_attr = sizes | default: '100vw'
+
+  assign candidates = '400,600,800,1000,1200,1600,2000' | split: ','
+-%}
+<img
+  {% if class %}class="{{ class }}" {% endif %}src="{{ image | image_url: width: target }}"
+  srcset="
+    {%- for candidate in candidates -%}
+      {%- assign candidate_width = candidate | times: 1 -%}
+      {%- if candidate_width <= image.width -%}
+        {{ image | image_url: width: candidate_width }} {{ candidate_width }}w,
+      {%- endif -%}
+    {%- endfor -%}
+    {{ image | image_url: width: image.width }} {{ image.width }}w"
+  sizes="{{ sizes_attr }}"
+  alt="{{ alt | escape }}"
+  width="{{ image.width }}"
+  height="{{ image.height }}"
+  loading="{{ loading_attr }}"
+  {% if fetchpriority %}fetchpriority="{{ fetchpriority }}" {% endif %}decoding="async">

@@ -24,8 +24,23 @@
           <p class="enquiry__success" role="status">{{ 'contact.form.success' | t }}</p>
         {%- endif -%}
 
+        {%- comment -%}
+          A named list, not a bare "check the highlighted fields" — nothing was
+          highlighted. The summary is focusable so the browser can land on it via
+          the #contact fragment Shopify redirects to after a rejected post.
+        {%- endcomment -%}
         {%- if form.errors -%}
-          <p class="enquiry__error" role="status">{{ 'contact.form.error' | t }}</p>
+          <div class="enquiry__error" role="alert" tabindex="-1" id="EnquiryErrors-{{ uid }}">
+            <p class="enquiry__error-lead">{{ 'contact.form.error' | t }}</p>
+            <ul class="enquiry__error-list" role="list">
+              {%- for field in form.errors -%}
+                <li>
+                  {{- form.errors.translated_fields[field] | default: field | capitalize }}:
+                  {{ form.errors.messages[field] -}}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
         {%- endif -%}
       </div>
 
@@ -35,7 +50,7 @@
           <div class="enquiry__grid">
             <div class="field">
               <label class="field__label" for="EnquiryName-{{ uid }}">{{ 'contact.form.name' | t }}</label>
-              <input class="field__input" type="text" id="EnquiryName-{{ uid }}" name="contact[name]" autocomplete="name" required>
+              <input class="field__input" type="text" id="EnquiryName-{{ uid }}" name="contact[name]" autocomplete="name"{% if form.errors contains 'name' %} aria-invalid="true"{% endif %} required>
             </div>
 
             <div class="field">
@@ -45,7 +60,7 @@
 
             <div class="field">
               <label class="field__label" for="EnquiryEmail-{{ uid }}">{{ 'contact.form.email' | t }}</label>
-              <input class="field__input" type="email" id="EnquiryEmail-{{ uid }}" name="contact[email]" autocomplete="email" required>
+              <input class="field__input" type="email" id="EnquiryEmail-{{ uid }}" name="contact[email]" autocomplete="email"{% if form.errors contains 'email' %} aria-invalid="true"{% endif %} required>
             </div>
 
             <div class="field">
@@ -62,9 +77,15 @@
               <label class="field__label" for="EnquiryBusiness-{{ uid }}">{{ 'contact.form.business_type' | t }}</label>
               <select class="field__input" id="EnquiryBusiness-{{ uid }}" name="contact[Business type]">
                 <option value="">{{ 'contact.form.business_type_prompt' | t }}</option>
+                {%- comment -%}
+                  `split: ','` keeps the leading space on every entry after the
+                  first, so compare against the stripped name — not the raw one,
+                  which would only ever match the first business type.
+                {%- endcomment -%}
                 {%- assign business_types = section.settings.business_types | split: ',' -%}
                 {%- for type in business_types -%}
-                  <option value="{{ type | strip | escape }}"{% if section.settings.preselect_business == type %} selected{% endif %}>{{ type | strip }}</option>
+                  {%- assign type_name = type | strip -%}
+                  <option value="{{ type_name | escape }}"{% if section.settings.preselect_business == type_name %} selected{% endif %}>{{ type_name }}</option>
                 {%- endfor -%}
               </select>
             </div>
@@ -104,6 +125,7 @@
                 name="contact[body]"
                 rows="5"
                 aria-describedby="EnquiryMessageHint-{{ uid }}"
+                {% if form.errors contains 'body' %}aria-invalid="true" {% endif %}
                 placeholder="{{ 'contact.form.message_placeholder' | t }}"></textarea>
               <p class="field__hint" id="EnquiryMessageHint-{{ uid }}">{{ 'contact.form.message_hint' | t }}</p>
             </div>

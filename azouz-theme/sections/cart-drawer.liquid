@@ -30,6 +30,18 @@
             <span>{{ 'cart.general.subtotal' | t }}</span>
             <span>{{ cart.total_price | money }}</span>
           </p>
+
+          {%- comment -%}
+            Checkout lives here rather than in the footer because only this
+            region is re-rendered after an ajax change. Parked in the footer it
+            would still be missing the first time a customer adds to an empty
+            cart, which is exactly when the drawer opens.
+          {%- endcomment -%}
+          <form action="{{ routes.cart_url }}" method="post" class="cart-drawer__checkout-form">
+            <button class="button cart-drawer__checkout" type="submit" name="checkout">
+              {{ 'cart.general.checkout' | t }}
+            </button>
+          </form>
         {%- endif -%}
       </div>
 

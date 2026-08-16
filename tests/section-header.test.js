@@ -47,6 +47,14 @@ test('the cart link shows the item count', async () => {
   assert.match(html, /header__cart-count/);
 });
 
+test('both cart counts carry a sync hook so ajax cannot desync them', async () => {
+  // The visible count is aria-hidden; the count a screen reader actually reads
+  // is the visually-hidden one. syncCartCount has to find and update both.
+  const html = await render();
+  assert.match(html, /data-cart-count\b/, 'the visible count needs its hook');
+  assert.match(html, /data-cart-count-label\b/, 'the screen-reader count needs its own hook');
+});
+
 test('search and cart actions expose a single action label', async () => {
   const html = await render();
   assert.match(html, /class="header__action-label"[^>]*>Search</);

@@ -26,6 +26,30 @@
     {{ 'sections.css' | asset_url | stylesheet_tag }}
     {{ 'commerce.css' | asset_url | stylesheet_tag }}
 
+    {%- comment -%}
+      Theme-editor colour overrides.
+
+      tokens.css owns the guideline palette and the measured contrast contract
+      documented at the top of that file. This block only emits a property the
+      merchant has actually set, so an unconfigured store renders the brand
+      palette verbatim and the contract still holds. A merchant who overrides
+      these owns the resulting ratios — the schema says so.
+
+      It comes after every stylesheet, so these definitions win on :root.
+    {%- endcomment -%}
+    {%- capture color_overrides -%}
+      {%- if settings.color_background != blank %}--color-bg: {{ settings.color_background }};{% endif -%}
+      {%- if settings.color_background_alt != blank %}--color-bg-alt: {{ settings.color_background_alt }};{% endif -%}
+      {%- if settings.color_text != blank %}--color-text: {{ settings.color_text }};{% endif -%}
+      {%- if settings.color_accent != blank %}--color-accent: {{ settings.color_accent }};{% endif -%}
+      {%- comment -%} The focus ring shares the deep accent so it can never lose contrast against it. {%- endcomment -%}
+      {%- assign deep = settings.color_accent_deep -%}
+      {%- if deep != blank %}--color-accent-deep: {{ deep }};--color-focus: {{ deep }};{% endif -%}
+    {%- endcapture -%}
+    {%- if color_overrides != blank -%}
+      <style>:root{ {{- color_overrides -}} }</style>
+    {%- endif -%}
+
     <script>document.documentElement.classList.replace('no-js', 'js');</script>
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
 

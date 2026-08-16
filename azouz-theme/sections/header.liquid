@@ -6,22 +6,27 @@
 <header class="header">
   <div class="container header__inner">
     <a class="header__logo" href="{{ routes.root_url }}">
+      {%- comment -%}
+        width/height reserve the box before the file arrives, so they have to
+        describe the real artwork: the uploaded image's own dimensions, or the
+        bundled SVG's 59.014 x 47.775 viewBox scaled to the default 64px height.
+      {%- endcomment -%}
       {%- if logo_source -%}
         <img
           class="header__logo-image"
           src="{{ logo_source | image_url: width: 400 }}"
           alt="{{ shop.name | escape }}"
           style="block-size: {{ logo_height }}px;"
-          width="400"
-          height="270">
+          width="{{ logo_source.width }}"
+          height="{{ logo_source.height }}">
       {%- else -%}
         <img
           class="header__logo-image"
           src="{{ 'logo-black.svg' | asset_url }}"
           alt="{{ shop.name | escape }}"
           style="block-size: {{ logo_height }}px;"
-          width="83"
-          height="56">
+          width="79"
+          height="64">
       {%- endif -%}
     </a>
 
@@ -50,8 +55,14 @@
       <a class="header__action" href="{{ routes.cart_url }}" data-cart-link>
         {%- render 'icon', name: 'cart' -%}
         <span class="header__action-label">{{ 'cart.general.title' | t }}</span>
+        {%- comment -%}
+          Two counts, two hooks. The badge is decorative (aria-hidden); the
+          visually-hidden sentence is what a screen reader announces. Both are
+          refreshed by syncCartCount after an ajax cart change — syncing only
+          the badge leaves the announced total stale.
+        {%- endcomment -%}
         <span class="header__cart-count" aria-hidden="true" data-cart-count>{{ cart.item_count | default: 0 }}</span>
-        <span class="visually-hidden">{{ cart.item_count | default: 0 }} {{ 'general.accessibility.cart_count' | t }}</span>
+        <span class="visually-hidden" data-cart-count-label>{{ cart.item_count | default: 0 }} {{ 'general.accessibility.cart_count' | t }}</span>
       </a>
     </div>
 

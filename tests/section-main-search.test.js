@@ -58,3 +58,57 @@ test('has no presets', async () => {
   const schema = extractSchema(await readFile(resolveInTheme('sections/main-search.liquid'), 'utf8'));
   assert.equal(schema.presets, undefined);
 });
+
+test('the search form asks Shopify for products only', async () => {
+  // Without this, `search.results` also carries pages and articles, which the
+  // product-card snippet renders as an empty tile with no price.
+  const html = await render('');
+  assert.match(html, /<input[^>]+type="hidden"[^>]+name="type"[^>]+value="product"|<input[^>]+name="type"[^>]+value="product"/);
+});
+
+test('a non-product result is never rendered as a product card', async () => {
+  const html = await renderSection('main-search', {
+    scope: {
+      search: {
+        performed: true,
+        terms: 'label',
+        results_count: 2,
+        results: [
+          { object_type: 'page', title: 'Private Label', url: '/pages/private-label' },
+          {
+            object_type: 'product',
+            title: 'Wadi Rum Blend',
+            url: '/products/wadi-rum-blend',
+            price: 7500,
+            price_min: 7500,
+            price_max: 7500,
+            available: true,
+            metafields: { custom: {} },
+          },
+        ],
+      },
+    },
+  });
+
+  assert.equal(countMatches(html, /class="product-card"/g), 1, 'only the product may become a card');
+  assert.equal(/Private Label/.test(html), false, 'the page result must not leak into the grid');
+});
+
+test('results are paginated rather than silently truncated', async () => {
+  const results = Array.from({ length: 15 }, (unused, index) => ({
+    object_type: 'product',
+    title: `Blend ${index}`,
+    url: `/products/blend-${index}`,
+    price: 7500,
+    price_min: 7500,
+    price_max: 7500,
+    available: true,
+    metafields: { custom: {} },
+  }));
+
+  const html = await renderSection('main-search', {
+    scope: { search: { performed: true, terms: 'blend', results, results_count: results.length } },
+  });
+
+  assert.match(html, /class="pagination"/, '15 results over a page size of 12 must paginate');
+});

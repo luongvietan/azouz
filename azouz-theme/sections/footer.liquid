@@ -1,12 +1,13 @@
 <footer class="footer">
   <div class="container footer__inner">
     <div class="footer__brand">
+      {%- comment -%} 59.014 x 47.775 viewBox, scaled — see sections/header.liquid. {%- endcomment -%}
       <img
         class="footer__logo"
         src="{{ 'logo-black.svg' | asset_url }}"
         alt="{{ shop.name | escape }}"
-        width="83"
-        height="56"
+        width="79"
+        height="64"
         loading="lazy">
       {%- if section.settings.tagline != blank -%}
         <p class="footer__tagline">{{ section.settings.tagline }}</p>

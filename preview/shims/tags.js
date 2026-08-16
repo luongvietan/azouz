@@ -124,11 +124,25 @@ export function registerShopifyTags(engine, options = {}) {
       const request = ctx.globals?.request ?? ctx.environments?.request ?? fixtures.request;
       const postedSuccessfully =
         formType === 'contact' && request?.query?.contact_posted === '1';
+
+      // Shopify only ever hands back form.errors after a real rejected post, so
+      // the error state is otherwise unreviewable. `?contact_errors=email,form`
+      // reproduces it — the same trick as ?contact_posted=1 above.
+      const requested = formType === 'contact' ? (request?.query?.contact_errors ?? '') : '';
+      const fields = requested.split(',').map((field) => field.trim()).filter(Boolean);
+
+      const errors = fields.length
+        ? Object.assign(fields, {
+            messages: Object.fromEntries(fields.map((field) => [field, "can't be blank"])),
+            translated_fields: Object.fromEntries(fields.map((field) => [field, field])),
+          })
+        : null;
+
       ctx.push({
         form: {
           posted_successfully: postedSuccessfully,
           'posted_successfully?': postedSuccessfully,
-          errors: null,
+          errors,
         },
       });
       yield engine.renderer.renderTemplates(this.templates, ctx, emitter);
