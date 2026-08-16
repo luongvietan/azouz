@@ -10,7 +10,8 @@
     "validate": "node scripts/validate-all.js",
     "check": "shopify theme check --path .",
     "package": "node scripts/package-theme.js",
-    "icons": "node scripts/generate-icons.js"
+    "icons": "node scripts/generate-icons.js",
+    "products": "node scripts/generate-products-csv.js"
   },
   "devDependencies": {
     "@hugeicons/core-free-icons": "^4.2.3",
