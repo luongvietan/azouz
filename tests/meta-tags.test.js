@@ -61,3 +61,33 @@ test('structured-data emits Product JSON-LD on a product page', async () => {
   const types = blocks.map((block) => JSON.parse(block[1])['@type']);
   assert.ok(types.includes('Product'), `got ${types.join(', ')}`);
 });
+
+test('structured-data emits BreadcrumbList on a product page', async () => {
+  const out = await renderSnippet('structured-data', {
+    request: { page_type: 'product' },
+    product: {
+      title: 'Wadi Rum Blend',
+      description: 'An espresso roast.',
+      url: '/products/wadi-rum-blend',
+      featured_image: '/preview-media/wadi-rum-blend.jpg',
+      vendor: 'Azouz Coffee',
+      price: 750,
+      available: true,
+    },
+  });
+  const blocks = [...out.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+  const types = blocks.map((block) => JSON.parse(block[1])['@type']);
+  assert.ok(types.includes('Product'));
+  assert.ok(types.includes('BreadcrumbList'));
+  assert.equal(/translation missing/.test(out), false);
+  assert.equal(/\bHome\b/.test(out.replace(/<script[\s\S]*?<\/script>/g, '')), false);
+});
+
+test('structured-data collection breadcrumbs are not hard-coded English', async () => {
+  const out = await renderSnippet('structured-data', {
+    request: { page_type: 'collection' },
+    collection: { title: 'Azouz Coffee', url: '/collections/all' },
+  });
+  assert.match(out, /BreadcrumbList/);
+  assert.equal(/translation missing/.test(out), false);
+});

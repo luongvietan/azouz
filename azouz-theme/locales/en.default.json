@@ -24,7 +24,9 @@
     },
     "meta": {
       "tags": "Tagged \"{{ tags }}\"",
-      "page": "Page {{ page }}"
+      "page": "Page {{ page }}",
+      "home": "Home",
+      "shop": "Shop"
     },
     "pagination": {
       "label": "Pagination",
