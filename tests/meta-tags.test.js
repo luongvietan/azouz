@@ -91,3 +91,25 @@ test('structured-data collection breadcrumbs are not hard-coded English', async 
   assert.match(out, /BreadcrumbList/);
   assert.equal(/translation missing/.test(out), false);
 });
+
+test('a page with no page_title does not repeat the shop name', async () => {
+  // The password page and any template Shopify leaves page_title unset on:
+  // meta_title falls back to shop.name, but the guard tested the empty
+  // page_title, so the shop name was appended to itself.
+  const html = await renderSnippet('meta-tags', { page_title: null });
+  const title = /<title>([^<]*)<\/title>/.exec(html)[1];
+  const occurrences = (title.match(/Azouz Coffee/g) ?? []).length;
+  assert.equal(occurrences, 1, `shop name repeated in <title>: ${title}`);
+});
+
+test('a page whose title already contains the shop name is left alone', async () => {
+  const html = await renderSnippet('meta-tags', { page_title: 'Azouz Coffee' });
+  const title = /<title>([^<]*)<\/title>/.exec(html)[1];
+  assert.equal((title.match(/Azouz Coffee/g) ?? []).length, 1, title);
+});
+
+test('a normal page title is suffixed with the shop name exactly once', async () => {
+  const html = await renderSnippet('meta-tags', { page_title: 'Wholesale' });
+  const title = /<title>([^<]*)<\/title>/.exec(html)[1];
+  assert.match(title, /^Wholesale\s*&middot;\s*Azouz Coffee$/, title);
+});

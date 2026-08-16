@@ -10,7 +10,13 @@
   assign meta_description = page_description | default: shop.description
 -%}
 
-<title>{{ meta_title }}{% unless page_title contains shop.name %} &middot; {{ shop.name }}{% endunless %}</title>
+{%- comment -%}
+  Test meta_title, not page_title. On a template where Shopify leaves
+  page_title unset — the password page, for one — meta_title falls back to the
+  shop name, and guarding on the empty page_title appended it to itself:
+  "Azouz Coffee · Azouz Coffee".
+{%- endcomment -%}
+<title>{{ meta_title }}{% unless meta_title contains shop.name %} &middot; {{ shop.name }}{% endunless %}</title>
 
 {%- if meta_description != blank -%}
   <meta name="description" content="{{ meta_description | escape }}">
