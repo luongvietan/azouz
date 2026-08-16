@@ -57,6 +57,25 @@ export function registerShopifyTags(engine, options = {}) {
     },
   });
 
+  /**
+   * Where Shopify actually posts each form type. Getting this wrong is silent:
+   * the form renders, the button works, and the submission goes nowhere.
+   */
+  const FORM_ACTIONS = {
+    product: '/cart/add',
+    cart: '/cart',
+    contact: '/contact#contact',
+    customer: '/contact#contact',
+    customer_login: '/account/login',
+    guest_login: '/account/login',
+    create_customer: '/account',
+    recover_customer_password: '/account/recover',
+    activate_customer_password: '/account/activate',
+    customer_address: '/account/addresses',
+    new_comment: '/comments',
+    localization: '/localization',
+  };
+
   engine.registerTag('form', {
     parse(tagToken, remainTokens) {
       this.args = tagToken.args;
@@ -74,9 +93,20 @@ export function registerShopifyTags(engine, options = {}) {
     },
     *render(ctx, emitter) {
       const formType = (this.args.match(/'([^']+)'|"([^"]+)"/) || [])[1] ?? 'contact';
+      const action = FORM_ACTIONS[formType] ?? `/${formType}`;
+
+      // Keyword arguments after the object, e.g. `id: 'AddToCart', class: 'x'`.
+      const attributes = {};
+      for (const match of this.args.matchAll(/(\w+)\s*:\s*'([^']*)'/g)) {
+        attributes[match[1]] = match[2];
+      }
+
+      const id = attributes.id ? ` id="${attributes.id}"` : '';
+      const className = attributes.class ?? `${formType}-form`;
+
       emitter.write(
-        `<form method="post" action="/${formType}#${formType}" accept-charset="UTF-8"` +
-          ` class="${formType}-form">` +
+        `<form method="post" action="${action}"${id} accept-charset="UTF-8"` +
+          ` class="${className}">` +
           `<input type="hidden" name="form_type" value="${formType}">` +
           `<input type="hidden" name="utf8" value="✓">`,
       );
