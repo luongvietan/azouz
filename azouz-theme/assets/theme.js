@@ -181,3 +181,46 @@ class VariantPicker extends HTMLElement {
 if (!customElements.get('variant-picker')) {
   customElements.define('variant-picker', VariantPicker);
 }
+
+/**
+ * <product-form> upgrades a real <form action="/cart/add"> into an async add.
+ *
+ * It wraps the submit button, not the form — the {% form %} tag owns the form
+ * element — and walks up to it. With scripting off the form posts natively and
+ * the customer lands on /cart, which is fully functional.
+ */
+class ProductForm extends HTMLElement {
+  connectedCallback() {
+    this.form = this.closest('form');
+    this.button = this.querySelector('[type="submit"]');
+    if (!this.form) return;
+
+    this.form.addEventListener('submit', (event) => this.onSubmit(event));
+  }
+
+  async onSubmit(event) {
+    event.preventDefault();
+    if (this.button) this.button.setAttribute('aria-busy', 'true');
+
+    try {
+      const response = await fetch('/cart/add', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(this.form),
+      });
+
+      if (!response.ok) throw new Error(`add to cart failed: ${response.status}`);
+
+      document.dispatchEvent(new CustomEvent('cart:updated', { detail: await response.json() }));
+    } catch {
+      // Anything unexpected: hand the browser back the plain form post.
+      this.form.submit();
+    } finally {
+      if (this.button) this.button.removeAttribute('aria-busy');
+    }
+  }
+}
+
+if (!customElements.get('product-form')) {
+  customElements.define('product-form', ProductForm);
+}
