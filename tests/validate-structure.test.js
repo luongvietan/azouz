@@ -67,12 +67,44 @@ test('allowed top-level directories produce no complaints', async () => {
   assert.deepEqual(await findDisallowedTopLevelEntries(dir), []);
 });
 
-test('an unexpected top-level directory is reported', async () => {
-  const dir = await makeTheme({ ...VALID, 'node_modules/pkg/index.js': '' });
-  assert.deepEqual(await findDisallowedTopLevelEntries(dir), ['node_modules']);
+test('a directory that looks like theme code but is not read by Shopify is reported', async () => {
+  // This is the failure that still matters now the theme root is the repo
+  // root: something a developer meant to ship, silently dropped on deploy.
+  const dir = await makeTheme({ ...VALID, 'styles/main.css': '' });
+  assert.deepEqual(await findDisallowedTopLevelEntries(dir), ['styles']);
 });
 
-test('a stray top-level file is reported', async () => {
-  const dir = await makeTheme({ ...VALID, 'README.md': '# hi' });
-  assert.deepEqual(await findDisallowedTopLevelEntries(dir), ['README.md']);
+test('a mis-cased theme directory is reported rather than silently ignored', async () => {
+  const dir = await makeTheme({ ...VALID, 'Snippets/card.liquid': '' });
+  assert.deepEqual(await findDisallowedTopLevelEntries(dir), ['Snippets']);
+});
+
+test('a stray liquid file at the root is reported — it belongs in a theme directory', async () => {
+  const dir = await makeTheme({ ...VALID, 'theme.liquid': '' });
+  assert.deepEqual(await findDisallowedTopLevelEntries(dir), ['theme.liquid']);
+});
+
+test('the project tooling that shares the theme root is not reported', async () => {
+  // Shopify ignores these; flagging them would make the check useless noise.
+  const dir = await makeTheme({
+    ...VALID,
+    'package.json': '{}',
+    'tests/x.test.js': '',
+    'scripts/x.js': '',
+    'preview/x.js': '',
+    'docs/x.md': '',
+    'node_modules/pkg/index.js': '',
+    'README.md': '# hi',
+  });
+  assert.deepEqual(await findDisallowedTopLevelEntries(dir), []);
+});
+
+test('client source artwork sharing the root is not reported', async () => {
+  const dir = await makeTheme({
+    ...VALID,
+    'Azouz - Brand Guidelines.pdf': '',
+    'azouz-logo.ai': '',
+    'photo.jpeg': '',
+  });
+  assert.deepEqual(await findDisallowedTopLevelEntries(dir), []);
 });

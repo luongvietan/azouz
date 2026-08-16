@@ -1,6 +1,6 @@
 import { readdir, access } from 'node:fs/promises';
 import { join } from 'node:path';
-import { THEME_SUBDIRS } from './theme-paths.js';
+import { THEME_SUBDIRS, PROJECT_ENTRIES, isSourceAsset } from './theme-paths.js';
 
 /**
  * Files Shopify requires before it will accept a theme.
@@ -37,11 +37,24 @@ export async function findDefaultLocale(themeDir) {
   return entries.find((name) => name.endsWith('.default.json')) ?? null;
 }
 
-/** @returns {Promise<string[]>} top-level entries Shopify does not permit, sorted. */
+/**
+ * Top-level entries that are neither part of the theme nor known project files.
+ *
+ * The theme root is the repository root, so this cannot simply reject anything
+ * that is not a Shopify directory — `tests/`, `package.json` and the client's
+ * source artwork all live here legitimately, and Shopify ignores them. What it
+ * still catches is the case that matters: a directory that looks like it was
+ * meant to be part of the theme but is not one Shopify reads, such as `styles/`
+ * or a mis-cased `Assets/`, which would be silently dropped on deploy.
+ *
+ * @returns {Promise<string[]>} unrecognised top-level entries, sorted.
+ */
 export async function findDisallowedTopLevelEntries(themeDir) {
   const entries = await readdir(themeDir, { withFileTypes: true });
   return entries
     .filter((entry) => !(entry.isDirectory() && THEME_SUBDIRS.has(entry.name)))
+    .filter((entry) => !PROJECT_ENTRIES.has(entry.name))
+    .filter((entry) => !isSourceAsset(entry.name))
     .map((entry) => entry.name)
     .sort();
 }

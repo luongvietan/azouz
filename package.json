@@ -8,7 +8,7 @@
     "test": "node --test tests/*.test.js",
     "preview": "node preview/server.js",
     "validate": "node scripts/validate-all.js",
-    "check": "shopify theme check --path azouz-theme",
+    "check": "shopify theme check --path .",
     "package": "node scripts/package-theme.js",
     "icons": "node scripts/generate-icons.js"
   },

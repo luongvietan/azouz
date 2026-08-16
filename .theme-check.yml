@@ -1,0 +1,20 @@
+# The theme lives at the repository root, because Shopify's GitHub integration
+# only connects a branch whose theme directories sit at the root and cannot be
+# pointed at a subdirectory.
+#
+# That puts the project's own tooling in theme check's path. Shopify itself
+# ignores these folders on deploy; this keeps the checker's scope matching, so
+# a finding always refers to something that actually ships.
+
+extends: theme-check:recommended
+
+ignore:
+  - node_modules/**
+  - dist/**
+  - docs/**
+  - preview/**
+  - scripts/**
+  - tests/**
+  - package.json
+  - package-lock.json
+  - .impeccable/**

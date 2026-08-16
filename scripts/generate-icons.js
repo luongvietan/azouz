@@ -1,5 +1,5 @@
 /**
- * Generate azouz-theme/snippets/icon.liquid from Hugeicons Stroke Rounded.
+ * Generate snippets/icon.liquid from Hugeicons Stroke Rounded.
  *
  * Source: https://hugeicons.com/icons/stroke-rounded
  * Package: @hugeicons/core-free-icons

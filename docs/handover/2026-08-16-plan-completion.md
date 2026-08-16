@@ -116,6 +116,45 @@ The test suite grew from 544 to 613 over that work.
 
 ---
 
+## Repository layout changed after the plans were written
+
+**The theme moved from `azouz-theme/` to the repository root.** Every plan
+document still refers to `azouz-theme/assets/…`, `azouz-theme/sections/…` and
+so on. Those paths were correct when the plans were executed; read them as
+root-relative now. The plans were left untouched rather than rewritten, because
+they are a record of what was done, not a current map.
+
+The move was made so the theme can be connected through Shopify's GitHub
+integration, which only accepts a branch whose theme directories sit at the
+repository root — it cannot be pointed at a subdirectory, and ignores every
+folder that is not part of the theme structure.
+
+That last part is what makes this work: `preview/`, `scripts/`, `tests/`,
+`docs/`, `package.json` and the client's source artwork all sit beside the
+theme at the root and Shopify simply ignores them.
+
+Three pieces of tooling had to follow:
+
+- `scripts/theme-paths.js` — `THEME_DIR` is now `ROOT`. It gained
+  `PROJECT_ENTRIES` and `isSourceAsset()`, which name what legitimately shares
+  the root.
+- `scripts/validate-json.js` — walks only `THEME_SUBDIRS` now. Walking the root
+  wholesale descended into `node_modules`, where `tsconfig.json` files carry
+  comments and were reported as broken theme JSON.
+- `scripts/validate-structure.js` — `findDisallowedTopLevelEntries` can no
+  longer reject everything that is not a Shopify directory. It skips known
+  project entries and still catches what matters: a directory meant to ship but
+  invisible to Shopify, such as `styles/` or a mis-cased `Assets/`.
+
+`.theme-check.yml` was added at the same time. Without it, theme check inspected
+74 files instead of 72, having wandered into `package.json` and
+`package-lock.json`. The ignore list keeps its scope equal to what actually
+ships.
+
+`npm run check` is now `shopify theme check --path .`.
+
+---
+
 ## Still open
 
 These are not defects. They are content gaps for the primary B2B audience, and
@@ -126,6 +165,13 @@ they need material from the client rather than code:
 - No trust signals: no food-safety, HACCP or halal certification, no founding
   year, no roastery capacity, no reference customers
 - No About / Our Roastery page
+
+**`npm run package` is broken.** `package.json` declares it, `archiver` is
+installed for it, but `scripts/package-theme.js` was never written and `dist/`
+is empty. Until it exists there is no zip to upload. It is Plan D scope ("the
+delivery zip"), and it matters more now the theme root is the repository root:
+the zip must contain `THEME_SUBDIRS` and nothing else, so it cannot simply
+archive the theme directory the way it could before.
 
 Two review findings were deliberately left alone, with reasons:
 
