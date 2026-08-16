@@ -58,7 +58,7 @@
 - Create: `scripts/theme-paths.js`
 - Test: `tests/theme-paths.test.js`
 
-- [ ] **Step 1: Initialise git**
+- [x] **Step 1: Initialise git**
 
 ```bash
 git init
@@ -66,7 +66,7 @@ git config user.name "Viet An Luong"
 git config user.email "luongvietan.231123@gmail.com"
 ```
 
-- [ ] **Step 2: Create `package.json`**
+- [x] **Step 2: Create `package.json`**
 
 ```json
 {
@@ -90,7 +90,7 @@ git config user.email "luongvietan.231123@gmail.com"
 }
 ```
 
-- [ ] **Step 3: Create `.gitignore`**
+- [x] **Step 3: Create `.gitignore`**
 
 ```gitignore
 node_modules/
@@ -100,12 +100,12 @@ node_modules/
 Thumbs.db
 ```
 
-- [ ] **Step 4: Install dependencies**
+- [x] **Step 4: Install dependencies**
 
 Run: `npm install`
 Expected: `node_modules/` created; `liquidjs`, `archiver`, `@shopify/cli` present. Warnings about peer deps are fine.
 
-- [ ] **Step 5: Write the failing test for `theme-paths.js`**
+- [x] **Step 5: Write the failing test for `theme-paths.js`**
 
 Create `tests/theme-paths.test.js`:
 
@@ -133,12 +133,12 @@ test('resolveInTheme joins a POSIX-style relative path onto the theme root', () 
 });
 ```
 
-- [ ] **Step 6: Run the test to verify it fails**
+- [x] **Step 6: Run the test to verify it fails**
 
 Run: `node --test tests/theme-paths.test.js`
 Expected: FAIL — `Cannot find module '../scripts/theme-paths.js'`
 
-- [ ] **Step 7: Create `scripts/theme-paths.js`**
+- [x] **Step 7: Create `scripts/theme-paths.js`**
 
 ```js
 import { fileURLToPath } from 'node:url';
@@ -176,18 +176,18 @@ export function resolveInTheme(relativePath) {
 }
 ```
 
-- [ ] **Step 8: Create the theme directory skeleton**
+- [x] **Step 8: Create the theme directory skeleton**
 
 ```bash
 mkdir -p azouz-theme/assets azouz-theme/config azouz-theme/layout azouz-theme/locales azouz-theme/sections azouz-theme/snippets azouz-theme/templates/customers tests preview/shims
 ```
 
-- [ ] **Step 9: Run the test to verify it passes**
+- [x] **Step 9: Run the test to verify it passes**
 
 Run: `node --test tests/theme-paths.test.js`
 Expected: PASS — 3 tests.
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit**
 
 ```bash
 git add package.json package-lock.json .gitignore scripts/theme-paths.js tests/theme-paths.test.js
@@ -204,7 +204,7 @@ Shopify rejects a theme zip that is missing required files or contains unexpecte
 - Create: `scripts/validate-structure.js`
 - Test: `tests/validate-structure.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/validate-structure.test.js`:
 
@@ -289,12 +289,12 @@ test('a stray top-level file is reported', async () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/validate-structure.test.js`
 Expected: FAIL — `Cannot find module '../scripts/validate-structure.js'`
 
-- [ ] **Step 3: Create `scripts/validate-structure.js`**
+- [x] **Step 3: Create `scripts/validate-structure.js`**
 
 ```js
 import { readdir, access } from 'node:fs/promises';
@@ -346,12 +346,12 @@ export async function findDisallowedTopLevelEntries(themeDir) {
 }
 ```
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `node --test tests/validate-structure.test.js`
 Expected: PASS — 8 tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add scripts/validate-structure.js tests/validate-structure.test.js
@@ -368,7 +368,7 @@ A single malformed JSON file causes Shopify to reject the whole upload with an u
 - Create: `scripts/validate-json.js`
 - Test: `tests/validate-json.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/validate-json.test.js`:
 
@@ -424,12 +424,12 @@ test('non-JSON files are ignored', async () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/validate-json.test.js`
 Expected: FAIL — `Cannot find module '../scripts/validate-json.js'`
 
-- [ ] **Step 3: Create `scripts/validate-json.js`**
+- [x] **Step 3: Create `scripts/validate-json.js`**
 
 ```js
 import { readdir, readFile } from 'node:fs/promises';
@@ -466,12 +466,12 @@ export async function findInvalidJson(themeDir) {
 }
 ```
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `node --test tests/validate-json.test.js`
 Expected: PASS — 4 tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add scripts/validate-json.js tests/validate-json.test.js
@@ -488,7 +488,7 @@ git commit -m "feat: validate every JSON file in the theme parses"
 - Create: `scripts/schema-parser.js`
 - Test: `tests/schema-parser.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/schema-parser.test.js`:
 
@@ -577,12 +577,12 @@ test('defaultBlocks returns an empty array when there are no presets', () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/schema-parser.test.js`
 Expected: FAIL — `Cannot find module '../scripts/schema-parser.js'`
 
-- [ ] **Step 3: Create `scripts/schema-parser.js`**
+- [x] **Step 3: Create `scripts/schema-parser.js`**
 
 ```js
 const SCHEMA_PATTERN = /\{%-?\s*schema\s*-?%\}([\s\S]*?)\{%-?\s*endschema\s*-?%\}/;
@@ -637,12 +637,12 @@ export function defaultBlocks(schema) {
 }
 ```
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `node --test tests/schema-parser.test.js`
 Expected: PASS — 10 tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add scripts/schema-parser.js tests/schema-parser.test.js
@@ -659,7 +659,7 @@ LiquidJS ships the standard Liquid filters. Shopify adds its own; these are the 
 - Create: `preview/shims/filters.js`
 - Test: `tests/filters.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/filters.test.js`:
 
@@ -754,12 +754,12 @@ test('link_to wraps text in an anchor', () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/filters.test.js`
 Expected: FAIL — `Cannot find module '../preview/shims/filters.js'`
 
-- [ ] **Step 3: Create `preview/shims/filters.js`**
+- [x] **Step 3: Create `preview/shims/filters.js`**
 
 ```js
 /**
@@ -889,14 +889,14 @@ export function registerShopifyFilters(engine, options = {}) {
 }
 ```
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `node --test tests/filters.test.js`
 Expected: PASS — 15 tests.
 
 If the `image_url` keyword-argument tests fail, log `args` inside the filter to confirm how the installed LiquidJS version delivers named arguments, and adjust `keywordArgs` accordingly. Do not change the test — the Liquid syntax it uses is what Shopify requires.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add preview/shims/filters.js tests/filters.test.js
@@ -911,7 +911,7 @@ git commit -m "feat: add Shopify liquid filter shims for local preview"
 - Create: `preview/shims/tags.js`
 - Test: `tests/tags.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/tags.test.js`:
 
@@ -988,12 +988,12 @@ test('section tags render a comment placeholder when no sections directory is co
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/tags.test.js`
 Expected: FAIL — `Cannot find module '../preview/shims/tags.js'`
 
-- [ ] **Step 3: Create `preview/shims/tags.js`**
+- [x] **Step 3: Create `preview/shims/tags.js`**
 
 ```js
 import { readFileSync, existsSync } from 'node:fs';
@@ -1169,14 +1169,14 @@ export function registerShopifyTags(engine, options = {}) {
 }
 ```
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `node --test tests/tags.test.js`
 Expected: PASS — 11 tests.
 
 If `engine.parser.parseStream` is not available on the installed LiquidJS, check the version with `npm ls liquidjs` and consult its `registerTag` docs for the block-tag API; the shape above targets LiquidJS 10.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add preview/shims/tags.js tests/tags.test.js
@@ -1193,7 +1193,7 @@ Realistic fixtures make the preview meaningful. Products mirror the client's act
 - Create: `preview/fixtures.js`
 - Test: `tests/fixtures.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/fixtures.test.js`:
 
@@ -1261,12 +1261,12 @@ test('the main menu links to the four marketing pages and the shop', () => {
 
 The three label colours are sampled from the client's packaging mockups: terracotta for Wadi Rum, mint for Dead Sea, olive for Downtown.
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/fixtures.test.js`
 Expected: FAIL — `Cannot find module '../preview/fixtures.js'`
 
-- [ ] **Step 3: Create `preview/fixtures.js`**
+- [x] **Step 3: Create `preview/fixtures.js`**
 
 ```js
 /**
@@ -1452,12 +1452,12 @@ export function buildFixtures() {
 }
 ```
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `node --test tests/fixtures.test.js`
 Expected: PASS — 7 tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add preview/fixtures.js tests/fixtures.test.js
@@ -1472,7 +1472,7 @@ git commit -m "feat: add preview fixtures mirroring the client's real products"
 - Create: `preview/engine.js`
 - Test: `tests/engine.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/engine.test.js`:
 
@@ -1543,12 +1543,12 @@ test('{% section %} renders the referenced section file', async () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/engine.test.js`
 Expected: FAIL — `Cannot find module '../preview/engine.js'`
 
-- [ ] **Step 3: Create `preview/engine.js`**
+- [x] **Step 3: Create `preview/engine.js`**
 
 ```js
 import { readFile } from 'node:fs/promises';
@@ -1621,12 +1621,12 @@ export async function renderThemeFile(engine, themeDir, relativePath, extraScope
 }
 ```
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `node --test tests/engine.test.js`
 Expected: PASS — 5 tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add preview/engine.js tests/engine.test.js
@@ -1644,7 +1644,7 @@ The brand's primary green cannot carry body-size text. This test encodes that fi
 - Create: `scripts/css-tokens.js`
 - Test: `tests/contrast.test.js`
 
-- [ ] **Step 1: Write the failing test for the contrast maths**
+- [x] **Step 1: Write the failing test for the contrast maths**
 
 Create `tests/contrast.test.js`:
 
@@ -1706,12 +1706,12 @@ test('readCssTokens does not hang on a circular reference', () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/contrast.test.js`
 Expected: FAIL — `Cannot find module '../scripts/contrast.js'`
 
-- [ ] **Step 3: Create `scripts/contrast.js`**
+- [x] **Step 3: Create `scripts/contrast.js`**
 
 ```js
 /** WCAG 2.1 relative luminance and contrast ratio. */
@@ -1743,7 +1743,7 @@ export function contrastRatio(foreground, background) {
 }
 ```
 
-- [ ] **Step 4: Create `scripts/css-tokens.js`**
+- [x] **Step 4: Create `scripts/css-tokens.js`**
 
 ```js
 /**
@@ -1778,12 +1778,12 @@ export function readCssTokens(css) {
 }
 ```
 
-- [ ] **Step 5: Run the maths tests to verify they pass**
+- [x] **Step 5: Run the maths tests to verify they pass**
 
 Run: `node --test tests/contrast.test.js`
 Expected: PASS — 9 tests.
 
-- [ ] **Step 6: Add the failing token-contract test**
+- [x] **Step 6: Add the failing token-contract test**
 
 Append to `tests/contrast.test.js`:
 
@@ -1849,12 +1849,12 @@ test('the hairline token is documented as non-text — it fails text contrast by
 });
 ```
 
-- [ ] **Step 7: Run to verify the new tests fail**
+- [x] **Step 7: Run to verify the new tests fail**
 
 Run: `node --test tests/contrast.test.js`
 Expected: FAIL — `ENOENT ... assets/tokens.css`
 
-- [ ] **Step 8: Create `azouz-theme/assets/tokens.css`**
+- [x] **Step 8: Create `azouz-theme/assets/tokens.css`**
 
 ```css
 /*
@@ -1951,12 +1951,12 @@ Expected: FAIL — `ENOENT ... assets/tokens.css`
 }
 ```
 
-- [ ] **Step 9: Run the tests to verify they pass**
+- [x] **Step 9: Run the tests to verify they pass**
 
 Run: `node --test tests/contrast.test.js`
 Expected: PASS — 17 tests.
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit**
 
 ```bash
 git add scripts/contrast.js scripts/css-tokens.js azouz-theme/assets/tokens.css tests/contrast.test.js
@@ -1974,7 +1974,7 @@ git commit -m "feat: add brand design tokens with an enforced WCAG contrast cont
 - Create: `azouz-theme/assets/baloo-*.woff2` (generated)
 - Test: `tests/fonts.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/fonts.test.js`:
 
@@ -2024,12 +2024,12 @@ test('the OFL licence ships with the fonts', async () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/fonts.test.js`
 Expected: FAIL — `ENOENT` on the assets listing or `fonts.css`.
 
-- [ ] **Step 3: Create `scripts/fetch-fonts.js`**
+- [x] **Step 3: Create `scripts/fetch-fonts.js`**
 
 ```js
 /**
@@ -2110,23 +2110,23 @@ await writeFile(resolveInTheme('assets/fonts.css'), header + blocks.join('\n\n')
 console.log(`wrote assets/fonts.css with ${blocks.length} faces`);
 ```
 
-- [ ] **Step 4: Run the font fetch**
+- [x] **Step 4: Run the font fetch**
 
 Run: `node scripts/fetch-fonts.js`
 Expected: several `wrote assets/baloo-…woff2` lines, then `wrote assets/fonts.css with N faces`.
 
 If the machine has no outbound network, download the family manually from `https://fonts.google.com/specimen/Baloo+Bhaijaan+2`, convert the ttf files to woff2, place them in `azouz-theme/assets/` using the `baloo-<subset>-<weight>.woff2` naming, and hand-write `fonts.css` in the same shape. The tests in Step 1 define what "correct" means either way.
 
-- [ ] **Step 5: Save the licence**
+- [x] **Step 5: Save the licence**
 
 Download `OFL.txt` from the family's Google Fonts page (the "License" tab) and save it to `azouz-theme/assets/OFL.txt`. Verify it opens with the words `SIL OPEN FONT LICENSE`.
 
-- [ ] **Step 6: Run the tests to verify they pass**
+- [x] **Step 6: Run the tests to verify they pass**
 
 Run: `node --test tests/fonts.test.js`
 Expected: PASS — 5 tests.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add scripts/fetch-fonts.js azouz-theme/assets/fonts.css azouz-theme/assets/OFL.txt azouz-theme/assets/baloo-*.woff2 tests/fonts.test.js
@@ -2144,7 +2144,7 @@ The client's `.ai` files are PDF-compatible containers holding pure vector paths
 - Create: `azouz-theme/assets/logo-primary.svg`, `logo-black.svg`, `logo-white.svg`, `logomark.svg`
 - Test: `tests/logo.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/logo.test.js`:
 
@@ -2214,12 +2214,12 @@ test('the logomark is the wordmark alone — wider aspect than the full lockup',
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/logo.test.js`
 Expected: FAIL — `ENOENT ... assets/logo-primary.svg`
 
-- [ ] **Step 3: Create `scripts/extract-logo.py`**
+- [x] **Step 3: Create `scripts/extract-logo.py`**
 
 ```python
 """
@@ -2315,12 +2315,12 @@ if __name__ == "__main__":
     main()
 ```
 
-- [ ] **Step 4: Run the extraction**
+- [x] **Step 4: Run the extraction**
 
 Run: `python scripts/extract-logo.py`
 Expected: four `wrote assets/…svg` lines.
 
-- [ ] **Step 5: Verify the logomark visually**
+- [x] **Step 5: Verify the logomark visually**
 
 The split heuristic must be checked by eye — a wrong split silently produces a broken logo.
 
@@ -2330,12 +2330,12 @@ python -c "import fitz; d=fitz.open('azouz-theme/assets/logomark.svg'); d[0].get
 
 Open `logomark-check.png`. It must show the Arabic wordmark عزوز **only**, with no "azouz coffee" strapline and no clipped strokes. If the strapline is still present or the wordmark is cut, adjust `split_index` in the script and re-run. Delete `logomark-check.png` when satisfied.
 
-- [ ] **Step 6: Run the tests to verify they pass**
+- [x] **Step 6: Run the tests to verify they pass**
 
 Run: `node --test tests/logo.test.js`
 Expected: PASS — 8 tests.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add scripts/extract-logo.py azouz-theme/assets/logo-primary.svg azouz-theme/assets/logo-black.svg azouz-theme/assets/logo-white.svg azouz-theme/assets/logomark.svg tests/logo.test.js
@@ -2352,7 +2352,7 @@ The cup mockup carries a geometric Kufi pattern. Rebuild it as a tileable SVG fo
 - Create: `azouz-theme/assets/pattern-kufi.svg`
 - Test: `tests/pattern.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/pattern.test.js`:
 
@@ -2388,12 +2388,12 @@ test('the pattern contains enough geometry to read as a motif', async () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/pattern.test.js`
 Expected: FAIL — `ENOENT ... assets/pattern-kufi.svg`
 
-- [ ] **Step 3: Create `azouz-theme/assets/pattern-kufi.svg`**
+- [x] **Step 3: Create `azouz-theme/assets/pattern-kufi.svg`**
 
 Square Kufic meander: interlocking right-angle keys on a 120-unit tile, echoing the cup artwork. Strokes only, `currentColor`, so it takes the colour of whatever it sits inside.
 
@@ -2412,12 +2412,12 @@ Square Kufic meander: interlocking right-angle keys on a 120-unit tile, echoing 
 </svg>
 ```
 
-- [ ] **Step 4: Run the tests to verify they pass**
+- [x] **Step 4: Run the tests to verify they pass**
 
 Run: `node --test tests/pattern.test.js`
 Expected: PASS — 4 tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add azouz-theme/assets/pattern-kufi.svg tests/pattern.test.js
@@ -2432,7 +2432,7 @@ git commit -m "feat: add tileable kufi pattern texture"
 - Create: `azouz-theme/assets/base.css`
 - Test: `tests/base-css.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/base-css.test.js`:
 
@@ -2494,12 +2494,12 @@ test('a skip link is styled', async () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/base-css.test.js`
 Expected: FAIL — `ENOENT ... assets/base.css`
 
-- [ ] **Step 3: Create `azouz-theme/assets/base.css`**
+- [x] **Step 3: Create `azouz-theme/assets/base.css`**
 
 ```css
 /*
@@ -2840,12 +2840,12 @@ a {
 }
 ```
 
-- [ ] **Step 4: Run the tests to verify they pass**
+- [x] **Step 4: Run the tests to verify they pass**
 
 Run: `node --test tests/base-css.test.js`
 Expected: PASS — 6 tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add azouz-theme/assets/base.css tests/base-css.test.js
@@ -2861,7 +2861,7 @@ git commit -m "feat: add base stylesheet with logical properties and the label-b
 - Create: `azouz-theme/snippets/structured-data.liquid`
 - Test: `tests/meta-tags.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/meta-tags.test.js`:
 
@@ -2931,12 +2931,12 @@ test('structured-data emits Product JSON-LD on a product page', async () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/meta-tags.test.js`
 Expected: FAIL — the snippet files do not exist.
 
-- [ ] **Step 3: Create `azouz-theme/snippets/meta-tags.liquid`**
+- [x] **Step 3: Create `azouz-theme/snippets/meta-tags.liquid`**
 
 ```liquid
 {%- comment -%}
@@ -2983,7 +2983,7 @@ Expected: FAIL — the snippet files do not exist.
 <meta name="theme-color" content="{{ settings.color_accent | default: '#67985E' }}">
 ```
 
-- [ ] **Step 4: Create `azouz-theme/snippets/structured-data.liquid`**
+- [x] **Step 4: Create `azouz-theme/snippets/structured-data.liquid`**
 
 ```liquid
 {%- comment -%}
@@ -3043,12 +3043,12 @@ Expected: FAIL — the snippet files do not exist.
 {%- endif -%}
 ```
 
-- [ ] **Step 5: Run the tests to verify they pass**
+- [x] **Step 5: Run the tests to verify they pass**
 
 Run: `node --test tests/meta-tags.test.js`
 Expected: PASS — 7 tests.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add azouz-theme/snippets/meta-tags.liquid azouz-theme/snippets/structured-data.liquid tests/meta-tags.test.js
@@ -3066,7 +3066,7 @@ Every user-visible string lives here, so Arabic can be added later without touch
 - Create: `azouz-theme/locales/en.default.schema.json`
 - Test: `tests/locales.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/locales.test.js`:
 
@@ -3130,12 +3130,12 @@ test('the schema locale carries theme editor labels', async () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/locales.test.js`
 Expected: FAIL — `ENOENT ... locales/en.default.json`
 
-- [ ] **Step 3: Create `azouz-theme/locales/en.default.json`**
+- [x] **Step 3: Create `azouz-theme/locales/en.default.json`**
 
 ```json
 {
@@ -3228,7 +3228,7 @@ Expected: FAIL — `ENOENT ... locales/en.default.json`
 }
 ```
 
-- [ ] **Step 4: Create `azouz-theme/locales/en.default.schema.json`**
+- [x] **Step 4: Create `azouz-theme/locales/en.default.schema.json`**
 
 ```json
 {
@@ -3260,12 +3260,12 @@ Expected: FAIL — `ENOENT ... locales/en.default.json`
 }
 ```
 
-- [ ] **Step 5: Run the tests to verify they pass**
+- [x] **Step 5: Run the tests to verify they pass**
 
 Run: `node --test tests/locales.test.js`
 Expected: PASS — 3 tests.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add azouz-theme/locales tests/locales.test.js
@@ -3280,7 +3280,7 @@ git commit -m "feat: add english locale files"
 - Create: `azouz-theme/layout/theme.liquid`
 - Test: `tests/theme-layout.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/theme-layout.test.js`:
 
@@ -3355,12 +3355,12 @@ test('theme.js is deferred so it never blocks rendering', async () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/theme-layout.test.js`
 Expected: FAIL — `ENOENT ... layout/theme.liquid`
 
-- [ ] **Step 3: Create `azouz-theme/layout/theme.liquid`**
+- [x] **Step 3: Create `azouz-theme/layout/theme.liquid`**
 
 ```liquid
 <!doctype html>
@@ -3412,14 +3412,14 @@ Expected: FAIL — `ENOENT ... layout/theme.liquid`
 </html>
 ```
 
-- [ ] **Step 4: Run the tests to verify they pass**
+- [x] **Step 4: Run the tests to verify they pass**
 
 Run: `node --test tests/theme-layout.test.js`
 Expected: PASS — 10 tests.
 
 The `{% section %}` calls for `announcement-bar`, `header` and `footer` render as `<!-- missing section: … -->` comments at this stage. Those sections are built in Plan B; the layout tests deliberately do not depend on them.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add azouz-theme/layout/theme.liquid tests/theme-layout.test.js
@@ -3442,7 +3442,7 @@ falls back to. Without these the preview 404s and Task 18's validator fails.
 - Create: `azouz-theme/assets/placeholder.svg`
 - Test: `tests/settings.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/settings.test.js`:
 
@@ -3519,12 +3519,12 @@ test('the placeholder is an svg using currentColor', async () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/settings.test.js`
 Expected: FAIL — `ENOENT ... config/settings_schema.json`
 
-- [ ] **Step 3: Create `azouz-theme/config/settings_schema.json`**
+- [x] **Step 3: Create `azouz-theme/config/settings_schema.json`**
 
 ```json
 [
@@ -3636,7 +3636,7 @@ Expected: FAIL — `ENOENT ... config/settings_schema.json`
 ]
 ```
 
-- [ ] **Step 4: Create `azouz-theme/config/settings_data.json`**
+- [x] **Step 4: Create `azouz-theme/config/settings_data.json`**
 
 ```json
 {
@@ -3656,7 +3656,7 @@ Expected: FAIL — `ENOENT ... config/settings_schema.json`
 }
 ```
 
-- [ ] **Step 5: Create `azouz-theme/assets/theme.js`**
+- [x] **Step 5: Create `azouz-theme/assets/theme.js`**
 
 Only the scroll reveal belongs in Plan A — `base.css` already styles `.reveal`, so without this the class would sit at `opacity: 0` forever. Cart, variant picker and quantity components arrive in Plan C.
 
@@ -3708,7 +3708,7 @@ if (!customElements.get('reveal-on-scroll')) {
 }
 ```
 
-- [ ] **Step 6: Create `azouz-theme/assets/placeholder.svg`**
+- [x] **Step 6: Create `azouz-theme/assets/placeholder.svg`**
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5" role="img" aria-label="Coffee bag placeholder">
@@ -3718,12 +3718,12 @@ if (!customElements.get('reveal-on-scroll')) {
 </svg>
 ```
 
-- [ ] **Step 7: Run the tests to verify they pass**
+- [x] **Step 7: Run the tests to verify they pass**
 
 Run: `node --test tests/settings.test.js`
 Expected: PASS — 9 tests.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add azouz-theme/config azouz-theme/assets/theme.js azouz-theme/assets/placeholder.svg tests/settings.test.js
@@ -3739,7 +3739,7 @@ git commit -m "feat: add theme settings schema, runtime script and image placeho
 - Create: `scripts/validate-all.js`
 - Test: `tests/validate-all.test.js`
 
-- [ ] **Step 1: Write the failing test for the aggregate validator**
+- [x] **Step 1: Write the failing test for the aggregate validator**
 
 Create `tests/validate-all.test.js`:
 
@@ -3755,12 +3755,12 @@ test('the real theme directory has no structural or JSON findings', async () => 
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `node --test tests/validate-all.test.js`
 Expected: FAIL — `Cannot find module '../scripts/validate-all.js'`
 
-- [ ] **Step 3: Create `scripts/validate-all.js`**
+- [x] **Step 3: Create `scripts/validate-all.js`**
 
 ```js
 import {
@@ -3806,12 +3806,12 @@ if (import.meta.url === `file://${process.argv[1].replace(/\\/g, '/')}`) {
 }
 ```
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `node --test tests/validate-all.test.js`
 Expected: PASS — 1 test.
 
-- [ ] **Step 5: Create `preview/server.js`**
+- [x] **Step 5: Create `preview/server.js`**
 
 ```js
 /**
@@ -3901,7 +3901,7 @@ server.listen(PORT, () => {
 });
 ```
 
-- [ ] **Step 6: Run the whole suite**
+- [x] **Step 6: Run the whole suite**
 
 Run: `npm test`
 Expected: PASS — every test file green: 133 tests across 18 files.
@@ -3927,17 +3927,17 @@ Expected: PASS — every test file green: 133 tests across 18 files.
 | `theme-layout` | 10 |
 | `validate-all` | 1 |
 
-- [ ] **Step 7: Run the aggregate validator**
+- [x] **Step 7: Run the aggregate validator**
 
 Run: `npm run validate`
 Expected: `Theme validation passed.`
 
-- [ ] **Step 8: Run Shopify's own linter**
+- [x] **Step 8: Run Shopify's own linter**
 
 Run: `npx shopify theme check --path azouz-theme`
 Expected: no errors. Warnings about missing templates are expected at this stage — Plan B and Plan C add them. Record any **error**-level finding and fix it before committing.
 
-- [ ] **Step 9: Start the preview and confirm it renders**
+- [x] **Step 9: Start the preview and confirm it renders**
 
 Run: `npm run preview`
 
@@ -3951,7 +3951,7 @@ Open `http://localhost:4321` and confirm:
 
 Stop the server with Ctrl+C.
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit**
 
 ```bash
 git add preview/server.js scripts/validate-all.js tests/validate-all.test.js
@@ -3962,12 +3962,12 @@ git commit -m "feat: add preview server and aggregate theme validator"
 
 ## Definition of Done for Plan A
 
-- [ ] `npm test` passes with no failures
-- [ ] `npm run validate` prints `Theme validation passed.`
-- [ ] `npx shopify theme check --path azouz-theme` reports no error-level findings
-- [ ] `npm run preview` serves a styled document at `http://localhost:4321` with brand fonts, brand colours, working skip link and favicon
-- [ ] The contrast guard is green, encoding the finding that primary green cannot carry body-size text
-- [ ] Four vector logo variants exist, visually verified, normalised to `#67985E`
-- [ ] Every commit above is on the branch
+- [x] `npm test` passes with no failures
+- [x] `npm run validate` prints `Theme validation passed.`
+- [x] `npx shopify theme check --path azouz-theme` reports no error-level findings
+- [x] `npm run preview` serves a styled document at `http://localhost:4321` with brand fonts, brand colours, working skip link and favicon
+- [x] The contrast guard is green, encoding the finding that primary green cannot carry body-size text
+- [x] Four vector logo variants exist, visually verified, normalised to `#67985E`
+- [x] Every commit above is on the branch
 
 **Next:** Plan B — marketing sections and the four client pages.

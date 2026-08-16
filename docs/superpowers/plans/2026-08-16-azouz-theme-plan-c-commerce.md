@@ -119,7 +119,7 @@ Named here so nobody adds them halfway through:
 - Modify: `azouz-theme/layout/theme.liquid`
 - Modify: `tests/sections-css.test.js`
 
-- [ ] **Step 1: Write the shared guard helper**
+- [x] **Step 1: Write the shared guard helper**
 
 Create `tests/helpers/css-guards.js`:
 
@@ -188,7 +188,7 @@ export function assertNoSmallTextOnAccent(css, label) {
 }
 ```
 
-- [ ] **Step 2: Write the failing test**
+- [x] **Step 2: Write the failing test**
 
 Create `tests/commerce-css.test.js`:
 
@@ -230,12 +230,12 @@ test('the layout links commerce.css after sections.css', async () => {
 });
 ```
 
-- [ ] **Step 3: Run to verify it fails**
+- [x] **Step 3: Run to verify it fails**
 
 Run: `node --test tests/commerce-css.test.js`
 Expected: FAIL — `ENOENT` on `assets/commerce.css`.
 
-- [ ] **Step 4: Create `azouz-theme/assets/commerce.css`**
+- [x] **Step 4: Create `azouz-theme/assets/commerce.css`**
 
 ```css
 /*
@@ -252,7 +252,7 @@ Expected: FAIL — `ENOENT` on `assets/commerce.css`.
 */
 ```
 
-- [ ] **Step 5: Link it from the layout**
+- [x] **Step 5: Link it from the layout**
 
 In `azouz-theme/layout/theme.liquid`, replace:
 
@@ -267,7 +267,7 @@ with:
     {{ 'commerce.css' | asset_url | stylesheet_tag }}
 ```
 
-- [ ] **Step 6: Point `tests/sections-css.test.js` at the shared helper**
+- [x] **Step 6: Point `tests/sections-css.test.js` at the shared helper**
 
 Replace the whole of `tests/sections-css.test.js` with:
 
@@ -309,17 +309,17 @@ test('the layout links sections.css after base.css', async () => {
 });
 ```
 
-- [ ] **Step 7: Run to verify everything passes**
+- [x] **Step 7: Run to verify everything passes**
 
 Run: `node --test tests/commerce-css.test.js tests/sections-css.test.js tests/theme-layout.test.js`
 Expected: PASS — 5 + 5 + 11 = 21 tests. If `sections-css` now fails, the shared helper is stricter than the copy it replaced; fix `sections.css`, not the helper.
 
-- [ ] **Step 8: Run the full suite**
+- [x] **Step 8: Run the full suite**
 
 Run: `npm test`
 Expected: PASS — 288 tests.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add azouz-theme/assets/commerce.css azouz-theme/layout/theme.liquid tests/helpers/css-guards.js tests/commerce-css.test.js tests/sections-css.test.js
@@ -336,7 +336,7 @@ The variant picker matches on `variant.options` — an array Shopify provides an
 - Modify: `preview/fixtures.js`
 - Test: `tests/fixtures-commerce.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/fixtures-commerce.test.js`:
 
@@ -408,12 +408,12 @@ test('each order has line items and a customer url', () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/fixtures-commerce.test.js`
 Expected: FAIL — `buildSearchFixture is not a function`, and variants have no `options`.
 
-- [ ] **Step 3: Give variants `options`, `url`, availability and compare-at**
+- [x] **Step 3: Give variants `options`, `url`, availability and compare-at**
 
 In `preview/fixtures.js`, replace the whole `makeBlend` function with:
 
@@ -515,7 +515,7 @@ and the `downtown-blend` call with:
     }),
 ```
 
-- [ ] **Step 4: Give the filter-bags product the same variant shape**
+- [x] **Step 4: Give the filter-bags product the same variant shape**
 
 Inside `buildFixtures`, replace the `filtered-coffee-bags` object literal's `variants` and `selected_or_first_available_variant` with:
 
@@ -550,7 +550,7 @@ Inside `buildFixtures`, replace the `filtered-coffee-bags` object literal's `var
       },
 ```
 
-- [ ] **Step 5: Add the search and customer builders**
+- [x] **Step 5: Add the search and customer builders**
 
 Append to `preview/fixtures.js`:
 
@@ -663,17 +663,17 @@ export function buildCustomerFixture() {
 }
 ```
 
-- [ ] **Step 6: Run to verify it passes**
+- [x] **Step 6: Run to verify it passes**
 
 Run: `node --test tests/fixtures-commerce.test.js tests/fixtures.test.js`
 Expected: PASS — 9 + 7 = 16 tests. The Plan A fixture tests must still be green; if `products expose variants with weight and grind options` fails, `makeBlend` lost a field.
 
-- [ ] **Step 7: Run the full suite**
+- [x] **Step 7: Run the full suite**
 
 Run: `npm test`
 Expected: PASS — 297 tests.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add preview/fixtures.js tests/fixtures-commerce.test.js
@@ -691,7 +691,7 @@ The preview server currently knows six hard-coded marketing paths. The shop need
 - Modify: `preview/server.js`
 - Test: `tests/route-context.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/route-context.test.js`:
 
@@ -786,12 +786,12 @@ test('every template any route points at exists in the theme', () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/route-context.test.js`
 Expected: FAIL — `Cannot find module '../preview/route-context.js'`
 
-- [ ] **Step 3: Create `preview/route-context.js`**
+- [x] **Step 3: Create `preview/route-context.js`**
 
 `ROUTES` and `templateForRoute` move here verbatim from `server.js` so there is one routing table.
 
@@ -962,7 +962,7 @@ export function listPreviewPaths() {
 }
 ```
 
-- [ ] **Step 4: Re-export from `preview/server.js` so Plan B's route test keeps working**
+- [x] **Step 4: Re-export from `preview/server.js` so Plan B's route test keeps working**
 
 In `preview/server.js`, delete the `ROUTES` constant and the `templateForRoute` function, and replace them with:
 
@@ -972,12 +972,12 @@ export { ROUTES, templateForRoute } from './route-context.js';
 
 Leave the rest of `server.js` alone for now — Task 4 rewrites its request handler.
 
-- [ ] **Step 5: Run to verify it fails on the templates only**
+- [x] **Step 5: Run to verify it fails on the templates only**
 
 Run: `node --test tests/route-context.test.js`
 Expected: FAIL — `Cannot find module './cart-api.js'`, and the last test cannot find `templates/product.json`. Both are created in Tasks 4 and 5. This is the expected intermediate state; do not chase it.
 
-- [ ] **Step 6: Commit the work in progress**
+- [x] **Step 6: Commit the work in progress**
 
 ```bash
 git add preview/route-context.js preview/server.js tests/route-context.test.js
@@ -994,7 +994,7 @@ Plan A listed "Cart Section API responses" as something the preview could not ve
 - Create: `preview/cart-api.js`
 - Test: `tests/cart-api.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/cart-api.test.js`:
 
@@ -1070,12 +1070,12 @@ test('seeding fills the cart so the populated state can be reviewed', () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/cart-api.test.js`
 Expected: FAIL — `Cannot find module '../preview/cart-api.js'`
 
-- [ ] **Step 3: Create `preview/cart-api.js`**
+- [x] **Step 3: Create `preview/cart-api.js`**
 
 ```js
 /**
@@ -1174,12 +1174,12 @@ export function buildCart() {
 }
 ```
 
-- [ ] **Step 4: Run to verify it passes**
+- [x] **Step 4: Run to verify it passes**
 
 Run: `node --test tests/cart-api.test.js`
 Expected: PASS — 8 tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add preview/cart-api.js tests/cart-api.test.js
@@ -1197,7 +1197,7 @@ git commit -m "feat: add an in-memory cart to the preview harness"
 - Modify: `tests/preview-routes.test.js`
 - Test: `tests/preview-server.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/preview-server.test.js`:
 
@@ -1301,12 +1301,12 @@ test('an asset is served with the right content type', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/preview-server.test.js`
 Expected: FAIL — no `/cart.js`, no section rendering, product template missing.
 
-- [ ] **Step 3: Create the fourteen placeholder templates**
+- [x] **Step 3: Create the fourteen placeholder templates**
 
 Each of these files contains exactly:
 
@@ -1338,7 +1338,7 @@ azouz-theme/templates/customers/activate_account.json
 
 Later tasks fill them in.
 
-- [ ] **Step 4: Rewrite `preview/server.js`**
+- [x] **Step 4: Rewrite `preview/server.js`**
 
 Replace the whole file:
 
@@ -1520,14 +1520,14 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
 }
 ```
 
-- [ ] **Step 5: Update Plan B's route test for the moved table**
+- [x] **Step 5: Update Plan B's route test for the moved table**
 
 `tests/preview-routes.test.js` asserted `templateForRoute` and `ROUTES` from `server.js`, which still re-exports them, so it passes unchanged. Confirm rather than assume:
 
 Run: `node --test tests/preview-routes.test.js`
 Expected: PASS — 5 tests.
 
-- [ ] **Step 6: Run the new tests**
+- [x] **Step 6: Run the new tests**
 
 Run: `node --test tests/preview-server.test.js tests/route-context.test.js`
 Expected: PASS — 9 + 12 = 21 tests.
@@ -1538,7 +1538,7 @@ The section-rendering test needs `sections/cart-drawer.liquid`, which does not e
 test('the section rendering endpoint returns rendered html per section', { skip: 'cart-drawer arrives in Task 19' }, async () => {
 ```
 
-- [ ] **Step 7: Run the full suite and the validator**
+- [x] **Step 7: Run the full suite and the validator**
 
 Run: `npm test`
 Expected: PASS — 326 tests, 1 skipped.
@@ -1548,7 +1548,7 @@ Treat the number as a sanity check, not a gate: the signal that matters is **zer
 Run: `npm run validate`
 Expected: `Theme validation passed.`
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add preview/server.js azouz-theme/templates tests/preview-server.test.js tests/route-context.test.js
@@ -1565,7 +1565,7 @@ git commit -m "feat: preview server renders the shop surface with a cart api"
 - Modify: `preview/shims/tags.js`
 - Test: `tests/form-tag.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/form-tag.test.js`:
 
@@ -1640,12 +1640,12 @@ test('an unknown form type falls back to a form-type url rather than throwing', 
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/form-tag.test.js`
 Expected: FAIL — the product form renders `action="/product#product"`.
 
-- [ ] **Step 3: Replace the `form` tag in `preview/shims/tags.js`**
+- [x] **Step 3: Replace the `form` tag in `preview/shims/tags.js`**
 
 Replace the whole `engine.registerTag('form', { ... });` block with:
 
@@ -1711,17 +1711,17 @@ Replace the whole `engine.registerTag('form', { ... });` block with:
   });
 ```
 
-- [ ] **Step 4: Run to verify it passes**
+- [x] **Step 4: Run to verify it passes**
 
 Run: `node --test tests/form-tag.test.js tests/tags.test.js tests/section-enquiry-form.test.js`
 Expected: PASS — 8 + the existing tag and enquiry tests. The enquiry form still posts to `/contact#contact`, so Plan B's test is unaffected.
 
-- [ ] **Step 5: Run the full suite**
+- [x] **Step 5: Run the full suite**
 
 Run: `npm test`
 Expected: PASS — 334 tests, 1 skipped.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add preview/shims/tags.js tests/form-tag.test.js
@@ -1739,7 +1739,7 @@ git commit -m "feat: post each form type to its real shopify endpoint in preview
 - Modify: `azouz-theme/assets/theme.js`
 - Test: `tests/theme-js-runtime.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/theme-js-runtime.test.js`:
 
@@ -1775,7 +1775,7 @@ test('loading theme.js twice does not throw on re-registration', async () => {
 });
 ```
 
-- [ ] **Step 2: Write the loader**
+- [x] **Step 2: Write the loader**
 
 Create `tests/helpers/load-theme-js.js`:
 
@@ -1825,12 +1825,12 @@ export async function loadThemeJs() {
 }
 ```
 
-- [ ] **Step 3: Run to verify it fails**
+- [x] **Step 3: Run to verify it fails**
 
 Run: `node --test tests/theme-js-runtime.test.js`
 Expected: FAIL — `AzouzTheme` is `undefined`; the other three pass.
 
-- [ ] **Step 4: Add the namespace to `azouz-theme/assets/theme.js`**
+- [x] **Step 4: Add the namespace to `azouz-theme/assets/theme.js`**
 
 Insert immediately after the file's opening comment block, before `const prefersReducedMotion`:
 
@@ -1846,17 +1846,17 @@ Insert immediately after the file's opening comment block, before `const prefers
 window.AzouzTheme = window.AzouzTheme || {};
 ```
 
-- [ ] **Step 5: Run to verify it passes**
+- [x] **Step 5: Run to verify it passes**
 
 Run: `node --test tests/theme-js-runtime.test.js`
 Expected: PASS — 4 tests.
 
-- [ ] **Step 6: Run the full suite**
+- [x] **Step 6: Run the full suite**
 
 Run: `npm test`
 Expected: PASS — 338 tests, 1 skipped.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add azouz-theme/assets/theme.js tests/helpers/load-theme-js.js tests/theme-js-runtime.test.js
@@ -1874,7 +1874,7 @@ git commit -m "test: load the real theme.js in a sandbox for unit tests"
 - Modify: `azouz-theme/assets/commerce.css`
 - Test: `tests/snippet-price.test.js`
 
-- [ ] **Step 1: Write the snippet render helper**
+- [x] **Step 1: Write the snippet render helper**
 
 Create `tests/helpers/render-snippet.js`:
 
@@ -1901,7 +1901,7 @@ export async function renderSnippet(name, args = {}, extraScope = {}) {
 }
 ```
 
-- [ ] **Step 2: Write the failing test**
+- [x] **Step 2: Write the failing test**
 
 Create `tests/snippet-price.test.js`:
 
@@ -1950,12 +1950,12 @@ test('a zero price still renders rather than collapsing to nothing', async () =>
 });
 ```
 
-- [ ] **Step 3: Run to verify it fails**
+- [x] **Step 3: Run to verify it fails**
 
 Run: `node --test tests/snippet-price.test.js`
 Expected: FAIL — the snippet does not exist, so `{% render %}` throws.
 
-- [ ] **Step 4: Add the locale keys**
+- [x] **Step 4: Add the locale keys**
 
 In `azouz-theme/locales/en.default.json`, inside `products.product`, add:
 
@@ -1966,7 +1966,7 @@ In `azouz-theme/locales/en.default.json`, inside `products.product`, add:
 
 `products.product.price` and `products.product.from_price` already exist from Plan A.
 
-- [ ] **Step 5: Create `azouz-theme/snippets/price.liquid`**
+- [x] **Step 5: Create `azouz-theme/snippets/price.liquid`**
 
 ```liquid
 {%- comment -%}
@@ -2012,7 +2012,7 @@ In `azouz-theme/locales/en.default.json`, inside `products.product`, add:
 </span>
 ```
 
-- [ ] **Step 6: Append to `azouz-theme/assets/commerce.css`**
+- [x] **Step 6: Append to `azouz-theme/assets/commerce.css`**
 
 ```css
 /* ---------- Price ---------- */
@@ -2040,12 +2040,12 @@ In `azouz-theme/locales/en.default.json`, inside `products.product`, add:
 }
 ```
 
-- [ ] **Step 7: Run to verify it passes**
+- [x] **Step 7: Run to verify it passes**
 
 Run: `node --test tests/snippet-price.test.js`
 Expected: PASS — 7 tests.
 
-- [ ] **Step 8: Run the full suite and commit**
+- [x] **Step 8: Run the full suite and commit**
 
 Run: `npm test`
 Expected: PASS — 345 tests, 1 skipped.
@@ -2066,7 +2066,7 @@ The dot meter reads `custom.roast_level`. If the client has not created that met
 - Modify: `azouz-theme/locales/en.default.json`
 - Test: `tests/snippet-roast-meter.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/snippet-roast-meter.test.js`:
 
@@ -2109,12 +2109,12 @@ test('the accessible label states both the level and the maximum', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/snippet-roast-meter.test.js`
 Expected: FAIL — the snippet does not exist.
 
-- [ ] **Step 3: Add the locale key**
+- [x] **Step 3: Add the locale key**
 
 In `azouz-theme/locales/en.default.json`, inside `products.product`, add:
 
@@ -2122,7 +2122,7 @@ In `azouz-theme/locales/en.default.json`, inside `products.product`, add:
       "roast_level_of": "Roast level {{ level }} of {{ total }}",
 ```
 
-- [ ] **Step 4: Create `azouz-theme/snippets/roast-meter.liquid`**
+- [x] **Step 4: Create `azouz-theme/snippets/roast-meter.liquid`**
 
 ```liquid
 {%- comment -%}
@@ -2150,12 +2150,12 @@ In `azouz-theme/locales/en.default.json`, inside `products.product`, add:
 {%- endif -%}
 ```
 
-- [ ] **Step 5: Run to verify it passes**
+- [x] **Step 5: Run to verify it passes**
 
 Run: `node --test tests/snippet-roast-meter.test.js`
 Expected: PASS — 6 tests.
 
-- [ ] **Step 6: Run the full suite and commit**
+- [x] **Step 6: Run the full suite and commit**
 
 Run: `npm test`
 Expected: PASS — 351 tests, 1 skipped.
@@ -2176,7 +2176,7 @@ The signature element of the site: the packaging label block, reused as a produc
 - Modify: `azouz-theme/assets/commerce.css`
 - Test: `tests/snippet-product-card.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/snippet-product-card.test.js`:
 
@@ -2247,12 +2247,12 @@ test('a sold-out product is marked as such', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/snippet-product-card.test.js`
 Expected: FAIL — the snippet does not exist.
 
-- [ ] **Step 3: Create `azouz-theme/snippets/product-card.liquid`**
+- [x] **Step 3: Create `azouz-theme/snippets/product-card.liquid`**
 
 ```liquid
 {%- comment -%}
@@ -2316,7 +2316,7 @@ Expected: FAIL — the snippet does not exist.
 </article>
 ```
 
-- [ ] **Step 4: Append to `azouz-theme/assets/commerce.css`**
+- [x] **Step 4: Append to `azouz-theme/assets/commerce.css`**
 
 ```css
 /* ---------- Product card ----------
@@ -2378,12 +2378,12 @@ Expected: FAIL — the snippet does not exist.
 }
 ```
 
-- [ ] **Step 5: Run to verify it passes**
+- [x] **Step 5: Run to verify it passes**
 
 Run: `node --test tests/snippet-product-card.test.js`
 Expected: PASS — 10 tests.
 
-- [ ] **Step 6: Run the full suite and commit**
+- [x] **Step 6: Run the full suite and commit**
 
 Run: `npm test`
 Expected: PASS — 361 tests, 1 skipped.
@@ -2402,7 +2402,7 @@ git commit -m "feat: add product card snippet"
 - Modify: `azouz-theme/assets/theme.js`, `azouz-theme/assets/commerce.css`, `azouz-theme/locales/en.default.json`
 - Test: `tests/snippet-quantity-input.test.js`, `tests/theme-js-quantity.test.js`
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 Create `tests/snippet-quantity-input.test.js`:
 
@@ -2491,12 +2491,12 @@ test('quantity-input is registered', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify they fail**
+- [x] **Step 2: Run to verify they fail**
 
 Run: `node --test tests/snippet-quantity-input.test.js tests/theme-js-quantity.test.js`
 Expected: FAIL — no snippet, `AzouzTheme.clampQuantity is not a function`.
 
-- [ ] **Step 3: Add the locale keys**
+- [x] **Step 3: Add the locale keys**
 
 In `azouz-theme/locales/en.default.json`, inside `general.accessibility`, add:
 
@@ -2505,7 +2505,7 @@ In `azouz-theme/locales/en.default.json`, inside `general.accessibility`, add:
       "increase_quantity": "Increase quantity",
 ```
 
-- [ ] **Step 4: Create `azouz-theme/snippets/quantity-input.liquid`**
+- [x] **Step 4: Create `azouz-theme/snippets/quantity-input.liquid`**
 
 ```liquid
 {%- comment -%}
@@ -2542,7 +2542,7 @@ In `azouz-theme/locales/en.default.json`, inside `general.accessibility`, add:
 </quantity-input>
 ```
 
-- [ ] **Step 5: Add the logic and the component to `azouz-theme/assets/theme.js`**
+- [x] **Step 5: Add the logic and the component to `azouz-theme/assets/theme.js`**
 
 Append:
 
@@ -2587,7 +2587,7 @@ if (!customElements.get('quantity-input')) {
 }
 ```
 
-- [ ] **Step 6: Append to `azouz-theme/assets/commerce.css`**
+- [x] **Step 6: Append to `azouz-theme/assets/commerce.css`**
 
 ```css
 /* ---------- Quantity ---------- */
@@ -2644,12 +2644,12 @@ if (!customElements.get('quantity-input')) {
 }
 ```
 
-- [ ] **Step 7: Run to verify they pass**
+- [x] **Step 7: Run to verify they pass**
 
 Run: `node --test tests/snippet-quantity-input.test.js tests/theme-js-quantity.test.js`
 Expected: PASS — 5 + 7 = 12 tests.
 
-- [ ] **Step 8: Run the full suite and commit**
+- [x] **Step 8: Run the full suite and commit**
 
 Run: `npm test`
 Expected: PASS — 373 tests, 1 skipped.
@@ -2668,7 +2668,7 @@ git commit -m "feat: add quantity input snippet and stepper component"
 - Modify: `azouz-theme/assets/commerce.css`, `azouz-theme/locales/en.default.json`
 - Test: `tests/snippet-pagination.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/snippet-pagination.test.js`:
 
@@ -2731,12 +2731,12 @@ test('is a navigation landmark with an accessible name', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/snippet-pagination.test.js`
 Expected: FAIL — the snippet does not exist.
 
-- [ ] **Step 3: Add the locale keys**
+- [x] **Step 3: Add the locale keys**
 
 In `azouz-theme/locales/en.default.json`, inside `general`, add a new group after `meta`:
 
@@ -2749,7 +2749,7 @@ In `azouz-theme/locales/en.default.json`, inside `general`, add a new group afte
     },
 ```
 
-- [ ] **Step 4: Create `azouz-theme/snippets/pagination.liquid`**
+- [x] **Step 4: Create `azouz-theme/snippets/pagination.liquid`**
 
 ```liquid
 {%- comment -%}
@@ -2794,7 +2794,7 @@ In `azouz-theme/locales/en.default.json`, inside `general`, add a new group afte
 {%- endif -%}
 ```
 
-- [ ] **Step 5: Append to `azouz-theme/assets/commerce.css`**
+- [x] **Step 5: Append to `azouz-theme/assets/commerce.css`**
 
 ```css
 /* ---------- Pagination ---------- */
@@ -2841,12 +2841,12 @@ In `azouz-theme/locales/en.default.json`, inside `general`, add a new group afte
 }
 ```
 
-- [ ] **Step 6: Run to verify it passes**
+- [x] **Step 6: Run to verify it passes**
 
 Run: `node --test tests/snippet-pagination.test.js`
 Expected: PASS — 7 tests.
 
-- [ ] **Step 7: Run the full suite and commit**
+- [x] **Step 7: Run the full suite and commit**
 
 Run: `npm test`
 Expected: PASS — 380 tests, 1 skipped.
@@ -2867,7 +2867,7 @@ Two selection mechanisms live side by side: option `<select>`s that JavaScript r
 - Modify: `azouz-theme/assets/commerce.css`, `azouz-theme/locales/en.default.json`
 - Test: `tests/snippet-variant-picker.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/snippet-variant-picker.test.js`:
 
@@ -2948,12 +2948,12 @@ test('no user-visible english is hard-coded', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/snippet-variant-picker.test.js`
 Expected: FAIL — the snippet does not exist.
 
-- [ ] **Step 3: Add the locale keys**
+- [x] **Step 3: Add the locale keys**
 
 In `azouz-theme/locales/en.default.json`, inside `products.product`, add:
 
@@ -2962,7 +2962,7 @@ In `azouz-theme/locales/en.default.json`, inside `products.product`, add:
       "variant_unavailable": "That combination is not available",
 ```
 
-- [ ] **Step 4: Create `azouz-theme/snippets/variant-picker.liquid`**
+- [x] **Step 4: Create `azouz-theme/snippets/variant-picker.liquid`**
 
 ```liquid
 {%- comment -%}
@@ -3036,7 +3036,7 @@ In `azouz-theme/locales/en.default.json`, inside `products.product`, add:
 </variant-picker>
 ```
 
-- [ ] **Step 5: Append to `azouz-theme/assets/commerce.css`**
+- [x] **Step 5: Append to `azouz-theme/assets/commerce.css`**
 
 ```css
 /* ---------- Variant picker ----------
@@ -3069,12 +3069,12 @@ In `azouz-theme/locales/en.default.json`, inside `products.product`, add:
 }
 ```
 
-- [ ] **Step 6: Run to verify it passes**
+- [x] **Step 6: Run to verify it passes**
 
 Run: `node --test tests/snippet-variant-picker.test.js`
 Expected: PASS — 9 tests.
 
-- [ ] **Step 7: Run the full suite and commit**
+- [x] **Step 7: Run the full suite and commit**
 
 Run: `npm test`
 Expected: PASS — 389 tests, 1 skipped.
@@ -3092,7 +3092,7 @@ git commit -m "feat: add variant picker snippet with a noscript fallback"
 - Modify: `azouz-theme/assets/theme.js`
 - Test: `tests/theme-js-variant.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/theme-js-variant.test.js`:
 
@@ -3155,12 +3155,12 @@ test('variant-picker is registered', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/theme-js-variant.test.js`
 Expected: FAIL — `AzouzTheme.findMatchingVariant is not a function`.
 
-- [ ] **Step 3: Append to `azouz-theme/assets/theme.js`**
+- [x] **Step 3: Append to `azouz-theme/assets/theme.js`**
 
 ```js
 /**
@@ -3253,14 +3253,14 @@ if (!customElements.get('variant-picker')) {
 }
 ```
 
-- [ ] **Step 4: Run to verify it passes**
+- [x] **Step 4: Run to verify it passes**
 
 Run: `node --test tests/theme-js-variant.test.js`
 Expected: PASS — 9 tests.
 
 Note the sandbox has no `document`, so `connectedCallback` is never invoked in tests — only the pure matcher is exercised. The element's DOM behaviour is verified in the browser at Task 24 Step 4.
 
-- [ ] **Step 5: Run the full suite and commit**
+- [x] **Step 5: Run the full suite and commit**
 
 Run: `npm test`
 Expected: PASS — 398 tests, 1 skipped.
@@ -3279,7 +3279,7 @@ git commit -m "feat: add variant picker component"
 - Modify: `azouz-theme/templates/product.json`, `azouz-theme/assets/commerce.css`, `azouz-theme/locales/en.default.json`
 - Test: `tests/section-main-product.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/section-main-product.test.js`:
 
@@ -3375,12 +3375,12 @@ test('has no presets — it only makes sense on the product template', async () 
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/section-main-product.test.js`
 Expected: FAIL — the section does not exist.
 
-- [ ] **Step 3: Add the locale keys**
+- [x] **Step 3: Add the locale keys**
 
 In `azouz-theme/locales/en.default.json`, inside `products.product`, add:
 
@@ -3390,7 +3390,7 @@ In `azouz-theme/locales/en.default.json`, inside `products.product`, add:
       "brewing": "Brewing",
 ```
 
-- [ ] **Step 4: Create `azouz-theme/sections/main-product.liquid`**
+- [x] **Step 4: Create `azouz-theme/sections/main-product.liquid`**
 
 ```liquid
 {%- liquid
@@ -3515,7 +3515,7 @@ In `azouz-theme/locales/en.default.json`, inside `products.product`, add:
 
 Note: `<product-form>` wraps only the button, not the `<form>`, because the `{% form %}` tag owns the form element. Task 16's component walks up to `this.closest('form')`.
 
-- [ ] **Step 5: Fill `azouz-theme/templates/product.json`**
+- [x] **Step 5: Fill `azouz-theme/templates/product.json`**
 
 ```json
 {
@@ -3526,7 +3526,7 @@ Note: `<product-form>` wraps only the button, not the `<form>`, because the `{% 
 }
 ```
 
-- [ ] **Step 6: Append to `azouz-theme/assets/commerce.css`**
+- [x] **Step 6: Append to `azouz-theme/assets/commerce.css`**
 
 ```css
 /* ---------- Product page ---------- */
@@ -3626,12 +3626,12 @@ Note: `<product-form>` wraps only the button, not the `<form>`, because the `{% 
 }
 ```
 
-- [ ] **Step 7: Run to verify it passes**
+- [x] **Step 7: Run to verify it passes**
 
 Run: `node --test tests/section-main-product.test.js`
 Expected: PASS — 12 tests.
 
-- [ ] **Step 8: Run the full suite and commit**
+- [x] **Step 8: Run the full suite and commit**
 
 Run: `npm test`
 Expected: PASS — 410 tests, 1 skipped.
@@ -3641,7 +3641,7 @@ git add azouz-theme/sections/main-product.liquid azouz-theme/templates/product.j
 git commit -m "feat: add product page"
 ```
 
-- [ ] **Step 9: Close the JSON-LD gap the spec already declared**
+- [x] **Step 9: Close the JSON-LD gap the spec already declared**
 
 Plan A emits Organization everywhere and Product on `request.page_type == 'product'`. The spec also requires **BreadcrumbList on product pages**, and the collection breadcrumb currently hard-codes the English word `Home`.
 
@@ -3733,7 +3733,7 @@ git commit -m "feat: add product breadcrumbs to json-ld"
 - Modify: `azouz-theme/assets/theme.js`
 - Test: `tests/theme-js-product-form.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/theme-js-product-form.test.js`:
 
@@ -3774,12 +3774,12 @@ test('the component announces a cart update rather than reaching into the drawer
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/theme-js-product-form.test.js`
 Expected: FAIL — `product-form` is not registered.
 
-- [ ] **Step 3: Append to `azouz-theme/assets/theme.js`**
+- [x] **Step 3: Append to `azouz-theme/assets/theme.js`**
 
 ```js
 /**
@@ -3826,12 +3826,12 @@ if (!customElements.get('product-form')) {
 }
 ```
 
-- [ ] **Step 4: Run to verify it passes**
+- [x] **Step 4: Run to verify it passes**
 
 Run: `node --test tests/theme-js-product-form.test.js`
 Expected: PASS — 5 tests.
 
-- [ ] **Step 5: Run the full suite and commit**
+- [x] **Step 5: Run the full suite and commit**
 
 Run: `npm test`
 Expected: PASS — 415 tests, 1 skipped.
@@ -3852,7 +3852,7 @@ One line list, rendered by both the cart page and the drawer.
 - Modify: `azouz-theme/assets/commerce.css`, `azouz-theme/locales/en.default.json`
 - Test: `tests/snippet-cart-line-items.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/snippet-cart-line-items.test.js`:
 
@@ -3916,12 +3916,12 @@ test('line images are lazy and have alt text', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/snippet-cart-line-items.test.js`
 Expected: FAIL — the snippet does not exist.
 
-- [ ] **Step 3: Add the locale keys**
+- [x] **Step 3: Add the locale keys**
 
 In `azouz-theme/locales/en.default.json`, inside `cart.general`, add:
 
@@ -3935,7 +3935,7 @@ In `azouz-theme/locales/en.default.json`, inside `cart.general`, add:
 
 `cart.general.remove` already exists from Plan A.
 
-- [ ] **Step 4: Create `azouz-theme/snippets/cart-line-items.liquid`**
+- [x] **Step 4: Create `azouz-theme/snippets/cart-line-items.liquid`**
 
 ```liquid
 {%- comment -%}
@@ -3997,7 +3997,7 @@ In `azouz-theme/locales/en.default.json`, inside `cart.general`, add:
 {%- endif -%}
 ```
 
-- [ ] **Step 5: Append to `azouz-theme/assets/commerce.css`**
+- [x] **Step 5: Append to `azouz-theme/assets/commerce.css`**
 
 ```css
 /* ---------- Cart lines ---------- */
@@ -4079,12 +4079,12 @@ In `azouz-theme/locales/en.default.json`, inside `cart.general`, add:
 }
 ```
 
-- [ ] **Step 6: Run to verify it passes**
+- [x] **Step 6: Run to verify it passes**
 
 Run: `node --test tests/snippet-cart-line-items.test.js`
 Expected: PASS — 8 tests.
 
-- [ ] **Step 7: Run the full suite and commit**
+- [x] **Step 7: Run the full suite and commit**
 
 Run: `npm test`
 Expected: PASS — 423 tests, 1 skipped.
@@ -4103,7 +4103,7 @@ git commit -m "feat: add cart line items snippet"
 - Modify: `azouz-theme/templates/cart.json`, `azouz-theme/assets/commerce.css`
 - Test: `tests/section-main-cart.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/section-main-cart.test.js`:
 
@@ -4171,12 +4171,12 @@ test('has no presets', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/section-main-cart.test.js`
 Expected: FAIL — the section does not exist.
 
-- [ ] **Step 3: Create `azouz-theme/sections/main-cart.liquid`**
+- [x] **Step 3: Create `azouz-theme/sections/main-cart.liquid`**
 
 ```liquid
 <section class="section main-cart"{{ section.shopify_attributes }}>
@@ -4225,7 +4225,7 @@ Expected: FAIL — the section does not exist.
 {% endschema %}
 ```
 
-- [ ] **Step 4: Fill `azouz-theme/templates/cart.json`**
+- [x] **Step 4: Fill `azouz-theme/templates/cart.json`**
 
 ```json
 {
@@ -4236,7 +4236,7 @@ Expected: FAIL — the section does not exist.
 }
 ```
 
-- [ ] **Step 5: Append to `azouz-theme/assets/commerce.css`**
+- [x] **Step 5: Append to `azouz-theme/assets/commerce.css`**
 
 ```css
 /* ---------- Cart page ---------- */
@@ -4283,12 +4283,12 @@ Expected: FAIL — the section does not exist.
 }
 ```
 
-- [ ] **Step 6: Run to verify it passes**
+- [x] **Step 6: Run to verify it passes**
 
 Run: `node --test tests/section-main-cart.test.js`
 Expected: PASS — 8 tests.
 
-- [ ] **Step 7: Run the full suite and commit**
+- [x] **Step 7: Run the full suite and commit**
 
 Run: `npm test`
 Expected: PASS — 431 tests, 1 skipped.
@@ -4310,7 +4310,7 @@ The drawer is a **section**, not a snippet, because only a section can be re-ren
 - Test: `tests/section-cart-drawer.test.js`, `tests/theme-js-cart-drawer.test.js`
 - Modify: `tests/preview-server.test.js` (remove the Task 5 skip)
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 Create `tests/section-cart-drawer.test.js`:
 
@@ -4419,12 +4419,12 @@ test('it uses showModal so the platform provides focus trapping', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify they fail**
+- [x] **Step 2: Run to verify they fail**
 
 Run: `node --test tests/section-cart-drawer.test.js tests/theme-js-cart-drawer.test.js`
 Expected: FAIL — neither the section nor the component exists.
 
-- [ ] **Step 3: Add the locale keys**
+- [x] **Step 3: Add the locale keys**
 
 In `azouz-theme/locales/en.default.json`, inside `general.accessibility`, add:
 
@@ -4438,7 +4438,7 @@ and inside `cart.general`, add:
       "view_cart": "View cart",
 ```
 
-- [ ] **Step 4: Create `azouz-theme/sections/cart-drawer.liquid`**
+- [x] **Step 4: Create `azouz-theme/sections/cart-drawer.liquid`**
 
 ```liquid
 {%- comment -%}
@@ -4494,7 +4494,7 @@ and inside `cart.general`, add:
 {% endschema %}
 ```
 
-- [ ] **Step 5: Render it from the layout**
+- [x] **Step 5: Render it from the layout**
 
 In `azouz-theme/layout/theme.liquid`, replace:
 
@@ -4509,7 +4509,7 @@ with:
     {% section 'cart-drawer' %}
 ```
 
-- [ ] **Step 6: Let the header open the drawer and expose its count for refresh**
+- [x] **Step 6: Let the header open the drawer and expose its count for refresh**
 
 In `azouz-theme/sections/header.liquid`, replace the cart link block:
 
@@ -4537,7 +4537,7 @@ with:
       </a>
 ```
 
-- [ ] **Step 7: Append the component to `azouz-theme/assets/theme.js`**
+- [x] **Step 7: Append the component to `azouz-theme/assets/theme.js`**
 
 ```js
 /**
@@ -4608,7 +4608,7 @@ if (!customElements.get('cart-drawer')) {
 }
 ```
 
-- [ ] **Step 8: Append to `azouz-theme/assets/commerce.css`**
+- [x] **Step 8: Append to `azouz-theme/assets/commerce.css`**
 
 ```css
 /* ---------- Cart drawer ---------- */
@@ -4692,7 +4692,7 @@ The backdrop uses `rgb(48 48 48 / 45%)` rather than a token because `::backdrop`
 
 In `tests/helpers/css-guards.js`, the colour check reads hex literals only, and `rgb(48 48 48 / 45%)` is not hex, so no change is needed. Confirm by running the guard.
 
-- [ ] **Step 9: Remove the Task 5 skip**
+- [x] **Step 9: Remove the Task 5 skip**
 
 In `tests/preview-server.test.js`, change:
 
@@ -4706,12 +4706,12 @@ back to:
 test('the section rendering endpoint returns rendered html per section', async () => {
 ```
 
-- [ ] **Step 10: Run to verify everything passes**
+- [x] **Step 10: Run to verify everything passes**
 
 Run: `node --test tests/section-cart-drawer.test.js tests/theme-js-cart-drawer.test.js tests/preview-server.test.js tests/commerce-css.test.js tests/section-header.test.js`
 Expected: PASS — 8 + 6 + 9 + 5 + 12 = 40 tests, none skipped.
 
-- [ ] **Step 11: Run the full suite and commit**
+- [x] **Step 11: Run the full suite and commit**
 
 Run: `npm test`
 Expected: PASS — 445 tests, **0 skipped**.
@@ -4730,7 +4730,7 @@ git commit -m "feat: add cart drawer with section rendering refresh"
 - Modify: `azouz-theme/templates/collection.json`, `azouz-theme/templates/index.json`, `azouz-theme/assets/commerce.css`, `azouz-theme/locales/en.default.json`
 - Test: `tests/section-main-collection.test.js`, `tests/section-featured-collection.test.js`
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 Create `tests/section-main-collection.test.js`:
 
@@ -4836,12 +4836,12 @@ test('declares a preset so the client can add it in the theme editor', async () 
 });
 ```
 
-- [ ] **Step 2: Run to verify they fail**
+- [x] **Step 2: Run to verify they fail**
 
 Run: `node --test tests/section-main-collection.test.js tests/section-featured-collection.test.js`
 Expected: FAIL — neither section exists.
 
-- [ ] **Step 3: Add the locale keys**
+- [x] **Step 3: Add the locale keys**
 
 In `azouz-theme/locales/en.default.json`, inside `collections.general`, add:
 
@@ -4851,7 +4851,7 @@ In `azouz-theme/locales/en.default.json`, inside `collections.general`, add:
 
 `collections.general.no_products` and `product_count` already exist from Plan A.
 
-- [ ] **Step 4: Create `azouz-theme/sections/main-collection.liquid`**
+- [x] **Step 4: Create `azouz-theme/sections/main-collection.liquid`**
 
 ```liquid
 <section class="section main-collection"{{ section.shopify_attributes }}>
@@ -4897,7 +4897,7 @@ In `azouz-theme/locales/en.default.json`, inside `collections.general`, add:
 {% endschema %}
 ```
 
-- [ ] **Step 5: Create `azouz-theme/sections/featured-collection.liquid`**
+- [x] **Step 5: Create `azouz-theme/sections/featured-collection.liquid`**
 
 ```liquid
 {%- liquid
@@ -4981,7 +4981,7 @@ In `azouz-theme/locales/en.default.json`, inside `collections.general`, add:
 {% endschema %}
 ```
 
-- [ ] **Step 6: Fill `azouz-theme/templates/collection.json`**
+- [x] **Step 6: Fill `azouz-theme/templates/collection.json`**
 
 ```json
 {
@@ -4992,7 +4992,7 @@ In `azouz-theme/locales/en.default.json`, inside `collections.general`, add:
 }
 ```
 
-- [ ] **Step 7: Add the featured collection to the homepage**
+- [x] **Step 7: Add the featured collection to the homepage**
 
 In `azouz-theme/templates/index.json`, add this entry to `sections`, between `audience` and `closing`:
 
@@ -5017,7 +5017,7 @@ and change `order` to:
   "order": ["hero", "services", "process", "audience", "featured", "closing"]
 ```
 
-- [ ] **Step 8: Append to `azouz-theme/assets/commerce.css`**
+- [x] **Step 8: Append to `azouz-theme/assets/commerce.css`**
 
 ```css
 /* ---------- Collection ---------- */
@@ -5063,12 +5063,12 @@ and change `order` to:
 }
 ```
 
-- [ ] **Step 9: Run to verify they pass**
+- [x] **Step 9: Run to verify they pass**
 
 Run: `node --test tests/section-main-collection.test.js tests/section-featured-collection.test.js tests/templates.test.js`
 Expected: PASS — 6 + 7 + 12 = 25 tests. `templates.test.js` must still report exactly one `<h1>` on the homepage; if it does not, `featured-collection` is emitting one.
 
-- [ ] **Step 10: Run the full suite and commit**
+- [x] **Step 10: Run the full suite and commit**
 
 Run: `npm test`
 Expected: PASS — 458 tests.
@@ -5087,7 +5087,7 @@ git commit -m "feat: add collection page and featured collection section"
 - Modify: `azouz-theme/templates/search.json`, `azouz-theme/assets/commerce.css`, `azouz-theme/locales/en.default.json`
 - Test: `tests/section-main-search.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/section-main-search.test.js`:
 
@@ -5154,12 +5154,12 @@ test('has no presets', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/section-main-search.test.js`
 Expected: FAIL — the section does not exist.
 
-- [ ] **Step 3: Add the locale key**
+- [x] **Step 3: Add the locale key**
 
 In `azouz-theme/locales/en.default.json`, inside `general.search`, add:
 
@@ -5169,7 +5169,7 @@ In `azouz-theme/locales/en.default.json`, inside `general.search`, add:
 
 `general.search.title`, `placeholder`, `submit` and `no_results` already exist from Plan A.
 
-- [ ] **Step 4: Create `azouz-theme/sections/main-search.liquid`**
+- [x] **Step 4: Create `azouz-theme/sections/main-search.liquid`**
 
 ```liquid
 {%- comment -%}
@@ -5229,7 +5229,7 @@ In `azouz-theme/locales/en.default.json`, inside `general.search`, add:
 {% endschema %}
 ```
 
-- [ ] **Step 5: Fill `azouz-theme/templates/search.json`**
+- [x] **Step 5: Fill `azouz-theme/templates/search.json`**
 
 ```json
 {
@@ -5240,7 +5240,7 @@ In `azouz-theme/locales/en.default.json`, inside `general.search`, add:
 }
 ```
 
-- [ ] **Step 6: Append to `azouz-theme/assets/commerce.css`**
+- [x] **Step 6: Append to `azouz-theme/assets/commerce.css`**
 
 ```css
 /* ---------- Search ---------- */
@@ -5277,12 +5277,12 @@ In `azouz-theme/locales/en.default.json`, inside `general.search`, add:
 }
 ```
 
-- [ ] **Step 7: Run to verify it passes**
+- [x] **Step 7: Run to verify it passes**
 
 Run: `node --test tests/section-main-search.test.js`
 Expected: PASS — 9 tests.
 
-- [ ] **Step 8: Run the full suite and commit**
+- [x] **Step 8: Run the full suite and commit**
 
 Run: `npm test`
 Expected: PASS — 467 tests.
@@ -5301,7 +5301,7 @@ git commit -m "feat: add search page"
 - Modify: `azouz-theme/templates/404.json`, `list-collections.json`, `password.json`, `azouz-theme/assets/commerce.css`, `azouz-theme/locales/en.default.json`
 - Test: `tests/section-main-404.test.js`, `tests/section-main-list-collections.test.js`, `tests/section-main-password.test.js`
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 Create `tests/section-main-404.test.js`:
 
@@ -5394,12 +5394,12 @@ test('the password layout exists and is a complete document', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify they fail**
+- [x] **Step 2: Run to verify they fail**
 
 Run: `node --test tests/section-main-404.test.js tests/section-main-list-collections.test.js tests/section-main-password.test.js`
 Expected: FAIL — none of the three sections exists.
 
-- [ ] **Step 3: Add the locale keys**
+- [x] **Step 3: Add the locale keys**
 
 In `azouz-theme/locales/en.default.json`, inside `general`, add a new group after `404`:
 
@@ -5419,7 +5419,7 @@ and inside `collections.general`, add:
       "empty": "No collections yet.",
 ```
 
-- [ ] **Step 4: Create `azouz-theme/sections/main-404.liquid`**
+- [x] **Step 4: Create `azouz-theme/sections/main-404.liquid`**
 
 ```liquid
 <section class="section main-404"{{ section.shopify_attributes }}>
@@ -5445,7 +5445,7 @@ and inside `collections.general`, add:
 {% endschema %}
 ```
 
-- [ ] **Step 5: Create `azouz-theme/sections/main-list-collections.liquid`**
+- [x] **Step 5: Create `azouz-theme/sections/main-list-collections.liquid`**
 
 ```liquid
 <section class="section main-list-collections"{{ section.shopify_attributes }}>
@@ -5489,7 +5489,7 @@ and inside `collections.general`, add:
 {% endschema %}
 ```
 
-- [ ] **Step 6: Create `azouz-theme/sections/main-password.liquid`**
+- [x] **Step 6: Create `azouz-theme/sections/main-password.liquid`**
 
 ```liquid
 <section class="section main-password"{{ section.shopify_attributes }}>
@@ -5525,7 +5525,7 @@ and inside `collections.general`, add:
 
 `storefront_password` is not in the shim's action map, so it falls through to `/storefront_password`. That is fine — the preview has no password gate; on Shopify the tag resolves correctly.
 
-- [ ] **Step 7: Create `azouz-theme/layout/password.liquid`**
+- [x] **Step 7: Create `azouz-theme/layout/password.liquid`**
 
 ```liquid
 <!doctype html>
@@ -5562,7 +5562,7 @@ and inside `collections.general`, add:
 </html>
 ```
 
-- [ ] **Step 8: Fill the three templates**
+- [x] **Step 8: Fill the three templates**
 
 `azouz-theme/templates/404.json`:
 
@@ -5597,7 +5597,7 @@ and inside `collections.general`, add:
 }
 ```
 
-- [ ] **Step 9: Append to `azouz-theme/assets/commerce.css`**
+- [x] **Step 9: Append to `azouz-theme/assets/commerce.css`**
 
 ```css
 /* ---------- 404 ---------- */
@@ -5681,12 +5681,12 @@ and inside `collections.general`, add:
 }
 ```
 
-- [ ] **Step 10: Run to verify they pass**
+- [x] **Step 10: Run to verify they pass**
 
 Run: `node --test tests/section-main-404.test.js tests/section-main-list-collections.test.js tests/section-main-password.test.js`
 Expected: PASS — 3 + 4 + 3 = 10 tests.
 
-- [ ] **Step 11: Run the full suite and the validator, then commit**
+- [x] **Step 11: Run the full suite and the validator, then commit**
 
 Run: `npm test`
 Expected: PASS — 477 tests.
@@ -5710,7 +5710,7 @@ Seven sections and seven templates. They are formulaic on purpose — every one 
 - Modify: the seven `azouz-theme/templates/customers/*.json`, `azouz-theme/assets/commerce.css`, `azouz-theme/locales/en.default.json`
 - Test: `tests/section-customer-accounts.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/section-customer-accounts.test.js`:
 
@@ -5825,12 +5825,12 @@ test('account activation posts to the activate endpoint', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/section-customer-accounts.test.js`
 Expected: FAIL — none of the seven sections exists.
 
-- [ ] **Step 3: Add the locale keys**
+- [x] **Step 3: Add the locale keys**
 
 In `azouz-theme/locales/en.default.json`, add a new top-level `customer` group after `contact`:
 
@@ -5904,7 +5904,7 @@ In `azouz-theme/locales/en.default.json`, add a new top-level `customer` group a
   },
 ```
 
-- [ ] **Step 4: Create the seven sections**
+- [x] **Step 4: Create the seven sections**
 
 `azouz-theme/sections/main-login.liquid`:
 
@@ -6234,7 +6234,7 @@ In `azouz-theme/locales/en.default.json`, add a new top-level `customer` group a
 {% endschema %}
 ```
 
-- [ ] **Step 5: Fill the seven customer templates**
+- [x] **Step 5: Fill the seven customer templates**
 
 Each file contains one section. In order:
 
@@ -6257,7 +6257,7 @@ Each with this shape, substituting the type:
 }
 ```
 
-- [ ] **Step 6: Append to `azouz-theme/assets/commerce.css`**
+- [x] **Step 6: Append to `azouz-theme/assets/commerce.css`**
 
 ```css
 /* ---------- Customer accounts ---------- */
@@ -6341,12 +6341,12 @@ Each with this shape, substituting the type:
 }
 ```
 
-- [ ] **Step 7: Run to verify it passes**
+- [x] **Step 7: Run to verify it passes**
 
 Run: `node --test tests/section-customer-accounts.test.js`
 Expected: PASS — 14 tests.
 
-- [ ] **Step 8: Run the full suite and the validator, then commit**
+- [x] **Step 8: Run the full suite and the validator, then commit**
 
 Run: `npm test`
 Expected: PASS — 491 tests.
@@ -6365,23 +6365,23 @@ git commit -m "feat: add customer account templates"
 
 No new code. Prove the shop works.
 
-- [ ] **Step 1: Full suite**
+- [x] **Step 1: Full suite**
 
 Run: `npm test`
 Expected: every test green, nothing skipped. Record the total.
 
-- [ ] **Step 2: Theme validator**
+- [x] **Step 2: Theme validator**
 
 Run: `npm run validate`
 Expected: `Theme validation passed.`
 
-- [ ] **Step 3: Shopify's linter**
+- [x] **Step 3: Shopify's linter**
 
 Run: `npm run check`
 
 Expected: **zero error-level findings.** The `AssetPreload` warning carried over from Plan A is acceptable. Report any new error, and any `MissingTemplate` — there should be none, since every section the layout and templates reference now exists.
 
-- [ ] **Step 4: Visual review**
+- [x] **Step 4: Visual review**
 
 Run: `npm run preview`, then open each route and check it against the list.
 
@@ -6402,7 +6402,7 @@ On every route confirm:
 - Pressing Tab first reveals the green "Skip to content" link
 - The console is free of errors and the Network tab shows no 404s
 
-- [ ] **Step 5: The two interactions that define this plan**
+- [x] **Step 5: The two interactions that define this plan**
 
 **Variant picker.** On `/products/wadi-rum-blend`:
 - Change Weight to 1kg — the price updates and the address bar gains `?variant=…`
@@ -6419,7 +6419,7 @@ On every route confirm:
 - With the drawer open, press Tab repeatedly — focus stays inside the dialog
 - Click "View cart" — `/cart` shows the same lines
 
-- [ ] **Step 6: No-JavaScript check**
+- [x] **Step 6: No-JavaScript check**
 
 **Do not skip this step.** It is the one that caught the `.reveal` defect at the end of Plan A, and it is the only check that proves the progressive-enhancement claim in the spec.
 
@@ -6435,7 +6435,7 @@ Disable JavaScript in DevTools, reload, and confirm on `/products/wadi-rum-blend
 
 Also with JavaScript off, on `/cart`: change a quantity, press Update cart, and confirm the line updates.
 
-- [ ] **Step 7: Responsive check**
+- [x] **Step 7: Responsive check**
 
 At 375, 768, 1280 and 1440 on `/collections/all`, `/products/wadi-rum-blend` and `/cart`:
 - No horizontal scrollbar on `<body>`
@@ -6443,7 +6443,7 @@ At 375, 768, 1280 and 1440 on `/collections/all`, `/products/wadi-rum-blend` and
 - The cart drawer is full-width at 375 and a right-hand panel above 768
 - The product page is one column at 375 and two above 896px
 
-- [ ] **Step 8: RTL smoke check**
+- [x] **Step 8: RTL smoke check**
 
 In DevTools set `document.documentElement.dir = 'rtl'` on `/products/wadi-rum-blend` and `/cart`:
 - The layout mirrors: nav, product columns, cart line order and text alignment all flip
@@ -6452,7 +6452,7 @@ In DevTools set `document.documentElement.dir = 'rtl'` on `/products/wadi-rum-bl
 
 Text stays English — only direction is under test. Arabic translation is out of scope.
 
-- [ ] **Step 9: Commit any fixes, then report**
+- [x] **Step 9: Commit any fixes, then report**
 
 Report: total test count, `theme check` error count, and anything from Steps 4–8 that did not hold.
 
@@ -6460,15 +6460,15 @@ Report: total test count, `theme check` error count, and anything from Steps 4�
 
 ## Definition of Done for Plan C
 
-- [ ] `npm test` passes with no failures and **nothing skipped**
-- [ ] `npm run validate` prints `Theme validation passed.`
-- [ ] `npm run check` reports **zero errors**
-- [ ] Every commerce route renders completely in the preview against fixtures
-- [ ] Each page has exactly one `<h1>`, no empty `href`, no `translation missing`, no unresolved section
-- [ ] The variant picker updates price, availability and URL, and disables unavailable combinations
-- [ ] The cart drawer opens on add, refreshes its contents and the header count, traps focus, and closes on Escape and backdrop click
-- [ ] With JavaScript disabled: every page is fully readable, the `<noscript>` variant select is the only variant control shown, add-to-cart posts natively to `/cart`, and quantities can still be updated
-- [ ] Layouts hold at 375 / 768 / 1280 / 1440 with no horizontal overflow
-- [ ] `dir="rtl"` mirrors the layout without breakage
+- [x] `npm test` passes with no failures and **nothing skipped**
+- [x] `npm run validate` prints `Theme validation passed.`
+- [x] `npm run check` reports **zero errors**
+- [x] Every commerce route renders completely in the preview against fixtures
+- [x] Each page has exactly one `<h1>`, no empty `href`, no `translation missing`, no unresolved section
+- [x] The variant picker updates price, availability and URL, and disables unavailable combinations
+- [x] The cart drawer opens on add, refreshes its contents and the header count, traps focus, and closes on Escape and backdrop click
+- [x] With JavaScript disabled: every page is fully readable, the `<noscript>` variant select is the only variant control shown, add-to-cart posts natively to `/cart`, and quantities can still be updated
+- [x] Layouts hold at 375 / 768 / 1280 / 1440 with no horizontal overflow
+- [x] `dir="rtl"` mirrors the layout without breakage
 
 **Next:** Plan D — blog and article templates, `gift_card.liquid`, the client setup guide, `products.csv`, the affiliate-app comparison, and the delivery zip.

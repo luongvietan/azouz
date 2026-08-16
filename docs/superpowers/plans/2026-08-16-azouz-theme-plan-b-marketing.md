@@ -92,7 +92,7 @@ Section styles need somewhere to live. Shopify's `{% stylesheet %}` tag would wo
 - Modify: `tests/base-css.test.js` (rename guards to cover both stylesheets)
 - Test: `tests/sections-css.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/sections-css.test.js`:
 
@@ -162,12 +162,12 @@ test('the layout links sections.css after base.css', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/sections-css.test.js`
 Expected: FAIL — `ENOENT ... assets/sections.css`
 
-- [ ] **Step 3: Create `azouz-theme/assets/sections.css`**
+- [x] **Step 3: Create `azouz-theme/assets/sections.css`**
 
 ```css
 /*
@@ -184,7 +184,7 @@ Expected: FAIL — `ENOENT ... assets/sections.css`
 */
 ```
 
-- [ ] **Step 4: Link it from the layout**
+- [x] **Step 4: Link it from the layout**
 
 In `azouz-theme/layout/theme.liquid`, immediately after the `base.css` line, add:
 
@@ -194,22 +194,22 @@ In `azouz-theme/layout/theme.liquid`, immediately after the `base.css` line, add
 
 The three stylesheet lines must end up in this order: `tokens.css`, `fonts.css`, `base.css`, `sections.css`.
 
-- [ ] **Step 5: Run to verify it passes**
+- [x] **Step 5: Run to verify it passes**
 
 Run: `node --test tests/sections-css.test.js`
 Expected: PASS — 5 tests.
 
-- [ ] **Step 6: Confirm the layout test still passes**
+- [x] **Step 6: Confirm the layout test still passes**
 
 Run: `node --test tests/theme-layout.test.js`
 Expected: PASS — 10 tests. The existing "links the token, font and base stylesheets in that order" test must still be green.
 
-- [ ] **Step 7: Run the full suite**
+- [x] **Step 7: Run the full suite**
 
 Run: `npm test`
 Expected: PASS — 140 tests.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add azouz-theme/assets/sections.css azouz-theme/layout/theme.liquid tests/sections-css.test.js
@@ -226,7 +226,7 @@ Shopify assembles a page by reading a JSON template's `order` array and renderin
 - Create: `preview/template-renderer.js`
 - Test: `tests/template-renderer.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/template-renderer.test.js`:
 
@@ -364,12 +364,12 @@ test('each rendered section is wrapped in a shopify-section element', async () =
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/template-renderer.test.js`
 Expected: FAIL — `Cannot find module '../preview/template-renderer.js'`
 
-- [ ] **Step 3: Create `preview/template-renderer.js`**
+- [x] **Step 3: Create `preview/template-renderer.js`**
 
 ```js
 import { readFile } from 'node:fs/promises';
@@ -460,17 +460,17 @@ export async function renderTemplate(engine, themeDir, templatePath, extraScope 
 }
 ```
 
-- [ ] **Step 4: Run to verify it passes**
+- [x] **Step 4: Run to verify it passes**
 
 Run: `node --test tests/template-renderer.test.js`
 Expected: PASS — 8 tests.
 
-- [ ] **Step 5: Run the full suite**
+- [x] **Step 5: Run the full suite**
 
 Run: `npm test`
 Expected: PASS — 148 tests.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add preview/template-renderer.js tests/template-renderer.test.js
@@ -485,7 +485,7 @@ git commit -m "feat: render OS 2.0 json templates in the preview harness"
 - Modify: `preview/server.js`
 - Test: `tests/preview-routes.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/preview-routes.test.js`:
 
@@ -538,12 +538,12 @@ test('every template a route points at exists in the theme', () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/preview-routes.test.js`
 Expected: FAIL — `ROUTES` and `templateForRoute` are not exported from `preview/server.js`.
 
-- [ ] **Step 3: Rewrite `preview/server.js`**
+- [x] **Step 3: Rewrite `preview/server.js`**
 
 Replace the whole file:
 
@@ -684,7 +684,7 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
 }
 ```
 
-- [ ] **Step 4: Create placeholder templates so the route test can pass**
+- [x] **Step 4: Create placeholder templates so the route test can pass**
 
 The route test asserts every referenced template exists. Create these six files now; later tasks fill them with real sections.
 
@@ -697,12 +697,12 @@ The route test asserts every referenced template exists. Create these six files 
 }
 ```
 
-- [ ] **Step 5: Run to verify it passes**
+- [x] **Step 5: Run to verify it passes**
 
 Run: `node --test tests/preview-routes.test.js`
 Expected: PASS — 5 tests.
 
-- [ ] **Step 6: Run the full suite and the validator**
+- [x] **Step 6: Run the full suite and the validator**
 
 Run: `npm test`
 Expected: PASS — 153 tests.
@@ -710,7 +710,7 @@ Expected: PASS — 153 tests.
 Run: `npm run validate`
 Expected: `Theme validation passed.`
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add preview/server.js azouz-theme/templates tests/preview-routes.test.js
@@ -729,7 +729,7 @@ Most schema setting types hand Liquid a plain string, but four hand it an **obje
 - Modify: `preview/engine.js` (apply the resolver in `renderThemeFile`)
 - Test: `tests/settings-resolver.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/settings-resolver.test.js`:
 
@@ -797,12 +797,12 @@ test('a null schema is tolerated', () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/settings-resolver.test.js`
 Expected: FAIL — `Cannot find module '../preview/settings-resolver.js'`
 
-- [ ] **Step 3: Create `preview/settings-resolver.js`**
+- [x] **Step 3: Create `preview/settings-resolver.js`**
 
 ```js
 /**
@@ -848,7 +848,7 @@ export function resolveSettings(schema, settings, fixtures) {
 }
 ```
 
-- [ ] **Step 4: Apply it in `preview/template-renderer.js`**
+- [x] **Step 4: Apply it in `preview/template-renderer.js`**
 
 Add the import at the top:
 
@@ -879,7 +879,7 @@ In `renderTemplate`, replace the `settings:` line inside the `scope.section` obj
         ),
 ```
 
-- [ ] **Step 5: Apply it in `preview/engine.js`**
+- [x] **Step 5: Apply it in `preview/engine.js`**
 
 In `renderThemeFile`, replace the `settings:` line inside `scope.section` with:
 
@@ -897,17 +897,17 @@ and add the import at the top:
 import { resolveSettings } from './settings-resolver.js';
 ```
 
-- [ ] **Step 6: Run to verify it passes**
+- [x] **Step 6: Run to verify it passes**
 
 Run: `node --test tests/settings-resolver.test.js`
 Expected: PASS — 9 tests.
 
-- [ ] **Step 7: Run the full suite**
+- [x] **Step 7: Run the full suite**
 
 Run: `npm test`
 Expected: PASS — 162 tests. The template-renderer and engine tests must still be green — if any regressed, the resolver was wired in wrongly.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add preview/settings-resolver.js preview/template-renderer.js preview/engine.js tests/settings-resolver.test.js
@@ -925,7 +925,7 @@ Every section test needs the same three lines of setup, and several sections nee
 - Create: `azouz-theme/snippets/icon.liquid`
 - Test: `tests/icon.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/icon.test.js`:
 
@@ -969,12 +969,12 @@ test('an unknown icon name renders nothing rather than breaking the page', async
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/icon.test.js`
 Expected: FAIL — the snippet does not exist.
 
-- [ ] **Step 3: Create `azouz-theme/snippets/icon.liquid`**
+- [x] **Step 3: Create `azouz-theme/snippets/icon.liquid`**
 
 ```liquid
 {%- comment -%}
@@ -1008,7 +1008,7 @@ Expected: FAIL — the snippet does not exist.
 {%- endcase -%}
 ```
 
-- [ ] **Step 4: Add icon sizing to `sections.css`**
+- [x] **Step 4: Add icon sizing to `sections.css`**
 
 Append:
 
@@ -1022,7 +1022,7 @@ Append:
 }
 ```
 
-- [ ] **Step 5: Create the shared test helper**
+- [x] **Step 5: Create the shared test helper**
 
 Create `tests/helpers/render-section.js`:
 
@@ -1054,17 +1054,17 @@ export function countMatches(html, pattern) {
 }
 ```
 
-- [ ] **Step 6: Run to verify it passes**
+- [x] **Step 6: Run to verify it passes**
 
 Run: `node --test tests/icon.test.js`
 Expected: PASS — 4 tests.
 
-- [ ] **Step 7: Run the full suite**
+- [x] **Step 7: Run the full suite**
 
 Run: `npm test`
 Expected: PASS — 166 tests. Confirm the helper file was NOT picked up as a test file (the run should report 15 test files, not 16).
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add azouz-theme/snippets/icon.liquid azouz-theme/assets/sections.css tests/icon.test.js tests/helpers/render-section.js
@@ -1081,7 +1081,7 @@ git commit -m "feat: add icon snippet and shared section test helper"
 - Modify: `azouz-theme/locales/en.default.json` (add one key)
 - Test: `tests/section-announcement-bar.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/section-announcement-bar.test.js`:
 
@@ -1135,12 +1135,12 @@ test('declares a preset so the client can add it in the theme editor', async () 
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/section-announcement-bar.test.js`
 Expected: FAIL — the section file does not exist.
 
-- [ ] **Step 3: Add the locale key**
+- [x] **Step 3: Add the locale key**
 
 In `azouz-theme/locales/en.default.json`, inside `general.accessibility`, add:
 
@@ -1148,7 +1148,7 @@ In `azouz-theme/locales/en.default.json`, inside `general.accessibility`, add:
       "announcement": "Announcement",
 ```
 
-- [ ] **Step 4: Create `azouz-theme/sections/announcement-bar.liquid`**
+- [x] **Step 4: Create `azouz-theme/sections/announcement-bar.liquid`**
 
 ```liquid
 {%- if section.settings.text != blank -%}
@@ -1185,7 +1185,7 @@ In `azouz-theme/locales/en.default.json`, inside `general.accessibility`, add:
 {% endschema %}
 ```
 
-- [ ] **Step 5: Append to `azouz-theme/assets/sections.css`**
+- [x] **Step 5: Append to `azouz-theme/assets/sections.css`**
 
 ```css
 /* ---------- Announcement bar ----------
@@ -1226,17 +1226,17 @@ In `azouz-theme/locales/en.default.json`, inside `general.accessibility`, add:
 }
 ```
 
-- [ ] **Step 6: Run to verify it passes**
+- [x] **Step 6: Run to verify it passes**
 
 Run: `node --test tests/section-announcement-bar.test.js`
 Expected: PASS — 6 tests.
 
-- [ ] **Step 7: Run the full suite**
+- [x] **Step 7: Run the full suite**
 
 Run: `npm test`
 Expected: PASS — 172 tests. The locale test must still pass — you added a key, removed none.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add azouz-theme/sections/announcement-bar.liquid azouz-theme/assets/sections.css azouz-theme/locales/en.default.json tests/section-announcement-bar.test.js
@@ -1255,7 +1255,7 @@ The mobile menu uses `<details>`/`<summary>` rather than a JavaScript toggle, so
 - Modify: `azouz-theme/locales/en.default.json` (add keys)
 - Test: `tests/section-header.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/section-header.test.js`:
 
@@ -1335,12 +1335,12 @@ test('declares a preset', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/section-header.test.js`
 Expected: FAIL — the section file does not exist.
 
-- [ ] **Step 3: Add locale keys**
+- [x] **Step 3: Add locale keys**
 
 In `azouz-theme/locales/en.default.json`, inside `general.accessibility`, add:
 
@@ -1349,7 +1349,7 @@ In `azouz-theme/locales/en.default.json`, inside `general.accessibility`, add:
       "cart_count": "items in cart",
 ```
 
-- [ ] **Step 4: Create `azouz-theme/sections/header.liquid`**
+- [x] **Step 4: Create `azouz-theme/sections/header.liquid`**
 
 ```liquid
 {%- liquid
@@ -1442,7 +1442,7 @@ In `azouz-theme/locales/en.default.json`, inside `general.accessibility`, add:
 {% endschema %}
 ```
 
-- [ ] **Step 5: Append to `azouz-theme/assets/sections.css`**
+- [x] **Step 5: Append to `azouz-theme/assets/sections.css`**
 
 ```css
 /* ---------- Header ---------- */
@@ -1558,17 +1558,17 @@ In `azouz-theme/locales/en.default.json`, inside `general.accessibility`, add:
 }
 ```
 
-- [ ] **Step 6: Run to verify it passes**
+- [x] **Step 6: Run to verify it passes**
 
 Run: `node --test tests/section-header.test.js`
 Expected: PASS — 12 tests.
 
-- [ ] **Step 7: Run the full suite**
+- [x] **Step 7: Run the full suite**
 
 Run: `npm test`
 Expected: PASS — 184 tests.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add azouz-theme/sections/header.liquid azouz-theme/assets/sections.css azouz-theme/locales/en.default.json tests/section-header.test.js
@@ -1585,7 +1585,7 @@ git commit -m "feat: add header with no-js mobile menu"
 - Modify: `azouz-theme/locales/en.default.json` (add keys)
 - Test: `tests/section-footer.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/section-footer.test.js`:
 
@@ -1645,12 +1645,12 @@ test('declares a preset', async () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `node --test tests/section-footer.test.js`
 Expected: FAIL — the section file does not exist.
 
-- [ ] **Step 3: Add locale keys**
+- [x] **Step 3: Add locale keys**
 
 In `azouz-theme/locales/en.default.json`, inside `layout.footer`, add:
 
@@ -1668,7 +1668,7 @@ and inside `general.accessibility` add:
       "whatsapp": "WhatsApp",
 ```
 
-- [ ] **Step 4: Create `azouz-theme/sections/footer.liquid`**
+- [x] **Step 4: Create `azouz-theme/sections/footer.liquid`**
 
 ```liquid
 <footer class="footer">
@@ -1760,7 +1760,7 @@ and inside `general.accessibility` add:
 {% endschema %}
 ```
 
-- [ ] **Step 5: Append to `azouz-theme/assets/sections.css`**
+- [x] **Step 5: Append to `azouz-theme/assets/sections.css`**
 
 ```css
 /* ---------- Footer ---------- */
@@ -1830,12 +1830,12 @@ and inside `general.accessibility` add:
 }
 ```
 
-- [ ] **Step 6: Run to verify it passes**
+- [x] **Step 6: Run to verify it passes**
 
 Run: `node --test tests/section-footer.test.js`
 Expected: PASS — 8 tests.
 
-- [ ] **Step 7: Run the full suite and theme check**
+- [x] **Step 7: Run the full suite and theme check**
 
 Run: `npm test`
 Expected: PASS — 192 tests.
@@ -1843,7 +1843,7 @@ Expected: PASS — 192 tests.
 Run: `npm run check`
 Expected: the three `MissingTemplate` errors for `announcement-bar`, `header` and `footer` are now **gone**. Remaining warnings are acceptable; report any error-level finding.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add azouz-theme/sections/footer.liquid azouz-theme/assets/sections.css azouz-theme/locales/en.default.json tests/section-footer.test.js
@@ -1875,7 +1875,7 @@ Each task follows the same five steps: write the test, run it and watch it fail,
 
 **Files:** create `azouz-theme/sections/hero-split.liquid`; append `azouz-theme/assets/sections.css`; test `tests/section-hero-split.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```js
 import { test } from 'node:test';
@@ -1964,9 +1964,9 @@ test('declares a preset', async () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails.**
+- [x] **Step 2: Run it and confirm it fails.**
 
-- [ ] **Step 3: Create the section**
+- [x] **Step 3: Create the section**
 
 ```liquid
 {%- liquid
@@ -2075,7 +2075,7 @@ test('declares a preset', async () => {
 {% endschema %}
 ```
 
-- [ ] **Step 4: Append the CSS**
+- [x] **Step 4: Append the CSS**
 
 ```css
 /* ---------- Hero ---------- */
@@ -2123,7 +2123,7 @@ test('declares a preset', async () => {
 }
 ```
 
-- [ ] **Step 5: Run the test until green, then `npm test`, then commit.**
+- [x] **Step 5: Run the test until green, then `npm test`, then commit.**
 
 ```bash
 git add azouz-theme/sections/hero-split.liquid azouz-theme/assets/sections.css tests/section-hero-split.test.js
@@ -2136,7 +2136,7 @@ git commit -m "feat: add hero split section"
 
 **Files:** create `azouz-theme/sections/cta-band.liquid`; append CSS; test `tests/section-cta-band.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```js
 import { test } from 'node:test';
@@ -2181,9 +2181,9 @@ test('declares a preset', async () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails.**
+- [x] **Step 2: Run it and confirm it fails.**
 
-- [ ] **Step 3: Create the section**
+- [x] **Step 3: Create the section**
 
 ```liquid
 {%- liquid
@@ -2247,7 +2247,7 @@ test('declares a preset', async () => {
 {% endschema %}
 ```
 
-- [ ] **Step 4: Append the CSS**
+- [x] **Step 4: Append the CSS**
 
 ```css
 /* ---------- CTA band ---------- */
@@ -2288,7 +2288,7 @@ test('declares a preset', async () => {
 }
 ```
 
-- [ ] **Step 5: Run the test until green, then `npm test`, then commit.**
+- [x] **Step 5: Run the test until green, then `npm test`, then commit.**
 
 ```bash
 git add azouz-theme/sections/cta-band.liquid azouz-theme/assets/sections.css tests/section-cta-band.test.js
@@ -2303,7 +2303,7 @@ Renders the "We work with: Cafés · Hotels · Restaurants …" lists that appea
 
 **Files:** create `azouz-theme/sections/audience-strip.liquid`; append CSS; test `tests/section-audience-strip.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```js
 import { test } from 'node:test';
@@ -2360,9 +2360,9 @@ test('declares a preset and a block type', async () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails.**
+- [x] **Step 2: Run it and confirm it fails.**
 
-- [ ] **Step 3: Create the section**
+- [x] **Step 3: Create the section**
 
 ```liquid
 {%- liquid
@@ -2444,7 +2444,7 @@ test('declares a preset and a block type', async () => {
 {% endschema %}
 ```
 
-- [ ] **Step 4: Append the CSS**
+- [x] **Step 4: Append the CSS**
 
 ```css
 /* ---------- Audience strip ---------- */
@@ -2486,7 +2486,7 @@ test('declares a preset and a block type', async () => {
 }
 ```
 
-- [ ] **Step 5: Run the test until green, then `npm test`, then commit.**
+- [x] **Step 5: Run the test until green, then `npm test`, then commit.**
 
 ```bash
 git add azouz-theme/sections/audience-strip.liquid azouz-theme/assets/sections.css tests/section-audience-strip.test.js
@@ -2501,7 +2501,7 @@ The "What We Do" cards on the homepage. This is where the packaging label block 
 
 **Files:** create `azouz-theme/sections/service-cards.liquid`; append CSS; test `tests/section-service-cards.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```js
 import { test } from 'node:test';
@@ -2575,9 +2575,9 @@ test('declares a preset with three cards', async () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails.**
+- [x] **Step 2: Run it and confirm it fails.**
 
-- [ ] **Step 3: Create the section**
+- [x] **Step 3: Create the section**
 
 ```liquid
 {%- liquid
@@ -2679,7 +2679,7 @@ test('declares a preset with three cards', async () => {
 {% endschema %}
 ```
 
-- [ ] **Step 4: Append the CSS**
+- [x] **Step 4: Append the CSS**
 
 ```css
 /* ---------- Service cards ----------
@@ -2726,7 +2726,7 @@ test('declares a preset with three cards', async () => {
 }
 ```
 
-- [ ] **Step 5: Run the test until green, then `npm test`, then commit.**
+- [x] **Step 5: Run the test until green, then `npm test`, then commit.**
 
 ```bash
 git add azouz-theme/sections/service-cards.liquid azouz-theme/assets/sections.css tests/section-service-cards.test.js
@@ -2741,7 +2741,7 @@ Serves both "From Bean to Bag. Source → Blend → Roast → Grind → Pack" (t
 
 **Files:** create `azouz-theme/sections/process-steps.liquid`; append CSS; test `tests/section-process-steps.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```js
 import { test } from 'node:test';
@@ -2796,9 +2796,9 @@ test('declares a preset with the five production steps', async () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails.**
+- [x] **Step 2: Run it and confirm it fails.**
 
-- [ ] **Step 3: Create the section**
+- [x] **Step 3: Create the section**
 
 ```liquid
 {%- liquid
@@ -2894,7 +2894,7 @@ test('declares a preset with the five production steps', async () => {
 {% endschema %}
 ```
 
-- [ ] **Step 4: Append the CSS**
+- [x] **Step 4: Append the CSS**
 
 ```css
 /* ---------- Process steps ---------- */
@@ -2979,7 +2979,7 @@ test('declares a preset with the five production steps', async () => {
 }
 ```
 
-- [ ] **Step 5: Run the test until green, then `npm test`, then commit.**
+- [x] **Step 5: Run the test until green, then `npm test`, then commit.**
 
 ```bash
 git add azouz-theme/sections/process-steps.liquid azouz-theme/assets/sections.css tests/section-process-steps.test.js
@@ -2994,7 +2994,7 @@ The plain lists: "Private Label Coffee Options" (8 coffee types) and "Retail Cof
 
 **Files:** create `azouz-theme/sections/feature-grid.liquid`; append CSS; test `tests/section-feature-grid.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```js
 import { test } from 'node:test';
@@ -3043,9 +3043,9 @@ test('declares a preset and a feature block type', async () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails.**
+- [x] **Step 2: Run it and confirm it fails.**
 
-- [ ] **Step 3: Create the section**
+- [x] **Step 3: Create the section**
 
 ```liquid
 {%- liquid
@@ -3130,7 +3130,7 @@ test('declares a preset and a feature block type', async () => {
 {% endschema %}
 ```
 
-- [ ] **Step 4: Append the CSS**
+- [x] **Step 4: Append the CSS**
 
 ```css
 /* ---------- Feature grid ---------- */
@@ -3169,7 +3169,7 @@ test('declares a preset and a feature block type', async () => {
 }
 ```
 
-- [ ] **Step 5: Run the test until green, then `npm test`, then commit.**
+- [x] **Step 5: Run the test until green, then `npm test`, then commit.**
 
 ```bash
 git add azouz-theme/sections/feature-grid.liquid azouz-theme/assets/sections.css tests/section-feature-grid.test.js
@@ -3184,7 +3184,7 @@ The wholesale page's four range cards, styled as packaging labels with their own
 
 **Files:** create `azouz-theme/sections/coffee-range.liquid`; append CSS; test `tests/section-coffee-range.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```js
 import { test } from 'node:test';
@@ -3238,9 +3238,9 @@ test('declares a preset with four ranges', async () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails.**
+- [x] **Step 2: Run it and confirm it fails.**
 
-- [ ] **Step 3: Create the section**
+- [x] **Step 3: Create the section**
 
 The `label_text` setting exists because the packaging uses both dark and light label colours — the mint Dead Sea label carries black type, the terracotta Wadi Rum label carries white. There is no reliable way to pick automatically in Liquid, so the client chooses, and the schema explains why.
 
@@ -3346,7 +3346,7 @@ The `label_text` setting exists because the packaging uses both dark and light l
 {% endschema %}
 ```
 
-- [ ] **Step 4: Append the CSS**
+- [x] **Step 4: Append the CSS**
 
 ```css
 /* ---------- Coffee range ---------- */
@@ -3374,7 +3374,7 @@ The `label_text` setting exists because the packaging uses both dark and light l
 }
 ```
 
-- [ ] **Step 5: Run the test until green, then `npm test`, then commit.**
+- [x] **Step 5: Run the test until green, then `npm test`, then commit.**
 
 ```bash
 git add azouz-theme/sections/coffee-range.liquid azouz-theme/assets/sections.css tests/section-coffee-range.test.js
@@ -3391,7 +3391,7 @@ Each attribute is drawn as a labelled spectrum with its two poles named. The spe
 
 **Files:** create `azouz-theme/sections/blend-builder.liquid`; append CSS; test `tests/section-blend-builder.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```js
 import { test } from 'node:test';
@@ -3442,9 +3442,9 @@ test('declares a preset with all six attributes', async () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails.**
+- [x] **Step 2: Run it and confirm it fails.**
 
-- [ ] **Step 3: Create the section**
+- [x] **Step 3: Create the section**
 
 ```liquid
 {%- liquid
@@ -3530,7 +3530,7 @@ test('declares a preset with all six attributes', async () => {
 {% endschema %}
 ```
 
-- [ ] **Step 4: Append the CSS**
+- [x] **Step 4: Append the CSS**
 
 ```css
 /* ---------- Blend builder ---------- */
@@ -3591,7 +3591,7 @@ test('declares a preset with all six attributes', async () => {
 
 The gradient is the one place a physical `to right` is unavoidable in a decorative fill. It carries no meaning, so it is exempt from the RTL rule — but note the guard test forbids `right:` as a *property*, not inside a gradient function, so this passes.
 
-- [ ] **Step 5: Run the test until green, then `npm test`, then commit.**
+- [x] **Step 5: Run the test until green, then `npm test`, then commit.**
 
 ```bash
 git add azouz-theme/sections/blend-builder.liquid azouz-theme/assets/sections.css tests/section-blend-builder.test.js
@@ -3606,7 +3606,7 @@ Two jobs, one section: "Packaging Options — 250 g · 500 g · 1 kg · Bulk" on
 
 **Files:** create `azouz-theme/sections/packaging-sizes.liquid`; append CSS; test `tests/section-packaging-sizes.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```js
 import { test } from 'node:test';
@@ -3654,9 +3654,9 @@ test('declares a preset', async () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails.**
+- [x] **Step 2: Run it and confirm it fails.**
 
-- [ ] **Step 3: Create the section**
+- [x] **Step 3: Create the section**
 
 ```liquid
 {%- liquid
@@ -3734,7 +3734,7 @@ test('declares a preset', async () => {
 {% endschema %}
 ```
 
-- [ ] **Step 4: Append the CSS**
+- [x] **Step 4: Append the CSS**
 
 ```css
 /* ---------- Packaging sizes ---------- */
@@ -3775,7 +3775,7 @@ test('declares a preset', async () => {
 }
 ```
 
-- [ ] **Step 5: Run the test until green, then `npm test`, then commit.**
+- [x] **Step 5: Run the test until green, then `npm test`, then commit.**
 
 ```bash
 git add azouz-theme/sections/packaging-sizes.liquid azouz-theme/assets/sections.css tests/section-packaging-sizes.test.js
@@ -3790,7 +3790,7 @@ git commit -m "feat: add packaging sizes section"
 
 **Files:** create `azouz-theme/sections/two-column-choice.liquid`; append CSS; test `tests/section-two-column-choice.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```js
 import { test } from 'node:test';
@@ -3843,9 +3843,9 @@ test('declares a preset with two options', async () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails.**
+- [x] **Step 2: Run it and confirm it fails.**
 
-- [ ] **Step 3: Create the section**
+- [x] **Step 3: Create the section**
 
 ```liquid
 {%- liquid
@@ -3925,7 +3925,7 @@ test('declares a preset with two options', async () => {
 {% endschema %}
 ```
 
-- [ ] **Step 4: Append the CSS**
+- [x] **Step 4: Append the CSS**
 
 ```css
 /* ---------- Two column choice ---------- */
@@ -3955,7 +3955,7 @@ test('declares a preset with two options', async () => {
 }
 ```
 
-- [ ] **Step 5: Run the test until green, then `npm test`, then commit.**
+- [x] **Step 5: Run the test until green, then `npm test`, then commit.**
 
 ```bash
 git add azouz-theme/sections/two-column-choice.liquid azouz-theme/assets/sections.css tests/section-two-column-choice.test.js
@@ -3970,7 +3970,7 @@ The Our Brands page's Azouz Coffee showcase — image, copy, and the CTA that br
 
 **Files:** create `azouz-theme/sections/brand-feature.liquid`; append CSS; test `tests/section-brand-feature.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```js
 import { test } from 'node:test';
@@ -4017,9 +4017,9 @@ test('declares a preset', async () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails.**
+- [x] **Step 2: Run it and confirm it fails.**
 
-- [ ] **Step 3: Create the section**
+- [x] **Step 3: Create the section**
 
 ```liquid
 {%- liquid
@@ -4100,7 +4100,7 @@ test('declares a preset', async () => {
 {% endschema %}
 ```
 
-- [ ] **Step 4: Append the CSS**
+- [x] **Step 4: Append the CSS**
 
 ```css
 /* ---------- Brand feature ---------- */
@@ -4147,7 +4147,7 @@ test('declares a preset', async () => {
 }
 ```
 
-- [ ] **Step 5: Run the test until green, then `npm test`, then commit.**
+- [x] **Step 5: Run the test until green, then `npm test`, then commit.**
 
 ```bash
 git add azouz-theme/sections/brand-feature.liquid azouz-theme/assets/sections.css tests/section-brand-feature.test.js
@@ -4164,7 +4164,7 @@ Custom fields use the `contact[Field Name]` convention — Shopify passes any su
 
 **Files:** create `azouz-theme/sections/enquiry-form.liquid`; append CSS; modify `azouz-theme/locales/en.default.json`; test `tests/section-enquiry-form.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```js
 import { test } from 'node:test';
@@ -4243,9 +4243,9 @@ test('declares two presets — sample and quote', async () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails.**
+- [x] **Step 2: Run it and confirm it fails.**
 
-- [ ] **Step 3: Add locale keys**
+- [x] **Step 3: Add locale keys**
 
 In `azouz-theme/locales/en.default.json`, inside `contact.form`, add:
 
@@ -4255,7 +4255,7 @@ In `azouz-theme/locales/en.default.json`, inside `contact.form`, add:
       "coffee_type_prompt": "Select a coffee type"
 ```
 
-- [ ] **Step 4: Create the section**
+- [x] **Step 4: Create the section**
 
 ```liquid
 {%- liquid
@@ -4403,7 +4403,7 @@ In `azouz-theme/locales/en.default.json`, inside `contact.form`, add:
 {% endschema %}
 ```
 
-- [ ] **Step 5: Append the CSS**
+- [x] **Step 5: Append the CSS**
 
 ```css
 /* ---------- Enquiry form ---------- */
@@ -4483,7 +4483,7 @@ In `azouz-theme/locales/en.default.json`, inside `contact.form`, add:
 }
 ```
 
-- [ ] **Step 6: Run the test until green, then `npm test`, then commit.**
+- [x] **Step 6: Run the test until green, then `npm test`, then commit.**
 
 ```bash
 git add azouz-theme/sections/enquiry-form.liquid azouz-theme/assets/sections.css azouz-theme/locales/en.default.json tests/section-enquiry-form.test.js
@@ -4498,7 +4498,7 @@ Any page the client creates that is not one of the four designed ones must still
 
 **Files:** create `azouz-theme/sections/main-page.liquid`; replace `azouz-theme/templates/page.json`; append CSS; test `tests/section-main-page.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```js
 import { test } from 'node:test';
@@ -4528,9 +4528,9 @@ test('an empty page body does not produce an empty wrapper', async () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails.**
+- [x] **Step 2: Run it and confirm it fails.**
 
-- [ ] **Step 3: Create `azouz-theme/sections/main-page.liquid`**
+- [x] **Step 3: Create `azouz-theme/sections/main-page.liquid`**
 
 ```liquid
 <section class="section main-page"{{ section.shopify_attributes }}>
@@ -4558,7 +4558,7 @@ test('an empty page body does not produce an empty wrapper', async () => {
 
 This section has no `presets` on purpose: it reads the `page` object and only makes sense on a page template, so it must not appear in the Theme Editor's "add section" list.
 
-- [ ] **Step 4: Replace `azouz-theme/templates/page.json`**
+- [x] **Step 4: Replace `azouz-theme/templates/page.json`**
 
 ```json
 {
@@ -4569,7 +4569,7 @@ This section has no `presets` on purpose: it reads the `page` object and only ma
 }
 ```
 
-- [ ] **Step 5: Append the CSS**
+- [x] **Step 5: Append the CSS**
 
 ```css
 /* ---------- Default page ---------- */
@@ -4596,7 +4596,7 @@ This section has no `presets` on purpose: it reads the `page` object and only ma
 .rte a { color: var(--color-accent-deep); }
 ```
 
-- [ ] **Step 6: Run the test until green, then `npm test`, then commit.**
+- [x] **Step 6: Run the test until green, then `npm test`, then commit.**
 
 ```bash
 git add azouz-theme/sections/main-page.liquid azouz-theme/templates/page.json azouz-theme/assets/sections.css tests/section-main-page.test.js
@@ -4611,7 +4611,7 @@ Every section now exists. This task fills the five JSON templates with the clien
 
 **Files:** replace `azouz-theme/templates/index.json`, `page.private-label.json`, `page.wholesale.json`, `page.our-brands.json`, `page.enquiry.json`; test `tests/templates.test.js`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```js
 import { test } from 'node:test';
@@ -4729,9 +4729,9 @@ test('the enquiry page renders a posting contact form', async () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails** (the templates are still the empty placeholders from Task 3).
+- [x] **Step 2: Run it and confirm it fails** (the templates are still the empty placeholders from Task 3).
 
-- [ ] **Step 3: Write `azouz-theme/templates/index.json`**
+- [x] **Step 3: Write `azouz-theme/templates/index.json`**
 
 ```json
 {
@@ -4843,7 +4843,7 @@ test('the enquiry page renders a posting contact form', async () => {
 }
 ```
 
-- [ ] **Step 4: Write `azouz-theme/templates/page.private-label.json`**
+- [x] **Step 4: Write `azouz-theme/templates/page.private-label.json`**
 
 ```json
 {
@@ -4989,7 +4989,7 @@ test('the enquiry page renders a posting contact form', async () => {
 }
 ```
 
-- [ ] **Step 5: Write `azouz-theme/templates/page.wholesale.json`**
+- [x] **Step 5: Write `azouz-theme/templates/page.wholesale.json`**
 
 ```json
 {
@@ -5119,7 +5119,7 @@ test('the enquiry page renders a posting contact form', async () => {
 }
 ```
 
-- [ ] **Step 6: Write `azouz-theme/templates/page.our-brands.json`**
+- [x] **Step 6: Write `azouz-theme/templates/page.our-brands.json`**
 
 ```json
 {
@@ -5191,7 +5191,7 @@ test('the enquiry page renders a posting contact form', async () => {
 }
 ```
 
-- [ ] **Step 7: Write `azouz-theme/templates/page.enquiry.json`**
+- [x] **Step 7: Write `azouz-theme/templates/page.enquiry.json`**
 
 Both `/pages/request-a-sample` and `/pages/get-a-quote` use this template. The client assigns it to both pages in the Shopify admin, then edits the heading per page in the Theme Editor.
 
@@ -5221,19 +5221,19 @@ Both `/pages/request-a-sample` and `/pages/get-a-quote` use this template. The c
 }
 ```
 
-- [ ] **Step 8: Run the tests until green**
+- [x] **Step 8: Run the tests until green**
 
 Run: `node --test tests/templates.test.js`
 Expected: PASS — 12 tests.
 
 If "exactly one h1" fails on the enquiry page, check that `enquiry-form` uses `<h2>` and only `hero-split` emits `<h1>`.
 
-- [ ] **Step 9: Run the full suite and the validator**
+- [x] **Step 9: Run the full suite and the validator**
 
 Run: `npm test` — all green.
 Run: `npm run validate` — `Theme validation passed.`
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit**
 
 ```bash
 git add azouz-theme/templates tests/templates.test.js
@@ -5246,23 +5246,23 @@ git commit -m "feat: assemble the four client pages from the supplied copy"
 
 No new code. Prove the whole marketing surface works.
 
-- [ ] **Step 1: Full suite**
+- [x] **Step 1: Full suite**
 
 Run: `npm test`
 Expected: every test green. Record the total.
 
-- [ ] **Step 2: Theme validator**
+- [x] **Step 2: Theme validator**
 
 Run: `npm run validate`
 Expected: `Theme validation passed.`
 
-- [ ] **Step 3: Shopify's linter**
+- [x] **Step 3: Shopify's linter**
 
 Run: `npm run check`
 
 Expected: **zero error-level findings.** The three `MissingTemplate` errors from Plan A must be gone now that `header`, `footer` and `announcement-bar` exist. Warnings such as `AssetPreload` and `OrphanedSnippet` are acceptable and were reviewed in Plan A. Report any new error.
 
-- [ ] **Step 4: Visual review**
+- [x] **Step 4: Visual review**
 
 Run: `npm run preview`, then open each route and check it against the list below.
 
@@ -5280,7 +5280,7 @@ On every route confirm:
 - Pressing Tab first reveals the green "Skip to content" link
 - The browser console is free of errors and the Network tab shows no 404s
 
-- [ ] **Step 5: Responsive check**
+- [x] **Step 5: Responsive check**
 
 At widths 375, 768, 1280 and 1440 on every route:
 - No horizontal scrollbar on `<body>`
@@ -5288,7 +5288,7 @@ At widths 375, 768, 1280 and 1440 on every route:
 - The desktop nav shows at 1280 and the mobile toggle is hidden
 - Card grids reflow rather than overflow
 
-- [ ] **Step 6: No-JavaScript check**
+- [x] **Step 6: No-JavaScript check**
 
 Disable JavaScript in DevTools and reload `/`.
 - All content is visible — nothing stuck invisible from the scroll reveal
@@ -5296,7 +5296,7 @@ Disable JavaScript in DevTools and reload `/`.
 
 This is the check that would have caught the `.reveal` defect found at the end of Plan A. Do not skip it.
 
-- [ ] **Step 7: RTL smoke check**
+- [x] **Step 7: RTL smoke check**
 
 In DevTools, set `document.documentElement.dir = 'rtl'` on `/pages/wholesale`.
 - The layout mirrors: navigation, card order and text alignment all flip
@@ -5304,7 +5304,7 @@ In DevTools, set `document.documentElement.dir = 'rtl'` on `/pages/wholesale`.
 
 Text stays English — only direction is under test here. Arabic translation is out of scope.
 
-- [ ] **Step 8: Commit any fixes, then report**
+- [x] **Step 8: Commit any fixes, then report**
 
 Report: total test count, `theme check` error count, and anything from steps 4–7 that did not hold.
 
@@ -5312,14 +5312,14 @@ Report: total test count, `theme check` error count, and anything from steps 4�
 
 ## Definition of Done for Plan B
 
-- [ ] `npm test` passes with no failures
-- [ ] `npm run validate` prints `Theme validation passed.`
-- [ ] `npm run check` reports **zero errors**
-- [ ] All five marketing routes render completely in the preview, with the client's copy verbatim
-- [ ] Each page has exactly one `<h1>`, no empty `href`, no `translation missing`, no unresolved section
-- [ ] Layouts hold at 375 / 768 / 1280 / 1440 with no horizontal overflow
-- [ ] With JavaScript disabled, all content is visible and the mobile menu still opens
-- [ ] Setting `dir="rtl"` mirrors the layout without breakage
+- [x] `npm test` passes with no failures
+- [x] `npm run validate` prints `Theme validation passed.`
+- [x] `npm run check` reports **zero errors**
+- [x] All five marketing routes render completely in the preview, with the client's copy verbatim
+- [x] Each page has exactly one `<h1>`, no empty `href`, no `translation missing`, no unresolved section
+- [x] Layouts hold at 375 / 768 / 1280 / 1440 with no horizontal overflow
+- [x] With JavaScript disabled, all content is visible and the mobile menu still opens
+- [x] Setting `dir="rtl"` mirrors the layout without breakage
 
 **Next:** Plan C — the commerce surface (product, collection, cart, search, customer accounts) and the `theme.js` web components.
 
