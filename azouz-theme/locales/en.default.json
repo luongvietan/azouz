@@ -123,6 +123,73 @@
       "error": "Please check the highlighted fields and try again."
     }
   },
+  "customer": {
+    "login": {
+      "title": "Sign in",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "forgot": "Forgot your password?",
+      "no_account": "Create an account"
+    },
+    "register": {
+      "title": "Create an account",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create account",
+      "has_account": "Already have an account? Sign in"
+    },
+    "account": {
+      "title": "Your account",
+      "orders": "Order history",
+      "no_orders": "You have not placed an order yet.",
+      "order_number": "Order",
+      "date": "Date",
+      "status": "Status",
+      "total": "Total",
+      "view_addresses": "Your addresses",
+      "logout": "Sign out"
+    },
+    "order": {
+      "title": "Order {{ name }}",
+      "placed_on": "Placed on {{ date }}",
+      "product": "Product",
+      "quantity": "Quantity",
+      "total": "Total",
+      "shipping_address": "Shipping address"
+    },
+    "addresses": {
+      "title": "Your addresses",
+      "add": "Add a new address",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "company": "Company",
+      "address1": "Address",
+      "city": "City",
+      "zip": "Postal code",
+      "country": "Country",
+      "phone": "Phone",
+      "submit": "Save address",
+      "back": "Back to your account"
+    },
+    "recover_password": {
+      "title": "Reset your password",
+      "subtext": "We will email you a link to set a new password.",
+      "email": "Email",
+      "submit": "Send reset link",
+      "cancel": "Back to sign in"
+    },
+    "activate_account": {
+      "title": "Activate your account",
+      "subtext": "Choose a password to finish setting up your account.",
+      "password": "Password",
+      "password_confirm": "Confirm password",
+      "submit": "Activate account",
+      "decline": "Decline invitation"
+    }
+  },
   "layout": {
     "footer": {
       "copyright": "Azouz Coffee",

@@ -1,0 +1,67 @@
+<section class="section account"{{ section.shopify_attributes }}>
+  <div class="container container--narrow account__inner">
+    <h1 class="account__heading">{{ 'customer.addresses.title' | t }}</h1>
+
+    {%- for address in customer.addresses -%}
+      <address class="account__address">{{ address | format_address }}</address>
+    {%- endfor -%}
+
+    <h2 class="account__subheading">{{ 'customer.addresses.add' | t }}</h2>
+
+    {%- form 'customer_address', class: 'account__form' -%}
+      <div class="field">
+        <label class="field__label" for="AddressFirstName">{{ 'customer.addresses.first_name' | t }}</label>
+        <input class="field__input" type="text" id="AddressFirstName" name="address[first_name]" autocomplete="given-name">
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="AddressLastName">{{ 'customer.addresses.last_name' | t }}</label>
+        <input class="field__input" type="text" id="AddressLastName" name="address[last_name]" autocomplete="family-name">
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="AddressCompany">{{ 'customer.addresses.company' | t }}</label>
+        <input class="field__input" type="text" id="AddressCompany" name="address[company]" autocomplete="organization">
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="AddressLine1">{{ 'customer.addresses.address1' | t }}</label>
+        <input class="field__input" type="text" id="AddressLine1" name="address[address1]" autocomplete="address-line1">
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="AddressCity">{{ 'customer.addresses.city' | t }}</label>
+        <input class="field__input" type="text" id="AddressCity" name="address[city]" autocomplete="address-level2">
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="AddressZip">{{ 'customer.addresses.zip' | t }}</label>
+        <input class="field__input" type="text" id="AddressZip" name="address[zip]" autocomplete="postal-code">
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="AddressCountry">{{ 'customer.addresses.country' | t }}</label>
+        <input class="field__input" type="text" id="AddressCountry" name="address[country]" autocomplete="country-name">
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="AddressPhone">{{ 'customer.addresses.phone' | t }}</label>
+        <input class="field__input" type="tel" id="AddressPhone" name="address[phone]" autocomplete="tel">
+      </div>
+
+      <button class="button" type="submit">{{ 'customer.addresses.submit' | t }}</button>
+    {%- endform -%}
+
+    <p class="account__links">
+      <a href="{{ routes.account_url }}">{{ 'customer.addresses.back' | t }}</a>
+    </p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Addresses",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

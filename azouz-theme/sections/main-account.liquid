@@ -1,0 +1,45 @@
+<section class="section account"{{ section.shopify_attributes }}>
+  <div class="container account__inner">
+    <h1 class="account__heading">{{ 'customer.account.title' | t }}</h1>
+    <p class="account__name">{{ customer.name }} — {{ customer.email }}</p>
+
+    <h2 class="account__subheading">{{ 'customer.account.orders' | t }}</h2>
+
+    {%- if customer.orders.size == 0 -%}
+      <p class="account__empty">{{ 'customer.account.no_orders' | t }}</p>
+    {%- else -%}
+      <table class="account__table">
+        <thead>
+          <tr>
+            <th scope="col">{{ 'customer.account.order_number' | t }}</th>
+            <th scope="col">{{ 'customer.account.date' | t }}</th>
+            <th scope="col">{{ 'customer.account.status' | t }}</th>
+            <th scope="col">{{ 'customer.account.total' | t }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for order in customer.orders -%}
+            <tr>
+              <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+              <td>{{ order.created_at | date: '%d %b %Y' }}</td>
+              <td>{{ order.fulfillment_status }}</td>
+              <td>{{ order.total_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    {%- endif -%}
+
+    <p class="account__links">
+      <a href="{{ routes.account_url }}/addresses">{{ 'customer.account.view_addresses' | t }}</a>
+    </p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Account",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

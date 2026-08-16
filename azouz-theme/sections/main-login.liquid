@@ -1,0 +1,32 @@
+<section class="section account"{{ section.shopify_attributes }}>
+  <div class="container container--narrow account__inner">
+    <h1 class="account__heading">{{ 'customer.login.title' | t }}</h1>
+
+    {%- form 'customer_login', class: 'account__form' -%}
+      <div class="field">
+        <label class="field__label" for="LoginEmail">{{ 'customer.login.email' | t }}</label>
+        <input class="field__input" type="email" id="LoginEmail" name="customer[email]" autocomplete="email" required>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="LoginPassword">{{ 'customer.login.password' | t }}</label>
+        <input class="field__input" type="password" id="LoginPassword" name="customer[password]" autocomplete="current-password" required>
+      </div>
+
+      <button class="button" type="submit">{{ 'customer.login.submit' | t }}</button>
+    {%- endform -%}
+
+    <p class="account__links">
+      <a href="{{ routes.account_url }}/recover">{{ 'customer.login.forgot' | t }}</a>
+      <a href="{{ routes.account_url }}/register">{{ 'customer.login.no_account' | t }}</a>
+    </p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Login",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

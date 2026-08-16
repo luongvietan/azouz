@@ -665,3 +665,83 @@
 .main-password__form .field {
   inline-size: 100%;
 }
+
+/* ---------- Customer accounts ---------- */
+
+.account__inner {
+  display: grid;
+  gap: var(--space-lg);
+  align-content: start;
+}
+
+.account__heading,
+.account__subheading {
+  margin: 0;
+}
+
+.account__subheading {
+  font-size: var(--text-lg);
+}
+
+.account__name {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.account__form {
+  display: grid;
+  gap: var(--space-md);
+  justify-items: start;
+}
+
+.account__form .field {
+  inline-size: 100%;
+}
+
+.account__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.account__empty {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.account__table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  text-align: start;
+}
+
+.account__table th,
+.account__table td {
+  padding: var(--space-sm);
+  border-block-end: var(--hairline);
+  text-align: start;
+}
+
+.account__table th {
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--color-text-muted);
+}
+
+.account__address {
+  margin: 0;
+  font-style: normal;
+  color: var(--color-text-muted);
+}
+
+.order__total {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}

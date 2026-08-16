@@ -1,0 +1,48 @@
+{%- comment -%}
+  Note the `assign` for the date. Writing
+  `{{ 'x' | t: date: order.created_at | date: '%d %b %Y' }}` would apply the
+  date filter to the finished sentence, not to the timestamp.
+{%- endcomment -%}
+{%- assign placed_on = order.created_at | date: '%d %b %Y' -%}
+
+<section class="section account"{{ section.shopify_attributes }}>
+  <div class="container account__inner">
+    <h1 class="account__heading">{{ 'customer.order.title' | t: name: order.name }}</h1>
+    <p class="account__name">{{ 'customer.order.placed_on' | t: date: placed_on }}</p>
+
+    <table class="account__table">
+      <thead>
+        <tr>
+          <th scope="col">{{ 'customer.order.product' | t }}</th>
+          <th scope="col">{{ 'customer.order.quantity' | t }}</th>
+          <th scope="col">{{ 'customer.order.total' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for item in order.line_items -%}
+          <tr>
+            <td><a href="{{ item.url }}">{{ item.title }}</a></td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.line_price | money }}</td>
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+
+    <p class="order__total">
+      <span>{{ 'customer.order.total' | t }}</span>
+      <span>{{ order.total_price | money }}</span>
+    </p>
+
+    <h2 class="account__subheading">{{ 'customer.order.shipping_address' | t }}</h2>
+    <address class="account__address">{{ order.shipping_address | format_address }}</address>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Order",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

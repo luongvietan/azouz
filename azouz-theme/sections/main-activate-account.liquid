@@ -1,0 +1,33 @@
+<section class="section account"{{ section.shopify_attributes }}>
+  <div class="container container--narrow account__inner">
+    <h1 class="account__heading">{{ 'customer.activate_account.title' | t }}</h1>
+    <p class="lead">{{ 'customer.activate_account.subtext' | t }}</p>
+
+    {%- form 'activate_customer_password', class: 'account__form' -%}
+      <div class="field">
+        <label class="field__label" for="ActivatePassword">{{ 'customer.activate_account.password' | t }}</label>
+        <input class="field__input" type="password" id="ActivatePassword" name="customer[password]" autocomplete="new-password" required>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="ActivatePasswordConfirm">{{ 'customer.activate_account.password_confirm' | t }}</label>
+        <input class="field__input" type="password" id="ActivatePasswordConfirm" name="customer[password_confirmation]" autocomplete="new-password" required>
+      </div>
+
+      <div class="button-group">
+        <button class="button" type="submit">{{ 'customer.activate_account.submit' | t }}</button>
+        <button class="button button--secondary" type="submit" name="decline">
+          {{ 'customer.activate_account.decline' | t }}
+        </button>
+      </div>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Activate account",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}
