@@ -217,3 +217,99 @@
 .variant-picker__unavailable[hidden] {
   display: none;
 }
+
+/* ---------- Product page ---------- */
+
+.main-product__inner {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.main-product__image {
+  inline-size: 100%;
+  block-size: auto;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-alt);
+}
+
+.main-product__details {
+  display: grid;
+  gap: var(--space-lg);
+  align-content: start;
+}
+
+.main-product__roast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.main-product__price {
+  margin: 0;
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.main-product__form {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.main-product__purchase {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.main-product__add[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.main-product__brews {
+  display: grid;
+  gap: var(--space-2xs);
+}
+
+/* ---------- Accordion ----------
+   Native <details>: keyboard and screen-reader behaviour for free, and it
+   works with scripting disabled. */
+
+.accordion {
+  border-block-start: var(--hairline);
+  padding-block: var(--space-md);
+}
+
+.accordion__summary {
+  cursor: pointer;
+  font-weight: var(--font-weight-semibold);
+  list-style: none;
+}
+
+.accordion__summary::-webkit-details-marker {
+  display: none;
+}
+
+.accordion__summary::after {
+  content: '+';
+  float: inline-end;
+  font-weight: var(--font-weight-regular);
+}
+
+.accordion[open] .accordion__summary::after {
+  content: '−';
+}
+
+.accordion__body {
+  padding-block-start: var(--space-sm);
+}
+
+@media (min-width: 56em) {
+  .main-product__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+  }
+}

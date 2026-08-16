@@ -1,0 +1,118 @@
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+  assign custom = product.metafields.custom
+  assign notes = custom.tasting_notes.value
+  assign brews = custom.brew_methods.value
+  assign label_color = custom.label_color.value
+
+  assign label_style = ''
+  if label_color != blank
+    assign label_style = '--label-bg: ' | append: label_color | append: ';'
+  endif
+
+  assign has_specs = false
+  if custom.origin.value != blank or custom.process.value != blank or custom.altitude.value != blank
+    assign has_specs = true
+  endif
+
+  assign add_label = 'products.product.add_to_cart' | t
+  assign sold_out_label = 'products.product.sold_out' | t
+-%}
+
+<section class="section main-product" data-product-root{{ section.shopify_attributes }}>
+  <div class="container main-product__inner">
+    <div class="main-product__media">
+      {%- if product.featured_image -%}
+        <img
+          class="main-product__image"
+          src="{{ product.featured_image | image_url: width: 1200 }}"
+          alt="{{ product.title | escape }}"
+          width="1200"
+          height="1500"
+          fetchpriority="high"
+          decoding="async">
+      {%- endif -%}
+    </div>
+
+    <div class="main-product__details">
+      <div class="label-block main-product__label" style="{{ label_style }}">
+        <h1 class="label-block__title">{{ product.title }}</h1>
+        {%- if notes != blank -%}
+          <p class="label-block__subtitle">{{ notes | join: ' | ' }}</p>
+        {%- endif -%}
+
+        {%- if has_specs -%}
+          <hr class="label-block__rule">
+          <dl class="label-block__specs">
+            {%- if custom.origin.value != blank -%}
+              <div><dt>{{ 'products.product.origin' | t }}</dt><dd>{{ custom.origin.value }}</dd></div>
+            {%- endif -%}
+            {%- if custom.process.value != blank -%}
+              <div><dt>{{ 'products.product.process' | t }}</dt><dd>{{ custom.process.value }}</dd></div>
+            {%- endif -%}
+            {%- if custom.altitude.value != blank -%}
+              <div><dt>{{ 'products.product.altitude' | t }}</dt><dd>{{ custom.altitude.value }}</dd></div>
+            {%- endif -%}
+          </dl>
+        {%- endif -%}
+      </div>
+
+      {%- if custom.roast_level.value != blank -%}
+        <div class="main-product__roast">
+          <span class="eyebrow">{{ 'products.product.roast_level' | t }}</span>
+          {%- render 'roast-meter', level: custom.roast_level.value -%}
+        </div>
+      {%- endif -%}
+
+      <p class="main-product__price" data-product-price>{{ current.price | money }}</p>
+
+      {%- form 'product', product, id: 'AddToCart', class: 'main-product__form' -%}
+        {%- render 'variant-picker', product: product, form_id: 'AddToCart' -%}
+
+        <div class="main-product__purchase">
+          {%- render 'quantity-input', name: 'quantity', value: 1, min: 1, form: 'AddToCart' -%}
+
+          <product-form class="main-product__submit">
+            <button
+              class="button main-product__add"
+              type="submit"
+              data-add-to-cart
+              data-label-add="{{ add_label | escape }}"
+              data-label-sold-out="{{ sold_out_label | escape }}"
+              {% unless current.available %}disabled{% endunless %}>
+              {%- if current.available -%}{{ add_label }}{%- else -%}{{ sold_out_label }}{%- endif -%}
+            </button>
+          </product-form>
+        </div>
+      {%- endform -%}
+
+      {%- if product.description != blank -%}
+        <details class="accordion" open>
+          <summary class="accordion__summary">{{ 'products.product.description' | t }}</summary>
+          <div class="accordion__body rte">{{ product.description }}</div>
+        </details>
+      {%- endif -%}
+
+      {%- if brews != blank -%}
+        <details class="accordion">
+          <summary class="accordion__summary">{{ 'products.product.brewing' | t }}</summary>
+          <div class="accordion__body">
+            <ul class="main-product__brews" role="list">
+              {%- for method in brews -%}
+                <li>{{ method }}</li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        </details>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

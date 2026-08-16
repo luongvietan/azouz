@@ -62,7 +62,10 @@
       "brew_methods": "Brewing methods",
       "view_details": "View details",
       "choose_options": "Choose options",
-      "variant_unavailable": "That combination is not available"
+      "variant_unavailable": "That combination is not available",
+      "specifications": "Specifications",
+      "description": "Description",
+      "brewing": "Brewing"
     }
   },
   "collections": {
