@@ -1,0 +1,23 @@
+{%- comment -%}
+  Dot meter for the `custom.roast_level` metafield.
+
+  Accepts: level (1–5, may be nil)
+
+  Renders nothing when the value is missing or zero, so the product page is
+  correct before the client has created the metafield definition in admin.
+{%- endcomment -%}
+
+{%- liquid
+  assign filled = level | default: 0 | at_least: 0 | at_most: 5
+-%}
+
+{%- if filled > 0 -%}
+  <div
+    class="roast-meter"
+    role="img"
+    aria-label="{{ 'products.product.roast_level_of' | t: level: filled, total: 5 }}">
+    {%- for dot in (1..5) -%}
+      <span class="roast-meter__dot{% if dot <= filled %} roast-meter__dot--filled{% endif %}"></span>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
