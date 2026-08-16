@@ -4,6 +4,16 @@
   working HTML when JavaScript is unavailable.
 */
 
+/*
+  Pure logic lives on one global namespace so it can be unit-tested by loading
+  this exact file into a sandbox — see tests/helpers/load-theme-js.js.
+
+  This file must stay a classic script. It is loaded with <script defer>, so
+  `import` or `export` anywhere in it would stop the entire runtime from
+  parsing and silently disable every component below.
+*/
+window.AzouzTheme = window.AzouzTheme || {};
+
 const prefersReducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
