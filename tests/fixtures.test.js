@@ -1,9 +1,21 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { buildFixtures } from '../preview/fixtures.js';
+import { ROOT } from '../scripts/theme-paths.js';
 
 test('the shop fixture uses Jordanian dinar', () => {
   assert.equal(buildFixtures().shop.currency, 'JOD');
+});
+
+test('each product featured image is a real file in preview/media', () => {
+  for (const product of buildFixtures().products) {
+    for (const src of [product.featured_image, ...(product.images ?? [])]) {
+      const name = String(src).replace(/^\/preview-media\//, '');
+      assert.ok(existsSync(join(ROOT, 'preview', 'media', name)), name);
+    }
+  }
 });
 
 test('the four packaging products from the client mockups are present', () => {
@@ -46,6 +58,12 @@ test('the cart fixture is empty by default', () => {
   const cart = buildFixtures().cart;
   assert.equal(cart.item_count, 0);
   assert.deepEqual(cart.items, []);
+});
+
+test('theme settings from settings_data are on the settings drop', () => {
+  const { settings } = buildFixtures();
+  assert.equal(settings.logo_height, 64);
+  assert.equal(settings.color_accent, '#67985E');
 });
 
 test('the main menu links to the four marketing pages and the shop', () => {

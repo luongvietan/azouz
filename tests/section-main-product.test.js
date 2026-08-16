@@ -17,6 +17,16 @@ test('the product title is the page h1, and the only one', async () => {
   assert.equal(countMatches(html, /<h1/g), 1);
 });
 
+test('a visible breadcrumb sits above the product and keeps a single h1', async () => {
+  const html = await render();
+  const crumb = html.match(/<nav[^>]*>([\s\S]*?)<\/nav>/);
+  assert.ok(crumb, 'expected a breadcrumb nav');
+  assert.match(crumb[1], /Home/);
+  assert.match(crumb[1], /Shop/);
+  assert.match(crumb[1], /Wadi Rum Blend/);
+  assert.equal(countMatches(html, /<h1/g), 1);
+});
+
 test('renders the add-to-cart form posting to cart add', async () => {
   const html = await render();
   assert.match(html, /action="\/cart\/add"/);

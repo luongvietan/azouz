@@ -15,8 +15,11 @@ import { renderTemplate } from './template-renderer.js';
 import { buildFixtures } from './fixtures.js';
 import { resolveRoute, listPreviewPaths } from './route-context.js';
 import { addLine, setLine, seedCart, buildCart } from './cart-api.js';
-import { extractSchema, defaultSettings, defaultBlocks } from '../scripts/schema-parser.js';
-import { THEME_DIR } from '../scripts/theme-paths.js';
+import { extractSchema } from '../scripts/schema-parser.js';
+import { resolveSection } from './settings-resolver.js';
+import { ROOT, THEME_DIR } from '../scripts/theme-paths.js';
+
+const MEDIA_DIR = join(ROOT, 'preview', 'media');
 
 export { ROUTES, templateForRoute } from './route-context.js';
 
@@ -54,11 +57,71 @@ async function serveAsset(response, urlPath) {
   }
 }
 
-/** Read a urlencoded request body into a URLSearchParams. */
+let enginePromise;
+function getEngine() {
+  enginePromise ??= createEngine(THEME_DIR);
+  return enginePromise;
+}
+
+/**
+ * Read a request body the way the theme actually posts it: urlencoded from a
+ * native form submit, multipart FormData from <product-form> fetch, or JSON.
+ */
 async function readForm(request) {
   const chunks = [];
   for await (const chunk of request) chunks.push(chunk);
-  return new URLSearchParams(Buffer.concat(chunks).toString('utf8'));
+  const buffer = Buffer.concat(chunks);
+  const contentType = request.headers['content-type'] ?? '';
+
+  if (contentType.includes('application/json')) {
+    const data = JSON.parse(buffer.toString('utf8') || '{}');
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(data)) {
+      if (value != null) params.set(key, String(value));
+    }
+    return params;
+  }
+
+  if (contentType.includes('multipart/form-data')) {
+    return parseMultipart(buffer, contentType);
+  }
+
+  return new URLSearchParams(buffer.toString('utf8'));
+}
+
+function parseMultipart(buffer, contentType) {
+  const boundaryMatch = /boundary=(?:"([^"]+)"|([^;]+))/i.exec(contentType);
+  if (!boundaryMatch) return new URLSearchParams();
+
+  const boundary = boundaryMatch[1] ?? boundaryMatch[2];
+  const params = new URLSearchParams();
+
+  for (const part of buffer.toString('utf8').split(`--${boundary}`)) {
+    if (!part || part === '--' || part.startsWith('--')) continue;
+    const headerEnd = part.indexOf('\r\n\r\n');
+    if (headerEnd === -1) continue;
+    const name = /name="([^"]+)"/.exec(part.slice(0, headerEnd));
+    if (!name) continue;
+    params.append(name[1], part.slice(headerEnd + 4).replace(/\r\n$/, ''));
+  }
+
+  return params;
+}
+
+/** Client packaging shots, served from preview/media — not part of the theme zip. */
+async function servePreviewMedia(response, urlPath) {
+  const relative = normalize(urlPath.replace(/^\/preview-media\//, '')).replace(/^(\.\.[/\\])+/, '');
+  const file = join(MEDIA_DIR, relative);
+  try {
+    const body = await readFile(file);
+    response.writeHead(200, {
+      'Content-Type': MIME[extname(file)] ?? 'application/octet-stream',
+      'Cache-Control': 'no-store',
+    });
+    response.end(body);
+  } catch {
+    response.writeHead(404).end('preview media not found');
+  }
 }
 
 /**
@@ -67,7 +130,7 @@ async function readForm(request) {
  * the header cart count after an add-to-cart.
  */
 async function renderSections(names, scope) {
-  const engine = await createEngine(THEME_DIR);
+  const engine = await getEngine();
   const rendered = {};
 
   for (const name of names) {
@@ -77,12 +140,7 @@ async function renderSections(names, scope) {
     const schema = extractSchema(source, `sections/${name}.liquid`);
     const sectionScope = {
       ...scope,
-      section: {
-        id: name,
-        settings: defaultSettings(schema),
-        blocks: defaultBlocks(schema),
-        shopify_attributes: '',
-      },
+      section: resolveSection(schema, name, {}, scope),
     };
     const html = await engine.parseAndRender(source, sectionScope, { globals: sectionScope });
     rendered[name] = `<div id="shopify-section-${name}" class="shopify-section">${html}</div>`;
@@ -92,12 +150,16 @@ async function renderSections(names, scope) {
 }
 
 /** The globals every render gets, with the route's own context merged over. */
-function buildScope(route) {
+function buildScope(route, searchParams = new URLSearchParams()) {
   const fixtures = buildFixtures();
   return {
     ...fixtures,
     cart: buildCart(),
-    request: { ...fixtures.request, page_type: route.page_type },
+    request: {
+      ...fixtures.request,
+      page_type: route.page_type,
+      query: Object.fromEntries(searchParams),
+    },
     page: null,
     ...route.scope,
   };
@@ -109,6 +171,14 @@ export function createPreviewServer() {
     const path = url.pathname.replace(/\/+$/, '') || '/';
 
     if (url.pathname.startsWith('/assets/')) return serveAsset(response, url.pathname);
+    if (url.pathname.startsWith('/preview-media/')) return servePreviewMedia(response, url.pathname);
+
+    if (request.method === 'POST' && path === '/contact') {
+      await readForm(request);
+      const referer = request.headers.referer;
+      const back = referer ? new URL(referer).pathname : '/';
+      return response.writeHead(302, { Location: `${back}?contact_posted=1` }).end();
+    }
 
     if (request.method === 'POST' && path === '/cart/add') {
       const form = await readForm(request);
@@ -143,13 +213,15 @@ export function createPreviewServer() {
 
     if (url.searchParams.has('sections')) {
       const names = url.searchParams.get('sections').split(',').filter(Boolean);
-      return json(response, 200, await renderSections(names, buildScope(route)));
+      return json(response, 200, await renderSections(names, buildScope(route, url.searchParams)));
     }
 
     try {
-      const engine = await createEngine(THEME_DIR);
-      const scope = buildScope(route);
-      const html = await renderThemeFile(engine, THEME_DIR, 'layout/theme.liquid', {
+      const engine = await getEngine();
+      const scope = buildScope(route, url.searchParams);
+      const layout =
+        route.page_type === 'password' ? 'layout/password.liquid' : 'layout/theme.liquid';
+      const html = await renderThemeFile(engine, THEME_DIR, layout, {
         ...scope,
         content_for_layout: await renderTemplate(engine, THEME_DIR, route.template, scope),
       });

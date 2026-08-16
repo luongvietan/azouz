@@ -1,6 +1,16 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { extractSchema, defaultSettings, defaultBlocks } from '../../scripts/schema-parser.js';
+import { extractSchema } from '../../scripts/schema-parser.js';
+import { buildFixtures } from '../fixtures.js';
+import { resolveSection } from '../settings-resolver.js';
+
+/** Prefer the live render scope so cart and request stay current. */
+function fixturesFrom(ctx) {
+  for (const candidate of [ctx.globals, ctx.environments]) {
+    if (candidate?.linklists) return candidate;
+  }
+  return buildFixtures();
+}
 
 /**
  * Consume raw tokens until the matching end tag, returning their source text.
@@ -110,7 +120,17 @@ export function registerShopifyTags(engine, options = {}) {
           `<input type="hidden" name="form_type" value="${formType}">` +
           `<input type="hidden" name="utf8" value="✓">`,
       );
-      ctx.push({ form: { posted_successfully: false, errors: null } });
+      const fixtures = fixturesFrom(ctx);
+      const request = ctx.globals?.request ?? ctx.environments?.request ?? fixtures.request;
+      const postedSuccessfully =
+        formType === 'contact' && request?.query?.contact_posted === '1';
+      ctx.push({
+        form: {
+          posted_successfully: postedSuccessfully,
+          'posted_successfully?': postedSuccessfully,
+          errors: null,
+        },
+      });
       yield engine.renderer.renderTemplates(this.templates, ctx, emitter);
       ctx.pop();
       emitter.write('</form>');
@@ -176,14 +196,8 @@ export function registerShopifyTags(engine, options = {}) {
       }
       const source = readFileSync(file, 'utf8');
       const schema = extractSchema(source, `sections/${name}.liquid`);
-      const override = sectionOverrides[name] ?? {};
       ctx.push({
-        section: {
-          id: name,
-          settings: { ...defaultSettings(schema), ...(override.settings ?? {}) },
-          blocks: override.blocks ?? defaultBlocks(schema),
-          shopify_attributes: '',
-        },
+        section: resolveSection(schema, name, sectionOverrides[name] ?? {}, fixturesFrom(ctx)),
       });
       const templates = engine.parse(source, file);
       yield engine.renderer.renderTemplates(templates, ctx, emitter);

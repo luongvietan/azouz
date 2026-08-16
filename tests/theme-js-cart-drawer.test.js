@@ -36,3 +36,25 @@ test('it replaces the inner content region, never its own element', async () => 
 test('it uses showModal so the platform provides focus trapping', async () => {
   assert.match(await source(), /showModal/);
 });
+
+test('open removes hidden and aria-hidden from the host and dialog before showModal', async () => {
+  const js = await source();
+  const openIndex = js.indexOf('open()');
+  const showModalIndex = js.indexOf('showModal', openIndex);
+  const openBody = js.slice(openIndex, showModalIndex);
+  assert.match(openBody, /this\.removeAttribute\(\s*['"]hidden['"]\s*\)/);
+  assert.match(openBody, /this\.removeAttribute\(\s*['"]aria-hidden['"]\s*\)/);
+  assert.match(openBody, /removeAttribute\(\s*['"]inert['"]\s*\)/);
+  assert.match(openBody, /removeAttribute\(\s*['"]aria-hidden['"]\s*\)/);
+  assert.match(openBody, /removeAttribute\(\s*['"]hidden['"]\s*\)/);
+});
+
+test('close restores hidden and aria-hidden on the host and dialog', async () => {
+  const js = await source();
+  assert.match(js, /addEventListener\(\s*['"]close['"]/);
+  assert.match(js, /this\.setAttribute\(\s*['"]hidden['"]/);
+  assert.match(js, /this\.setAttribute\(\s*['"]aria-hidden['"]\s*,\s*['"]true['"]\s*\)/);
+  assert.match(js, /setAttribute\(\s*['"]inert['"]/);
+  assert.match(js, /setAttribute\(\s*['"]aria-hidden['"]\s*,\s*['"]true['"]\s*\)/);
+  assert.match(js, /setAttribute\(\s*['"]hidden['"]\s*,\s*['"]['"]\s*\)/);
+});

@@ -12,11 +12,6 @@
   assign notes = custom.tasting_notes.value
   assign label_color = custom.label_color.value
 
-  assign label_style = ''
-  if label_color != blank
-    assign label_style = '--label-bg: ' | append: label_color | append: ';'
-  endif
-
   assign ranged = false
   if product.price_min != product.price_max
     assign ranged = true
@@ -39,8 +34,10 @@
     <p class="product-card__badge">{{ 'products.product.sold_out' | t }}</p>
   {%- endunless -%}
 
-  <div class="label-block product-card__label" style="{{ label_style }}">
-    <h3 class="label-block__title">{{ product.title }}<a class="product-card__link" href="{{ product.url }}"><span class="visually-hidden">{{ product.title }}</span></a></h3>
+  <div class="label-block product-card__label"{% if label_color != blank %} style="{% render 'label-ink', color: label_color %}"{% endif %}>
+    <h3 class="label-block__title">
+      <a class="product-card__link" href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
     {%- if notes != blank -%}
       <p class="label-block__subtitle">{{ notes | join: ' | ' }}</p>
     {%- endif -%}
@@ -52,6 +49,6 @@
       compare_at: product.compare_at_price,
       show_from: ranged
     -%}
-    {%- render 'roast-meter', level: custom.roast_level.value -%}
+    {%- render 'roast-meter', level: custom.roast_level.value, show_label: true -%}
   </div>
 </article>

@@ -95,3 +95,64 @@ test('an asset is served with the right content type', async () => {
   assert.equal(response.status, 200);
   assert.match(response.headers.get('content-type'), /text\/css/);
 });
+
+test('the header navigation renders the main menu — link_list settings must resolve', async () => {
+  const html = await (await fetch(`${origin}/`)).text();
+  assert.match(html, /class="header__link"[^>]*href="\/pages\/private-label"/);
+  assert.match(html, /class="header__link"[^>]*href="\/pages\/wholesale"/);
+  assert.match(html, /class="header__link"[^>]*href="\/pages\/our-brands"/);
+});
+
+test('posting the contact form redirects back instead of 404', async () => {
+  const response = await fetch(`${origin}/contact`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Referer: `${origin}/pages/get-a-quote`,
+    },
+    body: new URLSearchParams({ 'contact[email]': 'hello@example.com' }),
+    redirect: 'manual',
+  });
+  assert.equal(response.status, 302);
+  assert.match(response.headers.get('location') ?? '', /get-a-quote/);
+});
+
+test('the enquiry page shows the success banner after contact_posted=1', async () => {
+  const html = await (await fetch(`${origin}/pages/get-a-quote?contact_posted=1`)).text();
+  assert.match(html, /enquiry__success|Thanks — we have your enquiry/);
+});
+
+test('the enquiry page does not show the success banner without the query', async () => {
+  const html = await (await fetch(`${origin}/pages/get-a-quote`)).text();
+  assert.equal(/enquiry__success/.test(html), false);
+  assert.equal(/Thanks — we have your enquiry/.test(html), false);
+});
+
+test('posting multipart form data to /cart/add works — that is what product-form fetch sends', async () => {
+  resetCart();
+  const body = new FormData();
+  body.set('id', 'wadi-rum-blend-250-wb');
+  body.set('quantity', '1');
+  const response = await fetch(`${origin}/cart/add`, {
+    method: 'POST',
+    headers: { Accept: 'application/json' },
+    body,
+  });
+  assert.equal(response.status, 200);
+  assert.equal((await response.json()).item_count, 1);
+});
+
+test('product images under /preview-media/ are the client packaging shots', async () => {
+  for (const handle of ['wadi-rum-blend', 'dead-sea-blend', 'downtown-blend', 'filtered-coffee-bags']) {
+    const response = await fetch(`${origin}/preview-media/${handle}.jpg`);
+    assert.equal(response.status, 200, handle);
+    assert.match(response.headers.get('content-type') ?? '', /image\/jpeg/);
+  }
+});
+
+test('the password page uses the password layout — no store header or cart drawer', async () => {
+  const html = await (await fetch(`${origin}/password`)).text();
+  assert.match(html, /template-password/);
+  assert.equal(/class="header"/.test(html), false);
+  assert.equal(/cart-drawer/.test(html), false);
+});

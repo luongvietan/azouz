@@ -22,15 +22,17 @@ test('renders one row per attribute with both pole labels', async () => {
   assert.match(html, /Robusta blend/);
 });
 
-test('the spectrum bar is decorative and hidden from assistive tech', async () => {
+test('does not render a decorative spectrum bar', async () => {
   const html = await renderSection('blend-builder', { blocks: [SIX[0]] });
-  assert.match(html, /class="blend-attr__track"[^>]*aria-hidden="true"/);
+  assert.equal(/blend-attr__track/.test(html), false);
+  assert.match(html, /class="blend-attr__range"/);
 });
 
-test('the meaning survives without the bar — pole labels are real text', async () => {
+test('the meaning survives as plain text poles joined by an arrow', async () => {
   const html = await renderSection('blend-builder', { blocks: [SIX[0]] });
-  assert.match(html, /class="blend-attr__pole"[^>]*>\s*Light/);
-  assert.match(html, /class="blend-attr__pole"[^>]*>\s*Full/);
+  assert.match(html, />\s*Light\s*<\/span>/);
+  assert.match(html, />\s*Full\s*<\/span>/);
+  assert.match(html, /class="blend-attr__sep"[^>]*aria-hidden="true"/);
 });
 
 test('renders the heading as an h2 and attribute names as h3', async () => {

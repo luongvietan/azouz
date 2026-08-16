@@ -23,6 +23,14 @@ test('the dialog is closed in the markup — it must never block a no-js page', 
   assert.equal(/<dialog[^>]+\sopen/.test(html), false);
 });
 
+test('the closed drawer is inert and hidden from the accessibility tree', async () => {
+  const html = await render(filled());
+  assert.match(html, /<cart-drawer[^>]*\bhidden\b[^>]*aria-hidden="true"/);
+  assert.match(html, /<dialog[^>]*\binert\b[^>]*>/);
+  assert.match(html, /<dialog[^>]*aria-hidden="true"[^>]*>/);
+  assert.match(html, /<dialog[^>]*\bhidden\b[^>]*>/);
+});
+
 test('the refreshable region is marked so a refresh does not destroy the element', async () => {
   const html = await render(filled());
   assert.match(html, /data-drawer-content/);

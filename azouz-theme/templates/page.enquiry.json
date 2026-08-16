@@ -1,23 +1,25 @@
-{
-  "sections": {
-    "hero": {
-      "type": "hero-split",
-      "settings": {
-        "eyebrow": "Get in touch",
-        "heading": "Let's Create Your Coffee.",
-        "body": "<p>Tell us what type of coffee you are looking for, your expected quantity and your target market — we'll come back with a recommendation or a sample.</p>",
-        "background": "default"
-      }
-    },
-    "form": {
-      "type": "enquiry-form",
-      "settings": {
-        "eyebrow": "Enquiry",
-        "heading": "Tell us what you are looking for",
-        "require_volume": false,
-        "background": "alt"
-      }
-    }
-  },
-  "order": ["hero", "form"]
-}
+{
+  "sections": {
+    "hero": {
+      "type": "hero-split",
+      "settings": {
+        "eyebrow": "Get in touch",
+        "heading": "Request a Sample.",
+        "body": "<p>Tell us what type of coffee you are looking for and we will prepare a sample or recommend a blend to try.</p>",
+        "image": "/preview-media/wadi-rum-blend.jpg",
+        "image_alt": "Wadi Rum Blend sample bag, silver foil on Off White",
+        "background": "default"
+      }
+    },
+    "form": {
+      "type": "enquiry-form",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Tell us what you are looking for",
+        "require_volume": false,
+        "background": "alt"
+      }
+    }
+  },
+  "order": ["hero", "form"]
+}

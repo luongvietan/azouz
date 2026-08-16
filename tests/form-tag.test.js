@@ -62,6 +62,22 @@ test('the form body still renders and the form object is in scope', async () => 
   assert.match(html, />no</);
 });
 
+test('a contact form reports posted_successfully when the query flag is set', async () => {
+  const html = await render(
+    `{% form 'contact' %}{% if form.posted_successfully? %}yes{% else %}no{% endif %}{% endform %}`,
+    { request: { query: { contact_posted: '1' } } },
+  );
+  assert.match(html, />yes</);
+});
+
+test('a product form does not claim posted_successfully from the contact query flag', async () => {
+  const html = await render(
+    `{% form 'product', product %}{% if form.posted_successfully? %}yes{% else %}no{% endif %}{% endform %}`,
+    { product: { id: 'p1' }, request: { query: { contact_posted: '1' } } },
+  );
+  assert.match(html, />no</);
+});
+
 test('an unknown form type falls back to a form-type url rather than throwing', async () => {
   const html = await render(`{% form 'mystery' %}x{% endform %}`);
   assert.match(html, /action="\/mystery"/);

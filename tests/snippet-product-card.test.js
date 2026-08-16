@@ -5,11 +5,12 @@ import { renderSnippet } from './helpers/render-snippet.js';
 
 const fixtures = buildFixtures();
 const wadiRum = fixtures.products[0];
+const deadSea = fixtures.products[1];
 const filterBags = fixtures.products[3];
 
 test('renders the product title inside the label block', async () => {
   const html = await renderSnippet('product-card', { product: wadiRum });
-  assert.match(html, /label-block__title[^>]*>\s*Wadi Rum Blend/);
+  assert.match(html, /label-block__title[\s\S]*Wadi Rum Blend/);
 });
 
 test('the whole card links to the product', async () => {
@@ -30,6 +31,11 @@ test('renders the tasting notes as the label subtitle', async () => {
 test('renders the roast meter', async () => {
   const html = await renderSnippet('product-card', { product: wadiRum });
   assert.match(html, /roast-meter/);
+});
+
+test('labels the roast meter so the dots are not read as a star rating', async () => {
+  const html = await renderSnippet('product-card', { product: wadiRum });
+  assert.match(html, /roast-meter__label/);
 });
 
 test('shows a from-price when the product spans a price range', async () => {
@@ -61,4 +67,22 @@ test('a sold-out product is marked as such', async () => {
   const html = await renderSnippet('product-card', { product: soldOut });
   assert.match(html, /product-card__badge/);
   assert.equal(/translation missing/.test(html), false);
+});
+
+test('a light label fill auto-picks Jet ink', async () => {
+  const html = await renderSnippet('product-card', { product: deadSea });
+  assert.match(html, /--label-fg:\s*var\(--color-text\)/);
+});
+
+test('a dark label fill does not force Jet ink', async () => {
+  const html = await renderSnippet('product-card', { product: wadiRum });
+  assert.equal(/--label-fg/.test(html), false);
+});
+
+test('the product title is the accessible name once — not doubled', async () => {
+  const html = await renderSnippet('product-card', { product: wadiRum });
+  const heading = html.match(/<h3[^>]*>([\s\S]*?)<\/h3>/);
+  assert.ok(heading, 'expected a product-card heading');
+  assert.equal((heading[1].match(/Wadi Rum Blend/g) ?? []).length, 1);
+  assert.equal(/visually-hidden/.test(heading[1]), false);
 });

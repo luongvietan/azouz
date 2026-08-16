@@ -86,3 +86,15 @@ test('weight_with_unit appends the unit to a gram weight', () => {
 test('link_to wraps text in an anchor', () => {
   assert.equal(render(`{{ 'Shop' | link_to: '/collections/all' }}`), '<a href="/collections/all">Shop</a>');
 });
+
+test('color_brightness of Dead Sea mint is above the dark-ink threshold', () => {
+  assert.ok(Number(render(`{{ '#BFDDD3' | color_brightness }}`)) > 160);
+});
+
+test('color_brightness of Wadi Rum rust is below the dark-ink threshold', () => {
+  assert.ok(Number(render(`{{ '#C4562E' | color_brightness }}`)) < 160);
+});
+
+test('color_brightness of Jet is below the dark-ink threshold', () => {
+  assert.ok(Number(render(`{{ '#303030' | color_brightness }}`)) < 160);
+});

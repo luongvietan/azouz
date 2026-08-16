@@ -11,7 +11,7 @@ const render = (scope = {}, settings = {}) =>
 
 test('the collection title is the page h1, and the only one', async () => {
   const html = await render();
-  assert.match(html, /<h1[^>]*>[\s\S]*Azouz Coffee[\s\S]*<\/h1>/);
+  assert.match(html, /<h1[^>]*>[\s\S]*Our Coffee[\s\S]*<\/h1>/);
   assert.equal(countMatches(html, /<h1/g), 1);
 });
 

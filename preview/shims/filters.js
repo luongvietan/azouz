@@ -28,6 +28,20 @@ export function handleize(value) {
     .replace(/^-+|-+$/g, '');
 }
 
+/**
+ * Shopify `color_brightness`: W3C perceived brightness, 0–255.
+ * Accepts `#RRGGBB`. Unknown input returns 0 so light-ink stays the default.
+ */
+export function colorBrightness(value) {
+  const match = /^#([0-9a-fA-F]{6})$/.exec(String(value ?? '').trim());
+  if (!match) return 0;
+  const n = parseInt(match[1], 16);
+  const r = (n >> 16) & 255;
+  const g = (n >> 8) & 255;
+  const b = n & 255;
+  return (r * 299 + g * 587 + b * 114) / 1000;
+}
+
 /** Resolve a dotted key against a nested translations object. */
 function lookupTranslation(translations, key) {
   return String(key)
@@ -81,6 +95,7 @@ export function registerShopifyFilters(engine, options = {}) {
 
   engine.registerFilter('handle', handleize);
   engine.registerFilter('handleize', handleize);
+  engine.registerFilter('color_brightness', colorBrightness);
 
   engine.registerFilter('t', (key, ...args) => {
     const found = lookupTranslation(translations, key);

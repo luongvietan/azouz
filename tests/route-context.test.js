@@ -21,6 +21,14 @@ test('a product url resolves to the product template with that product in scope'
   assert.equal(route.scope.product.title, 'Wadi Rum Blend');
 });
 
+test('a product url with ?variant= selects that variant', () => {
+  const route = resolveRoute(
+    '/products/wadi-rum-blend',
+    new URLSearchParams('variant=wadi-rum-blend-1kg-wb'),
+  );
+  assert.equal(route.scope.product.selected_or_first_available_variant.id, 'wadi-rum-blend-1kg-wb');
+});
+
 test('an unknown product handle resolves to the 404 template', () => {
   const route = resolveRoute('/products/not-a-real-blend');
   assert.equal(route.page_type, '404');
@@ -31,6 +39,14 @@ test('a collection url resolves to the collection template', () => {
   const route = resolveRoute('/collections/all');
   assert.equal(route.page_type, 'collection');
   assert.equal(route.scope.collection.products.length, 4);
+});
+
+test('preview page titles follow the resolved resource', () => {
+  assert.equal(resolveRoute('/products/wadi-rum-blend').scope.page_title, 'Wadi Rum Blend');
+  assert.equal(resolveRoute('/collections/all').scope.page_title, 'Our Coffee');
+  assert.equal(resolveRoute('/pages/private-label').scope.page_title, 'Private Label');
+  assert.equal(resolveRoute('/pages/wholesale').scope.page_title, 'Wholesale');
+  assert.equal(resolveRoute('/').scope.page_title, 'Your Coffee. Your Brand. Our Roastery.');
 });
 
 test('the collection index lists every collection', () => {

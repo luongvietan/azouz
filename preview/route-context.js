@@ -10,7 +10,11 @@ import { buildCart } from './cart-api.js';
 
 /** Static marketing routes. `page` supplies the Liquid `page` object. */
 export const ROUTES = {
-  '/': { page_type: 'index', template: 'templates/index.json' },
+  '/': {
+    page_type: 'index',
+    template: 'templates/index.json',
+    page_title: 'Your Coffee. Your Brand. Our Roastery.',
+  },
   '/pages/private-label': {
     page_type: 'page',
     template: 'templates/page.private-label.json',
@@ -33,7 +37,7 @@ export const ROUTES = {
   },
   '/pages/get-a-quote': {
     page_type: 'page',
-    template: 'templates/page.enquiry.json',
+    template: 'templates/page.get-a-quote.json',
     page: { title: 'Get a Quote', handle: 'get-a-quote', content: '' },
   },
 };
@@ -81,7 +85,12 @@ export function resolveRoute(pathname, query = new URLSearchParams()) {
     return {
       page_type: marketing.page_type,
       template: templateForRoute(marketing),
-      scope: { page: marketing.page ?? null },
+      scope: {
+        page: marketing.page ?? null,
+        ...(marketing.page_title || marketing.page?.title
+          ? { page_title: marketing.page_title || marketing.page.title }
+          : {}),
+      },
     };
   }
 
@@ -89,10 +98,20 @@ export function resolveRoute(pathname, query = new URLSearchParams()) {
   if (product) {
     const found = fixtures.products.find((item) => item.handle === product[1]);
     if (!found) return notFound();
+    const variantId = query.get('variant');
+    const selected = variantId
+      ? found.variants.find((variant) => String(variant.id) === variantId)
+      : null;
     return {
       page_type: 'product',
       template: 'templates/product.json',
-      scope: { product: found, collection: fixtures.collections.all },
+      scope: {
+        product: selected
+          ? { ...found, selected_or_first_available_variant: selected }
+          : found,
+        collection: fixtures.collections.all,
+        page_title: found.title,
+      },
     };
   }
 
@@ -100,7 +119,11 @@ export function resolveRoute(pathname, query = new URLSearchParams()) {
   if (collection) {
     const found = fixtures.collections[collection[1]];
     if (!found) return notFound();
-    return { page_type: 'collection', template: 'templates/collection.json', scope: { collection: found } };
+    return {
+      page_type: 'collection',
+      template: 'templates/collection.json',
+      scope: { collection: found, page_title: found.title },
+    };
   }
 
   if (path === '/collections') {

@@ -1,67 +1,68 @@
-{
-  "sections": {
-    "hero": {
-      "type": "hero-split",
-      "settings": {
-        "eyebrow": "Our Brands",
-        "heading": "Our Brands.",
-        "body": "<p>Alongside private label and wholesale coffee, we also develop and sell our own coffee products.</p><p>Our brands are created using the same roasting, blending and product development experience we offer to our business partners.</p>",
-        "background": "default"
-      }
-    },
-    "azouz": {
-      "type": "brand-feature",
-      "settings": {
-        "eyebrow": "Our own brand",
-        "heading": "Azouz Coffee",
-        "body": "<p>Our own coffee brand, developed for modern coffee drinkers.</p><p>The range includes espresso, Turkish coffee, specialty coffee and selected retail products.</p>",
-        "cta_label": "View Azouz Coffee",
-        "cta_link": "/collections/all",
-        "media_position": "end",
-        "background": "alt"
-      }
-    },
-    "products": {
-      "type": "feature-grid",
-      "settings": {
-        "eyebrow": "Retail Coffee Products",
-        "heading": "Our own branded products can be available in different formats depending on the range.",
-        "background": "default"
-      },
-      "blocks": {
-        "espresso": { "type": "feature", "settings": { "title": "Espresso coffee" } },
-        "turkish": { "type": "feature", "settings": { "title": "Turkish coffee" } },
-        "specialty": { "type": "feature", "settings": { "title": "Specialty coffee" } },
-        "single_origin": { "type": "feature", "settings": { "title": "Single-origin coffee" } },
-        "whole_bean": { "type": "feature", "settings": { "title": "Whole bean coffee" } },
-        "ground": { "type": "feature", "settings": { "title": "Ground coffee" } },
-        "retail_bags": { "type": "feature", "settings": { "title": "Retail coffee bags" } },
-        "seasonal": { "type": "feature", "settings": { "title": "Selected seasonal products" } }
-      },
-      "block_order": ["espresso", "turkish", "specialty", "single_origin", "whole_bean", "ground", "retail_bags", "seasonal"]
-    },
-    "distribution": {
-      "type": "cta-band",
-      "settings": {
-        "heading": "Interested in Distribution?",
-        "body": "<p>We work with retailers, distributors, cafés and hospitality businesses looking to stock our brands. For wholesale pricing, distribution opportunities or product availability, contact our team.</p>",
-        "cta_primary_label": "Become a Distributor",
-        "cta_primary_link": "/pages/get-a-quote",
-        "cta_secondary_label": "Wholesale Enquiry",
-        "cta_secondary_link": "/pages/get-a-quote",
-        "background": "accent"
-      }
-    },
-    "cross_sell": {
-      "type": "cta-band",
-      "settings": {
-        "heading": "Looking for Your Own Brand Instead?",
-        "body": "<p>If you like what we produce but want coffee under your own name, our private label service can help you create your own range.</p>",
-        "cta_primary_label": "Explore Private Label",
-        "cta_primary_link": "/pages/private-label",
-        "background": "default"
-      }
-    }
-  },
-  "order": ["hero", "azouz", "products", "distribution", "cross_sell"]
-}
+{
+  "sections": {
+    "hero": {
+      "type": "hero-split",
+      "settings": {
+        "eyebrow": "Our Brands",
+        "heading": "Our Brands.",
+        "body": "<p>Alongside private label and wholesale coffee, we also develop and sell our own coffee products.</p><p>Our brands are created using the same roasting, blending and product development experience we offer to our business partners.</p>",
+        "image": "/preview-media/downtown-blend.jpg",
+        "image_alt": "Downtown Blend retail bag, silver foil on Off White",
+        "background": "default"
+      }
+    },
+    "azouz": {
+      "type": "brand-feature",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Azouz Coffee",
+        "body": "<p>Our own coffee brand, developed for modern coffee drinkers.</p><p>The range includes espresso, Turkish coffee, specialty coffee and selected retail products.</p>",
+        "cta_label": "View Azouz Coffee",
+        "cta_link": "/collections/all",
+        "image": "/preview-media/wadi-rum-blend.jpg",
+        "image_alt": "Wadi Rum Blend and Dead Sea Blend bags from the Azouz retail range",
+        "media_position": "end",
+        "background": "alt"
+      }
+    },
+    "products": {
+      "type": "feature-grid",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Formats in our retail range.",
+        "background": "default"
+      },
+      "blocks": {
+        "espresso": { "type": "feature", "settings": { "title": "Espresso coffee" } },
+        "turkish": { "type": "feature", "settings": { "title": "Turkish coffee" } },
+        "specialty": { "type": "feature", "settings": { "title": "Specialty coffee" } },
+        "whole_bean": { "type": "feature", "settings": { "title": "Whole bean coffee" } },
+        "retail_bags": { "type": "feature", "settings": { "title": "Retail coffee bags" } }
+      },
+      "block_order": ["espresso", "turkish", "specialty", "whole_bean", "retail_bags"]
+    },
+    "distribution": {
+      "type": "cta-band",
+      "settings": {
+        "heading": "Interested in Distribution?",
+        "body": "<p>We work with retailers, distributors, cafés and hospitality businesses looking to stock our brands. For wholesale pricing, distribution opportunities or product availability, contact our team.</p>",
+        "cta_primary_label": "Become a Distributor",
+        "cta_primary_link": "/pages/get-a-quote",
+        "cta_secondary_label": "View Wholesale",
+        "cta_secondary_link": "/pages/wholesale",
+        "background": "accent"
+      }
+    },
+    "cross_sell": {
+      "type": "cta-band",
+      "settings": {
+        "heading": "Looking for Your Own Brand Instead?",
+        "body": "<p>If you like what we produce but want coffee under your own name, our private label service can help you create your own range.</p>",
+        "cta_primary_label": "Explore Private Label",
+        "cta_primary_link": "/pages/private-label",
+        "background": "default"
+      }
+    }
+  },
+  "order": ["hero", "azouz", "products", "distribution", "cross_sell"]
+}

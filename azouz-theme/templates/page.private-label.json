@@ -1,141 +1,114 @@
-{
-  "sections": {
-    "hero": {
-      "type": "hero-split",
-      "settings": {
-        "eyebrow": "Private Label",
-        "heading": "Build Your Own Coffee Brand.",
-        "body": "<p>We help businesses create coffee products under their own brand — from coffee selection and roasting to grinding and packaging.</p>",
-        "cta_primary_label": "Start Your Project",
-        "cta_primary_link": "/pages/get-a-quote",
-        "cta_secondary_label": "Request a Sample",
-        "cta_secondary_link": "/pages/request-a-sample",
-        "background": "default"
-      }
-    },
-    "capabilities": {
-      "type": "process-steps",
-      "settings": {
-        "eyebrow": "What We Can Do",
-        "heading": "From selection to sealed bag.",
-        "show_numbers": true,
-        "layout": "cards",
-        "background": "alt"
-      },
-      "blocks": {
-        "choose": {
-          "type": "step",
-          "settings": { "title": "Choose Your Coffee", "body": "Select from our existing blends or create something unique." }
-        },
-        "develop": {
-          "type": "step",
-          "settings": { "title": "Custom Blend Development", "body": "We can adjust the origin, roast level, body, acidity and flavour profile to suit your market." }
-        },
-        "roast": {
-          "type": "step",
-          "settings": { "title": "Roasting", "body": "Your approved coffee is roasted consistently to the agreed profile." }
-        },
-        "grind": {
-          "type": "step",
-          "settings": { "title": "Grinding", "body": "Available as whole bean or ground for different brewing methods." }
-        },
-        "pack": {
-          "type": "step",
-          "settings": { "title": "Packaging", "body": "We can pack your coffee into retail or wholesale sizes ready for your brand." }
-        }
-      },
-      "block_order": ["choose", "develop", "roast", "grind", "pack"]
-    },
-    "options": {
-      "type": "feature-grid",
-      "settings": { "eyebrow": "Private Label Coffee Options", "heading": "We can produce:", "background": "default" },
-      "blocks": {
-        "espresso": { "type": "feature", "settings": { "title": "Espresso blends" } },
-        "specialty": { "type": "feature", "settings": { "title": "Specialty coffee" } },
-        "single_origin": { "type": "feature", "settings": { "title": "Single-origin coffee" } },
-        "turkish": { "type": "feature", "settings": { "title": "Turkish coffee" } },
-        "arabic": { "type": "feature", "settings": { "title": "Arabic coffee" } },
-        "filter": { "type": "feature", "settings": { "title": "Filter coffee" } },
-        "whole_bean": { "type": "feature", "settings": { "title": "Whole bean coffee" } },
-        "ground": { "type": "feature", "settings": { "title": "Ground coffee" } }
-      },
-      "block_order": ["espresso", "specialty", "single_origin", "turkish", "arabic", "filter", "whole_bean", "ground"]
-    },
-    "choice": {
-      "type": "two-column-choice",
-      "settings": { "heading": "Your Blend or Ours.", "background": "alt" },
-      "blocks": {
-        "existing": {
-          "type": "option",
-          "settings": { "title": "Choose One of Our Existing Blends", "body": "A faster option if you want to launch quickly." }
-        },
-        "custom": {
-          "type": "option",
-          "settings": { "title": "Create Your Own Blend", "body": "Work with us to develop a coffee specifically for your brand, market and target price." }
-        }
-      },
-      "block_order": ["existing", "custom"]
-    },
-    "blend": {
-      "type": "blend-builder",
-      "settings": { "eyebrow": "We can adjust", "heading": "Tune every variable.", "background": "default" },
-      "blocks": {
-        "body": { "type": "attribute", "settings": { "title": "Body", "low": "Light", "high": "Full" } },
-        "sweetness": { "type": "attribute", "settings": { "title": "Sweetness", "low": "Subtle", "high": "Pronounced" } },
-        "acidity": { "type": "attribute", "settings": { "title": "Acidity", "low": "Low", "high": "Bright" } },
-        "roast": { "type": "attribute", "settings": { "title": "Roast Level", "low": "Light", "high": "Dark" } },
-        "ratio": { "type": "attribute", "settings": { "title": "Arabica/Robusta Ratio", "low": "100% Arabica", "high": "Robusta blend" } },
-        "flavour": { "type": "attribute", "settings": { "title": "Flavour Profile", "low": "Chocolate", "high": "Fruit" } }
-      },
-      "block_order": ["body", "sweetness", "acidity", "roast", "ratio", "flavour"]
-    },
-    "packaging": {
-      "type": "packaging-sizes",
-      "settings": {
-        "heading": "Packaging Options",
-        "body": "Available in different sizes depending on your project.",
-        "note": "Custom packaging options can also be discussed.",
-        "background": "alt"
-      },
-      "blocks": {
-        "s250": { "type": "format", "settings": { "title": "250 g" } },
-        "s500": { "type": "format", "settings": { "title": "500 g" } },
-        "s1kg": { "type": "format", "settings": { "title": "1 kg" } },
-        "bulk": { "type": "format", "settings": { "title": "Bulk" } }
-      },
-      "block_order": ["s250", "s500", "s1kg", "bulk"]
-    },
-    "audience": {
-      "type": "audience-strip",
-      "settings": {
-        "heading": "Who We Work With",
-        "intro": "",
-        "footnote": "Whether you are creating your first coffee product or expanding an existing range, we can support you from sample to production.",
-        "background": "default"
-      },
-      "blocks": {
-        "shops": { "type": "audience", "settings": { "title": "Coffee Shops" } },
-        "retailers": { "type": "audience", "settings": { "title": "Retailers" } },
-        "hotels": { "type": "audience", "settings": { "title": "Hotels" } },
-        "restaurants": { "type": "audience", "settings": { "title": "Restaurants" } },
-        "distributors": { "type": "audience", "settings": { "title": "Distributors" } },
-        "startups": { "type": "audience", "settings": { "title": "Startups" } },
-        "supermarkets": { "type": "audience", "settings": { "title": "Supermarkets" } }
-      },
-      "block_order": ["shops", "retailers", "hotels", "restaurants", "distributors", "startups", "supermarkets"]
-    },
-    "closing": {
-      "type": "cta-band",
-      "settings": {
-        "heading": "Ready to Create Your Coffee?",
-        "body": "<p>Tell us what type of coffee you are looking for, your expected quantity and your target market.</p>",
-        "cta_primary_label": "Request a Sample",
-        "cta_primary_link": "/pages/request-a-sample",
-        "cta_secondary_label": "Get a Private Label Quote",
-        "cta_secondary_link": "/pages/get-a-quote",
-        "background": "accent"
-      }
-    }
-  },
-  "order": ["hero", "capabilities", "options", "choice", "blend", "packaging", "audience", "closing"]
-}
+{
+  "sections": {
+    "hero": {
+      "type": "hero-split",
+      "settings": {
+        "eyebrow": "Private Label",
+        "heading": "Build Your Own Coffee Brand.",
+        "body": "<p>We help businesses create coffee products under their own brand — from coffee selection and roasting to grinding and packaging.</p>",
+        "image": "/preview-media/wadi-rum-blend-alt.jpg",
+        "image_alt": "Wadi Rum Blend retail bag, silver foil on Off White",
+        "cta_primary_label": "Start Your Project",
+        "cta_primary_link": "/pages/get-a-quote",
+        "cta_secondary_label": "Request a Sample",
+        "cta_secondary_link": "/pages/request-a-sample",
+        "background": "default"
+      }
+    },
+    "capabilities": {
+      "type": "process-steps",
+      "settings": {
+        "eyebrow": "",
+        "heading": "From selection to sealed bag.",
+        "show_numbers": true,
+        "layout": "cards",
+        "background": "alt"
+      },
+      "blocks": {
+        "choose": {
+          "type": "step",
+          "settings": {
+            "title": "Choose Your Coffee",
+            "body": "Pick one of our existing blends for a faster launch, or work with us to develop something unique for your brand."
+          }
+        },
+        "develop": {
+          "type": "step",
+          "settings": { "title": "Custom Blend Development", "body": "We can adjust the origin, roast level, body, acidity and flavour profile to suit your market." }
+        },
+        "roast": {
+          "type": "step",
+          "settings": { "title": "Roasting", "body": "Your approved coffee is roasted consistently to the agreed profile." }
+        },
+        "grind": {
+          "type": "step",
+          "settings": { "title": "Grinding", "body": "Available as whole bean or ground for different brewing methods." }
+        },
+        "pack": {
+          "type": "step",
+          "settings": { "title": "Packaging", "body": "We can pack your coffee into retail or wholesale sizes ready for your brand." }
+        }
+      },
+      "block_order": ["choose", "develop", "roast", "grind", "pack"]
+    },
+    "options": {
+      "type": "feature-grid",
+      "settings": { "eyebrow": "", "heading": "We can produce:", "background": "default" },
+      "blocks": {
+        "espresso": { "type": "feature", "settings": { "title": "Espresso blends" } },
+        "specialty": { "type": "feature", "settings": { "title": "Specialty coffee" } },
+        "single_origin": { "type": "feature", "settings": { "title": "Single-origin coffee" } },
+        "turkish": { "type": "feature", "settings": { "title": "Turkish coffee" } },
+        "filter": { "type": "feature", "settings": { "title": "Filter coffee" } }
+      },
+      "block_order": ["espresso", "specialty", "single_origin", "turkish", "filter"]
+    },
+    "blend": {
+      "type": "blend-builder",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Tune every variable.",
+        "body": "<p>We tune these variables together during blend development. This is not a self-serve configurator.</p>",
+        "background": "alt"
+      },
+      "blocks": {
+        "body": { "type": "attribute", "settings": { "title": "Body", "low": "Light", "high": "Full" } },
+        "sweetness": { "type": "attribute", "settings": { "title": "Sweetness", "low": "Subtle", "high": "Pronounced" } },
+        "acidity": { "type": "attribute", "settings": { "title": "Acidity", "low": "Low", "high": "Bright" } },
+        "roast": { "type": "attribute", "settings": { "title": "Roast Level", "low": "Light", "high": "Dark" } },
+        "ratio": { "type": "attribute", "settings": { "title": "Arabica/Robusta Ratio", "low": "100% Arabica", "high": "Robusta blend" } },
+        "flavour": { "type": "attribute", "settings": { "title": "Flavour Profile", "low": "Chocolate", "high": "Fruit" } }
+      },
+      "block_order": ["body", "sweetness", "acidity", "roast", "ratio", "flavour"]
+    },
+    "packaging": {
+      "type": "packaging-sizes",
+      "settings": {
+        "heading": "Packaging Options",
+        "body": "Available in different sizes depending on your project.",
+        "note": "Custom packaging options can also be discussed.",
+        "background": "default"
+      },
+      "blocks": {
+        "s250": { "type": "format", "settings": { "title": "250 g" } },
+        "s500": { "type": "format", "settings": { "title": "500 g" } },
+        "s1kg": { "type": "format", "settings": { "title": "1 kg" } },
+        "bulk": { "type": "format", "settings": { "title": "Bulk" } }
+      },
+      "block_order": ["s250", "s500", "s1kg", "bulk"]
+    },
+    "closing": {
+      "type": "cta-band",
+      "settings": {
+        "heading": "Ready to Create Your Coffee?",
+        "body": "<p>Tell us what type of coffee you are looking for, your expected quantity and your target market.</p>",
+        "cta_primary_label": "Request a Sample",
+        "cta_primary_link": "/pages/request-a-sample",
+        "cta_secondary_label": "Get a Private Label Quote",
+        "cta_secondary_link": "/pages/get-a-quote",
+        "background": "accent"
+      }
+    }
+  },
+  "order": ["hero", "capabilities", "options", "blend", "packaging", "closing"]
+}

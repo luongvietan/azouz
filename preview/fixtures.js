@@ -3,10 +3,22 @@
  * Product data mirrors the packaging mockups supplied by the client.
  * Prices are placeholders — see dist/products.csv for the values the client edits.
  */
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { THEME_DIR } from '../scripts/theme-paths.js';
+
+function themeSettings() {
+  try {
+    const data = JSON.parse(readFileSync(join(THEME_DIR, 'config/settings_data.json'), 'utf8'));
+    return data.current ?? {};
+  } catch {
+    return {};
+  }
+}
 
 const metafield = (value, type) => ({ value, type });
 
-function makeBlend({ handle, title, roast, notes, labelColor, description, soldOut, saleOn }) {
+function makeBlend({ handle, title, roast, notes, labelColor, description, soldOut, saleOn, extraImages = [] }) {
   const url = `/products/${handle}`;
 
   const variant = ({ id, weight, grind, price, compareAt = null }) => ({
@@ -56,7 +68,7 @@ function makeBlend({ handle, title, roast, notes, labelColor, description, soldO
     variants,
     selected_or_first_available_variant: available[0] ?? variants[0],
     featured_image: `/preview-media/${handle}.jpg`,
-    images: [`/preview-media/${handle}.jpg`],
+    images: [`/preview-media/${handle}.jpg`, ...extraImages],
     tags: ['espresso', 'arabica'],
     type: 'Coffee',
     vendor: 'Azouz Coffee',
@@ -83,6 +95,7 @@ export function buildFixtures() {
       notes: ['Dark Chocolate', 'Caramel', 'Spice'],
       labelColor: '#C4562E',
       description: 'An espresso roast built for depth — dark chocolate and caramel with a warm spice finish.',
+      extraImages: ['/preview-media/wadi-rum-blend-alt.jpg'],
     }),
     makeBlend({
       handle: 'dead-sea-blend',
@@ -153,7 +166,7 @@ export function buildFixtures() {
       vendor: 'Azouz Coffee',
       metafields: {
         custom: {
-          roast_level: metafield(5, 'number_integer'),
+          roast_level: metafield(4, 'number_integer'),
           tasting_notes: metafield(['Rich', 'Full Bodied'], 'list.single_line_text_field'),
           origin: metafield('Blend', 'single_line_text_field'),
           process: metafield('Washed', 'single_line_text_field'),
@@ -168,7 +181,7 @@ export function buildFixtures() {
   const allCollection = {
     id: 'all',
     handle: 'all',
-    title: 'Azouz Coffee',
+    title: 'Our Coffee',
     description: 'Espresso, Turkish, specialty and filter coffee, roasted in Jordan.',
     url: '/collections/all',
     products,
@@ -203,8 +216,9 @@ export function buildFixtures() {
       },
       footer: {
         links: [
-          { title: 'Request a Sample', url: '/pages/request-a-sample', active: false, links: [] },
-          { title: 'Get a Quote', url: '/pages/get-a-quote', active: false, links: [] },
+          { title: 'Private Label', url: '/pages/private-label', active: false, links: [] },
+          { title: 'Wholesale', url: '/pages/wholesale', active: false, links: [] },
+          { title: 'Shop', url: '/collections/all', active: false, links: [] },
         ],
       },
     },
@@ -219,6 +233,7 @@ export function buildFixtures() {
       account_url: '/account',
       account_login_url: '/account/login',
     },
+    settings: themeSettings(),
     request: { locale: { iso_code: 'en', endonym_name: 'English' }, page_type: 'index', design_mode: false },
     canonical_url: 'https://www.azouzcoffee.com/',
     page_title: 'Azouz Coffee',

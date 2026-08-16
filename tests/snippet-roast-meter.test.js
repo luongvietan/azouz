@@ -34,3 +34,20 @@ test('the accessible label states both the level and the maximum', async () => {
   const html = await renderSnippet('roast-meter', { level: 3 });
   assert.match(html, /aria-label="[^"]*3[^"]*5[^"]*"/);
 });
+
+test('does not show a visible Roast level label by default', async () => {
+  const html = await renderSnippet('roast-meter', { level: 3 });
+  assert.equal(/roast-meter__label/.test(html), false);
+  const withoutAria = html.replace(/aria-label="[^"]*"/g, '');
+  assert.equal(/Roast level/.test(withoutAria), false);
+});
+
+test('shows a visible Roast level label when show_label is true', async () => {
+  const html = await renderSnippet('roast-meter', { level: 3, show_label: true });
+  assert.match(html, /roast-meter__label/);
+  assert.match(html, /aria-hidden="true"/);
+  const withoutAria = html.replace(/aria-label="[^"]*"/g, '');
+  assert.match(withoutAria, /Roast level/);
+  assert.match(html, /role="img"/);
+  assert.match(html, /aria-label="[^"]*3[^"]*5[^"]*"/);
+});

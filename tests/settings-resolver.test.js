@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveSettings } from '../preview/settings-resolver.js';
+import { resolveSettings, resolveSection } from '../preview/settings-resolver.js';
 import { buildFixtures } from '../preview/fixtures.js';
 
 const fixtures = buildFixtures();
@@ -37,6 +37,15 @@ test('an empty image_picker resolves to null so {% if %} guards work', () => {
   assert.equal(resolveSettings(schema, { image: '' }, fixtures).image, null);
 });
 
+test('an image_picker path that is already a URL is left alone', () => {
+  const resolved = resolveSettings(
+    schema,
+    { image: '/preview-media/wadi-rum-blend.jpg' },
+    fixtures,
+  );
+  assert.equal(resolved.image, '/preview-media/wadi-rum-blend.jpg');
+});
+
 test('a collection handle becomes the collection object', () => {
   const resolved = resolveSettings(schema, { featured: 'all' }, fixtures);
   assert.equal(resolved.featured.products.length, 4);
@@ -58,4 +67,14 @@ test('settings with no declared type pass through untouched', () => {
 
 test('a null schema is tolerated', () => {
   assert.deepEqual(resolveSettings(null, { a: 1 }, fixtures), { a: 1 });
+});
+
+test('resolveSection turns a link_list default into a menu object', () => {
+  const section = resolveSection(
+    { settings: [{ type: 'link_list', id: 'menu', default: 'main-menu' }] },
+    'header',
+    {},
+    fixtures,
+  );
+  assert.equal(section.settings.menu.links[0].title, 'Private Label');
 });

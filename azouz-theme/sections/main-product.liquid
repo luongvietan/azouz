@@ -5,11 +5,6 @@
   assign brews = custom.brew_methods.value
   assign label_color = custom.label_color.value
 
-  assign label_style = ''
-  if label_color != blank
-    assign label_style = '--label-bg: ' | append: label_color | append: ';'
-  endif
-
   assign has_specs = false
   if custom.origin.value != blank or custom.process.value != blank or custom.altitude.value != blank
     assign has_specs = true
@@ -20,8 +15,23 @@
 -%}
 
 <section class="section main-product" data-product-root{{ section.shopify_attributes }}>
-  <div class="container main-product__inner">
-    <div class="main-product__media">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="{{ 'general.accessibility.breadcrumb' | t }}">
+      <ol class="breadcrumb__list" role="list">
+        <li class="breadcrumb__item">
+          <a class="breadcrumb__link" href="{{ routes.root_url }}">{{ 'general.meta.home' | t }}</a>
+        </li>
+        <li class="breadcrumb__item">
+          <a class="breadcrumb__link" href="{{ collection.url | default: routes.all_products_collection_url }}">{{ 'general.meta.shop' | t }}</a>
+        </li>
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__current" aria-current="page">{{ product.title }}</span>
+        </li>
+      </ol>
+    </nav>
+
+    <div class="main-product__inner">
+      <div class="main-product__media">
       {%- if product.featured_image -%}
         <img
           class="main-product__image"
@@ -32,10 +42,10 @@
           fetchpriority="high"
           decoding="async">
       {%- endif -%}
-    </div>
+      </div>
 
-    <div class="main-product__details">
-      <div class="label-block main-product__label" style="{{ label_style }}">
+      <div class="main-product__details">
+      <div class="label-block main-product__label"{% if label_color != blank %} style="{% render 'label-ink', color: label_color %}"{% endif %}>
         <h1 class="label-block__title">{{ product.title }}</h1>
         {%- if notes != blank -%}
           <p class="label-block__subtitle">{{ notes | join: ' | ' }}</p>
@@ -105,6 +115,7 @@
           </div>
         </details>
       {%- endif -%}
+      </div>
     </div>
   </div>
 </section>

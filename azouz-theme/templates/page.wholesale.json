@@ -1,125 +1,107 @@
-{
-  "sections": {
-    "hero": {
-      "type": "hero-split",
-      "settings": {
-        "eyebrow": "Wholesale",
-        "heading": "Wholesale Coffee for Your Business.",
-        "body": "<p>Reliable, consistent coffee for cafés, restaurants, hotels, offices and distributors.</p><p>Choose from our existing blends or work with us to create your own.</p>",
-        "cta_primary_label": "Request Wholesale Pricing",
-        "cta_primary_link": "/pages/get-a-quote",
-        "cta_secondary_label": "Request a Sample",
-        "cta_secondary_link": "/pages/request-a-sample",
-        "background": "default"
-      }
-    },
-    "range": {
-      "type": "coffee-range",
-      "settings": { "eyebrow": "Our Coffee Range", "heading": "Four ways we roast.", "background": "alt" },
-      "blocks": {
-        "espresso": {
-          "type": "range",
-          "settings": {
-            "title": "Espresso Blends",
-            "body": "Balanced coffees developed for espresso and milk-based drinks.",
-            "label_color": "#C4562E",
-            "label_text": "light"
-          }
-        },
-        "turkish": {
-          "type": "range",
-          "settings": {
-            "title": "Turkish Coffee",
-            "body": "Traditional profiles available plain or with cardamom.",
-            "label_color": "#7C7F44",
-            "label_text": "light"
-          }
-        },
-        "specialty": {
-          "type": "range",
-          "settings": {
-            "title": "Specialty Coffee",
-            "body": "Single origins and specialty-grade coffees selected for quality and flavour.",
-            "label_color": "#BFDDD3",
-            "label_text": "dark"
-          }
-        },
-        "filter": {
-          "type": "range",
-          "settings": {
-            "title": "Filter Coffee",
-            "body": "Coffee roasted for V60, batch brew and other filter methods.",
-            "label_color": "#303030",
-            "label_text": "light"
-          }
-        }
-      },
-      "block_order": ["espresso", "turkish", "specialty", "filter"]
-    },
-    "blend": {
-      "type": "blend-builder",
-      "settings": {
-        "eyebrow": "We can adjust",
-        "heading": "Create Your Own House Blend.",
-        "body": "<p>Want something unique for your business? We can develop a custom blend based on the taste and price point you need.</p>",
-        "background": "default"
-      },
-      "blocks": {
-        "body": { "type": "attribute", "settings": { "title": "Body", "low": "Light", "high": "Full" } },
-        "sweetness": { "type": "attribute", "settings": { "title": "Sweetness", "low": "Subtle", "high": "Pronounced" } },
-        "acidity": { "type": "attribute", "settings": { "title": "Acidity", "low": "Low", "high": "Bright" } },
-        "roast": { "type": "attribute", "settings": { "title": "Roast Level", "low": "Light", "high": "Dark" } },
-        "ratio": { "type": "attribute", "settings": { "title": "Arabica/Robusta Ratio", "low": "100% Arabica", "high": "Robusta blend" } },
-        "flavour": { "type": "attribute", "settings": { "title": "Flavour Profile", "low": "Chocolate", "high": "Fruit" } }
-      },
-      "block_order": ["body", "sweetness", "acidity", "roast", "ratio", "flavour"]
-    },
-    "audience": {
-      "type": "audience-strip",
-      "settings": {
-        "heading": "Coffee for Different Businesses",
-        "intro": "We supply coffee for:",
-        "footnote": "Whether you need a few kilograms or regular commercial supply, we can help you choose the right coffee for your operation.",
-        "background": "alt"
-      },
-      "blocks": {
-        "shops": { "type": "audience", "settings": { "title": "Coffee Shops" } },
-        "restaurants": { "type": "audience", "settings": { "title": "Restaurants" } },
-        "hotels": { "type": "audience", "settings": { "title": "Hotels" } },
-        "offices": { "type": "audience", "settings": { "title": "Offices" } },
-        "retailers": { "type": "audience", "settings": { "title": "Retailers" } },
-        "distributors": { "type": "audience", "settings": { "title": "Distributors" } }
-      },
-      "block_order": ["shops", "restaurants", "hotels", "offices", "retailers", "distributors"]
-    },
-    "consistency": {
-      "type": "packaging-sizes",
-      "settings": {
-        "heading": "Consistent Coffee, Batch After Batch.",
-        "body": "Once your coffee is approved, we roast it to a consistent profile to help you maintain the same taste and quality over time.",
-        "note": "",
-        "background": "default"
-      },
-      "blocks": {
-        "whole": { "type": "format", "settings": { "title": "Whole Bean" } },
-        "ground": { "type": "format", "settings": { "title": "Ground Coffee" } },
-        "retail": { "type": "format", "settings": { "title": "Retail Bags" } },
-        "wholesale": { "type": "format", "settings": { "title": "Wholesale Bags" } }
-      },
-      "block_order": ["whole", "ground", "retail", "wholesale"]
-    },
-    "closing": {
-      "type": "cta-band",
-      "settings": {
-        "heading": "Need Help Choosing?",
-        "body": "<p>Tell us what coffee machine you use, how much coffee you consume and the flavour profile you prefer. We can recommend a blend or prepare samples for you to try.</p>",
-        "cta_primary_label": "Request a Sample",
-        "cta_primary_link": "/pages/request-a-sample",
-        "cta_secondary_label": "Get Wholesale Pricing",
-        "cta_secondary_link": "/pages/get-a-quote",
-        "background": "accent"
-      }
-    }
-  },
-  "order": ["hero", "range", "blend", "audience", "consistency", "closing"]
-}
+{
+  "sections": {
+    "hero": {
+      "type": "hero-split",
+      "settings": {
+        "eyebrow": "Wholesale",
+        "heading": "Wholesale Coffee for Your Business.",
+        "body": "<p>Reliable, consistent coffee for cafés, restaurants, hotels, offices and distributors.</p><p>Choose from our existing blends or work with us to create your own.</p>",
+        "image": "/preview-media/dead-sea-blend.jpg",
+        "image_alt": "Dead Sea Blend wholesale bag, silver foil on Off White",
+        "cta_primary_label": "Request Wholesale Pricing",
+        "cta_primary_link": "/pages/get-a-quote",
+        "cta_secondary_label": "Request a Sample",
+        "cta_secondary_link": "/pages/request-a-sample",
+        "background": "default"
+      }
+    },
+    "range": {
+      "type": "coffee-range",
+      "settings": { "eyebrow": "", "heading": "Four ways we roast.", "background": "alt" },
+      "blocks": {
+        "espresso": {
+          "type": "range",
+          "settings": {
+            "title": "Espresso Blends",
+            "body": "Balanced coffees developed for espresso and milk-based drinks.",
+            "label_color": "#C4562E",
+            "label_text": "light"
+          }
+        },
+        "turkish": {
+          "type": "range",
+          "settings": {
+            "title": "Turkish Coffee",
+            "body": "Traditional profiles available plain or with cardamom.",
+            "label_color": "#7C7F44",
+            "label_text": "light"
+          }
+        },
+        "specialty": {
+          "type": "range",
+          "settings": {
+            "title": "Specialty Coffee",
+            "body": "Single origins and specialty-grade coffees selected for quality and flavour.",
+            "label_color": "#BFDDD3",
+            "label_text": "dark"
+          }
+        },
+        "filter": {
+          "type": "range",
+          "settings": {
+            "title": "Filter Coffee",
+            "body": "Coffee roasted for V60, batch brew and other filter methods.",
+            "label_color": "#303030",
+            "label_text": "light"
+          }
+        }
+      },
+      "block_order": ["espresso", "turkish", "specialty", "filter"]
+    },
+    "audience": {
+      "type": "audience-strip",
+      "settings": {
+        "heading": "Coffee for Different Businesses",
+        "intro": "We supply coffee for:",
+        "footnote": "Whether you need a few kilograms or regular commercial supply, we can help you choose the right coffee for your operation.",
+        "background": "alt"
+      },
+      "blocks": {
+        "shops": { "type": "audience", "settings": { "title": "Coffee Shops" } },
+        "restaurants": { "type": "audience", "settings": { "title": "Restaurants" } },
+        "hotels": { "type": "audience", "settings": { "title": "Hotels" } },
+        "distributors": { "type": "audience", "settings": { "title": "Distributors" } }
+      },
+      "block_order": ["shops", "restaurants", "hotels", "distributors"]
+    },
+    "consistency": {
+      "type": "packaging-sizes",
+      "settings": {
+        "heading": "Consistent Coffee, Batch After Batch.",
+        "body": "Once your coffee is approved, we roast it to a consistent profile to help you maintain the same taste and quality over time.",
+        "note": "",
+        "background": "default"
+      },
+      "blocks": {
+        "whole": { "type": "format", "settings": { "title": "Whole Bean" } },
+        "ground": { "type": "format", "settings": { "title": "Ground Coffee" } },
+        "retail": { "type": "format", "settings": { "title": "Retail Bags" } },
+        "wholesale": { "type": "format", "settings": { "title": "Wholesale Bags" } }
+      },
+      "block_order": ["whole", "ground", "retail", "wholesale"]
+    },
+    "closing": {
+      "type": "cta-band",
+      "settings": {
+        "heading": "Need Help Choosing?",
+        "body": "<p>Tell us what coffee machine you use, how much coffee you consume and the flavour profile you prefer. We can recommend a blend or prepare samples for you to try.</p>",
+        "cta_primary_label": "Request a Sample",
+        "cta_primary_link": "/pages/request-a-sample",
+        "cta_secondary_label": "Get Wholesale Pricing",
+        "cta_secondary_link": "/pages/get-a-quote",
+        "background": "accent"
+      }
+    }
+  },
+  "order": ["hero", "range", "audience", "consistency", "closing"]
+}

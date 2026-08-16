@@ -248,6 +248,14 @@ class CartDrawer extends HTMLElement {
       if (event.target === this.dialog) this.dialog.close();
     });
 
+    this.dialog.addEventListener('close', () => {
+      this.setAttribute('hidden', '');
+      this.setAttribute('aria-hidden', 'true');
+      this.dialog.setAttribute('inert', '');
+      this.dialog.setAttribute('aria-hidden', 'true');
+      this.dialog.setAttribute('hidden', '');
+    });
+
     const link = document.querySelector('[data-cart-link]');
     if (link) {
       link.addEventListener('click', (event) => {
@@ -260,6 +268,11 @@ class CartDrawer extends HTMLElement {
   }
 
   open() {
+    this.removeAttribute('hidden');
+    this.removeAttribute('aria-hidden');
+    this.dialog.removeAttribute('inert');
+    this.dialog.removeAttribute('aria-hidden');
+    this.dialog.removeAttribute('hidden');
     if (typeof this.dialog.showModal === 'function') this.dialog.showModal();
     else window.location.href = '/cart';
   }

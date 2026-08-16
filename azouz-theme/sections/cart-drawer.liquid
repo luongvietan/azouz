@@ -9,8 +9,8 @@
   cart link goes to /cart as normal.
 {%- endcomment -%}
 
-<cart-drawer class="cart-drawer">
-  <dialog class="cart-drawer__dialog" aria-label="{{ 'cart.general.title' | t }}">
+<cart-drawer class="cart-drawer" hidden aria-hidden="true">
+  <dialog class="cart-drawer__dialog" aria-label="{{ 'cart.general.title' | t }}" inert aria-hidden="true" hidden>
     <div class="cart-drawer__panel">
       <div class="cart-drawer__head">
         <h2 class="cart-drawer__heading">{{ 'cart.general.title' | t }}</h2>

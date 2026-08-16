@@ -22,11 +22,11 @@
         {%- for block in section.blocks -%}
           <div class="blend-attr reveal"{{ block.shopify_attributes }}>
             <h3 class="blend-attr__title">{{ block.settings.title }}</h3>
-            <div class="blend-attr__scale">
-              <span class="blend-attr__pole">{{ block.settings.low }}</span>
-              <span class="blend-attr__track" aria-hidden="true"></span>
-              <span class="blend-attr__pole">{{ block.settings.high }}</span>
-            </div>
+            <p class="blend-attr__range">
+              <span>{{ block.settings.low }}</span>
+              <span class="blend-attr__sep" aria-hidden="true">→</span>
+              <span>{{ block.settings.high }}</span>
+            </p>
           </div>
         {%- endfor -%}
       </div>
@@ -41,7 +41,12 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "We can adjust" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Create Your Own Blend" },
-    { "type": "richtext", "id": "body", "label": "Intro" },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Intro",
+      "default": "<p>We tune these variables together during blend development. This is not a self-serve configurator.</p>"
+    },
     {
       "type": "select",
       "id": "background",

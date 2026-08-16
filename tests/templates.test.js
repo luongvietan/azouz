@@ -12,6 +12,7 @@ const MARKETING = [
   'page.wholesale.json',
   'page.our-brands.json',
   'page.enquiry.json',
+  'page.get-a-quote.json',
 ];
 
 const load = async (name) => JSON.parse(await readFile(resolveInTheme(`templates/${name}`), 'utf8'));
@@ -83,31 +84,74 @@ test('the homepage carries the client headline and both hero calls to action', a
   assert.match(html, /Your Coffee\. Your Brand\. Our Roastery\./);
   assert.match(html, /Request a Sample/);
   assert.match(html, /Start Your Private Label/);
+  assert.match(html, /class="button--quiet"[^>]*href="\/pages\/private-label"/);
 });
 
-test('the private label page carries its headline and all eight coffee types', async () => {
+test('the homepage hero uses a packaging photo and a short packaging-line eyebrow', async () => {
+  const html = await renderAll('index.json');
+  assert.match(html, /src="[^"]*\/preview-media\/wadi-rum-blend\.jpg/);
+  assert.match(html, /Specialty coffee roasters/);
+  assert.equal(/What We Do/i.test(html), false);
+  assert.equal(/How it works/i.test(html), false);
+});
+
+test('the homepage audience strip keeps four chips and omits restaurants and distributors', async () => {
+  const html = await renderAll('index.json');
+  assert.match(html, /Cafés/);
+  assert.match(html, /Hotels/);
+  assert.match(html, /Retailers/);
+  assert.match(html, /Coffee Brands/);
+  assert.equal(/Restaurants/.test(html), false);
+  assert.equal(/Distributors/.test(html), false);
+});
+
+test('the private label page carries its headline, hero bag, and five coffee types', async () => {
   const html = await renderAll('page.private-label.json');
   assert.match(html, /Build Your Own Coffee Brand\./);
-  for (const type of ['Espresso blends', 'Turkish coffee', 'Arabic coffee', 'Ground coffee']) {
+  assert.match(html, /preview-media\/wadi-rum-blend-alt\.jpg/);
+  for (const type of ['Espresso blends', 'Turkish coffee', 'Filter coffee']) {
     assert.match(html, new RegExp(type));
   }
+  assert.equal(/Arabic coffee/.test(html), false);
+  assert.equal(/Your Blend or Ours\./.test(html), false);
+  assert.equal(/Who We Work With/.test(html), false);
 });
 
-test('the wholesale page carries its headline and all four ranges', async () => {
+test('the homepage features private label in the service cards grid', async () => {
+  const html = await renderAll('index.json');
+  assert.match(html, /Private label is where we start\./);
+  assert.match(html, /service-card--featured/);
+  assert.match(html, /Start Your Private Label/);
+});
+
+test('the wholesale page carries its headline, hero bag, and all four ranges', async () => {
   const html = await renderAll('page.wholesale.json');
   assert.match(html, /Wholesale Coffee for Your Business\./);
+  assert.match(html, /preview-media\/dead-sea-blend\.jpg/);
+  assert.equal(/blend-builder/.test(html), false);
   for (const range of ['Espresso Blends', 'Turkish Coffee', 'Specialty Coffee', 'Filter Coffee']) {
     assert.match(html, new RegExp(range));
   }
 });
 
-test('the our brands page bridges into the shop', async () => {
+test('the our brands page bridges into the shop with packaging photography', async () => {
   const html = await renderAll('page.our-brands.json');
   assert.match(html, /Our Brands\./);
+  assert.match(html, /preview-media\/downtown-blend\.jpg/);
+  assert.match(html, /preview-media\/wadi-rum-blend\.jpg/);
   assert.match(html, /href="\/collections\/all"/);
+  assert.match(html, /href="\/pages\/wholesale"[^>]*>[\s\S]*View Wholesale/);
 });
 
-test('the enquiry page renders a posting contact form', async () => {
+test('the sample enquiry page uses a sample-specific headline and hero bag', async () => {
   const html = await renderAll('page.enquiry.json');
+  assert.match(html, /Request a Sample\./);
+  assert.match(html, /preview-media\/wadi-rum-blend\.jpg/);
   assert.match(html, /action="\/contact#contact"/);
+});
+
+test('the quote enquiry page requires expected volume', async () => {
+  const html = await renderAll('page.get-a-quote.json');
+  assert.match(html, /Get a Quote for Your Project\./);
+  assert.match(html, /name="contact\[Expected monthly volume\]"[^>]*required/);
 });

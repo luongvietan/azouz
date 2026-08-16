@@ -62,6 +62,26 @@ test('the label colour setting drives the card fill via a custom property', asyn
   assert.match(html, /--label-bg:\s*#C4562E/);
 });
 
+test('a light service-card label fill auto-picks Jet ink', async () => {
+  const html = await renderSection('service-cards', {
+    blocks: [card('s1', { title: 'X', label_color: '#BFDDD3' })],
+  });
+  assert.match(html, /--label-fg:\s*var\(--color-text\)/);
+});
+
+test('a featured card uses the lead layout and a primary button', async () => {
+  const html = await renderSection('service-cards', {
+    blocks: [
+      card('s1', { ...THREE[0].settings, featured: true }),
+      THREE[1],
+      THREE[2],
+    ],
+  });
+  assert.match(html, /service-cards__grid--lead/);
+  assert.match(html, /service-card--featured/);
+  assert.match(html, /class="button service-card__cta"/);
+});
+
 test('declares a preset with three cards', async () => {
   const { extractSchema } = await import('../scripts/schema-parser.js');
   const schema = extractSchema(await readFile(resolveInTheme('sections/service-cards.liquid'), 'utf8'));

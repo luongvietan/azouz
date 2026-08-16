@@ -47,6 +47,13 @@ test('the cart link shows the item count', async () => {
   assert.match(html, /header__cart-count/);
 });
 
+test('search and cart actions expose a single action label', async () => {
+  const html = await render();
+  assert.match(html, /class="header__action-label"[^>]*>Search</);
+  assert.match(html, /class="header__action-label"[^>]*>Your cart</);
+  assert.equal((html.match(/class="header__action-label"/g) || []).length, 2);
+});
+
 test('the mobile menu works without javascript', async () => {
   const html = await render();
   assert.match(html, /<details[^>]*class="header__mobile"/);

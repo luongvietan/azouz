@@ -1,0 +1,16 @@
+{%- comment -%}
+  Style fragment for a packaging label fill.
+
+  Accepts: color (hex, may be blank)
+
+  Always sets --label-bg when a colour is present. Light fills
+  (color_brightness > 160) also set --label-fg to Jet so white type
+  is not used on mint, cream, or other pale label colours.
+{%- endcomment -%}
+{%- if color != blank -%}
+  --label-bg: {{ color }};
+  {%- assign brightness = color | color_brightness -%}
+  {%- if brightness > 160 -%}
+    --label-fg: var(--color-text);
+  {%- endif -%}
+{%- endif -%}

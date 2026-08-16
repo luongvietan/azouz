@@ -3,8 +3,10 @@
     "hero": {
       "type": "hero-split",
       "settings": {
-        "eyebrow": "Coffee Roasting · Custom Blends · Private Label · Specialty Coffee",
+        "eyebrow": "Specialty coffee roasters",
         "heading": "Your Coffee. Your Brand. Our Roastery.",
+        "image": "/preview-media/wadi-rum-blend.jpg",
+        "image_alt": "Wadi Rum Blend, 1kg bag, roasted in Jordan",
         "body": "<p>We roast and produce coffee for cafés, hotels, retailers, distributors and growing coffee brands.</p><p>From selecting the coffee to roasting, blending and packaging — we help you create the right product for your business.</p>",
         "cta_primary_label": "Request a Sample",
         "cta_primary_link": "/pages/request-a-sample",
@@ -15,7 +17,7 @@
     },
     "services": {
       "type": "service-cards",
-      "settings": { "eyebrow": "What We Do", "heading": "Three ways we work with you.", "background": "default" },
+      "settings": { "eyebrow": "", "heading": "Private label is where we start.", "background": "default" },
       "blocks": {
         "private_label": {
           "type": "service",
@@ -24,8 +26,9 @@
             "body": "Create coffee under your own brand.",
             "detail": "Custom blends, roasting, grinding and packaging",
             "label_color": "#C4562E",
-            "link_label": "Learn More",
-            "link": "/pages/private-label"
+            "link_label": "Start Your Private Label",
+            "link": "/pages/private-label",
+            "featured": true
           }
         },
         "wholesale": {
@@ -56,7 +59,7 @@
     "process": {
       "type": "process-steps",
       "settings": {
-        "eyebrow": "How it works",
+        "eyebrow": "",
         "heading": "From Bean to Bag.",
         "body": "We manage the coffee production process so you can focus on growing your business.",
         "show_numbers": true,
@@ -83,17 +86,15 @@
       "blocks": {
         "cafes": { "type": "audience", "settings": { "title": "Cafés" } },
         "hotels": { "type": "audience", "settings": { "title": "Hotels" } },
-        "restaurants": { "type": "audience", "settings": { "title": "Restaurants" } },
         "retailers": { "type": "audience", "settings": { "title": "Retailers" } },
-        "distributors": { "type": "audience", "settings": { "title": "Distributors" } },
         "brands": { "type": "audience", "settings": { "title": "Coffee Brands" } }
       },
-      "block_order": ["cafes", "hotels", "restaurants", "retailers", "distributors", "brands"]
+      "block_order": ["cafes", "hotels", "retailers", "brands"]
     },
     "featured": {
       "type": "featured-collection",
       "settings": {
-        "eyebrow": "Azouz Coffee",
+        "eyebrow": "",
         "heading": "Our Coffee",
         "collection": "all",
         "products_to_show": 4,

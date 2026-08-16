@@ -40,7 +40,7 @@
     <div class="header__actions">
       <a class="header__action" href="{{ routes.search_url }}">
         {%- render 'icon', name: 'search' -%}
-        <span class="visually-hidden">{{ 'general.search.title' | t }}</span>
+        <span class="header__action-label">{{ 'general.search.title' | t }}</span>
       </a>
 
       {%- comment -%}
@@ -49,7 +49,7 @@
       {%- endcomment -%}
       <a class="header__action" href="{{ routes.cart_url }}" data-cart-link>
         {%- render 'icon', name: 'cart' -%}
-        <span class="visually-hidden">{{ 'cart.general.title' | t }}</span>
+        <span class="header__action-label">{{ 'cart.general.title' | t }}</span>
         <span class="header__cart-count" aria-hidden="true" data-cart-count>{{ cart.item_count | default: 0 }}</span>
         <span class="visually-hidden">{{ cart.item_count | default: 0 }} {{ 'general.accessibility.cart_count' | t }}</span>
       </a>

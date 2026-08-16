@@ -15,7 +15,8 @@
       "whatsapp": "WhatsApp",
       "decrease_quantity": "Decrease quantity",
       "increase_quantity": "Increase quantity",
-      "close_cart": "Close cart"
+      "close_cart": "Close cart",
+      "breadcrumb": "Breadcrumb"
     },
     "search": {
       "title": "Search",
@@ -194,7 +195,7 @@
     "footer": {
       "copyright": "Azouz Coffee",
       "rights": "All rights reserved.",
-      "menu": "Explore",
+      "menu": "Services",
       "contact": "Contact",
       "follow": "Follow"
     }

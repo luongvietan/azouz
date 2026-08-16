@@ -3,6 +3,14 @@
   if section.settings.background == 'alt'
     assign section_class = 'section section--alt service-cards'
   endif
+
+  assign has_featured = false
+  for block in section.blocks
+    if block.settings.featured
+      assign has_featured = true
+      break
+    endif
+  endfor
 -%}
 
 <section class="{{ section_class }}"{{ section.shopify_attributes }}>
@@ -15,12 +23,12 @@
     </div>
 
     <reveal-on-scroll>
-      <div class="grid grid--3 service-cards__grid">
+      <div class="service-cards__grid{% if has_featured %} service-cards__grid--lead{% else %} grid grid--3{% endif %}">
         {%- for block in section.blocks -%}
-          <article class="service-card reveal"{{ block.shopify_attributes }}>
+          <article class="service-card reveal{% if block.settings.featured %} service-card--featured{% endif %}"{{ block.shopify_attributes }}>
             <div
               class="label-block service-card__label"
-              {% if block.settings.label_color != blank %}style="--label-bg: {{ block.settings.label_color }};"{% endif %}>
+              {% if block.settings.label_color != blank %}style="{% render 'label-ink', color: block.settings.label_color %}"{% endif %}>
               <h3 class="label-block__title">{{ block.settings.title }}</h3>
               {%- if block.settings.detail != blank -%}
                 <hr class="label-block__rule">
@@ -33,10 +41,14 @@
             {%- endif -%}
 
             {%- if block.settings.link_label != blank and block.settings.link != blank -%}
-              <a class="service-card__link" href="{{ block.settings.link }}">
-                {{ block.settings.link_label }}
-                {%- render 'icon', name: 'arrow-right' -%}
-              </a>
+              {%- if block.settings.featured -%}
+                <a class="button service-card__cta" href="{{ block.settings.link }}">{{ block.settings.link_label }}</a>
+              {%- else -%}
+                <a class="service-card__link" href="{{ block.settings.link }}">
+                  {{ block.settings.link_label }}
+                  {%- render 'icon', name: 'arrow-right' -%}
+                </a>
+              {%- endif -%}
             {%- endif -%}
           </article>
         {%- endfor -%}
@@ -79,7 +91,14 @@
           "info": "The title inside the label is large enough to sit on the primary green. Do not use this colour for small text elsewhere."
         },
         { "type": "text", "id": "link_label", "label": "Link label" },
-        { "type": "url", "id": "link", "label": "Link" }
+        { "type": "url", "id": "link", "label": "Link" },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Feature this card",
+          "default": false,
+          "info": "Featured cards span the full height beside the other services and use a primary button."
+        }
       ]
     }
   ],

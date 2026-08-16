@@ -10,10 +10,13 @@ test('is a contentinfo landmark', async () => {
   assert.match(await render(), /<footer[^>]+class="footer"/);
 });
 
-test('renders the menu links', async () => {
+test('renders service links instead of duplicating enquiry CTAs', async () => {
   const html = await render();
-  assert.match(html, /Request a Sample/);
-  assert.match(html, /Get a Quote/);
+  assert.match(html, /Private Label/);
+  assert.match(html, /Wholesale/);
+  assert.match(html, /Shop/);
+  assert.equal(/Request a Sample/.test(html), false);
+  assert.equal(/Get a Quote/.test(html), false);
 });
 
 test('shows the shop name and the current year in the copyright', async () => {
