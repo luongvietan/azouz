@@ -1,6 +1,7 @@
 node_modules/
 .shopify/
 .impeccable/
+dist/
 *.log
 .DS_Store
 Thumbs.db
