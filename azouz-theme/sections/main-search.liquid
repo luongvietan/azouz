@@ -52,7 +52,7 @@
           {%- endcomment -%}
           {%- for item in search.results -%}
             {%- if item.object_type == 'product' -%}
-              {%- render 'product-card', product: item -%}
+              {%- render 'product-card', product: item, heading_level: 2 -%}
             {%- endif -%}
           {%- endfor -%}
         </div>

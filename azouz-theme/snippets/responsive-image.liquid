@@ -44,4 +44,5 @@
   width="{{ image.width }}"
   height="{{ image.height }}"
   loading="{{ loading_attr }}"
-  {% if fetchpriority %}fetchpriority="{{ fetchpriority }}" {% endif %}decoding="async">
+  {% comment %}`!= blank` not truthiness: in Liquid an empty string is truthy.{% endcomment %}
+  {%- if fetchpriority != blank %} fetchpriority="{{ fetchpriority }}"{% endif %} decoding="async">

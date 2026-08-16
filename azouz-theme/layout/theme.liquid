@@ -1,9 +1,15 @@
 <!doctype html>
 {%- liquid
   assign locale_code = request.locale.iso_code | default: 'en'
-  assign rtl_locales = 'ar,he,fa,ur'
+
+  # Compare the language subtag, not the whole code: `'ar,he,fa,ur' contains
+  # 'he-IL'` is false, so a substring test left every regional right-to-left
+  # locale rendering left-to-right. Splitting also stops a bare 'r' matching.
+  assign language = locale_code | split: '-' | first | downcase
+  assign rtl_languages = 'ar,he,fa,ur' | split: ','
+
   assign text_direction = 'ltr'
-  if rtl_locales contains locale_code
+  if rtl_languages contains language
     assign text_direction = 'rtl'
   endif
 -%}
@@ -12,7 +18,12 @@
     {%- render 'meta-tags' -%}
 
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    <link rel="icon" type="image/svg+xml" href="{{ 'logomark.svg' | asset_url }}">
+    {%- comment -%} The merchant's favicon if they set one; the logomark otherwise. {%- endcomment -%}
+    {%- if settings.favicon -%}
+      <link rel="icon" href="{{ settings.favicon | image_url: width: 96 }}">
+    {%- else -%}
+      <link rel="icon" type="image/svg+xml" href="{{ 'logomark.svg' | asset_url }}">
+    {%- endif -%}
 
     {%- comment -%}
       Only the regular-weight Latin face is preloaded. It carries the body copy

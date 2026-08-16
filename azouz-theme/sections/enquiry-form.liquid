@@ -133,6 +133,23 @@
         </fieldset>
       </div>
 
+      {%- comment -%}
+        Honeypot. Bots fill every field they find; a person never sees this one.
+        aria-hidden and tabindex="-1" keep it away from screen readers and the
+        keyboard, so it costs a real customer nothing. Shopify has no server-side
+        hook to reject on, but the value arrives in the notification email and
+        makes a submission trivially filterable.
+      {%- endcomment -%}
+      <div class="enquiry__honeypot" aria-hidden="true">
+        <label for="EnquiryWebsite-{{ uid }}">{{ 'contact.form.honeypot' | t }}</label>
+        <input
+          type="text"
+          id="EnquiryWebsite-{{ uid }}"
+          name="contact[Website]"
+          tabindex="-1"
+          autocomplete="off">
+      </div>
+
       <button class="button enquiry__submit" type="submit">{{ 'contact.form.send' | t }}</button>
     {% endform %}
   </div>

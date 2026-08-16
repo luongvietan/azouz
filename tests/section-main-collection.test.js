@@ -44,3 +44,14 @@ test('has no presets', async () => {
   );
   assert.equal(schema.presets, undefined);
 });
+
+test('the collection can be sorted, and the sort is a shareable url', async () => {
+  const html = await render();
+  assert.match(html, /<form[^>]+class="collection__sort"[^>]*method="get"|<form[^>]+method="get"[^>]*class="collection__sort"/);
+  assert.match(html, /name="sort_by"/);
+  assert.match(html, /<label[^>]+for="CollectionSort"/);
+});
+
+test('sorting works with scripting off — there is a real submit button', async () => {
+  assert.match(await render(), /collection__sort-apply[\s\S]*?type="submit"|type="submit"[^>]*collection__sort-apply/);
+});

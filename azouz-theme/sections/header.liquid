@@ -1,6 +1,9 @@
 {%- liquid
   assign logo_height = settings.logo_height | default: 64
-  assign logo_source = section.settings.logo
+
+  # The header's own picker wins; the theme-level Brand logo is the fallback so
+  # a merchant who sets it once in Theme settings sees it here.
+  assign logo_source = section.settings.logo | default: settings.logo
 -%}
 
 <header class="header">
@@ -34,7 +37,10 @@
       <ul class="header__menu" role="list">
         {%- for link in section.settings.menu.links -%}
           <li>
-            <a class="header__link{% if link.active %} is-active{% endif %}" href="{{ link.url }}">
+            <a
+              class="header__link{% if link.active %} is-active{% endif %}"
+              href="{{ link.url }}"
+              {%- if link.active %} aria-current="page"{% endif %}>
               {{ link.title }}
             </a>
           </li>

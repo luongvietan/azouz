@@ -197,6 +197,56 @@ window.AzouzTheme.findMatchingVariant = function findMatchingVariant(variants, s
   );
 };
 
+/*
+  Collection sort submits on change once scripting is available. The form is a
+  plain GET with a visible Apply button underneath, which CSS hides only when
+  the `js` class is set — so nothing here is load-bearing.
+*/
+document.addEventListener('change', (event) => {
+  const select = event.target.closest('[data-collection-sort]');
+  if (select) select.form?.submit();
+});
+
+/**
+ * Write a variant's price into a rendered `price` snippet.
+ *
+ * Only the amounts are touched. Replacing the container's textContent would
+ * also delete the visually-hidden "Price" / "Sale price" labels, which is the
+ * only thing telling a screen reader what the number is.
+ *
+ * @param {Element} root the element carrying data-product-price
+ * @param {{price: string, compare_at?: string}} variant
+ */
+window.AzouzTheme.renderPrice = function renderPrice(root, variant) {
+  const amount = root.querySelector('[data-price-amount]');
+  if (amount) amount.textContent = variant.price;
+  else root.textContent = variant.price; // a bare price element, no snippet
+
+  const onSale = Boolean(variant.compare_at);
+
+  const wrapper = root.querySelector('.price') ?? root;
+  wrapper.classList.toggle('price--on-sale', onSale);
+
+  // The label has to follow the state, or a full-price variant is still
+  // announced as "Sale price".
+  const label = root.querySelector('[data-price-label]');
+  const labels = wrapper.dataset ?? {};
+  if (label && labels.labelPrice && labels.labelSale) {
+    label.textContent = onSale ? labels.labelSale : labels.labelPrice;
+  }
+
+  const compare = root.querySelector('[data-price-compare]');
+  if (!compare) return;
+
+  const compareAmount = compare.querySelector('[data-price-compare-amount]');
+  if (onSale) {
+    if (compareAmount) compareAmount.textContent = variant.compare_at;
+    compare.hidden = false;
+  } else {
+    compare.hidden = true;
+  }
+};
+
 /**
  * <variant-picker> drives the option selects.
  *
@@ -248,7 +298,7 @@ class VariantPicker extends HTMLElement {
 
     this.input.value = variant.id;
     if (this.message) this.message.hidden = true;
-    if (price) price.textContent = variant.price;
+    if (price) window.AzouzTheme.renderPrice(price, variant);
 
     if (button) {
       button.disabled = !variant.available;

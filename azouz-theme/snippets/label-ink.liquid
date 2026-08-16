@@ -7,8 +7,13 @@
   (color_brightness > 160) also set --label-fg to Jet so white type
   is not used on mint, cream, or other pale label colours.
 {%- endcomment -%}
+{%- comment -%}
+  The value lands inside a style="" attribute, so it is escaped: a metafield
+  containing a quote would otherwise close the attribute and let arbitrary
+  markup through.
+{%- endcomment -%}
 {%- if color != blank -%}
-  --label-bg: {{ color }};
+  --label-bg: {{ color | escape }};
   {%- assign brightness = color | color_brightness -%}
   {%- if brightness > 160 -%}
     --label-fg: var(--color-text);

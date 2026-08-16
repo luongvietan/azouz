@@ -86,3 +86,24 @@ test('declares a preset', async () => {
   const schema = extractSchema(await readFile(resolveInTheme('sections/header.liquid'), 'utf8'));
   assert.ok(Array.isArray(schema.presets) && schema.presets.length > 0);
 });
+
+test('the active nav link is marked for assistive tech, not only visually', async () => {
+  // `is-active` only styles it; aria-current is what a screen reader announces.
+  const html = await renderSection('header', {
+    settings: {
+      menu: {
+        links: [
+          { title: 'Wholesale', url: '/pages/wholesale', active: false, links: [] },
+          { title: 'Shop', url: '/collections/all', active: true, links: [] },
+        ],
+      },
+    },
+  });
+
+  assert.equal((html.match(/aria-current="page"/g) ?? []).length, 1, 'exactly one link is current');
+  assert.match(html, /href="\/collections\/all"[^>]*aria-current="page"/);
+});
+
+test('no link is marked current when none is active', async () => {
+  assert.equal(/aria-current/.test(await render()), false);
+});

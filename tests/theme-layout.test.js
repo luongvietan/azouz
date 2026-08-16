@@ -114,3 +114,19 @@ test('theme.js is deferred so it never blocks rendering', async () => {
   const out = await renderLayout();
   assert.match(out, /theme\.js[^>]*defer/);
 });
+
+test('a regional rtl locale still flips direction', async () => {
+  // `'ar,he,fa,ur' contains 'he-IL'` is false, so a substring test silently
+  // left regional right-to-left locales rendering left-to-right.
+  for (const locale of ['ar', 'ar-JO', 'he', 'he-IL', 'fa-IR', 'ur-PK']) {
+    const out = await renderLayout({ request: { locale: { iso_code: locale }, page_type: 'index' } });
+    assert.match(out, /<html[^>]+dir="rtl"/, `${locale} should be rtl`);
+  }
+});
+
+test('a left-to-right locale that merely shares letters stays ltr', async () => {
+  for (const locale of ['en', 'fr', 'hu', 'af', 'es']) {
+    const out = await renderLayout({ request: { locale: { iso_code: locale }, page_type: 'index' } });
+    assert.match(out, /<html[^>]+dir="ltr"/, `${locale} should be ltr`);
+  }
+});

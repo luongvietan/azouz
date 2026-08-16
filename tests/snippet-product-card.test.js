@@ -86,3 +86,16 @@ test('the product title is the accessible name once — not doubled', async () =
   assert.equal((heading[1].match(/Wadi Rum Blend/g) ?? []).length, 1);
   assert.equal(/visually-hidden/.test(heading[1]), false);
 });
+
+test('the card heading defaults to h3, for a grid sitting under a section h2', async () => {
+  const html = await renderSnippet('product-card', { product: wadiRum });
+  assert.match(html, /<h3[^>]*class="label-block__title"/);
+});
+
+test('the heading level can be raised for a grid sitting directly under the h1', async () => {
+  // A collection or search page has no section h2 between its h1 and the
+  // cards, so an h3 there skips a level.
+  const html = await renderSnippet('product-card', { product: wadiRum, heading_level: 2 });
+  assert.match(html, /<h2[^>]*class="label-block__title"/);
+  assert.equal(/<h3/.test(html), false);
+});

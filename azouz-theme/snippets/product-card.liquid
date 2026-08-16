@@ -1,7 +1,13 @@
 {%- comment -%}
   Product tile built from the packaging label block.
 
-  Accepts: product (required)
+  Accepts:
+    product        - required
+    heading_level  - optional, 2 or 3 (default 3)
+
+  The card title has to sit one level below whatever heading introduces the
+  grid. Under a section h2 — featured-collection — that is h3. On a collection
+  or search page the grid follows the h1 directly, so it is h2.
 
   Every metafield read is guarded — the card is correct on a store where the
   definitions have not been created yet.
@@ -34,9 +40,11 @@
   {%- endunless -%}
 
   <div class="label-block product-card__label"{% if label_color != blank %} style="{% render 'label-ink', color: label_color %}"{% endif %}>
-    <h3 class="label-block__title">
+    {%- assign heading_tag = 'h3' -%}
+    {%- if heading_level == 2 -%}{%- assign heading_tag = 'h2' -%}{%- endif -%}
+    <{{ heading_tag }} class="label-block__title">
       <a class="product-card__link" href="{{ product.url }}">{{ product.title }}</a>
-    </h3>
+    </{{ heading_tag }}>
     {%- if notes != blank -%}
       <p class="label-block__subtitle">{{ notes | join: ' | ' }}</p>
     {%- endif -%}

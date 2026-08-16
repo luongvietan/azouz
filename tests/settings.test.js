@@ -68,3 +68,27 @@ test('the placeholder is an svg using currentColor', async () => {
   assert.match(svg, /<svg/);
   assert.match(svg, /viewBox=/);
 });
+
+test('every declared setting is actually read somewhere in the theme', async () => {
+  // A picker in the editor that nothing consumes is a promise the theme does
+  // not keep: the merchant changes it and nothing happens.
+  const { readFile, readdir } = await import('node:fs/promises');
+  const { join } = await import('node:path');
+  const { THEME_DIR } = await import('../scripts/theme-paths.js');
+
+  const sources = [];
+  for (const dir of ['layout', 'sections', 'snippets']) {
+    for (const name of await readdir(join(THEME_DIR, dir))) {
+      sources.push(await readFile(join(THEME_DIR, dir, name), 'utf8'));
+    }
+  }
+  const haystack = sources.join('\n');
+
+  const schema = JSON.parse(await readFile(join(THEME_DIR, 'config/settings_schema.json'), 'utf8'));
+  const ids = schema.flatMap((group) => (group.settings ?? []).map((s) => s.id)).filter(Boolean);
+
+  // `section.settings.logo` must not count as a read of the theme-level
+  // `settings.logo`, so the match has to exclude the section-scoped form.
+  const unused = ids.filter((id) => !new RegExp(`(?<!section\\.)settings\\.${id}\\b`).test(haystack));
+  assert.deepEqual(unused, [], `settings nothing reads: ${unused.join(', ')}`);
+});

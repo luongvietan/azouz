@@ -16,26 +16,37 @@
   assign formatted = price | money
 -%}
 
-<span class="price{% if on_sale %} price--on-sale{% endif %}{% if class %} {{ class }}{% endif %}">
+{%- comment -%}
+  Both label wordings ride on the element so <variant-picker> can swap them
+  when a sale variant is replaced by a full-price one. Leaving the label alone
+  makes a screen reader announce "Sale price" for a price that is not reduced.
+{%- endcomment -%}
+<span
+  class="price{% if on_sale %} price--on-sale{% endif %}{% if class %} {{ class }}{% endif %}"
+  data-label-price="{{ 'products.product.price' | t | escape }}"
+  data-label-sale="{{ 'products.product.sale_price' | t | escape }}">
   {%- if show_from -%}
     <span class="price__from">{{ 'products.product.from_price' | t: price: formatted }}</span>
   {%- else -%}
+    {%- comment -%}
+      The amount sits in its own element so a variant change can rewrite just
+      the number. Writing to .price__current instead would take the
+      visually-hidden label with it.
+    {%- endcomment -%}
     <span class="price__current">
-      <span class="visually-hidden">
+      <span class="visually-hidden" data-price-label>
         {%- if on_sale -%}
           {{- 'products.product.sale_price' | t -}}
         {%- else -%}
           {{- 'products.product.price' | t -}}
         {%- endif -%}
       </span>
-      {{ formatted }}
+      <span data-price-amount>{{ formatted }}</span>
     </span>
 
-    {%- if on_sale -%}
-      <s class="price__compare">
-        <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
-        {{ compare_at | money }}
-      </s>
-    {%- endif -%}
+    <s class="price__compare" data-price-compare{% unless on_sale %} hidden{% endunless %}>
+      <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+      <span data-price-compare-amount>{% if on_sale %}{{ compare_at | money }}{% endif %}</span>
+    </s>
   {%- endif -%}
 </span>

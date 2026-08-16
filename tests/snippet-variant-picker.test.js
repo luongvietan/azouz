@@ -18,8 +18,8 @@ test('renders one select per product option', async () => {
 
 test('each option select has a visible label', async () => {
   const html = await render();
-  assert.match(html, /<label[^>]+for="Option-1"[^>]*>\s*Weight/);
-  assert.match(html, /<label[^>]+for="Option-2"[^>]*>\s*Grind/);
+  assert.match(html, /<label[^>]+for="Option-[^"]+-1"[^>]*>\s*Weight/);
+  assert.match(html, /<label[^>]+for="Option-[^"]+-2"[^>]*>\s*Grind/);
 });
 
 test('the currently selected variant is preselected in each option', async () => {
@@ -71,4 +71,17 @@ test('the fallback marks sold-out variants disabled', async () => {
 
 test('no user-visible english is hard-coded', async () => {
   assert.equal(/translation missing/.test(await render()), false);
+});
+
+test('option field ids are namespaced so two pickers can coexist', async () => {
+  // A bare "Option-1" collides the moment the product section renders twice —
+  // a quick view beside the main product — and the label points at the wrong
+  // select.
+  const html = await renderSnippet('variant-picker', { product: wadiRum, form_id: 'AddToCart' });
+  const ids = [...html.matchAll(/<select[^>]*\sid="([^"]+)"/g)].map((m) => m[1]);
+  assert.ok(ids.length >= 2, `expected the option selects, got ${ids}`);
+  for (const id of ids) {
+    assert.equal(/^Option-\d+$/.test(id), false, `${id} is not namespaced`);
+    assert.match(html, new RegExp(`<label[^>]+for="${id}"`), `no label for #${id}`);
+  }
 });

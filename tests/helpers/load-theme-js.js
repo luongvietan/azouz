@@ -29,6 +29,16 @@ export async function loadThemeJs() {
       unobserve() {}
     },
     fetch: async () => ({ ok: true, json: async () => ({}), text: async () => '' }),
+    // Enough of a document for the file's top-level delegated listeners to
+    // attach. Behaviour that needs a real DOM is verified in the browser.
+    document: {
+      listeners: new Map(),
+      addEventListener(type, handler) {
+        this.listeners.set(type, [...(this.listeners.get(type) ?? []), handler]);
+      },
+      querySelector: () => null,
+      querySelectorAll: () => [],
+    },
     console,
   };
 

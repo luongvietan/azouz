@@ -54,3 +54,19 @@ test('declares a preset', async () => {
   const schema = extractSchema(await readFile(resolveInTheme('sections/footer.liquid'), 'utf8'));
   assert.ok(Array.isArray(schema.presets) && schema.presets.length > 0);
 });
+
+test('the store policies are reachable from the footer', async () => {
+  const html = await render();
+  assert.match(html, /footer__policies/);
+  for (const title of ['Privacy policy', 'Terms of service', 'Refund policy']) {
+    assert.match(html, new RegExp(title), `missing ${title}`);
+  }
+});
+
+test('a store with no written policies renders no empty policy nav', async () => {
+  const html = await renderSection('footer', {
+    settings: { menu: 'footer' },
+    scope: { shop: { name: 'Azouz Coffee', policies: [], email: '' } },
+  });
+  assert.equal(/footer__policies/.test(html), false);
+});

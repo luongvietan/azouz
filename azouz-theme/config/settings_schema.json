@@ -78,24 +78,22 @@
       {
         "type": "paragraph",
         "content": "Enquiry forms are delivered to the store's sender email, set in Shopify admin under Settings → Notifications."
-      },
-      {
-        "type": "url",
-        "id": "sample_page_url",
-        "label": "Request a sample page"
-      },
-      {
-        "type": "url",
-        "id": "quote_page_url",
-        "label": "Get a quote page"
       }
     ]
   },
   {
     "name": "Social",
     "settings": [
-      { "type": "url", "id": "social_instagram", "label": "Instagram" },
-      { "type": "url", "id": "social_facebook", "label": "Facebook" },
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook"
+      },
       {
         "type": "text",
         "id": "social_whatsapp",

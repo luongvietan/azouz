@@ -145,3 +145,16 @@ test('no error markup at all on a clean render', async () => {
   assert.equal(/enquiry__error/.test(html), false);
   assert.equal(/aria-invalid="true"/.test(html), false);
 });
+
+test('a honeypot field is present but hidden from people and screen readers', async () => {
+  const html = await render();
+  const wrapper = /<div class="enquiry__honeypot"[^>]*>/.exec(html);
+  assert.ok(wrapper, 'the honeypot wrapper must exist');
+  assert.match(wrapper[0], /aria-hidden="true"/);
+  assert.match(html, /name="contact\[Website\]"[\s\S]{0,120}tabindex="-1"/);
+});
+
+test('the honeypot is never required, so it cannot block a real submission', async () => {
+  const field = /<input[^>]*name="contact\[Website\]"[^>]*>/.exec(await render())[0];
+  assert.equal(/required/.test(field), false);
+});

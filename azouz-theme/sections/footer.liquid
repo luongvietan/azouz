@@ -62,6 +62,22 @@
 
   <div class="container footer__legal">
     <hr class="rule">
+
+    {%- comment -%}
+      A store taking payment needs its policies reachable. shop.policies only
+      contains the ones the merchant has written, so an empty list renders
+      nothing rather than a row of dead links.
+    {%- endcomment -%}
+    {%- if shop.policies.size > 0 -%}
+      <nav class="footer__policies" aria-label="{{ 'layout.footer.legal' | t }}">
+        <ul class="footer__policy-list" role="list">
+          {%- for policy in shop.policies -%}
+            <li><a class="footer__link" href="{{ policy.url }}">{{ policy.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
     <p class="footer__copyright">
       &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'layout.footer.rights' | t }}
     </p>

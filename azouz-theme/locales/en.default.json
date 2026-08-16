@@ -1,5 +1,10 @@
 {
   "general": {
+    "404": {
+      "title": "Page not found",
+      "subtext": "The page you were looking for does not exist.",
+      "link": "Back to home"
+    },
     "accessibility": {
       "skip_to_content": "Skip to content",
       "close": "Close",
@@ -42,11 +47,6 @@
       "submit": "Subscribe",
       "success": "Thanks for subscribing."
     },
-    "404": {
-      "title": "Page not found",
-      "subtext": "The page you were looking for does not exist.",
-      "link": "Back to home"
-    },
     "password": {
       "heading": "Opening soon",
       "subtext": "Enter the store password to take a look around.",
@@ -85,7 +85,9 @@
       "product_count": "{{ count }} products",
       "view_all": "View all",
       "title": "Collections",
-      "empty": "No collections yet."
+      "empty": "No collections yet.",
+      "sort_by": "Sort by",
+      "sort_apply": "Apply"
     }
   },
   "cart": {
@@ -127,7 +129,8 @@
       "coffee_type_prompt": "Select a coffee type",
       "send": "Send enquiry",
       "success": "Thanks — we have your enquiry and will be in touch shortly.",
-      "error": "Please check the highlighted fields and try again."
+      "error": "Please check the highlighted fields and try again.",
+      "honeypot": "Leave this field empty"
     }
   },
   "customer": {
@@ -203,7 +206,8 @@
       "rights": "All rights reserved.",
       "menu": "Services",
       "contact": "Contact",
-      "follow": "Follow"
+      "follow": "Follow",
+      "legal": "Legal"
     }
   }
 }

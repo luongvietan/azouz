@@ -20,7 +20,12 @@ export function resolveSettings(schema, settings, fixtures) {
   for (const [id, value] of Object.entries(settings ?? {})) {
     switch (declaredType.get(id)) {
       case 'link_list':
-        resolved[id] = fixtures.linklists?.[value] ?? { links: [] };
+        // A handle names one of the fixture menus; an object is already a
+        // resolved menu, which is how a test supplies its own link states.
+        resolved[id] =
+          value && typeof value === 'object'
+            ? value
+            : (fixtures.linklists?.[value] ?? { links: [] });
         break;
 
       case 'image_picker':

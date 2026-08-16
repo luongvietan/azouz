@@ -32,18 +32,32 @@
 
     <div class="main-product__inner">
       <div class="main-product__media">
-      {%- comment -%} The product shot is the LCP element on this template. {%- endcomment -%}
-      {%- if product.featured_image -%}
+      {%- comment -%}
+        The whole gallery, not just the featured shot — the packaging is the
+        product here, and a merchant who uploads a second angle expects it to
+        appear. The first image is the LCP element; the rest lazy-load.
+      {%- endcomment -%}
+      {%- for image in product.images -%}
+        {%- liquid
+          assign image_loading = 'lazy'
+          assign image_priority = ''
+          if forloop.first
+            assign image_loading = 'eager'
+            assign image_priority = 'high'
+          endif
+
+          assign image_alt = image.alt | default: product.title
+        -%}
         {%- render 'responsive-image',
-          image: product.featured_image,
-          alt: product.title,
+          image: image,
+          alt: image_alt,
           class: 'main-product__image',
           width: 1200,
           sizes: '(min-width: 56em) 45vw, 92vw',
-          loading: 'eager',
-          fetchpriority: 'high'
+          loading: image_loading,
+          fetchpriority: image_priority
         -%}
-      {%- endif -%}
+      {%- endfor -%}
       </div>
 
       <div class="main-product__details">
@@ -76,7 +90,13 @@
         </div>
       {%- endif -%}
 
-      <p class="main-product__price" data-product-price>{{ current.price | money }}</p>
+      {%- comment -%}
+        A live region: <variant-picker> rewrites this when the selection
+        changes, and without it the new price is a silent update.
+      {%- endcomment -%}
+      <p class="main-product__price" data-product-price aria-live="polite">
+        {%- render 'price', price: current.price, compare_at: current.compare_at_price -%}
+      </p>
 
       {%- form 'product', product, id: 'AddToCart', class: 'main-product__form' -%}
         {%- render 'variant-picker', product: product, form_id: 'AddToCart' -%}

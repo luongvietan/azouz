@@ -45,10 +45,19 @@ test('renders the variant picker and the quantity input', async () => {
   assert.match(html, /<quantity-input/);
 });
 
-test('the product image is eager with high priority — it is the LCP element', async () => {
+test('the first product image is eager with high priority — it is the LCP element', async () => {
   const html = await render();
-  assert.match(html, /fetchpriority="high"/);
-  assert.equal(/loading="lazy"/.test(html), false);
+  const images = html.match(/<img[\s\S]*?>/g).filter((tag) => tag.includes('main-product__image'));
+
+  assert.match(images[0], /loading="eager"/);
+  assert.match(images[0], /fetchpriority="high"/);
+
+  // Everything below the fold stays lazy and unprioritised, or the gallery
+  // competes with the LCP image for bandwidth.
+  for (const tag of images.slice(1)) {
+    assert.match(tag, /loading="lazy"/);
+    assert.equal(/fetchpriority/.test(tag), false);
+  }
 });
 
 test('renders the roast meter and the tasting notes', async () => {
@@ -96,4 +105,32 @@ test('has no presets — it only makes sense on the product template', async () 
   const { extractSchema } = await import('../scripts/schema-parser.js');
   const schema = extractSchema(await readFile(resolveInTheme('sections/main-product.liquid'), 'utf8'));
   assert.equal(schema.presets, undefined);
+});
+
+test('every product image is rendered, not just the featured one', async () => {
+  // wadi-rum-blend has a second packaging shot; dropping it silently loses
+  // merchandising the merchant uploaded.
+  const html = await render();
+  const images = html.match(/class="main-product__image"/g) ?? [];
+  assert.ok(images.length >= 2, `expected the full gallery, rendered ${images.length}`);
+  assert.match(html, /wadi-rum-blend-alt/);
+});
+
+test('a product on sale shows the struck-through was-price', async () => {
+  const { products } = buildFixtures();
+  const onSale = products.find((product) => product.handle === 'downtown-blend');
+  const html = await renderSection('main-product', { scope: { product: onSale } });
+  assert.match(html, /<s[^>]*class="price__compare"/, 'the compare-at price must be shown');
+});
+
+test('a product not on sale keeps the compare-at price hidden', async () => {
+  const html = await render();
+  assert.match(html, /<s[^>]+data-price-compare[^>]*\shidden/);
+});
+
+test('the price is a live region so a variant change is announced', async () => {
+  const html = await render();
+  const price = /<[^>]*data-product-price[^>]*>/.exec(html);
+  assert.ok(price, 'the price element must exist');
+  assert.match(price[0], /aria-live="polite"/);
 });

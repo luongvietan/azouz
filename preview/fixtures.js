@@ -193,6 +193,17 @@ export function buildFixtures() {
     products_count: products.length,
     all_products_count: products.length,
     image: null,
+    // Shopify supplies the option list and the currently applied sort; the
+    // theme renders whatever the merchant enabled rather than a fixed list.
+    sort_options: [
+      { name: 'Featured', value: 'manual' },
+      { name: 'Price, low to high', value: 'price-ascending' },
+      { name: 'Price, high to low', value: 'price-descending' },
+      { name: 'Alphabetically, A-Z', value: 'title-ascending' },
+      { name: 'Date, new to old', value: 'created-descending' },
+    ],
+    default_sort_by: 'manual',
+    sort_by: null,
   };
 
   return {
@@ -206,6 +217,13 @@ export function buildFixtures() {
       email: 'hello@azouzcoffee.com',
       phone: '',
       address: { city: 'Amman', country: 'Jordan' },
+      // Shopify exposes only the policies the merchant has actually written;
+      // an unset policy is nil, which is why the footer guards each one.
+      policies: [
+        { title: 'Privacy policy', url: '/policies/privacy-policy' },
+        { title: 'Terms of service', url: '/policies/terms-of-service' },
+        { title: 'Refund policy', url: '/policies/refund-policy' },
+      ],
     },
     cart: { item_count: 0, items: [], total_price: 0, currency: 'JOD', note: null },
     collections: { all: allCollection },

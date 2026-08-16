@@ -15,6 +15,11 @@
 
 {%- liquid
   assign current = product.selected_or_first_available_variant
+
+  # Namespace the field ids on the product. A bare "Option-1" collides the
+  # moment a second picker for another product is on the page, and each label
+  # then points at whichever select the browser saw first.
+  assign uid = product.id
 -%}
 
 <variant-picker class="variant-picker" data-url="{{ product.url }}">
@@ -26,6 +31,9 @@
           "options": {{ variant.options | json }},
           "available": {{ variant.available | json }},
           "price": {{ variant.price | money | json }},
+          {%- if variant.compare_at_price > variant.price -%}
+            "compare_at": {{ variant.compare_at_price | money | json }},
+          {%- endif -%}
           "url": {{ variant.url | json }}
         }{% unless forloop.last %},{% endunless %}
       {%- endfor -%}
@@ -36,8 +44,8 @@
     {%- for option in product.options_with_values -%}
       {%- assign option_index = forloop.index0 -%}
       <div class="field">
-        <label class="field__label" for="Option-{{ forloop.index }}">{{ option.name }}</label>
-        <select class="field__input" id="Option-{{ forloop.index }}" data-option-index="{{ option_index }}">
+        <label class="field__label" for="Option-{{ uid }}-{{ forloop.index }}">{{ option.name }}</label>
+        <select class="field__input" id="Option-{{ uid }}-{{ forloop.index }}" data-option-index="{{ option_index }}">
           {%- for value in option.values -%}
             <option value="{{ value | escape }}"
               {%- if current.options[option_index] == value %} selected{% endif -%}
@@ -54,8 +62,8 @@
 
   <noscript>
     <div class="field">
-      <label class="field__label" for="VariantFallback">{{ 'products.product.choose_options' | t }}</label>
-      <select class="field__input" id="VariantFallback" name="id" form="{{ form_id }}">
+      <label class="field__label" for="VariantFallback-{{ uid }}">{{ 'products.product.choose_options' | t }}</label>
+      <select class="field__input" id="VariantFallback-{{ uid }}" name="id" form="{{ form_id }}">
         {%- for variant in product.variants -%}
           <option
             value="{{ variant.id }}"

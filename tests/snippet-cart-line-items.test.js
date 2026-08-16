@@ -55,3 +55,9 @@ test('line images are lazy and have alt text', async () => {
   assert.match(html, /loading="lazy"/);
   assert.match(html, /alt="Wadi Rum Blend"/);
 });
+
+test('the remove link escapes its ampersand and encodes the line key', async () => {
+  const html = await renderSnippet('cart-line-items', { cart: filledCart() });
+  const href = /class="cart-line__remove"[\s\S]*?href="([^"]+)"/.exec(html)[1];
+  assert.match(href, /&amp;quantity=0$/, `raw & in ${href}`);
+});

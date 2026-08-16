@@ -62,3 +62,9 @@ test('the quantity stepper buttons meet the 44px touch target floor', async () =
   assert.equal(declaration(css, '.quantity__button', 'min-inline-size'), '2.75rem');
   assert.equal(declaration(css, '.quantity__button', 'min-block-size'), '2.75rem');
 });
+
+test('pagination targets meet the 44px touch target floor', async () => {
+  const css = await load();
+  assert.equal(declaration(css, '.pagination__page', 'min-inline-size'), '2.75rem');
+  assert.equal(declaration(css, '.pagination__page', 'min-block-size'), '2.75rem');
+});
