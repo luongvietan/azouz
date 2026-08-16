@@ -92,3 +92,92 @@ class QuantityInput extends HTMLElement {
 if (!customElements.get('quantity-input')) {
   customElements.define('quantity-input', QuantityInput);
 }
+
+/**
+ * Find the variant whose option values are exactly the ones selected.
+ * Order matters: index 0 is option one, index 1 is option two.
+ *
+ * @param {Array<{options: string[]}>} variants
+ * @param {string[]} selected
+ * @returns {object|null}
+ */
+window.AzouzTheme.findMatchingVariant = function findMatchingVariant(variants, selected) {
+  if (!Array.isArray(variants) || !Array.isArray(selected) || selected.length === 0) return null;
+
+  return (
+    variants.find((variant) => {
+      const values = variant.options ?? [];
+      if (values.length !== selected.length) return false;
+      return values.every((value, index) => value === selected[index]);
+    }) ?? null
+  );
+};
+
+/**
+ * <variant-picker> drives the option selects.
+ *
+ * It creates the hidden name="id" input itself, so with scripting off the only
+ * field named "id" is the one inside <noscript>. It updates the price, the
+ * add-to-cart button and the address bar as the selection changes.
+ */
+class VariantPicker extends HTMLElement {
+  connectedCallback() {
+    const data = this.querySelector('[data-variant-data]');
+    if (!data) return;
+
+    try {
+      this.variants = JSON.parse(data.textContent);
+    } catch {
+      return; // malformed data must not take the page down
+    }
+
+    this.selects = Array.from(this.querySelectorAll('[data-option-index]'));
+    if (this.selects.length === 0) return;
+
+    this.root = this.closest('[data-product-root]') ?? document;
+    this.message = this.querySelector('[data-variant-unavailable]');
+
+    this.input = document.createElement('input');
+    this.input.type = 'hidden';
+    this.input.name = 'id';
+    const form = this.closest('form');
+    if (form) form.appendChild(this.input);
+    else this.appendChild(this.input);
+
+    this.addEventListener('change', () => this.update());
+    this.update();
+  }
+
+  update() {
+    const selected = this.selects.map((select) => select.value);
+    const variant = window.AzouzTheme.findMatchingVariant(this.variants, selected);
+
+    const button = this.root.querySelector('[data-add-to-cart]');
+    const price = this.root.querySelector('[data-product-price]');
+
+    if (!variant) {
+      this.input.value = '';
+      if (this.message) this.message.hidden = false;
+      if (button) button.disabled = true;
+      return;
+    }
+
+    this.input.value = variant.id;
+    if (this.message) this.message.hidden = true;
+    if (price) price.textContent = variant.price;
+
+    if (button) {
+      button.disabled = !variant.available;
+      const label = variant.available ? button.dataset.labelAdd : button.dataset.labelSoldOut;
+      if (label) button.textContent = label;
+    }
+
+    if (variant.url && window.history?.replaceState) {
+      window.history.replaceState({}, '', variant.url);
+    }
+  }
+}
+
+if (!customElements.get('variant-picker')) {
+  customElements.define('variant-picker', VariantPicker);
+}
