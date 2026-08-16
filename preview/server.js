@@ -229,6 +229,17 @@ export function createPreviewServer() {
     try {
       const engine = await getEngine();
       const scope = buildScope(route, url.searchParams);
+
+      // A .liquid template is a whole document of its own — gift_card.liquid
+      // declares {% layout none %} — so it is rendered directly rather than
+      // being poured into content_for_layout.
+      if (route.template.endsWith('.liquid')) {
+        const standalone = await renderThemeFile(engine, THEME_DIR, route.template, scope);
+        return response
+          .writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
+          .end(standalone);
+      }
+
       const layout =
         route.page_type === 'password' ? 'layout/password.liquid' : 'layout/theme.liquid';
       const html = await renderThemeFile(engine, THEME_DIR, layout, {

@@ -97,6 +97,15 @@ export function registerShopifyFilters(engine, options = {}) {
     (Number(cents ?? 0) / 100).toFixed(2),
   );
 
+  // Shopify's gift-card code formatter: uppercase, in groups of four, so the
+  // code can be read aloud and retyped from a print-out without losing place.
+  engine.registerFilter('format_code', (value) =>
+    String(value ?? '')
+      .replace(/[^a-zA-Z0-9]/g, '')
+      .toUpperCase()
+      .replace(/(.{4})(?=.)/g, '$1 '),
+  );
+
   engine.registerFilter('handle', handleize);
   engine.registerFilter('handleize', handleize);
   engine.registerFilter('color_brightness', colorBrightness);

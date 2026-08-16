@@ -524,3 +524,79 @@ class CartForm extends HTMLElement {
 if (!customElements.get('cart-form')) {
   customElements.define('cart-form', CartForm);
 }
+
+/**
+ * Copy text to the clipboard, falling back where the async API is unavailable.
+ *
+ * navigator.clipboard is undefined on an insecure origin and its promise
+ * rejects when the document is not focused, so the execCommand path is not
+ * legacy politeness — it is what runs on a real proportion of visits.
+ *
+ * @param {string} text
+ * @returns {Promise<boolean>} whether the copy actually happened
+ */
+window.AzouzTheme.copyText = async function copyText(text) {
+  const value = String(text ?? '').trim();
+  if (value === '') return false;
+
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(value);
+      return true;
+    }
+  } catch {
+    // Fall through to the selection-based path below.
+  }
+
+  try {
+    const field = document.createElement('textarea');
+    field.value = value;
+    field.setAttribute('readonly', '');
+    field.style.position = 'fixed';
+    field.style.opacity = '0';
+    document.body.appendChild(field);
+    field.select();
+    const copied = document.execCommand('copy');
+    field.remove();
+    return copied;
+  } catch {
+    return false;
+  }
+};
+
+/**
+ * <gift-card-actions> adds copy and print to the issued gift card.
+ *
+ * Both need scripting, so both buttons are hidden by CSS until this element
+ * upgrades. The code itself is always plain selectable text — these are a
+ * convenience over it, never the only way to get at it.
+ */
+class GiftCardActions extends HTMLElement {
+  connectedCallback() {
+    this.copyButton = this.querySelector('[data-gift-card-copy]');
+    this.printButton = this.querySelector('[data-gift-card-print]');
+    this.confirmation = this.querySelector('[data-gift-card-copied]');
+
+    this.copyButton?.addEventListener('click', () => this.copy());
+    this.printButton?.addEventListener('click', () => window.print());
+  }
+
+  async copy() {
+    const code = document.querySelector('[data-gift-card-code]')?.textContent ?? '';
+    const copied = await window.AzouzTheme.copyText(code);
+
+    // Nothing is announced unless the copy succeeded — a confirmation that
+    // lies is worse than none, because the customer stops checking.
+    if (!copied || !this.confirmation) return;
+
+    this.confirmation.hidden = false;
+    clearTimeout(this.resetTimer);
+    this.resetTimer = setTimeout(() => {
+      this.confirmation.hidden = true;
+    }, 4000);
+  }
+}
+
+if (!customElements.get('gift-card-actions')) {
+  customElements.define('gift-card-actions', GiftCardActions);
+}

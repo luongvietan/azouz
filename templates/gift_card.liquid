@@ -1,0 +1,165 @@
+{%- comment -%}
+  The issued gift card.
+
+  This template is not sectioned and cannot be — Shopify serves it outside the
+  storefront and does not accept a gift_card.json. `{% layout none %}` is
+  deliberate: the recipient arrives here from an email with one job, to read or
+  print a code. A header, a cart drawer and a footer full of enquiry links
+  would be noise, and the drawer would fetch a cart this visitor does not have.
+
+  No QR code. Generating one needs a third-party JavaScript encoder, and the
+  theme carries no third-party JavaScript at all; the code below is selectable,
+  copyable and printable, which is what redeeming it at checkout requires.
+{%- endcomment -%}
+{% layout none %}<!doctype html>
+{%- liquid
+  assign locale_code = request.locale.iso_code | default: 'en'
+  # Same language-subtag rule as layout/theme.liquid.
+  assign language = locale_code | split: '-' | first | downcase
+  assign rtl_languages = 'ar,he,fa,ur' | split: ','
+
+  assign text_direction = 'ltr'
+  if rtl_languages contains language
+    assign text_direction = 'rtl'
+  endif
+
+  assign spent = false
+  if gift_card.balance == 0
+    assign spent = true
+  endif
+
+  assign part_spent = false
+  if gift_card.balance != gift_card.initial_value and spent == false
+    assign part_spent = true
+  endif
+
+  assign redeemable = true
+  if gift_card.expired or spent or gift_card.enabled == false
+    assign redeemable = false
+  endif
+-%}
+<html lang="{{ locale_code }}" dir="{{ text_direction }}" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {%- comment -%}
+      A gift card url is a bearer token: anyone holding it can spend the
+      balance. It must never reach an index or a referrer log.
+    {%- endcomment -%}
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="referrer" content="no-referrer">
+
+    <title>{{ 'gift_card.issued.title' | t }} &middot; {{ shop.name }}</title>
+
+    {%- if settings.favicon -%}
+      <link rel="icon" href="{{ settings.favicon | image_url: width: 96 }}">
+    {%- else -%}
+      <link rel="icon" type="image/svg+xml" href="{{ 'logomark.svg' | asset_url }}">
+    {%- endif -%}
+
+    <link rel="preload" href="{{ 'baloo-latin-400.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
+
+    {{ 'tokens.css' | asset_url | stylesheet_tag }}
+    {{ 'fonts.css' | asset_url | stylesheet_tag }}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'gift-card.css' | asset_url | stylesheet_tag }}
+
+    <script>document.documentElement.classList.replace('no-js', 'js');</script>
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="template-gift-card">
+    <main id="MainContent" tabindex="-1" class="gift-card">
+      <a class="gift-card__shop" href="{{ shop.url }}">
+        <img
+          class="gift-card__logo"
+          src="{{ 'logo-black.svg' | asset_url }}"
+          alt="{{ shop.name | escape }}"
+          width="79"
+          height="64">
+      </a>
+
+      <h1 class="gift-card__heading">{{ 'gift_card.issued.title' | t }}</h1>
+
+      <div class="gift-card__voucher">
+        <p class="gift-card__value-label">{{ 'gift_card.issued.initial_value' | t }}</p>
+        <p class="gift-card__value">{{ gift_card.initial_value | money }}</p>
+
+        {%- comment -%}
+          Only when the two differ. On an untouched card "50 JOD remaining"
+          under "50 JOD" reads as though something has already been spent.
+        {%- endcomment -%}
+        {%- if part_spent -%}
+          {%- assign balance = gift_card.balance | money -%}
+          <p class="gift-card__balance">{{ 'gift_card.issued.remaining' | t: balance: balance }}</p>
+        {%- endif -%}
+
+        <p class="gift-card__code-label" id="GiftCardCodeLabel">
+          {{- 'gift_card.issued.code_label' | t -}}
+        </p>
+        {%- comment -%}
+          The code is the one thing on this page that must survive being read
+          aloud, retyped from a print-out and pasted into a checkout field. It
+          is plain selectable text, never an image.
+        {%- endcomment -%}
+        <p class="gift-card__code" aria-describedby="GiftCardCodeLabel" data-gift-card-code>
+          {{- gift_card.code | format_code -}}
+        </p>
+
+        {%- if redeemable -%}
+          <p class="gift-card__subtext">{{ 'gift_card.issued.subtext' | t }}</p>
+        {%- endif -%}
+
+        {%- comment -%}
+          Status, in the order that matters to someone holding the card: it is
+          dead (disabled), it is out of time, it is out of money, or it is fine
+          and here is when that stops being true.
+        {%- endcomment -%}
+        {%- if gift_card.enabled == false -%}
+          <p class="gift-card__status gift-card__status--warning" role="status">
+            {{- 'gift_card.issued.disabled' | t -}}
+          </p>
+        {%- elsif gift_card.expired -%}
+          <p class="gift-card__status gift-card__status--warning" role="status">
+            {{- 'gift_card.issued.expired' | t -}}
+          </p>
+        {%- elsif spent -%}
+          <p class="gift-card__status gift-card__status--warning" role="status">
+            {{- 'gift_card.issued.spent' | t -}}
+          </p>
+        {%- elsif gift_card.expires_on -%}
+          {%- assign expiry = gift_card.expires_on | date: '%-d %B %Y' -%}
+          <p class="gift-card__status">{{ 'gift_card.issued.expires_on' | t: date: expiry }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%}
+        Both controls need scripting, so both live inside the element that
+        provides it and are hidden until it upgrades — nothing dead on screen.
+      {%- endcomment -%}
+      <gift-card-actions class="gift-card__actions">
+        <button class="button" type="button" data-gift-card-copy>
+          {{- 'gift_card.issued.copy' | t -}}
+        </button>
+        <button class="button button--secondary" type="button" data-gift-card-print>
+          {{- 'gift_card.issued.print' | t -}}
+        </button>
+        <p class="gift-card__copied" role="status" data-gift-card-copied hidden>
+          {{- 'gift_card.issued.copied' | t -}}
+        </p>
+      </gift-card-actions>
+
+      <p class="gift-card__links">
+        {%- if gift_card.pass_url -%}
+          <a class="gift-card__wallet" href="{{ gift_card.pass_url }}">
+            {{- 'gift_card.issued.apple_wallet' | t -}}
+          </a>
+        {%- endif -%}
+        <a class="button--quiet" href="{{ shop.url }}">{{ 'gift_card.issued.shop_link' | t }}</a>
+      </p>
+    </main>
+  </body>
+</html>

@@ -10,6 +10,7 @@ import {
   buildSearchFixture,
   buildCustomerFixture,
   buildBlogFixture,
+  buildGiftCardFixture,
 } from './fixtures.js';
 import { buildCart } from './cart-api.js';
 import { handleize } from './shims/filters.js';
@@ -196,6 +197,18 @@ export function resolveRoute(pathname, query = new URLSearchParams()) {
     };
   }
 
+  // Shopify's issued-card url is /gift_cards/<shop id>/<token>. The template
+  // is a standalone .liquid document — it declares {% layout none %} and the
+  // server renders it without the storefront layout.
+  const giftCard = /^\/gift_cards\/\d+\/([\w-]+)$/.exec(path);
+  if (giftCard) {
+    return {
+      page_type: 'gift_card',
+      template: 'templates/gift_card.liquid',
+      scope: { gift_card: buildGiftCardFixture(query.get('state') ?? '') },
+    };
+  }
+
   if (path === '/password') {
     return { page_type: 'password', template: 'templates/password.json', scope: {} };
   }
@@ -233,6 +246,7 @@ export function listPreviewPaths() {
     '/cart',
     '/search',
     '/password',
+    '/gift_cards/1/azou1h7g3k9m2p',
     ...Object.keys(ACCOUNT_ROUTES),
     '/account/orders/1002',
     '/404',

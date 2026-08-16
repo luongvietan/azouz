@@ -1,0 +1,158 @@
+/*
+  Azouz Coffee — issued gift card.
+
+  Loaded only by templates/gift_card.liquid, which renders outside the
+  storefront layout. It has no header, no cart and no footer, so none of
+  sections.css or commerce.css applies here; this file carries everything the
+  voucher needs on top of tokens.css and base.css.
+
+  Colour rules are the ones in tokens.css: the primary green is a fill and a
+  display-size type colour only. The voucher amount is the one place green
+  carries text, and it is set at --text-3xl.
+*/
+
+.gift-card {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-lg);
+  max-inline-size: 32rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  padding-block: var(--space-2xl);
+  text-align: center;
+}
+
+.gift-card__shop { display: inline-flex; }
+
+.gift-card__logo {
+  inline-size: auto;
+  max-inline-size: 100%;
+}
+
+.gift-card__heading {
+  margin: 0;
+  font-size: var(--text-2xl);
+}
+
+.gift-card__voucher {
+  display: grid;
+  gap: var(--space-sm);
+  inline-size: 100%;
+  padding: var(--space-xl) var(--space-lg);
+  background-color: var(--color-bg-alt);
+  border: var(--hairline);
+  border-radius: var(--radius-lg);
+}
+
+.gift-card__value-label,
+.gift-card__code-label {
+  margin: 0;
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.gift-card__value {
+  margin: 0;
+  font-size: var(--text-3xl);
+  line-height: var(--leading-display);
+  color: var(--color-accent-deep);
+}
+
+.gift-card__balance {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+/*
+  The code is retyped by hand more often than it is copied. Tabular figures
+  keep the groups aligned, generous tracking separates them, and `break-all`
+  stops a long code overflowing a narrow phone rather than being cut off.
+*/
+.gift-card__code {
+  margin: 0;
+  padding-block: var(--space-xs);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  user-select: all;
+}
+
+.gift-card__subtext {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.gift-card__status {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/*
+  A warning has to survive being read without colour — someone printing this
+  in greyscale, or reading it colour-blind. The weight and the rule above it
+  carry the emphasis; the colour only reinforces it.
+*/
+.gift-card__status--warning {
+  padding-block-start: var(--space-sm);
+  border-block-start: var(--hairline);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.gift-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.gift-card__copied {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-accent-deep);
+}
+
+/* Both actions need scripting, so neither is shown before it is available. */
+.no-js .gift-card__actions {
+  display: none;
+}
+
+.gift-card__links {
+  display: grid;
+  gap: var(--space-sm);
+  margin: 0;
+}
+
+.gift-card__wallet {
+  color: var(--color-accent-deep);
+}
+
+/*
+  Printed, this is a voucher someone hands over. What survives is the logo,
+  the amount, the code and any warning about it; the buttons and the links
+  cannot be used on paper and only cost ink.
+*/
+@media print {
+  .gift-card {
+    padding-block: 0;
+  }
+
+  .gift-card__voucher {
+    background-color: transparent;
+    border-color: var(--color-text);
+  }
+
+  .gift-card__actions,
+  .gift-card__links {
+    display: none;
+  }
+}

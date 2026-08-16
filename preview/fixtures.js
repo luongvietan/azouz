@@ -392,6 +392,45 @@ export function buildBlogFixture() {
   };
 }
 
+/**
+ * A Shopify `gift_card` drop as the issued-card template sees it.
+ *
+ * Shopify only ever serves this page with a real card behind it, so the states
+ * that matter — part spent, expired, disabled — are otherwise unreviewable.
+ * `?state=` on the preview url selects one, the same trick `?contact_errors=`
+ * uses for the enquiry form.
+ *
+ * @param {string} [state] one of 'part-spent', 'spent', 'expired', 'disabled'
+ */
+export function buildGiftCardFixture(state = '') {
+  const card = {
+    code: 'azou1h7g3k9m2p',
+    initial_value: 5000,
+    balance: 5000,
+    currency: 'JOD',
+    enabled: true,
+    expired: false,
+    expires_on: '2027-08-17',
+    url: '/gift_cards/1/azou1h7g3k9m2p',
+    pass_url: '/gift_cards/1/azou1h7g3k9m2p.pkpass',
+    qr_identifier: 'azou1h7g3k9m2p',
+    customer: { first_name: 'Layla', last_name: 'Haddad' },
+  };
+
+  switch (state) {
+    case 'part-spent':
+      return { ...card, balance: 1750 };
+    case 'spent':
+      return { ...card, balance: 0 };
+    case 'expired':
+      return { ...card, expired: true, expires_on: '2026-06-30' };
+    case 'disabled':
+      return { ...card, enabled: false };
+    default:
+      return card;
+  }
+}
+
 const ADDRESS = {
   id: 'addr-1',
   first_name: 'Layla',

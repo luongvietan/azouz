@@ -128,6 +128,24 @@
       "view_cart": "View cart"
     }
   },
+  "gift_card": {
+    "issued": {
+      "title": "Here is your gift card",
+      "subtext": "Enter this code at checkout to spend it.",
+      "code_label": "Gift card code",
+      "copy": "Copy code",
+      "copied": "Code copied",
+      "print": "Print",
+      "initial_value": "Gift card value",
+      "remaining": "{{ balance }} remaining",
+      "expires_on": "Expires on {{ date }}",
+      "expired": "This gift card has expired.",
+      "disabled": "This gift card is no longer active.",
+      "spent": "This gift card has been spent in full.",
+      "apple_wallet": "Add to Apple Wallet",
+      "shop_link": "Start shopping"
+    }
+  },
   "contact": {
     "form": {
       "heading": "Tell us what you are looking for",
