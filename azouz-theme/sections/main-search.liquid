@@ -1,0 +1,55 @@
+{%- comment -%}
+  Search results.
+
+  Predictive search is a Shopify server-side API with no local equivalent and
+  is out of scope; this is a plain GET form, which means a search is a URL the
+  customer can bookmark and share.
+{%- endcomment -%}
+
+<section class="section main-search"{{ section.shopify_attributes }}>
+  <div class="container container--narrow main-search__inner">
+    <h1 class="search__heading">{{ 'general.search.title' | t }}</h1>
+
+    <form class="search__form" method="get" action="{{ routes.search_url }}" role="search">
+      <div class="field">
+        <label class="field__label" for="SearchInput">{{ 'general.search.title' | t }}</label>
+        <input
+          class="field__input"
+          type="search"
+          id="SearchInput"
+          name="q"
+          value="{{ search.terms | escape }}"
+          placeholder="{{ 'general.search.placeholder' | t | escape }}">
+      </div>
+      <button class="button" type="submit">{{ 'general.search.submit' | t }}</button>
+    </form>
+
+    {%- if search.performed -%}
+      {%- if search.results_count > 0 -%}
+        <p class="search__count">
+          {{ 'general.search.results_count' | t: count: search.results_count }}
+        </p>
+      {%- else -%}
+        <p class="search__empty">{{ 'general.search.no_results' | t: terms: search.terms }}</p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+
+  {%- if search.results_count > 0 -%}
+    <div class="container">
+      <div class="grid grid--3 search__grid">
+        {%- for item in search.results -%}
+          {%- render 'product-card', product: item -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Search",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

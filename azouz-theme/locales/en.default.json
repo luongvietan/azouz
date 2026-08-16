@@ -21,7 +21,8 @@
       "title": "Search",
       "placeholder": "Search coffee",
       "submit": "Search",
-      "no_results": "No results for \"{{ terms }}\"."
+      "no_results": "No results for \"{{ terms }}\".",
+      "results_count": "{{ count }} results"
     },
     "meta": {
       "tags": "Tagged \"{{ tags }}\"",
