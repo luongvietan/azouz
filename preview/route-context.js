@@ -5,8 +5,14 @@
  * Anything unrecognised resolves to the 404 template rather than null, so the
  * preview always renders the theme rather than a bare server error page.
  */
-import { buildFixtures, buildSearchFixture, buildCustomerFixture } from './fixtures.js';
+import {
+  buildFixtures,
+  buildSearchFixture,
+  buildCustomerFixture,
+  buildBlogFixture,
+} from './fixtures.js';
 import { buildCart } from './cart-api.js';
+import { handleize } from './shims/filters.js';
 
 /** Static marketing routes. `page` supplies the Liquid `page` object. */
 export const ROUTES = {
@@ -134,6 +140,50 @@ export function resolveRoute(pathname, query = new URLSearchParams()) {
     };
   }
 
+  // /blogs/<blog>/tagged/<tag> renders the blog template with current_tags set,
+  // which is the only thing that distinguishes it from the unfiltered listing.
+  const taggedBlog = /^\/blogs\/([\w-]+)\/tagged\/([\w-]+)$/.exec(path);
+  if (taggedBlog) {
+    const blog = buildBlogFixture();
+    if (taggedBlog[1] !== blog.handle) return notFound();
+    const tag = blog.all_tags.find((name) => handleize(name) === taggedBlog[2]);
+    if (!tag) return notFound();
+    const articles = blog.articles.filter((item) => item.tags.includes(tag));
+    return {
+      page_type: 'blog',
+      template: 'templates/blog.json',
+      scope: {
+        blog: { ...blog, articles, articles_count: articles.length },
+        current_tags: [tag],
+        page_title: `${blog.title} — ${tag}`,
+      },
+    };
+  }
+
+  const articlePath = /^\/blogs\/([\w-]+)\/([\w-]+)$/.exec(path);
+  if (articlePath) {
+    const blog = buildBlogFixture();
+    if (articlePath[1] !== blog.handle) return notFound();
+    const found = blog.articles.find((item) => item.handle === articlePath[2]);
+    if (!found) return notFound();
+    return {
+      page_type: 'article',
+      template: 'templates/article.json',
+      scope: { blog, article: found, page_title: found.title },
+    };
+  }
+
+  const blogPath = /^\/blogs\/([\w-]+)$/.exec(path);
+  if (blogPath) {
+    const blog = buildBlogFixture();
+    if (blogPath[1] !== blog.handle) return notFound();
+    return {
+      page_type: 'blog',
+      template: 'templates/blog.json',
+      scope: { blog, current_tags: [], page_title: blog.title },
+    };
+  }
+
   if (path === '/cart') {
     return { page_type: 'cart', template: 'templates/cart.json', scope: { cart: buildCart() } };
   }
@@ -177,6 +227,9 @@ export function listPreviewPaths() {
     '/collections',
     '/collections/all',
     '/products/wadi-rum-blend',
+    '/blogs/journal',
+    '/blogs/journal/what-private-label-coffee-actually-involves',
+    '/blogs/journal/tagged/private-label',
     '/cart',
     '/search',
     '/password',

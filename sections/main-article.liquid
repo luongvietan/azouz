@@ -1,0 +1,197 @@
+{%- comment -%}
+  A single journal post.
+
+  The body sits in the narrow container — the same measure as the default page
+  — because long-form prose at the full 80rem grid is unreadable. Only the
+  featured image breaks out to the wide container.
+{%- endcomment -%}
+
+{%- liquid
+  assign uid = section.id
+  assign has_tags = false
+  if article.tags.size > 0
+    assign has_tags = true
+  endif
+
+  # Resolved ahead of the render: a filter inside a render argument does not
+  # reliably chain.
+  #
+  # No fallback to the title. The h1 sits directly above this image, so an alt
+  # repeating it makes a screen reader announce the same sentence twice. Where
+  # the merchant has written real alt text it is used; otherwise the image is
+  # decorative and the empty string is correct.
+  assign article_image_alt = article.image.alt | default: ''
+-%}
+
+<section class="section main-article"{{ section.shopify_attributes }}>
+  <div class="container container--narrow">
+    <nav class="article__breadcrumb" aria-label="{{ 'general.accessibility.breadcrumb' | t }}">
+      <a class="article__breadcrumb-link" href="{{ blog.url }}">{{ blog.title }}</a>
+    </nav>
+
+    <header class="article__head">
+      <h1 class="article__title">{{ article.title }}</h1>
+
+      <p class="article__meta">
+        {%- if article.published_at -%}
+          <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+            {{- article.published_at | date: '%-d %B %Y' -}}
+          </time>
+        {%- endif -%}
+        {%- if article.author != blank -%}
+          <span class="article__author">{{ 'blog.general.by_author' | t: author: article.author }}</span>
+        {%- endif -%}
+      </p>
+    </header>
+  </div>
+
+  {%- comment -%}
+    Eager and high priority: on an article this is the LCP element, and the
+    width/height come off the drop so the box is reserved at the right ratio.
+  {%- endcomment -%}
+  {%- if article.image -%}
+    <div class="container article__media">
+      {%- render 'responsive-image',
+        image: article.image,
+        alt: article_image_alt,
+        class: 'article__image',
+        width: 1600,
+        sizes: '(min-width: 80em) 76rem, 100vw',
+        loading: 'eager',
+        fetchpriority: 'high'
+      -%}
+    </div>
+  {%- endif -%}
+
+  <div class="container container--narrow article__body">
+    <div class="rte article__content">{{ article.content }}</div>
+
+    {%- if has_tags -%}
+      <div class="article__tags">
+        <h2 class="article__tags-heading">{{ 'blog.general.tags' | t }}</h2>
+        <ul class="article__tag-list" role="list">
+          {%- for tag in article.tags -%}
+            <li>
+              <a class="article__tag" href="{{ blog.url }}/tagged/{{ tag | handleize }}">{{ tag }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    <p class="article__back">
+      <a class="button--quiet" href="{{ blog.url }}">
+        {{- 'blog.general.back_to_blog' | t: title: blog.title -}}
+      </a>
+    </p>
+
+    {%- comment -%}
+      Comments exist only where the merchant has enabled them on the blog. On a
+      blog with them off, Shopify rejects a post to /comments, so rendering the
+      form regardless would offer a control that cannot work.
+    {%- endcomment -%}
+    {%- if blog.comments_enabled? -%}
+      <section class="article__comments" id="comments" aria-labelledby="ArticleComments-{{ uid }}">
+        <h2 class="article__comments-heading" id="ArticleComments-{{ uid }}">
+          {{- 'blog.general.comments' | t -}}
+        </h2>
+
+        {%- if article.comments_count > 0 -%}
+          <ol class="comment-list" role="list">
+            {%- for comment in article.comments -%}
+              <li class="comment" id="comment-{{ comment.id }}">
+                <p class="comment__meta">
+                  <span class="comment__author">{{ comment.author }}</span>
+                  <time datetime="{{ comment.created_at | date: '%Y-%m-%d' }}">
+                    {{- comment.created_at | date: '%-d %B %Y' -}}
+                  </time>
+                </p>
+                <div class="comment__body rte">{{ comment.content }}</div>
+              </li>
+            {%- endfor -%}
+          </ol>
+        {%- else -%}
+          <p class="article__no-comments">{{ 'blog.general.no_comments' | t }}</p>
+        {%- endif -%}
+
+        {% form 'new_comment', article %}
+          <h3 class="article__comment-form-heading">{{ 'blog.general.comment_form_title' | t }}</h3>
+
+          <div aria-live="polite">
+            {%- if form.posted_successfully? -%}
+              <p class="article__comment-success" role="status">
+                {%- if blog.moderated? -%}
+                  {{- 'blog.general.comment_moderated' | t -}}
+                {%- else -%}
+                  {{- 'blog.general.comment_success' | t -}}
+                {%- endif -%}
+              </p>
+            {%- endif -%}
+
+            {%- if form.errors -%}
+              <div class="article__comment-error" role="alert" tabindex="-1">
+                <p>{{ 'blog.general.comment_error' | t }}</p>
+                <ul role="list">
+                  {%- for field in form.errors -%}
+                    <li>
+                      {{- form.errors.translated_fields[field] | default: field | capitalize }}:
+                      {{ form.errors.messages[field] -}}
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="CommentAuthor-{{ uid }}">
+              {{- 'blog.general.comment_author' | t -}}
+            </label>
+            <input
+              class="field__input"
+              type="text"
+              id="CommentAuthor-{{ uid }}"
+              name="comment[author]"
+              autocomplete="name"
+              {% if form.errors contains 'author' %}aria-invalid="true" {% endif %}required>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="CommentEmail-{{ uid }}">
+              {{- 'blog.general.comment_email' | t -}}
+            </label>
+            <input
+              class="field__input"
+              type="email"
+              id="CommentEmail-{{ uid }}"
+              name="comment[email]"
+              autocomplete="email"
+              {% if form.errors contains 'email' %}aria-invalid="true" {% endif %}required>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="CommentBody-{{ uid }}">
+              {{- 'blog.general.comment_body' | t -}}
+            </label>
+            <textarea
+              class="field__input"
+              id="CommentBody-{{ uid }}"
+              name="comment[body]"
+              rows="5"
+              {% if form.errors contains 'body' %}aria-invalid="true" {% endif %}required></textarea>
+          </div>
+
+          <button class="button" type="submit">{{ 'blog.general.comment_submit' | t }}</button>
+        {% endform %}
+      </section>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog post",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

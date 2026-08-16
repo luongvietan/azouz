@@ -1,0 +1,53 @@
+{%- comment -%}
+  Journal post tile.
+
+  Accepts:
+    article        - required
+    heading_level  - optional, 2 or 3 (default 3)
+
+  Same heading rule as product-card: the tile title sits one level below
+  whatever heading introduces the grid. On the blog page the grid follows the
+  h1 directly, so it is h2.
+
+  The image is not a second link to the same place. A card that links twice
+  gives a screen reader two identical destinations, and an image link with an
+  empty alt has no accessible name at all — so the title carries the link and
+  the image is decorative.
+{%- endcomment -%}
+
+{%- liquid
+  assign heading_tag = 'h3'
+  if heading_level == 2
+    assign heading_tag = 'h2'
+  endif
+
+  assign summary = article.excerpt_or_content | strip_html | truncatewords: 26
+-%}
+
+<article class="article-card">
+  {%- if article.image -%}
+    {%- render 'responsive-image',
+      image: article.image,
+      alt: '',
+      class: 'article-card__image',
+      width: 600,
+      sizes: '(min-width: 56em) 30vw, (min-width: 48em) 45vw, 90vw'
+    -%}
+  {%- endif -%}
+
+  <div class="article-card__body">
+    {%- if article.published_at -%}
+      <time class="article-card__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+        {{- article.published_at | date: '%-d %B %Y' -}}
+      </time>
+    {%- endif -%}
+
+    <{{ heading_tag }} class="article-card__title">
+      <a class="article-card__link" href="{{ article.url }}">{{ article.title }}</a>
+    </{{ heading_tag }}>
+
+    {%- if summary != blank -%}
+      <p class="article-card__excerpt">{{ summary }}</p>
+    {%- endif -%}
+  </div>
+</article>

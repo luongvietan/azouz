@@ -68,6 +68,43 @@
 </script>
 {%- endif -%}
 
+{%- if request.page_type == 'article' and article -%}
+  {%- capture article_url %}{% render 'absolute-url', url: article.url %}{% endcapture -%}
+  {%- capture blog_url %}{% render 'absolute-url', url: blog.url %}{% endcapture -%}
+  {%- assign article_url = article_url | strip -%}
+  {%- assign article_summary = article.excerpt_or_content | strip_html | truncatewords: 40 -%}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ article.title | json }},
+  "description": {{ article_summary | json }},
+  "url": {{ article_url | json }},
+  "datePublished": {{ article.published_at | date: '%Y-%m-%d' | json }},
+  {%- if article.image -%}
+  {%- assign article_image = article.image | image_url: width: 1200 -%}
+  {%- capture article_image_url %}{% render 'absolute-url', url: article_image %}{% endcapture -%}
+  "image": {{ article_image_url | strip | json }},
+  {%- endif -%}
+  "author": { "@type": "Organization", "name": {{ article.author | default: shop.name | json }} },
+  "publisher": { "@type": "Organization", "name": {{ shop.name | json }}, "logo": {{ logo_url | strip | json }} }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": {{ 'general.meta.home' | t | json }}, "item": {{ shop.url | json }} },
+    { "@type": "ListItem", "position": 2, "name": {{ blog.title | json }}, "item": {{ blog_url | strip | json }} },
+    { "@type": "ListItem", "position": 3, "name": {{ article.title | json }}, "item": {{ article_url | json }} }
+  ]
+}
+</script>
+{%- endif -%}
+
 {%- if request.page_type == 'collection' and collection -%}
   {%- capture collection_url %}{% render 'absolute-url', url: collection.url %}{% endcapture -%}
 

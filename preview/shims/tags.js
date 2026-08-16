@@ -123,7 +123,8 @@ export function registerShopifyTags(engine, options = {}) {
       const fixtures = fixturesFrom(ctx);
       const request = ctx.globals?.request ?? ctx.environments?.request ?? fixtures.request;
       const postedSuccessfully =
-        formType === 'contact' && request?.query?.contact_posted === '1';
+        (formType === 'contact' && request?.query?.contact_posted === '1') ||
+        (formType === 'new_comment' && request?.query?.comment_posted === '1');
 
       // Shopify only ever hands back form.errors after a real rejected post, so
       // the error state is otherwise unreviewable. `?contact_errors=email,form`

@@ -1,0 +1,57 @@
+{%- comment -%}
+  Blog listing.
+
+  `blog.title` is the merchant's own name for the blog — "Journal", "News",
+  whatever they create in the admin — so it is the h1 rather than a hard-coded
+  heading the client cannot change.
+{%- endcomment -%}
+
+{%- liquid
+  assign tag_list = current_tags | join: ', '
+-%}
+
+<section class="section main-blog"{{ section.shopify_attributes }}>
+  <div class="container">
+    <header class="blog__head">
+      <h1 class="blog__heading">{{ blog.title }}</h1>
+
+      {%- comment -%}
+        Shopify serves /blogs/<blog>/tagged/<tag> through this same template.
+        Without this the page looks identical to the unfiltered one and there is
+        no way back to the full list.
+      {%- endcomment -%}
+      {%- if tag_list != blank -%}
+        <p class="blog__filter">
+          <span class="blog__filter-label">{{ 'general.meta.tags' | t: tags: tag_list }}</span>
+          <a class="blog__filter-clear" href="{{ blog.url }}">{{ 'blog.general.all_tags' | t }}</a>
+        </p>
+      {%- endif -%}
+    </header>
+
+    {%- if blog.articles.size == 0 -%}
+      <p class="blog__empty">{{ 'blog.general.no_articles' | t }}</p>
+    {%- else -%}
+      {%- paginate blog.articles by 12 -%}
+        <reveal-on-scroll>
+          <div class="grid grid--3 blog__grid">
+            {%- for article in blog.articles -%}
+              <div class="reveal">
+                {%- render 'article-card', article: article, heading_level: 2 -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        </reveal-on-scroll>
+
+        {%- render 'pagination', paginate: paginate -%}
+      {%- endpaginate -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog posts",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

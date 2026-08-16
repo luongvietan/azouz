@@ -90,6 +90,27 @@
       "sort_apply": "Apply"
     }
   },
+  "blog": {
+    "general": {
+      "all_tags": "All posts",
+      "no_articles": "No posts yet.",
+      "read_more": "Read more",
+      "back_to_blog": "Back to {{ title }}",
+      "by_author": "By {{ author }}",
+      "tags": "Tags",
+      "comments": "Comments",
+      "comment_count": "{{ count }} comments",
+      "no_comments": "No comments yet.",
+      "comment_form_title": "Leave a comment",
+      "comment_author": "Name",
+      "comment_email": "Email",
+      "comment_body": "Comment",
+      "comment_submit": "Post comment",
+      "comment_success": "Thanks — your comment has been posted.",
+      "comment_moderated": "Thanks — your comment will appear once it has been approved.",
+      "comment_error": "Please check the highlighted fields and try again."
+    }
+  },
   "cart": {
     "general": {
       "title": "Your cart",

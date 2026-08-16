@@ -29,12 +29,14 @@
 <meta property="og:site_name" content="{{ shop.name | escape }}">
 <meta property="og:title" content="{{ meta_title | escape }}">
 <meta property="og:url" content="{{ canonical_url }}">
-<meta property="og:type" content="{% if request.page_type == 'product' %}product{% else %}website{% endif %}">
+<meta property="og:type" content="{% if request.page_type == 'product' %}product{% elsif request.page_type == 'article' %}article{% else %}website{% endif %}">
 {%- if meta_description != blank -%}
   <meta property="og:description" content="{{ meta_description | escape }}">
 {%- endif -%}
 {%- if request.page_type == 'product' and product.featured_image -%}
   <meta property="og:image" content="{{ product.featured_image | image_url: width: 1200 }}">
+{%- elsif request.page_type == 'article' and article.image -%}
+  <meta property="og:image" content="{{ article.image | image_url: width: 1200 }}">
 {%- else -%}
   <meta property="og:image" content="{{ 'logo-primary.svg' | asset_url }}">
 {%- endif -%}

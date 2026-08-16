@@ -235,6 +235,7 @@ export function buildFixtures() {
           { title: 'Wholesale', url: '/pages/wholesale', active: false, links: [] },
           { title: 'Our Brands', url: '/pages/our-brands', active: false, links: [] },
           { title: 'Shop', url: '/collections/all', active: false, links: [] },
+          { title: 'Journal', url: '/blogs/journal', active: false, links: [] },
         ],
       },
       footer: {
@@ -293,6 +294,101 @@ export function buildSearchFixture(terms = '') {
     results,
     results_count: results.length,
     types: ['product'],
+  };
+}
+
+/**
+ * A Shopify `blog` drop with its articles.
+ *
+ * The blog handle is the merchant's to choose in the admin; `journal` is the
+ * one the preview navigation links to. Real posts are the client's to write —
+ * these exist so the templates can be reviewed with prose in them.
+ *
+ * `comments_enabled?` and `moderated?` carry the trailing question mark
+ * Shopify uses, and the plain names too, so a condition written either way
+ * resolves in preview exactly as it does live.
+ */
+export function buildBlogFixture() {
+  const article = ({ handle, title, published, author, image, excerpt, content, tags, comments = [] }) => ({
+    id: handle,
+    handle,
+    title,
+    url: `/blogs/journal/${handle}`,
+    published_at: published,
+    created_at: published,
+    author,
+    // No alt on the drop: a merchant who has not written alt text is the
+    // common case, and the section must render correctly for it. The article
+    // title is deliberately not reused — the h1 above the image already says it.
+    image: image ? imageDrop(image, '') : null,
+    excerpt,
+    excerpt_or_content: excerpt || content,
+    content,
+    tags,
+    comments,
+    comments_count: comments.length,
+    comment_post_url: '/comments',
+  });
+
+  const articles = [
+    article({
+      handle: 'what-private-label-coffee-actually-involves',
+      title: 'What private label coffee actually involves',
+      published: '2026-07-28T09:00:00Z',
+      author: 'Azouz Coffee',
+      image: '/preview-media/wadi-rum-blend-alt.jpg',
+      excerpt: 'From the first cupping to a pallet of your own bags — the steps, and what we need from you at each one.',
+      content:
+        '<p>Private label starts with a conversation about what you pour today and what you want it to taste like.</p>' +
+        '<h2>Cupping and profile</h2><p>We roast two or three profiles against your brief and taste them together.</p>' +
+        '<h2>Packaging</h2><p>Your artwork on our bags, or your own bags shipped to the roastery.</p>',
+      tags: ['Private label', 'Process'],
+      comments: [
+        {
+          id: 'comment-1',
+          author: 'Layla Haddad',
+          created_at: '2026-07-29T11:20:00Z',
+          content: '<p>Useful breakdown — the packaging lead time is the part we always underestimate.</p>',
+        },
+      ],
+    }),
+    article({
+      handle: 'choosing-a-house-espresso',
+      title: 'Choosing a house espresso',
+      published: '2026-07-14T09:00:00Z',
+      author: 'Azouz Coffee',
+      image: '/preview-media/dead-sea-blend.jpg',
+      excerpt: 'A house espresso has to hold up in milk, survive a busy bar, and still taste like a decision rather than a default.',
+      content:
+        '<p>Most cafés taste espresso black and then serve nine drinks in ten with milk.</p>' +
+        '<h2>Taste it the way you sell it</h2><p>Pull the shot, then pull it again into the drink your customers actually order.</p>',
+      tags: ['Wholesale', 'Espresso'],
+    }),
+    article({
+      handle: 'roasting-notes-turkish-coffee',
+      title: 'Roasting notes: Turkish coffee',
+      published: '2026-06-30T09:00:00Z',
+      author: 'Azouz Coffee',
+      image: '/preview-media/downtown-blend.jpg',
+      excerpt: 'Ground finer than anything else we make, and roasted for a cup that is boiled rather than brewed.',
+      content: '<p>Turkish coffee is unforgiving of a roast that was built for a filter cone.</p>',
+      tags: ['Turkish coffee'],
+    }),
+  ];
+
+  return {
+    id: 'journal',
+    handle: 'journal',
+    title: 'Journal',
+    url: '/blogs/journal',
+    articles,
+    articles_count: articles.length,
+    all_tags: ['Private label', 'Process', 'Wholesale', 'Espresso', 'Turkish coffee'],
+    tags: [],
+    comments_enabled: true,
+    'comments_enabled?': true,
+    moderated: false,
+    'moderated?': false,
   };
 }
 

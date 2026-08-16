@@ -66,12 +66,13 @@ test('theme settings from settings_data are on the settings drop', () => {
   assert.equal(settings.color_accent, '#67985E');
 });
 
-test('the main menu links to the four marketing pages and the shop', () => {
+test('the main menu links to the marketing pages, the shop and the journal', () => {
   const urls = buildFixtures().linklists['main-menu'].links.map((link) => link.url);
   assert.deepEqual(urls, [
     '/pages/private-label',
     '/pages/wholesale',
     '/pages/our-brands',
     '/collections/all',
+    '/blogs/journal',
   ]);
 });

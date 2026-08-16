@@ -180,6 +180,16 @@ export function createPreviewServer() {
       return response.writeHead(302, { Location: `${back}?contact_posted=1` }).end();
     }
 
+    // Shopify posts a comment to /comments and redirects back to the article
+    // with ?comment_posted=1. Nothing is stored here — the redirect is what
+    // makes the posted state reviewable.
+    if (request.method === 'POST' && path === '/comments') {
+      await readForm(request);
+      const referer = request.headers.referer;
+      const back = referer ? new URL(referer).pathname : '/';
+      return response.writeHead(302, { Location: `${back}?comment_posted=1#comments` }).end();
+    }
+
     if (request.method === 'POST' && path === '/cart/add') {
       const form = await readForm(request);
       addLine(form.get('id'), Number(form.get('quantity') ?? 1));
