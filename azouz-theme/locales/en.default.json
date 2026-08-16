@@ -12,7 +12,9 @@
       "cart_count": "items in cart",
       "instagram": "Instagram",
       "facebook": "Facebook",
-      "whatsapp": "WhatsApp"
+      "whatsapp": "WhatsApp",
+      "decrease_quantity": "Decrease quantity",
+      "increase_quantity": "Increase quantity"
     },
     "search": {
       "title": "Search",

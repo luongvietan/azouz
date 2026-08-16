@@ -53,3 +53,42 @@ class RevealOnScroll extends HTMLElement {
 if (!customElements.get('reveal-on-scroll')) {
   customElements.define('reveal-on-scroll', RevealOnScroll);
 }
+
+/**
+ * Coerce whatever is in a quantity field into a usable whole number.
+ * @param {unknown} value
+ * @param {number} min
+ * @param {number} [max]
+ */
+window.AzouzTheme.clampQuantity = function clampQuantity(value, min = 1, max = Infinity) {
+  const parsed = Math.floor(Number(value));
+  if (!Number.isFinite(parsed)) return min;
+  return Math.min(Math.max(parsed, min), max);
+};
+
+/**
+ * <quantity-input> turns its two buttons into a stepper.
+ * The <input type="number"> inside works on its own without this.
+ */
+class QuantityInput extends HTMLElement {
+  connectedCallback() {
+    this.input = this.querySelector('input');
+    if (!this.input) return;
+
+    this.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-quantity-step]');
+      if (!button) return;
+
+      const min = Number(this.input.min || 1);
+      const max = this.input.max === '' ? Infinity : Number(this.input.max);
+      const next = Number(this.input.value) + Number(button.dataset.quantityStep);
+
+      this.input.value = window.AzouzTheme.clampQuantity(next, min, max);
+      this.input.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+  }
+}
+
+if (!customElements.get('quantity-input')) {
+  customElements.define('quantity-input', QuantityInput);
+}

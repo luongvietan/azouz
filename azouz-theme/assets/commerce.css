@@ -92,3 +92,56 @@
   justify-content: space-between;
   gap: var(--space-xs);
 }
+
+/* ---------- Quantity ---------- */
+
+.quantity {
+  display: inline-flex;
+  align-items: stretch;
+  border: var(--hairline);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.quantity__button {
+  padding-inline: var(--space-sm);
+  font-size: var(--text-lg);
+  line-height: 1;
+  color: var(--color-text);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.quantity__input {
+  inline-size: 3.5rem;
+  padding-block: var(--space-xs);
+  text-align: center;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-inline: var(--hairline);
+  -moz-appearance: textfield;
+}
+
+.quantity__input::-webkit-outer-spin-button,
+.quantity__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Nothing dead on screen: the steppers only exist once the script has run. */
+.no-js .quantity__button {
+  display: none;
+}
+
+.no-js .quantity__input {
+  border-inline: 0;
+  -moz-appearance: auto;
+}
+
+.no-js .quantity__input::-webkit-outer-spin-button,
+.no-js .quantity__input::-webkit-inner-spin-button {
+  -webkit-appearance: auto;
+}
