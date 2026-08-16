@@ -130,3 +130,23 @@ test('a left-to-right locale that merely shares letters stays ltr', async () => 
     assert.match(out, /<html[^>]+dir="ltr"/, `${locale} should be ltr`);
   }
 });
+
+const renderPasswordLayout = async (scope = {}) => {
+  const engine = await createEngine(THEME_DIR);
+  return renderThemeFile(engine, THEME_DIR, 'layout/password.liquid', scope);
+};
+
+test('the password layout decides direction the same way the main layout does', async () => {
+  // Both layouts carry their own copy of this logic. The main one was fixed to
+  // compare the language subtag; the password one kept the substring test and
+  // so still rendered ltr for he-IL, which no test noticed.
+  for (const locale of ['ar', 'ar-JO', 'he', 'he-IL', 'fa-IR', 'ur-PK']) {
+    const out = await renderPasswordLayout({ request: { locale: { iso_code: locale }, page_type: 'password' } });
+    assert.match(out, /<html[^>]+dir="rtl"/, `${locale} should be rtl on the password page`);
+  }
+
+  for (const locale of ['en', 'fr', 'es']) {
+    const out = await renderPasswordLayout({ request: { locale: { iso_code: locale }, page_type: 'password' } });
+    assert.match(out, /<html[^>]+dir="ltr"/, `${locale} should be ltr on the password page`);
+  }
+});
