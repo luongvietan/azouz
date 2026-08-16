@@ -81,7 +81,7 @@ test('posting to /cart/add without an ajax Accept header redirects to the cart p
   assert.equal(response.headers.get('location'), '/cart');
 });
 
-test('the section rendering endpoint returns rendered html per section', { skip: 'cart-drawer arrives in Task 19' }, async () => {
+test('the section rendering endpoint returns rendered html per section', async () => {
   resetCart();
   const response = await fetch(`${origin}/?sections=cart-drawer,header`);
   assert.equal(response.status, 200);

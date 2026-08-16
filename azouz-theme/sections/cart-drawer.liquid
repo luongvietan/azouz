@@ -1,0 +1,51 @@
+{%- comment -%}
+  The cart drawer.
+
+  A section rather than a snippet because only sections can be re-rendered
+  through the Section Rendering API after an add-to-cart.
+
+  A native <dialog> without the `open` attribute: invisible and inert until
+  showModal() is called, so with scripting off it costs nothing and the header
+  cart link goes to /cart as normal.
+{%- endcomment -%}
+
+<cart-drawer class="cart-drawer">
+  <dialog class="cart-drawer__dialog" aria-label="{{ 'cart.general.title' | t }}">
+    <div class="cart-drawer__panel">
+      <div class="cart-drawer__head">
+        <h2 class="cart-drawer__heading">{{ 'cart.general.title' | t }}</h2>
+        <button class="cart-drawer__close" type="button" data-drawer-close>
+          {%- render 'icon', name: 'close' -%}
+          <span class="visually-hidden">{{ 'general.accessibility.close_cart' | t }}</span>
+        </button>
+      </div>
+
+      <div class="cart-drawer__content" data-drawer-content>
+        {%- if cart.items.size == 0 -%}
+          <p class="cart-drawer__empty">{{ 'cart.general.empty' | t }}</p>
+        {%- else -%}
+          {%- render 'cart-line-items', cart: cart -%}
+
+          <p class="cart-drawer__subtotal">
+            <span>{{ 'cart.general.subtotal' | t }}</span>
+            <span>{{ cart.total_price | money }}</span>
+          </p>
+        {%- endif -%}
+      </div>
+
+      <div class="cart-drawer__foot">
+        <a class="button button--secondary" href="{{ routes.cart_url }}">
+          {{ 'cart.general.view_cart' | t }}
+        </a>
+      </div>
+    </div>
+  </dialog>
+</cart-drawer>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

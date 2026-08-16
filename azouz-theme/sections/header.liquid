@@ -43,10 +43,14 @@
         <span class="visually-hidden">{{ 'general.search.title' | t }}</span>
       </a>
 
-      <a class="header__action" href="{{ routes.cart_url }}">
+      {%- comment -%}
+        A link, not a button: with scripting off it navigates to /cart. The
+        drawer component upgrades it to open the drawer instead.
+      {%- endcomment -%}
+      <a class="header__action" href="{{ routes.cart_url }}" data-cart-link>
         {%- render 'icon', name: 'cart' -%}
         <span class="visually-hidden">{{ 'cart.general.title' | t }}</span>
-        <span class="header__cart-count" aria-hidden="true">{{ cart.item_count | default: 0 }}</span>
+        <span class="header__cart-count" aria-hidden="true" data-cart-count>{{ cart.item_count | default: 0 }}</span>
         <span class="visually-hidden">{{ cart.item_count | default: 0 }} {{ 'general.accessibility.cart_count' | t }}</span>
       </a>
     </div>

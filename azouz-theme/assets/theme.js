@@ -224,3 +224,70 @@ class ProductForm extends HTMLElement {
 if (!customElements.get('product-form')) {
   customElements.define('product-form', ProductForm);
 }
+
+/**
+ * <cart-drawer> shows the cart without a page load.
+ *
+ * It refreshes itself through Shopify's Section Rendering API and replaces only
+ * the inner content region, so the element and its listeners survive. The
+ * markup is a <dialog> with no `open` attribute: inert until showModal(), which
+ * means a page with scripting disabled behaves as though the drawer is not
+ * there and the header cart link simply navigates to /cart.
+ */
+class CartDrawer extends HTMLElement {
+  connectedCallback() {
+    this.dialog = this.querySelector('dialog');
+    if (!this.dialog) return;
+
+    this.querySelectorAll('[data-drawer-close]').forEach((button) => {
+      button.addEventListener('click', () => this.dialog.close());
+    });
+
+    // Clicking the backdrop closes the dialog.
+    this.dialog.addEventListener('click', (event) => {
+      if (event.target === this.dialog) this.dialog.close();
+    });
+
+    const link = document.querySelector('[data-cart-link]');
+    if (link) {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        this.open();
+      });
+    }
+
+    document.addEventListener('cart:updated', () => this.refresh());
+  }
+
+  open() {
+    if (typeof this.dialog.showModal === 'function') this.dialog.showModal();
+    else window.location.href = '/cart';
+  }
+
+  async refresh() {
+    try {
+      const response = await fetch(`${window.location.pathname}?sections=cart-drawer,header`);
+      if (!response.ok) throw new Error(`section render failed: ${response.status}`);
+
+      const sections = await response.json();
+      const parsed = new DOMParser().parseFromString(sections['cart-drawer'] ?? '', 'text/html');
+
+      const fresh = parsed.querySelector('[data-drawer-content]');
+      const current = this.querySelector('[data-drawer-content]');
+      if (fresh && current) current.innerHTML = fresh.innerHTML;
+
+      const header = new DOMParser().parseFromString(sections.header ?? '', 'text/html');
+      const freshCount = header.querySelector('[data-cart-count]');
+      const currentCount = document.querySelector('[data-cart-count]');
+      if (freshCount && currentCount) currentCount.textContent = freshCount.textContent;
+    } catch {
+      // Leave the drawer showing whatever it last had; /cart is still correct.
+    }
+
+    this.open();
+  }
+}
+
+if (!customElements.get('cart-drawer')) {
+  customElements.define('cart-drawer', CartDrawer);
+}

@@ -14,7 +14,8 @@
       "facebook": "Facebook",
       "whatsapp": "WhatsApp",
       "decrease_quantity": "Decrease quantity",
-      "increase_quantity": "Increase quantity"
+      "increase_quantity": "Increase quantity",
+      "close_cart": "Close cart"
     },
     "search": {
       "title": "Search",
@@ -89,7 +90,8 @@
       "line_total": "Total",
       "remove_item": "Remove {{ title }}",
       "update": "Update cart",
-      "drawer_title": "Added to your cart"
+      "drawer_title": "Added to your cart",
+      "view_cart": "View cart"
     }
   },
   "contact": {
