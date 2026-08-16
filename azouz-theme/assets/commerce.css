@@ -188,3 +188,32 @@
   text-decoration: none;
   font-weight: var(--font-weight-semibold);
 }
+
+/* ---------- Variant picker ----------
+   With scripting off the option selects cannot drive anything, so they are
+   hidden and the <noscript> select is the only control on screen. */
+
+.variant-picker {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.variant-picker__options {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+}
+
+.no-js .variant-picker__options {
+  display: none;
+}
+
+.variant-picker__unavailable {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-accent-deep);
+}
+
+.variant-picker__unavailable[hidden] {
+  display: none;
+}

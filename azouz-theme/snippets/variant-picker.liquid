@@ -1,0 +1,69 @@
+{%- comment -%}
+  Variant selection.
+
+  Accepts: product (required), form_id (the id of the add-to-cart form)
+
+  Two mechanisms, never both live at once:
+    - option selects, read by <variant-picker>, which creates the hidden
+      name="id" input itself once it has connected
+    - a <noscript> select named "id", which the browser only parses when
+      scripting is off
+
+  Because the hidden input is created by script, there is exactly one field
+  named "id" in the form in either state.
+{%- endcomment -%}
+
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+-%}
+
+<variant-picker class="variant-picker" data-url="{{ product.url }}">
+  <script type="application/json" data-variant-data>
+    [
+      {%- for variant in product.variants -%}
+        {
+          "id": {{ variant.id | json }},
+          "options": {{ variant.options | json }},
+          "available": {{ variant.available | json }},
+          "price": {{ variant.price | money | json }},
+          "url": {{ variant.url | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  </script>
+
+  <div class="variant-picker__options">
+    {%- for option in product.options_with_values -%}
+      {%- assign option_index = forloop.index0 -%}
+      <div class="field">
+        <label class="field__label" for="Option-{{ forloop.index }}">{{ option.name }}</label>
+        <select class="field__input" id="Option-{{ forloop.index }}" data-option-index="{{ option_index }}">
+          {%- for value in option.values -%}
+            <option value="{{ value | escape }}"
+              {%- if current.options[option_index] == value %} selected{% endif -%}
+            >{{ value }}</option>
+          {%- endfor -%}
+        </select>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <p class="variant-picker__unavailable" data-variant-unavailable hidden>
+    {{ 'products.product.variant_unavailable' | t }}
+  </p>
+
+  <noscript>
+    <div class="field">
+      <label class="field__label" for="VariantFallback">{{ 'products.product.choose_options' | t }}</label>
+      <select class="field__input" id="VariantFallback" name="id" form="{{ form_id }}">
+        {%- for variant in product.variants -%}
+          <option
+            value="{{ variant.id }}"
+            {%- unless variant.available %} disabled{% endunless -%}
+            {%- if variant.id == current.id %} selected{% endif -%}
+          >{{ variant.title }} — {{ variant.price | money }}</option>
+        {%- endfor -%}
+      </select>
+    </div>
+  </noscript>
+</variant-picker>

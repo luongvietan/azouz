@@ -1,0 +1,74 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { buildFixtures } from '../preview/fixtures.js';
+import { renderSnippet } from './helpers/render-snippet.js';
+import { countMatches } from './helpers/render-section.js';
+
+const fixtures = buildFixtures();
+const wadiRum = fixtures.products[0];
+const deadSea = fixtures.products[1];
+
+const render = (product = wadiRum) =>
+  renderSnippet('variant-picker', { product, form_id: 'AddToCart' });
+
+test('renders one select per product option', async () => {
+  const html = await render();
+  assert.equal(countMatches(html, /data-option-index=/g), 2);
+});
+
+test('each option select has a visible label', async () => {
+  const html = await render();
+  assert.match(html, /<label[^>]+for="Option-1"[^>]*>\s*Weight/);
+  assert.match(html, /<label[^>]+for="Option-2"[^>]*>\s*Grind/);
+});
+
+test('the currently selected variant is preselected in each option', async () => {
+  const html = await render();
+  assert.match(html, /<option value="250g" selected/);
+  assert.match(html, /<option value="Whole Bean" selected/);
+});
+
+test('the variant data is emitted as parseable json', async () => {
+  const html = await render();
+  const json = /<script type="application\/json" data-variant-data>([\s\S]*?)<\/script>/.exec(html);
+  assert.ok(json, 'the variant json script must be present');
+  const variants = JSON.parse(json[1]);
+  assert.equal(variants.length, 3);
+  assert.deepEqual(variants[0].options, ['250g', 'Whole Bean']);
+  assert.equal(typeof variants[0].price, 'string', 'prices are pre-formatted by Liquid');
+});
+
+test('the json marks unavailable variants so the picker can disable them', async () => {
+  const html = await render(deadSea);
+  const json = /<script type="application\/json" data-variant-data>([\s\S]*?)<\/script>/.exec(html);
+  const variants = JSON.parse(json[1]);
+  assert.ok(variants.some((variant) => variant.available === false));
+});
+
+test('a noscript fallback select posts a real variant id', async () => {
+  const html = await render();
+  const noscript = /<noscript>([\s\S]*?)<\/noscript>/.exec(html);
+  assert.ok(noscript, 'there must be a noscript fallback');
+  assert.match(noscript[1], /name="id"/);
+  assert.match(noscript[1], /form="AddToCart"/);
+});
+
+test('only the noscript select is named id — the option selects never are', async () => {
+  const html = await render();
+  const withoutNoscript = html.replace(/<noscript>[\s\S]*?<\/noscript>/, '');
+  assert.equal(
+    /name="id"/.test(withoutNoscript),
+    false,
+    'a second name="id" outside noscript would post two conflicting variant ids',
+  );
+});
+
+test('the fallback marks sold-out variants disabled', async () => {
+  const html = await render(deadSea);
+  const noscript = /<noscript>([\s\S]*?)<\/noscript>/.exec(html)[1];
+  assert.match(noscript, /disabled/);
+});
+
+test('no user-visible english is hard-coded', async () => {
+  assert.equal(/translation missing/.test(await render()), false);
+});
