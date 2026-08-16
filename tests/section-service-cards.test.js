@@ -82,6 +82,18 @@ test('a featured card uses the lead layout and a primary button', async () => {
   assert.match(html, /class="button service-card__cta"/);
 });
 
+test('support cards demote visually when one card is featured', async () => {
+  const html = await renderSection('service-cards', {
+    blocks: [
+      card('s1', { ...THREE[0].settings, featured: true }),
+      THREE[1],
+      THREE[2],
+    ],
+  });
+  assert.match(html, /service-card--support/);
+  assert.equal(countMatches(html, /service-card--support/g), 2);
+});
+
 test('declares a preset with three cards', async () => {
   const { extractSchema } = await import('../scripts/schema-parser.js');
   const schema = extractSchema(await readFile(resolveInTheme('sections/service-cards.liquid'), 'utf8'));

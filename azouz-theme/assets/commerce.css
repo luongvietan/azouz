@@ -104,13 +104,19 @@
 }
 
 .quantity__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding-inline: var(--space-sm);
-  font-size: var(--text-lg);
-  line-height: 1;
   color: var(--color-text);
   background: none;
   border: 0;
   cursor: pointer;
+}
+
+.quantity__button .icon {
+  inline-size: 1rem;
+  block-size: 1rem;
 }
 
 .quantity__input {
@@ -400,10 +406,15 @@
 }
 
 .cart-line__remove {
-  font-size: var(--text-lg);
-  line-height: 1;
+  display: inline-flex;
+  align-items: center;
   color: var(--color-text-muted);
   text-decoration: none;
+}
+
+.cart-line__remove .icon {
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
 }
 
 .cart-line__remove:hover {
@@ -474,7 +485,12 @@
 
 /* ---------- Cart drawer ---------- */
 
-cart-drawer[hidden] {
+cart-drawer[hidden],
+cart-drawer[inert] {
+  display: none;
+}
+
+.cart-drawer__dialog[hidden] {
   display: none;
 }
 
@@ -525,8 +541,11 @@ cart-drawer[hidden] {
 }
 
 .cart-drawer__content {
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   padding: var(--space-lg);
+  min-block-size: 0;
 }
 
 .cart-drawer__empty {
@@ -534,11 +553,53 @@ cart-drawer[hidden] {
   color: var(--color-text-muted);
 }
 
+/* Compact line layout tuned to the drawer width (always, regardless of viewport). */
+.cart-drawer__content .cart-line {
+  grid-template-columns: 4.5rem 1fr auto;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "image info total"
+    "image actions actions";
+  align-items: start;
+  gap: var(--space-xs) var(--space-md);
+  padding-block-end: var(--space-md);
+}
+
+.cart-drawer__content .cart-line__image {
+  grid-area: image;
+  inline-size: 4.5rem;
+}
+
+.cart-drawer__content .cart-line__info {
+  grid-area: info;
+  min-inline-size: 0;
+}
+
+.cart-drawer__content .cart-line__total {
+  grid-area: total;
+  grid-column: auto;
+  align-self: start;
+  text-align: end;
+  white-space: nowrap;
+}
+
+.cart-drawer__content .cart-line__actions {
+  grid-area: actions;
+  grid-column: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-2xs);
+}
+
 .cart-drawer__subtotal {
   display: flex;
   justify-content: space-between;
   gap: var(--space-md);
-  margin-block-start: var(--space-lg);
+  margin-block-start: auto;
+  padding-block-start: var(--space-lg);
+  border-block-start: var(--hairline);
+  font-size: var(--text-lg);
   font-weight: var(--font-weight-semibold);
   font-variant-numeric: tabular-nums;
 }

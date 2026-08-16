@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createEngine } from '../preview/engine.js';
 import { THEME_DIR } from '../scripts/theme-paths.js';
 
-const ICONS = ['search', 'cart', 'menu', 'close', 'arrow-right', 'chevron-down'];
+const ICONS = ['search', 'cart', 'menu', 'close', 'arrow-right', 'chevron-down', 'plus', 'minus', 'remove', 'source', 'blend', 'roast', 'grind', 'pack'];
 
 async function renderIcon(name) {
   const engine = await createEngine(THEME_DIR);

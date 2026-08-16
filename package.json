@@ -9,9 +9,11 @@
     "preview": "node preview/server.js",
     "validate": "node scripts/validate-all.js",
     "check": "shopify theme check --path azouz-theme",
-    "package": "node scripts/package-theme.js"
+    "package": "node scripts/package-theme.js",
+    "icons": "node scripts/generate-icons.js"
   },
   "devDependencies": {
+    "@hugeicons/core-free-icons": "^4.2.3",
     "@shopify/cli": "^4.6.1",
     "archiver": "^8.0.0",
     "liquidjs": "^10.29.0"

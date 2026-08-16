@@ -58,6 +58,14 @@ test('the business type options match the audiences named in the copy', async ()
   }
 });
 
+test('groups contact and project fields for lower cognitive load', async () => {
+  const html = await render();
+  assert.match(html, /<fieldset[^>]*class="enquiry__group"/);
+  assert.match(html, /Your details/);
+  assert.match(html, /Project details/);
+  assert.match(html, /e\.g\. 20 kg per month/);
+});
+
 test('the success message is announced to screen readers', async () => {
   const html = await render();
   assert.match(html, /role="status"|aria-live="polite"/);

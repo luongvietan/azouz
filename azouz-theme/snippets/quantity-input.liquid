@@ -9,7 +9,7 @@
 
 <quantity-input class="quantity">
   <button class="quantity__button" type="button" data-quantity-step="-1">
-    <span aria-hidden="true">&minus;</span>
+    {%- render 'icon', name: 'minus' -%}
     <span class="visually-hidden">{{ 'general.accessibility.decrease_quantity' | t }}</span>
   </button>
 
@@ -26,7 +26,7 @@
     aria-label="{{ 'products.product.quantity' | t }}">
 
   <button class="quantity__button" type="button" data-quantity-step="1">
-    <span aria-hidden="true">+</span>
+    {%- render 'icon', name: 'plus' -%}
     <span class="visually-hidden">{{ 'general.accessibility.increase_quantity' | t }}</span>
   </button>
 </quantity-input>

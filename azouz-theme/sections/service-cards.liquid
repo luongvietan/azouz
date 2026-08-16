@@ -25,7 +25,7 @@
     <reveal-on-scroll>
       <div class="service-cards__grid{% if has_featured %} service-cards__grid--lead{% else %} grid grid--3{% endif %}">
         {%- for block in section.blocks -%}
-          <article class="service-card reveal{% if block.settings.featured %} service-card--featured{% endif %}"{{ block.shopify_attributes }}>
+          <article class="service-card reveal{% if block.settings.featured %} service-card--featured{% elsif has_featured %} service-card--support{% endif %}"{{ block.shopify_attributes }}>
             <div
               class="label-block service-card__label"
               {% if block.settings.label_color != blank %}style="{% render 'label-ink', color: block.settings.label_color %}"{% endif %}>

@@ -41,7 +41,7 @@
           <a
             class="cart-line__remove"
             href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity=0">
-            <span aria-hidden="true">&times;</span>
+            {%- render 'icon', name: 'remove' -%}
             <span class="visually-hidden">
               {{- 'cart.general.remove_item' | t: title: item.product_title -}}
             </span>

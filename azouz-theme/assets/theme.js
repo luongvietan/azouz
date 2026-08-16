@@ -67,6 +67,82 @@ window.AzouzTheme.clampQuantity = function clampQuantity(value, min = 1, max = I
 };
 
 /**
+ * Read the line key out of a cart quantity input's `name` attribute.
+ * Cart lines use `updates[<key>]`, which is what `/cart/change` expects as `id`.
+ * @param {string} name
+ * @returns {string|null}
+ */
+window.AzouzTheme.parseCartLineKey = function parseCartLineKey(name) {
+  if (typeof name !== 'string') return null;
+  const match = name.match(/^updates\[(.+)\]$/);
+  return match ? match[1] : null;
+};
+
+/**
+ * POST a single line change and announce it so every cart surface can refresh.
+ * @param {string} id
+ * @param {number} quantity
+ */
+window.AzouzTheme.changeCartLine = async function changeCartLine(id, quantity) {
+  const response = await fetch('/cart/change', {
+    method: 'POST',
+    headers: { Accept: 'application/json' },
+    body: new URLSearchParams({ id, quantity: String(quantity) }),
+  });
+
+  if (!response.ok) throw new Error(`cart change failed: ${response.status}`);
+
+  document.dispatchEvent(new CustomEvent('cart:updated', { detail: await response.json() }));
+};
+
+/**
+ * Apply a quantity edit from a cart line input.
+ * @param {Event} event
+ * @param {Element} root
+ */
+window.AzouzTheme.handleCartQuantityChange = async function handleCartQuantityChange(event, root) {
+  const input = event.target.closest('.quantity__input');
+  if (!input || !root.contains(input)) return;
+
+  const id = window.AzouzTheme.parseCartLineKey(input.name);
+  if (!id) return;
+
+  const quantity = window.AzouzTheme.clampQuantity(input.value, 0);
+  input.value = quantity;
+
+  await window.AzouzTheme.changeCartLine(id, quantity);
+};
+
+/**
+ * Remove a cart line through the ajax change endpoint.
+ * @param {Event} event
+ * @param {Element} root
+ */
+window.AzouzTheme.handleCartRemoveClick = async function handleCartRemoveClick(event, root) {
+  const remove = event.target.closest('.cart-line__remove');
+  if (!remove || !root.contains(remove)) return;
+
+  event.preventDefault();
+
+  const url = new URL(remove.href, window.location.origin);
+  const id = url.searchParams.get('id');
+  if (!id) return;
+
+  await window.AzouzTheme.changeCartLine(id, 0);
+};
+
+/**
+ * Copy the cart count out of a rendered header section.
+ * @param {string} headerHtml
+ */
+window.AzouzTheme.syncCartCount = function syncCartCount(headerHtml) {
+  const header = new DOMParser().parseFromString(headerHtml ?? '', 'text/html');
+  const freshCount = header.querySelector('[data-cart-count]');
+  const currentCount = document.querySelector('[data-cart-count]');
+  if (freshCount && currentCount) currentCount.textContent = freshCount.textContent;
+};
+
+/**
  * <quantity-input> turns its two buttons into a stepper.
  * The <input type="number"> inside works on its own without this.
  */
@@ -211,7 +287,9 @@ class ProductForm extends HTMLElement {
 
       if (!response.ok) throw new Error(`add to cart failed: ${response.status}`);
 
-      document.dispatchEvent(new CustomEvent('cart:updated', { detail: await response.json() }));
+      const detail = await response.json();
+      detail.openDrawer = true;
+      document.dispatchEvent(new CustomEvent('cart:updated', { detail }));
     } catch {
       // Anything unexpected: hand the browser back the plain form post.
       this.form.submit();
@@ -251,10 +329,17 @@ class CartDrawer extends HTMLElement {
     this.dialog.addEventListener('close', () => {
       this.setAttribute('hidden', '');
       this.setAttribute('aria-hidden', 'true');
+      this.setAttribute('inert', '');
       this.dialog.setAttribute('inert', '');
       this.dialog.setAttribute('aria-hidden', 'true');
       this.dialog.setAttribute('hidden', '');
     });
+
+    this.content = this.querySelector('[data-drawer-content]');
+    if (this.content) {
+      this.content.addEventListener('change', (event) => this.onLineQuantityChange(event));
+      this.content.addEventListener('click', (event) => this.onLineRemoveClick(event));
+    }
 
     const link = document.querySelector('[data-cart-link]');
     if (link) {
@@ -264,17 +349,38 @@ class CartDrawer extends HTMLElement {
       });
     }
 
-    document.addEventListener('cart:updated', () => this.refresh());
+    document.addEventListener('cart:updated', (event) => {
+      this.refresh();
+      if (event.detail?.openDrawer) this.open();
+    });
   }
 
   open() {
     this.removeAttribute('hidden');
     this.removeAttribute('aria-hidden');
+    this.removeAttribute('inert');
     this.dialog.removeAttribute('inert');
     this.dialog.removeAttribute('aria-hidden');
     this.dialog.removeAttribute('hidden');
-    if (typeof this.dialog.showModal === 'function') this.dialog.showModal();
-    else window.location.href = '/cart';
+    if (typeof this.dialog.showModal === 'function') {
+      if (!this.dialog.open) this.dialog.showModal();
+    } else window.location.href = '/cart';
+  }
+
+  async onLineQuantityChange(event) {
+    try {
+      await window.AzouzTheme.handleCartQuantityChange(event, this.content);
+    } catch {
+      await this.refresh();
+    }
+  }
+
+  async onLineRemoveClick(event) {
+    try {
+      await window.AzouzTheme.handleCartRemoveClick(event, this.content);
+    } catch {
+      await this.refresh();
+    }
   }
 
   async refresh() {
@@ -289,18 +395,74 @@ class CartDrawer extends HTMLElement {
       const current = this.querySelector('[data-drawer-content]');
       if (fresh && current) current.innerHTML = fresh.innerHTML;
 
-      const header = new DOMParser().parseFromString(sections.header ?? '', 'text/html');
-      const freshCount = header.querySelector('[data-cart-count]');
-      const currentCount = document.querySelector('[data-cart-count]');
-      if (freshCount && currentCount) currentCount.textContent = freshCount.textContent;
+      window.AzouzTheme.syncCartCount(sections.header ?? '');
     } catch {
       // Leave the drawer showing whatever it last had; /cart is still correct.
     }
-
-    this.open();
   }
 }
 
 if (!customElements.get('cart-drawer')) {
   customElements.define('cart-drawer', CartDrawer);
+}
+
+/**
+ * <cart-form> upgrades the cart page so line edits refresh in place.
+ *
+ * The underlying {% form 'cart' %} still posts for no-js customers; with
+ * scripting on, quantity changes and remove controls go through /cart/change
+ * and the main-cart section is re-rendered.
+ */
+class CartForm extends HTMLElement {
+  connectedCallback() {
+    this.body = this.querySelector('[data-cart-body]');
+    if (!this.body) return;
+
+    this.addEventListener('change', (event) => this.onLineQuantityChange(event));
+    this.addEventListener('click', (event) => this.onLineRemoveClick(event));
+    document.addEventListener('cart:updated', () => this.refresh());
+  }
+
+  async onLineQuantityChange(event) {
+    try {
+      await window.AzouzTheme.handleCartQuantityChange(event, this);
+    } catch {
+      await this.refresh();
+    }
+  }
+
+  async onLineRemoveClick(event) {
+    try {
+      await window.AzouzTheme.handleCartRemoveClick(event, this);
+    } catch {
+      await this.refresh();
+    }
+  }
+
+  async refresh() {
+    try {
+      const response = await fetch(`${window.location.pathname}?sections=main-cart,header,cart-drawer`);
+      if (!response.ok) throw new Error(`section render failed: ${response.status}`);
+
+      const sections = await response.json();
+      const parsed = new DOMParser().parseFromString(sections['main-cart'] ?? '', 'text/html');
+      const fresh = parsed.querySelector('[data-cart-body]');
+
+      if (fresh && this.body) this.body.innerHTML = fresh.innerHTML;
+
+      window.AzouzTheme.syncCartCount(sections.header ?? '');
+
+      const drawer = document.querySelector('cart-drawer');
+      const drawerParsed = new DOMParser().parseFromString(sections['cart-drawer'] ?? '', 'text/html');
+      const freshContent = drawerParsed.querySelector('[data-drawer-content]');
+      const currentContent = drawer?.querySelector('[data-drawer-content]');
+      if (freshContent && currentContent) currentContent.innerHTML = freshContent.innerHTML;
+    } catch {
+      // The form still posts natively; leave the last good markup on screen.
+    }
+  }
+}
+
+if (!customElements.get('cart-form')) {
+  customElements.define('cart-form', CartForm);
 }

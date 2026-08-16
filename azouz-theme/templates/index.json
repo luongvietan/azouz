@@ -10,7 +10,7 @@
         "body": "<p>We roast and produce coffee for cafés, hotels, retailers, distributors and growing coffee brands.</p><p>From selecting the coffee to roasting, blending and packaging — we help you create the right product for your business.</p>",
         "cta_primary_label": "Request a Sample",
         "cta_primary_link": "/pages/request-a-sample",
-        "cta_secondary_label": "Start Your Private Label",
+        "cta_secondary_label": "How private label works",
         "cta_secondary_link": "/pages/private-label",
         "background": "default"
       }
@@ -67,11 +67,11 @@
         "background": "alt"
       },
       "blocks": {
-        "source": { "type": "step", "settings": { "title": "Source" } },
-        "blend": { "type": "step", "settings": { "title": "Blend" } },
-        "roast": { "type": "step", "settings": { "title": "Roast" } },
-        "grind": { "type": "step", "settings": { "title": "Grind" } },
-        "pack": { "type": "step", "settings": { "title": "Pack" } }
+        "source": { "type": "step", "settings": { "title": "Source", "icon": "source" } },
+        "blend": { "type": "step", "settings": { "title": "Blend", "icon": "blend" } },
+        "roast": { "type": "step", "settings": { "title": "Roast", "icon": "roast" } },
+        "grind": { "type": "step", "settings": { "title": "Grind", "icon": "grind" } },
+        "pack": { "type": "step", "settings": { "title": "Pack", "icon": "pack" } }
       },
       "block_order": ["source", "blend", "roast", "grind", "pack"]
     },

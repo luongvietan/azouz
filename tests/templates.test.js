@@ -83,7 +83,7 @@ test('the homepage carries the client headline and both hero calls to action', a
   const html = await renderAll('index.json');
   assert.match(html, /Your Coffee\. Your Brand\. Our Roastery\./);
   assert.match(html, /Request a Sample/);
-  assert.match(html, /Start Your Private Label/);
+  assert.match(html, /How private label works/);
   assert.match(html, /class="button--quiet"[^>]*href="\/pages\/private-label"/);
 });
 
@@ -132,6 +132,18 @@ test('the wholesale page carries its headline, hero bag, and all four ranges', a
   for (const range of ['Espresso Blends', 'Turkish Coffee', 'Specialty Coffee', 'Filter Coffee']) {
     assert.match(html, new RegExp(range));
   }
+});
+
+test('the private label closing band leads with a quote, not a repeated sample CTA', async () => {
+  const html = await renderAll('page.private-label.json');
+  assert.match(html, /Get a Private Label Quote/);
+  assert.match(html, /Try a sample first/);
+});
+
+test('the wholesale closing band leads with pricing, not a repeated sample CTA', async () => {
+  const html = await renderAll('page.wholesale.json');
+  assert.match(html, /Get Wholesale Pricing/);
+  assert.match(html, /Try a sample first/);
 });
 
 test('the our brands page bridges into the shop with packaging photography', async () => {

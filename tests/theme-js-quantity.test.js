@@ -37,3 +37,10 @@ test('quantity-input is registered', async () => {
   const { customElements } = await loadThemeJs();
   assert.equal(typeof customElements.get('quantity-input'), 'function');
 });
+
+test('parseCartLineKey reads the line key from a cart quantity input name', async () => {
+  const { AzouzTheme } = await loadThemeJs();
+  assert.equal(AzouzTheme.parseCartLineKey('updates[wadi-rum-blend-250-wb]'), 'wadi-rum-blend-250-wb');
+  assert.equal(AzouzTheme.parseCartLineKey('quantity'), null);
+  assert.equal(AzouzTheme.parseCartLineKey(''), null);
+});

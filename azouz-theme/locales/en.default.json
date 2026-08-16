@@ -108,6 +108,8 @@
   "contact": {
     "form": {
       "heading": "Tell us what you are looking for",
+      "contact_group": "Your details",
+      "project_group": "Project details",
       "name": "Name",
       "company": "Company",
       "email": "Email",
@@ -115,7 +117,11 @@
       "business_type": "Business type",
       "coffee_type": "Coffee type",
       "volume": "Expected monthly volume",
+      "volume_placeholder": "e.g. 20 kg per month",
+      "volume_hint": "Approximate monthly volume in kg or number of retail bags.",
       "message": "Message",
+      "message_placeholder": "Timeline, packaging or market details",
+      "message_hint": "Optional. Add anything that helps us quote accurately.",
       "optional": "optional",
       "business_type_prompt": "Select a business type",
       "coffee_type_prompt": "Select a coffee type",

@@ -6,8 +6,10 @@ import { resolveInTheme } from '../scripts/theme-paths.js';
 
 const step = (id, settings) => ({ id, type: 'step', settings, shopify_attributes: '' });
 
+const ICONS = ['source', 'blend', 'roast', 'grind', 'pack'];
+
 const FLOW = ['Source', 'Blend', 'Roast', 'Grind', 'Pack'].map((title, i) =>
-  step(`s${i}`, { title }),
+  step(`s${i}`, { title, icon: ICONS[i] }),
 );
 
 test('renders one step per block, in order', async () => {
@@ -32,9 +34,17 @@ test('renders step descriptions when present and omits the element when not', as
   assert.equal(/process-step__body/.test(withoutBody), false);
 });
 
-test('step numbers are decorative and hidden from assistive tech', async () => {
+test('step icons are decorative and hidden from assistive tech', async () => {
   const html = await renderSection('process-steps', { settings: { show_numbers: true }, blocks: FLOW });
-  assert.match(html, /class="process-step__number"[^>]*aria-hidden="true"/);
+  assert.match(html, /class="process-step__marker"[^>]*aria-hidden="true"/);
+  assert.match(html, /class="icon icon--source"/);
+  assert.match(html, /class="icon icon--pack"/);
+});
+
+test('flow layout exposes a step count for equal columns', async () => {
+  const html = await renderSection('process-steps', { settings: { layout: 'flow' }, blocks: FLOW });
+  assert.match(html, /--step-count:\s*5/);
+  assert.match(html, /process-steps__list--flow/);
 });
 
 test('step titles are h3 and the section heading is the only h2', async () => {

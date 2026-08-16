@@ -32,3 +32,8 @@ test('the component announces a cart update rather than reaching into the drawer
   const source = await readFile(resolveInTheme('assets/theme.js'), 'utf8');
   assert.match(source, /cart:updated/);
 });
+
+test('add-to-cart asks the drawer to open', async () => {
+  const source = await readFile(resolveInTheme('assets/theme.js'), 'utf8');
+  assert.match(source, /openDrawer\s*=\s*true/);
+});

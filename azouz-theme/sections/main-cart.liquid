@@ -2,36 +2,40 @@
   <div class="container main-cart__inner">
     <h1 class="main-cart__heading">{{ 'cart.general.title' | t }}</h1>
 
-    {%- if cart.items.size == 0 -%}
-      <div class="cart__empty">
-        <p class="lead">{{ 'cart.general.empty' | t }}</p>
-        <a class="button" href="{{ routes.all_products_collection_url }}">
-          {{ 'cart.general.continue_shopping' | t }}
-        </a>
-      </div>
-    {%- else -%}
-      {%- form 'cart', cart, id: 'CartForm', class: 'main-cart__form' -%}
-        {%- render 'cart-line-items', cart: cart, form_id: 'CartForm' -%}
-
-        <div class="cart__summary">
-          <p class="cart__subtotal">
-            <span>{{ 'cart.general.subtotal' | t }}</span>
-            <span>{{ cart.total_price | money }}</span>
-          </p>
-
-          <p class="cart__note">{{ 'cart.general.taxes_note' | t }}</p>
-
-          <div class="button-group cart__actions">
-            <button class="button button--secondary" type="submit" name="update">
-              {{ 'cart.general.update' | t }}
-            </button>
-            <button class="button" type="submit" name="checkout">
-              {{ 'cart.general.checkout' | t }}
-            </button>
+    <cart-form>
+      <div data-cart-body>
+        {%- if cart.items.size == 0 -%}
+          <div class="cart__empty">
+            <p class="lead">{{ 'cart.general.empty' | t }}</p>
+            <a class="button" href="{{ routes.all_products_collection_url }}">
+              {{ 'cart.general.continue_shopping' | t }}
+            </a>
           </div>
-        </div>
-      {%- endform -%}
-    {%- endif -%}
+        {%- else -%}
+          {%- form 'cart', cart, id: 'CartForm', class: 'main-cart__form' -%}
+            {%- render 'cart-line-items', cart: cart, form_id: 'CartForm' -%}
+
+            <div class="cart__summary">
+              <p class="cart__subtotal">
+                <span>{{ 'cart.general.subtotal' | t }}</span>
+                <span>{{ cart.total_price | money }}</span>
+              </p>
+
+              <p class="cart__note">{{ 'cart.general.taxes_note' | t }}</p>
+
+              <div class="button-group cart__actions">
+                <button class="button button--secondary" type="submit" name="update">
+                  {{ 'cart.general.update' | t }}
+                </button>
+                <button class="button" type="submit" name="checkout">
+                  {{ 'cart.general.checkout' | t }}
+                </button>
+              </div>
+            </div>
+          {%- endform -%}
+        {%- endif -%}
+      </div>
+    </cart-form>
   </div>
 </section>
 

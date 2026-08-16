@@ -18,11 +18,16 @@
     </div>
 
     <reveal-on-scroll>
-      <ol class="process-steps__list process-steps__list--{{ section.settings.layout }}" role="list">
+      <ol
+        class="process-steps__list process-steps__list--{{ section.settings.layout }}"
+        style="--step-count: {{ section.blocks.size }}"
+        role="list">
         {%- for block in section.blocks -%}
           <li class="process-step reveal"{{ block.shopify_attributes }}>
             {%- if section.settings.show_numbers -%}
-              <span class="process-step__number" aria-hidden="true">{{ forloop.index }}</span>
+              <span class="process-step__marker" aria-hidden="true">
+                {%- render 'icon', name: block.settings.icon -%}
+              </span>
             {%- endif -%}
             <h3 class="process-step__title">{{ block.settings.title }}</h3>
             {%- if block.settings.body != blank -%}
@@ -43,7 +48,7 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "From Bean to Bag." },
     { "type": "text", "id": "body", "label": "Intro" },
-    { "type": "checkbox", "id": "show_numbers", "label": "Show step numbers", "default": true },
+    { "type": "checkbox", "id": "show_numbers", "label": "Show step icons", "default": true },
     {
       "type": "select",
       "id": "layout",
@@ -71,7 +76,20 @@
       "name": "Step",
       "settings": [
         { "type": "text", "id": "title", "label": "Title", "default": "Source" },
-        { "type": "text", "id": "body", "label": "Description" }
+        { "type": "text", "id": "body", "label": "Description" },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "source", "label": "Source" },
+            { "value": "blend", "label": "Blend" },
+            { "value": "roast", "label": "Roast" },
+            { "value": "grind", "label": "Grind" },
+            { "value": "pack", "label": "Pack" }
+          ],
+          "default": "source"
+        }
       ]
     }
   ],
@@ -79,11 +97,11 @@
     {
       "name": "Process steps",
       "blocks": [
-        { "type": "step", "settings": { "title": "Source" } },
-        { "type": "step", "settings": { "title": "Blend" } },
-        { "type": "step", "settings": { "title": "Roast" } },
-        { "type": "step", "settings": { "title": "Grind" } },
-        { "type": "step", "settings": { "title": "Pack" } }
+        { "type": "step", "settings": { "title": "Source", "icon": "source" } },
+        { "type": "step", "settings": { "title": "Blend", "icon": "blend" } },
+        { "type": "step", "settings": { "title": "Roast", "icon": "roast" } },
+        { "type": "step", "settings": { "title": "Grind", "icon": "grind" } },
+        { "type": "step", "settings": { "title": "Pack", "icon": "pack" } }
       ]
     }
   ]

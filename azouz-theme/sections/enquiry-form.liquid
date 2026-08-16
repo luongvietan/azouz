@@ -29,66 +29,86 @@
         {%- endif -%}
       </div>
 
-      <div class="enquiry__grid">
-        <div class="field">
-          <label class="field__label" for="EnquiryName-{{ uid }}">{{ 'contact.form.name' | t }}</label>
-          <input class="field__input" type="text" id="EnquiryName-{{ uid }}" name="contact[name]" autocomplete="name" required>
-        </div>
+      <div class="enquiry__groups">
+        <fieldset class="enquiry__group">
+          <legend class="enquiry__legend">{{ 'contact.form.contact_group' | t }}</legend>
+          <div class="enquiry__grid">
+            <div class="field">
+              <label class="field__label" for="EnquiryName-{{ uid }}">{{ 'contact.form.name' | t }}</label>
+              <input class="field__input" type="text" id="EnquiryName-{{ uid }}" name="contact[name]" autocomplete="name" required>
+            </div>
 
-        <div class="field">
-          <label class="field__label" for="EnquiryCompany-{{ uid }}">{{ 'contact.form.company' | t }}</label>
-          <input class="field__input" type="text" id="EnquiryCompany-{{ uid }}" name="contact[Company]" autocomplete="organization">
-        </div>
+            <div class="field">
+              <label class="field__label" for="EnquiryCompany-{{ uid }}">{{ 'contact.form.company' | t }}</label>
+              <input class="field__input" type="text" id="EnquiryCompany-{{ uid }}" name="contact[Company]" autocomplete="organization">
+            </div>
 
-        <div class="field">
-          <label class="field__label" for="EnquiryEmail-{{ uid }}">{{ 'contact.form.email' | t }}</label>
-          <input class="field__input" type="email" id="EnquiryEmail-{{ uid }}" name="contact[email]" autocomplete="email" required>
-        </div>
+            <div class="field">
+              <label class="field__label" for="EnquiryEmail-{{ uid }}">{{ 'contact.form.email' | t }}</label>
+              <input class="field__input" type="email" id="EnquiryEmail-{{ uid }}" name="contact[email]" autocomplete="email" required>
+            </div>
 
-        <div class="field">
-          <label class="field__label" for="EnquiryPhone-{{ uid }}">{{ 'contact.form.phone' | t }}</label>
-          <input class="field__input" type="tel" id="EnquiryPhone-{{ uid }}" name="contact[phone]" autocomplete="tel">
-        </div>
+            <div class="field">
+              <label class="field__label" for="EnquiryPhone-{{ uid }}">{{ 'contact.form.phone' | t }}</label>
+              <input class="field__input" type="tel" id="EnquiryPhone-{{ uid }}" name="contact[phone]" autocomplete="tel">
+            </div>
+          </div>
+        </fieldset>
 
-        <div class="field">
-          <label class="field__label" for="EnquiryBusiness-{{ uid }}">{{ 'contact.form.business_type' | t }}</label>
-          <select class="field__input" id="EnquiryBusiness-{{ uid }}" name="contact[Business type]">
-            <option value="">{{ 'contact.form.business_type_prompt' | t }}</option>
-            {%- assign business_types = section.settings.business_types | split: ',' -%}
-            {%- for type in business_types -%}
-              <option value="{{ type | strip | escape }}"{% if section.settings.preselect_business == type %} selected{% endif %}>{{ type | strip }}</option>
-            {%- endfor -%}
-          </select>
-        </div>
+        <fieldset class="enquiry__group">
+          <legend class="enquiry__legend">{{ 'contact.form.project_group' | t }}</legend>
+          <div class="enquiry__grid">
+            <div class="field">
+              <label class="field__label" for="EnquiryBusiness-{{ uid }}">{{ 'contact.form.business_type' | t }}</label>
+              <select class="field__input" id="EnquiryBusiness-{{ uid }}" name="contact[Business type]">
+                <option value="">{{ 'contact.form.business_type_prompt' | t }}</option>
+                {%- assign business_types = section.settings.business_types | split: ',' -%}
+                {%- for type in business_types -%}
+                  <option value="{{ type | strip | escape }}"{% if section.settings.preselect_business == type %} selected{% endif %}>{{ type | strip }}</option>
+                {%- endfor -%}
+              </select>
+            </div>
 
-        <div class="field">
-          <label class="field__label" for="EnquiryCoffee-{{ uid }}">{{ 'contact.form.coffee_type' | t }}</label>
-          <select class="field__input" id="EnquiryCoffee-{{ uid }}" name="contact[Coffee type]">
-            <option value="">{{ 'contact.form.coffee_type_prompt' | t }}</option>
-            {%- assign coffee_types = section.settings.coffee_types | split: ',' -%}
-            {%- for type in coffee_types -%}
-              <option value="{{ type | strip | escape }}">{{ type | strip }}</option>
-            {%- endfor -%}
-          </select>
-        </div>
+            <div class="field">
+              <label class="field__label" for="EnquiryCoffee-{{ uid }}">{{ 'contact.form.coffee_type' | t }}</label>
+              <select class="field__input" id="EnquiryCoffee-{{ uid }}" name="contact[Coffee type]">
+                <option value="">{{ 'contact.form.coffee_type_prompt' | t }}</option>
+                {%- assign coffee_types = section.settings.coffee_types | split: ',' -%}
+                {%- for type in coffee_types -%}
+                  <option value="{{ type | strip | escape }}">{{ type | strip }}</option>
+                {%- endfor -%}
+              </select>
+            </div>
 
-        <div class="field field--wide">
-          <label class="field__label" for="EnquiryVolume-{{ uid }}">
-            {{ 'contact.form.volume' | t }}
-            {%- unless section.settings.require_volume %} <span class="field__hint">({{ 'contact.form.optional' | t }})</span>{% endunless -%}
-          </label>
-          <input
-            class="field__input"
-            type="text"
-            id="EnquiryVolume-{{ uid }}"
-            name="contact[Expected monthly volume]"
-            {% if section.settings.require_volume %}required{% endif %}>
-        </div>
+            <div class="field field--wide">
+              <label class="field__label" for="EnquiryVolume-{{ uid }}">
+                {{ 'contact.form.volume' | t }}
+                {%- unless section.settings.require_volume %} <span class="field__hint">({{ 'contact.form.optional' | t }})</span>{% endunless -%}
+              </label>
+              <input
+                class="field__input"
+                type="text"
+                id="EnquiryVolume-{{ uid }}"
+                name="contact[Expected monthly volume]"
+                placeholder="{{ 'contact.form.volume_placeholder' | t }}"
+                aria-describedby="EnquiryVolumeHint-{{ uid }}"
+                {% if section.settings.require_volume %}required{% endif %}>
+              <p class="field__hint" id="EnquiryVolumeHint-{{ uid }}">{{ 'contact.form.volume_hint' | t }}</p>
+            </div>
 
-        <div class="field field--wide">
-          <label class="field__label" for="EnquiryMessage-{{ uid }}">{{ 'contact.form.message' | t }}</label>
-          <textarea class="field__input field__input--textarea" id="EnquiryMessage-{{ uid }}" name="contact[body]" rows="5"></textarea>
-        </div>
+            <div class="field field--wide">
+              <label class="field__label" for="EnquiryMessage-{{ uid }}">{{ 'contact.form.message' | t }}</label>
+              <textarea
+                class="field__input field__input--textarea"
+                id="EnquiryMessage-{{ uid }}"
+                name="contact[body]"
+                rows="5"
+                aria-describedby="EnquiryMessageHint-{{ uid }}"
+                placeholder="{{ 'contact.form.message_placeholder' | t }}"></textarea>
+              <p class="field__hint" id="EnquiryMessageHint-{{ uid }}">{{ 'contact.form.message_hint' | t }}</p>
+            </div>
+          </div>
+        </fieldset>
       </div>
 
       <button class="button enquiry__submit" type="submit">{{ 'contact.form.send' | t }}</button>

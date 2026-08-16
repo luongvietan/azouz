@@ -30,6 +30,12 @@ test('the form posts to the cart so quantity edits work without javascript', asy
   assert.match(html, /name="update"|type="submit"/);
 });
 
+test('the cart page body is marked for js refresh', async () => {
+  const html = await render(filled());
+  assert.match(html, /<cart-form/);
+  assert.match(html, /data-cart-body/);
+});
+
 test('there is a checkout button', async () => {
   const html = await render(filled());
   assert.match(html, /name="checkout"/);
