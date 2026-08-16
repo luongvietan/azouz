@@ -68,3 +68,20 @@ test('pagination targets meet the 44px touch target floor', async () => {
   assert.equal(declaration(css, '.pagination__page', 'min-inline-size'), '2.75rem');
   assert.equal(declaration(css, '.pagination__page', 'min-block-size'), '2.75rem');
 });
+
+test('the drawer line areas are not undone by a later grid-column reset', async () => {
+  // `grid-area: actions` sets the column span; a `grid-column: auto` after it
+  // silently throws that away and the remove control wraps to its own row.
+  const css = await load();
+  for (const selector of [
+    '.cart-drawer__content .cart-line__actions',
+    '.cart-drawer__content .cart-line__total',
+  ]) {
+    assert.ok(declaration(css, selector, 'grid-area'), `${selector} should place itself by area`);
+    assert.equal(
+      declaration(css, selector, 'grid-column'),
+      null,
+      `${selector} must not reset grid-column after grid-area`,
+    );
+  }
+});

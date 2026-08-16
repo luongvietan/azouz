@@ -602,9 +602,12 @@ cart-drawer[inert] {
   min-inline-size: 0;
 }
 
+/* No `grid-column: auto` here. It looks like it is undoing the base
+   `grid-column: 2`, but it comes after `grid-area` and so wipes the column
+   placement the named area just set — which dropped the actions row back into
+   the info column alone and wrapped the remove control onto its own line. */
 .cart-drawer__content .cart-line__total {
   grid-area: total;
-  grid-column: auto;
   align-self: start;
   text-align: end;
   white-space: nowrap;
@@ -612,7 +615,6 @@ cart-drawer[inert] {
 
 .cart-drawer__content .cart-line__actions {
   grid-area: actions;
-  grid-column: auto;
   display: flex;
   align-items: center;
   gap: var(--space-sm);
