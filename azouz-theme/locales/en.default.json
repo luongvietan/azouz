@@ -43,6 +43,8 @@
       "quantity": "Quantity",
       "price": "Price",
       "from_price": "From {{ price }}",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price",
       "roast_level": "Roast level",
       "tasting_notes": "Tasting notes",
       "origin": "Origin",

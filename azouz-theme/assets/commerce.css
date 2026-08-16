@@ -10,3 +10,27 @@
     - no physical direction properties; logical only, so the theme flips for Arabic
     - never place body-size text on --color-accent (3.37:1); use --color-accent-deep
 */
+
+/* ---------- Price ---------- */
+
+.price {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-xs);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.price__compare {
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-regular);
+}
+
+.price--on-sale .price__current {
+  color: var(--color-accent-deep);
+}
+
+.price__from {
+  font-weight: var(--font-weight-regular);
+}
