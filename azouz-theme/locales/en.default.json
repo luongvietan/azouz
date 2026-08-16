@@ -45,6 +45,12 @@
       "title": "Page not found",
       "subtext": "The page you were looking for does not exist.",
       "link": "Back to home"
+    },
+    "password": {
+      "heading": "Opening soon",
+      "subtext": "Enter the store password to take a look around.",
+      "label": "Password",
+      "submit": "Enter"
     }
   },
   "products": {
@@ -76,7 +82,9 @@
     "general": {
       "no_products": "No products in this collection yet.",
       "product_count": "{{ count }} products",
-      "view_all": "View all"
+      "view_all": "View all",
+      "title": "Collections",
+      "empty": "No collections yet."
     }
   },
   "cart": {

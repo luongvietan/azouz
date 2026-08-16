@@ -1,0 +1,39 @@
+<section class="section main-list-collections"{{ section.shopify_attributes }}>
+  <div class="container">
+    <h1 class="list-collections__heading">{{ 'collections.general.title' | t }}</h1>
+
+    {%- if collections.size == 0 -%}
+      <p class="collection__empty">{{ 'collections.general.empty' | t }}</p>
+    {%- else -%}
+      <div class="grid grid--3 list-collections__grid">
+        {%- for item in collections -%}
+          <article class="collection-card">
+            {%- if item.image -%}
+              <img
+                class="collection-card__image"
+                src="{{ item.image | image_url: width: 600 }}"
+                alt="{{ item.title | escape }}"
+                width="600"
+                height="400"
+                loading="lazy">
+            {%- endif -%}
+            <h2 class="collection-card__title">
+              <a href="{{ item.url }}">{{ item.title }}</a>
+            </h2>
+            <p class="collection-card__count">
+              {{ 'collections.general.product_count' | t: count: item.products_count }}
+            </p>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collections list",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

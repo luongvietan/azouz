@@ -1,0 +1,21 @@
+<section class="section main-404"{{ section.shopify_attributes }}>
+  <div class="container container--narrow main-404__inner">
+    <h1 class="main-404__heading">{{ 'general.404.title' | t }}</h1>
+    <p class="lead">{{ 'general.404.subtext' | t }}</p>
+
+    <div class="button-group">
+      <a class="button" href="{{ routes.root_url }}">{{ 'general.404.link' | t }}</a>
+      <a class="button button--secondary" href="{{ routes.all_products_collection_url }}">
+        {{ 'cart.general.continue_shopping' | t }}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

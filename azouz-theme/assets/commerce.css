@@ -585,3 +585,83 @@
 .search__grid {
   gap: var(--space-xl) var(--space-lg);
 }
+
+/* ---------- 404 ---------- */
+
+.main-404__inner {
+  display: grid;
+  gap: var(--space-lg);
+  justify-items: center;
+  text-align: center;
+}
+
+.main-404__heading {
+  margin: 0;
+}
+
+/* ---------- Collections list ---------- */
+
+.list-collections__heading {
+  margin-block-end: var(--space-xl);
+}
+
+.collection-card {
+  display: grid;
+  gap: var(--space-xs);
+  align-content: start;
+}
+
+.collection-card__image {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-alt);
+}
+
+.collection-card__title {
+  margin: 0;
+  font-size: var(--text-lg);
+}
+
+.collection-card__title a {
+  text-decoration: none;
+}
+
+.collection-card__count {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Password ---------- */
+
+.main-password__inner {
+  display: grid;
+  gap: var(--space-lg);
+  justify-items: center;
+  text-align: center;
+  min-block-size: 70dvh;
+  align-content: center;
+}
+
+.main-password__logo {
+  block-size: 3.5rem;
+  inline-size: auto;
+}
+
+.main-password__heading {
+  margin: 0;
+}
+
+.main-password__form {
+  display: grid;
+  gap: var(--space-md);
+  justify-items: center;
+  inline-size: min(24rem, 100%);
+}
+
+.main-password__form .field {
+  inline-size: 100%;
+}
