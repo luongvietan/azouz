@@ -1,0 +1,97 @@
+import { test, before, after } from 'node:test';
+import assert from 'node:assert/strict';
+import { createPreviewServer } from '../preview/server.js';
+import { resetCart } from '../preview/cart-api.js';
+
+let server;
+let origin;
+
+before(async () => {
+  server = createPreviewServer();
+  await new Promise((resolve) => server.listen(0, resolve));
+  origin = `http://localhost:${server.address().port}`;
+});
+
+after(() => server.close());
+
+test('the homepage renders a full document', async () => {
+  const response = await fetch(`${origin}/`);
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /<!doctype html>/i);
+  assert.match(html, /Your Coffee\. Your Brand\. Our Roastery\./);
+});
+
+test('a product page renders that product', async () => {
+  const html = await (await fetch(`${origin}/products/wadi-rum-blend`)).text();
+  assert.match(html, /Wadi Rum Blend/);
+});
+
+test('an unknown url renders the theme 404, not a server error', async () => {
+  const response = await fetch(`${origin}/nope`);
+  assert.equal(response.status, 404);
+  assert.match(await response.text(), /<!doctype html>/i);
+});
+
+test('the remove link works — GET /cart/change with quantity 0 drops the line', async () => {
+  resetCart();
+  await fetch(`${origin}/cart/add`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+    body: new URLSearchParams({ id: 'wadi-rum-blend-250-wb', quantity: '1' }),
+  });
+
+  const response = await fetch(
+    `${origin}/cart/change?id=wadi-rum-blend-250-wb&quantity=0`,
+    { redirect: 'manual' },
+  );
+  assert.equal(response.status, 302);
+
+  const cart = await (await fetch(`${origin}/cart.js`)).json();
+  assert.equal(cart.item_count, 0);
+});
+
+test('cart.js returns the live cart as json', async () => {
+  resetCart();
+  const cart = await (await fetch(`${origin}/cart.js`)).json();
+  assert.equal(cart.item_count, 0);
+});
+
+test('posting to /cart/add adds a line and returns json for fetch callers', async () => {
+  resetCart();
+  const response = await fetch(`${origin}/cart/add`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+    body: new URLSearchParams({ id: 'wadi-rum-blend-250-wb', quantity: '2' }),
+  });
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.item_count, 2);
+});
+
+test('posting to /cart/add without an ajax Accept header redirects to the cart page', async () => {
+  resetCart();
+  const response = await fetch(`${origin}/cart/add`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ id: 'wadi-rum-blend-250-wb', quantity: '1' }),
+    redirect: 'manual',
+  });
+  assert.equal(response.status, 302);
+  assert.equal(response.headers.get('location'), '/cart');
+});
+
+test('the section rendering endpoint returns rendered html per section', { skip: 'cart-drawer arrives in Task 19' }, async () => {
+  resetCart();
+  const response = await fetch(`${origin}/?sections=cart-drawer,header`);
+  assert.equal(response.status, 200);
+  const sections = await response.json();
+  assert.match(sections['cart-drawer'], /shopify-section-cart-drawer/);
+  assert.match(sections.header, /shopify-section-header/);
+});
+
+test('an asset is served with the right content type', async () => {
+  const response = await fetch(`${origin}/assets/commerce.css`);
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get('content-type'), /text\/css/);
+});
