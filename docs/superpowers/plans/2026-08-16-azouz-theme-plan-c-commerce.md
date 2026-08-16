@@ -71,6 +71,8 @@ Named here so nobody adds them halfway through:
 | `snippets/cart-drawer.liquid` | `sections/cart-drawer.liquid` | The Section Rendering API can only re-render a **section**. A snippet cannot be refreshed after an add-to-cart. |
 | `<accordion-item>` custom element | Plain `<details>`/`<summary>` | The native element already does everything the component would, keyboard and screen-reader behaviour included. Writing a custom element to reimplement it would be code with no purpose. |
 | Section styles in `sections.css` | New `assets/commerce.css` | `sections.css` is already large. Commerce styles change together and belong together. |
+| `snippets/responsive-image.liquid` | `image_url` + explicit `width`/`height` on each `<img>` | Marketing images already ship this way. A shared snippet would be a rename, not a behaviour change. Add it in a polish pass if Lighthouse flags missing `srcset`. |
+| `snippets/social-icons.liquid` | Footer already renders social links from theme settings | A second snippet would duplicate `footer.liquid`. |
 
 ---
 
@@ -3637,6 +3639,90 @@ Expected: PASS — 410 tests, 1 skipped.
 ```bash
 git add azouz-theme/sections/main-product.liquid azouz-theme/templates/product.json azouz-theme/assets/commerce.css azouz-theme/locales/en.default.json tests/section-main-product.test.js
 git commit -m "feat: add product page"
+```
+
+- [ ] **Step 9: Close the JSON-LD gap the spec already declared**
+
+Plan A emits Organization everywhere and Product on `request.page_type == 'product'`. The spec also requires **BreadcrumbList on product pages**, and the collection breadcrumb currently hard-codes the English word `Home`.
+
+In `azouz-theme/locales/en.default.json`, inside `general.meta`, add:
+
+```json
+      "home": "Home",
+      "shop": "Shop"
+```
+
+In `azouz-theme/snippets/structured-data.liquid`, replace the collection-only breadcrumb block with one that also fires on product pages. Do **not** reuse `general.meta.tags` — that string is `"Tagged \"{{ tags }}\""`.
+
+```liquid
+{%- if request.page_type == 'collection' and collection -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": {{ 'general.meta.home' | t | json }}, "item": {{ shop.url | json }} },
+    { "@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": {{ collection.url | json }} }
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- if request.page_type == 'product' and product -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": {{ 'general.meta.home' | t | json }}, "item": {{ shop.url | json }} },
+    { "@type": "ListItem", "position": 2, "name": {{ 'general.meta.shop' | t | json }}, "item": {{ routes.all_products_collection_url | json }} },
+    { "@type": "ListItem", "position": 3, "name": {{ product.title | json }}, "item": {{ product.url | json }} }
+  ]
+}
+</script>
+{%- endif -%}
+```
+
+Append to `tests/meta-tags.test.js`:
+
+```js
+test('structured-data emits BreadcrumbList on a product page', async () => {
+  const out = await renderSnippet('structured-data', {
+    request: { page_type: 'product' },
+    product: {
+      title: 'Wadi Rum Blend',
+      description: 'An espresso roast.',
+      url: '/products/wadi-rum-blend',
+      featured_image: '/preview-media/wadi-rum-blend.jpg',
+      vendor: 'Azouz Coffee',
+      price: 750,
+      available: true,
+    },
+  });
+  const blocks = [...out.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+  const types = blocks.map((block) => JSON.parse(block[1])['@type']);
+  assert.ok(types.includes('Product'));
+  assert.ok(types.includes('BreadcrumbList'));
+  assert.equal(/translation missing/.test(out), false);
+  assert.equal(/\bHome\b/.test(out.replace(/<script[\s\S]*?<\/script>/g, '')), false);
+});
+
+test('structured-data collection breadcrumbs are not hard-coded English', async () => {
+  const out = await renderSnippet('structured-data', {
+    request: { page_type: 'collection' },
+    collection: { title: 'Azouz Coffee', url: '/collections/all' },
+  });
+  assert.match(out, /BreadcrumbList/);
+  assert.equal(/translation missing/.test(out), false);
+});
+```
+
+Run: `node --test tests/meta-tags.test.js`
+Expected: PASS — existing tests plus the two new ones.
+
+```bash
+git add azouz-theme/snippets/structured-data.liquid azouz-theme/locales/en.default.json tests/meta-tags.test.js
+git commit -m "feat: add product breadcrumbs to json-ld"
 ```
 
 ---
