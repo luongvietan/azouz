@@ -1,0 +1,40 @@
+{%- comment -%}
+  Accepts: paginate (the object from {% paginate %})
+
+  Built from `pages` and `current_page` rather than `paginate.parts`, so the
+  same markup renders under Shopify and under the preview harness.
+{%- endcomment -%}
+
+{%- if paginate.pages > 1 -%}
+  <nav class="pagination" aria-label="{{ 'general.pagination.label' | t }}">
+    {%- if paginate.previous -%}
+      <a class="pagination__previous" href="{{ paginate.previous.url }}" rel="prev">
+        {{ 'general.pagination.previous' | t }}
+      </a>
+    {%- endif -%}
+
+    <ol class="pagination__list" role="list">
+      {%- for page in (1..paginate.pages) -%}
+        <li>
+          {%- if page == paginate.current_page -%}
+            <span class="pagination__page pagination__page--current" aria-current="page">
+              <span class="visually-hidden">{{ 'general.pagination.page' | t: page: page }}</span>
+              <span aria-hidden="true">{{ page }}</span>
+            </span>
+          {%- else -%}
+            <a class="pagination__page" href="?page={{ page }}">
+              <span class="visually-hidden">{{ 'general.pagination.page' | t: page: page }}</span>
+              <span aria-hidden="true">{{ page }}</span>
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ol>
+
+    {%- if paginate.next -%}
+      <a class="pagination__next" href="{{ paginate.next.url }}" rel="next">
+        {{ 'general.pagination.next' | t }}
+      </a>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

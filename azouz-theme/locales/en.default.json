@@ -26,6 +26,12 @@
       "tags": "Tagged \"{{ tags }}\"",
       "page": "Page {{ page }}"
     },
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {{ page }}"
+    },
     "newsletter": {
       "label": "Email",
       "submit": "Subscribe",
