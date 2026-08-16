@@ -1,0 +1,64 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { buildFixtures } from '../preview/fixtures.js';
+import { renderSnippet } from './helpers/render-snippet.js';
+
+const fixtures = buildFixtures();
+const wadiRum = fixtures.products[0];
+const filterBags = fixtures.products[3];
+
+test('renders the product title inside the label block', async () => {
+  const html = await renderSnippet('product-card', { product: wadiRum });
+  assert.match(html, /label-block__title[^>]*>\s*Wadi Rum Blend/);
+});
+
+test('the whole card links to the product', async () => {
+  const html = await renderSnippet('product-card', { product: wadiRum });
+  assert.match(html, /href="\/products\/wadi-rum-blend"/);
+});
+
+test('uses the blend label colour from the metafield', async () => {
+  const html = await renderSnippet('product-card', { product: wadiRum });
+  assert.match(html, /--label-bg:\s*#C4562E/);
+});
+
+test('renders the tasting notes as the label subtitle', async () => {
+  const html = await renderSnippet('product-card', { product: wadiRum });
+  assert.match(html, /Dark Chocolate/);
+});
+
+test('renders the roast meter', async () => {
+  const html = await renderSnippet('product-card', { product: wadiRum });
+  assert.match(html, /roast-meter/);
+});
+
+test('shows a from-price when the product spans a price range', async () => {
+  const html = await renderSnippet('product-card', { product: wadiRum });
+  assert.match(html, /price__from/);
+});
+
+test('shows a plain price when every variant costs the same', async () => {
+  const html = await renderSnippet('product-card', { product: filterBags });
+  assert.equal(/price__from/.test(html), false);
+  assert.match(html, /price__current/);
+});
+
+test('the image has alt text and is lazy loaded — cards are below the fold', async () => {
+  const html = await renderSnippet('product-card', { product: wadiRum });
+  assert.match(html, /alt="Wadi Rum Blend"/);
+  assert.match(html, /loading="lazy"/);
+});
+
+test('a product with no label colour still renders', async () => {
+  const plain = { ...wadiRum, metafields: { custom: {} } };
+  const html = await renderSnippet('product-card', { product: plain });
+  assert.match(html, /label-block/);
+  assert.equal(/roast-meter/.test(html), false);
+});
+
+test('a sold-out product is marked as such', async () => {
+  const soldOut = { ...wadiRum, available: false };
+  const html = await renderSnippet('product-card', { product: soldOut });
+  assert.match(html, /product-card__badge/);
+  assert.equal(/translation missing/.test(html), false);
+});

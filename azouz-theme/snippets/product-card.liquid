@@ -1,0 +1,57 @@
+{%- comment -%}
+  Product tile built from the packaging label block.
+
+  Accepts: product (required)
+
+  Every metafield read is guarded — the card is correct on a store where the
+  definitions have not been created yet.
+{%- endcomment -%}
+
+{%- liquid
+  assign custom = product.metafields.custom
+  assign notes = custom.tasting_notes.value
+  assign label_color = custom.label_color.value
+
+  assign label_style = ''
+  if label_color != blank
+    assign label_style = '--label-bg: ' | append: label_color | append: ';'
+  endif
+
+  assign ranged = false
+  if product.price_min != product.price_max
+    assign ranged = true
+  endif
+-%}
+
+<article class="product-card">
+  {%- if product.featured_image -%}
+    <img
+      class="product-card__image"
+      src="{{ product.featured_image | image_url: width: 600 }}"
+      alt="{{ product.title | escape }}"
+      width="600"
+      height="750"
+      loading="lazy"
+      decoding="async">
+  {%- endif -%}
+
+  {%- unless product.available -%}
+    <p class="product-card__badge">{{ 'products.product.sold_out' | t }}</p>
+  {%- endunless -%}
+
+  <div class="label-block product-card__label" style="{{ label_style }}">
+    <h3 class="label-block__title">{{ product.title }}<a class="product-card__link" href="{{ product.url }}"><span class="visually-hidden">{{ product.title }}</span></a></h3>
+    {%- if notes != blank -%}
+      <p class="label-block__subtitle">{{ notes | join: ' | ' }}</p>
+    {%- endif -%}
+  </div>
+
+  <div class="product-card__meta">
+    {%- render 'price',
+      price: product.price,
+      compare_at: product.compare_at_price,
+      show_from: ranged
+    -%}
+    {%- render 'roast-meter', level: custom.roast_level.value -%}
+  </div>
+</article>
