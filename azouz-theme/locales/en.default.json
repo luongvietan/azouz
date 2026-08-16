@@ -84,7 +84,12 @@
       "subtotal": "Subtotal",
       "checkout": "Check out",
       "remove": "Remove",
-      "taxes_note": "Taxes and shipping calculated at checkout."
+      "taxes_note": "Taxes and shipping calculated at checkout.",
+      "quantity": "Quantity",
+      "line_total": "Total",
+      "remove_item": "Remove {{ title }}",
+      "update": "Update cart",
+      "drawer_title": "Added to your cart"
     }
   },
   "contact": {

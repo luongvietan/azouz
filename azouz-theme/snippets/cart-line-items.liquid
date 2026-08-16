@@ -1,0 +1,58 @@
+{%- comment -%}
+  The cart's line list. Shared by the cart page and the drawer.
+
+  Accepts: cart (required), form_id (optional, associates the quantity inputs
+  with a form that lives outside this markup)
+
+  Renders nothing for an empty cart — the caller shows the empty state.
+{%- endcomment -%}
+
+{%- if cart.items.size > 0 -%}
+  <ul class="cart-lines" role="list">
+    {%- for item in cart.items -%}
+      <li class="cart-line">
+        {%- if item.image -%}
+          <img
+            class="cart-line__image"
+            src="{{ item.image | image_url: width: 160 }}"
+            alt="{{ item.product_title | escape }}"
+            width="80"
+            height="100"
+            loading="lazy">
+        {%- endif -%}
+
+        <div class="cart-line__info">
+          <a class="cart-line__title" href="{{ item.url }}">{{ item.product_title }}</a>
+          {%- if item.variant_title != blank -%}
+            <p class="cart-line__variant">{{ item.variant_title }}</p>
+          {%- endif -%}
+          <p class="cart-line__unit">{{ item.price | money }}</p>
+        </div>
+
+        <div class="cart-line__actions">
+          {%- assign quantity_name = 'updates[' | append: item.key | append: ']' -%}
+          {%- render 'quantity-input',
+            name: quantity_name,
+            value: item.quantity,
+            min: 0,
+            form: form_id
+          -%}
+
+          <a
+            class="cart-line__remove"
+            href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity=0">
+            <span aria-hidden="true">&times;</span>
+            <span class="visually-hidden">
+              {{- 'cart.general.remove_item' | t: title: item.product_title -}}
+            </span>
+          </a>
+        </div>
+
+        <p class="cart-line__total">
+          <span class="visually-hidden">{{ 'cart.general.line_total' | t }}</span>
+          {{ item.line_price | money }}
+        </p>
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endif -%}
