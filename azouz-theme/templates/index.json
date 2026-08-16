@@ -90,6 +90,18 @@
       },
       "block_order": ["cafes", "hotels", "restaurants", "retailers", "distributors", "brands"]
     },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Azouz Coffee",
+        "heading": "Our Coffee",
+        "collection": "all",
+        "products_to_show": 4,
+        "link_label": "Discover Our Coffee",
+        "link": "/collections/all",
+        "background": "default"
+      }
+    },
     "closing": {
       "type": "cta-band",
       "settings": {
@@ -103,5 +115,5 @@
       }
     }
   },
-  "order": ["hero", "services", "process", "audience", "closing"]
+  "order": ["hero", "services", "process", "audience", "featured", "closing"]
 }

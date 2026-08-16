@@ -1,0 +1,79 @@
+{%- liquid
+  assign featured = section.settings.collection
+  assign limit = section.settings.products_to_show | default: 4
+
+  assign section_class = 'section featured-collection'
+  if section.settings.background == 'alt'
+    assign section_class = 'section section--alt featured-collection'
+  endif
+
+  assign has_link = false
+  if section.settings.link_label != blank and section.settings.link != blank
+    assign has_link = true
+  endif
+-%}
+
+{%- if featured != blank -%}
+  <section class="{{ section_class }}"{{ section.shopify_attributes }}>
+    <div class="container">
+      <div class="featured-collection__head">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        <h2 class="featured-collection__heading">{{ section.settings.heading }}</h2>
+      </div>
+
+      <reveal-on-scroll>
+        <div class="grid grid--4 featured-collection__grid">
+          {%- for product in featured.products limit: limit -%}
+            <div class="reveal">
+              {%- render 'product-card', product: product -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </reveal-on-scroll>
+
+      {%- if has_link -%}
+        <div class="button-group featured-collection__actions">
+          <a class="button button--secondary" href="{{ section.settings.link }}">
+            {{ section.settings.link_label }}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our Coffee" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "View all" },
+    { "type": "url", "id": "link", "label": "Link" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "default", "label": "Page" },
+        { "value": "alt", "label": "Warm cream" }
+      ],
+      "default": "default"
+    }
+  ],
+  "presets": [{ "name": "Featured collection" }]
+}
+{% endschema %}

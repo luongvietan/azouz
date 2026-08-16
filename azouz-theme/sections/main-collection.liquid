@@ -1,0 +1,41 @@
+<section class="section main-collection"{{ section.shopify_attributes }}>
+  <div class="container">
+    <header class="collection__head">
+      <h1 class="collection__heading">{{ collection.title }}</h1>
+
+      {%- if collection.description != blank -%}
+        <div class="collection__description rte">{{ collection.description }}</div>
+      {%- endif -%}
+
+      <p class="collection__count">
+        {{ 'collections.general.product_count' | t: count: collection.products_count }}
+      </p>
+    </header>
+
+    {%- if collection.products.size == 0 -%}
+      <p class="collection__empty">{{ 'collections.general.no_products' | t }}</p>
+    {%- else -%}
+      {%- paginate collection.products by 12 -%}
+        <reveal-on-scroll>
+          <div class="grid grid--3 collection__grid">
+            {%- for product in collection.products -%}
+              <div class="reveal">
+                {%- render 'product-card', product: product -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        </reveal-on-scroll>
+
+        {%- render 'pagination', paginate: paginate -%}
+      {%- endpaginate -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

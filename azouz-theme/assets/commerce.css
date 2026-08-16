@@ -510,3 +510,45 @@
 .cart-drawer__foot .button {
   inline-size: 100%;
 }
+
+/* ---------- Collection ---------- */
+
+.collection__head {
+  display: grid;
+  gap: var(--space-sm);
+  margin-block-end: var(--space-xl);
+  max-inline-size: var(--content-narrow);
+}
+
+.collection__heading {
+  margin: 0;
+}
+
+.collection__count,
+.collection__empty {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.collection__grid,
+.featured-collection__grid {
+  gap: var(--space-xl) var(--space-lg);
+}
+
+/* ---------- Featured collection ---------- */
+
+.featured-collection__head {
+  display: grid;
+  gap: var(--space-sm);
+  margin-block-end: var(--space-xl);
+}
+
+.featured-collection__heading {
+  margin: 0;
+}
+
+.featured-collection__actions {
+  justify-content: center;
+  margin-block-start: var(--space-xl);
+}
