@@ -89,7 +89,7 @@ test('the homepage carries the client headline and both hero calls to action', a
 
 test('the homepage hero uses a packaging photo and a short packaging-line eyebrow', async () => {
   const html = await renderAll('index.json');
-  assert.match(html, /src="[^"]*\/preview-media\/wadi-rum-blend\.jpg/);
+  assert.match(html, /src="[^"]*\/preview-media\/hero-azouz-coffee-cup\.jpg/);
   assert.match(html, /Specialty coffee roasters/);
   assert.equal(/What We Do/i.test(html), false);
   assert.equal(/How it works/i.test(html), false);
