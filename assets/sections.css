@@ -215,10 +215,19 @@
 
 /*
   Between the mobile breakpoint and a comfortable desktop the row has to carry
-  the logo, every menu link and two now-labelled actions. Four links fitted;
-  adding a fifth — which is a merchant menu edit, not a theme change — pushed
-  768px to 785px and the whole page scrolled sideways. The spacing tightens
-  across that band instead of the row being allowed to overflow.
+  the logo, every menu link and both actions. Four links fitted; a fifth — a
+  merchant menu edit, not a theme change — did not, and the row either
+  overflowed the viewport or wrapped the last link onto a second line under a
+  sticky header.
+
+  So across that band the spacing tightens and the action labels stay visually
+  hidden, exactly as they are on mobile. The icons keep their accessible names,
+  and roughly 120px of label text goes back to the menu.
+
+  Measured after the change: six menu items sit on one row at every width from
+  768px up. A seventh wraps to a second row at 768px and at 1024px — the menu
+  wraps rather than the page scrolling sideways, which is the failure mode
+  worth having.
 */
 @media (min-width: 48em) and (max-width: 63.99em) {
   .header__inner { gap: var(--space-md); }
@@ -226,7 +235,7 @@
   .header__actions { gap: var(--space-2xs); }
 }
 
-@media (min-width: 48em) {
+@media (min-width: 64em) {
   .header__action-label {
     position: static;
     inline-size: auto;
