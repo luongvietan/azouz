@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { extractSchema, defaultSettings } from '../scripts/schema-parser.js';
 import { buildFixtures } from './fixtures.js';
 import { resolveSettings } from './settings-resolver.js';
+import { demoImageFor } from './demo-media.js';
 
 /**
  * Expand a JSON template's blocks into the array shape Liquid sees as
@@ -70,16 +71,18 @@ export async function renderTemplate(engine, themeDir, templatePath, extraScope 
     const source = await readFile(file, 'utf8');
     const schema = extractSchema(source, `sections/${config.type}.liquid`);
 
+    // The shipped templates leave `image` unset — a path there fails Shopify's
+    // validation and costs the whole template. Demo imagery is preview-only.
+    const demoImage = demoImageFor(templatePath, id);
+    const settings = { ...defaultSettings(schema), ...(config.settings ?? {}) };
+    if (demoImage && !settings.image) settings.image = demoImage;
+
     const scope = {
       ...fixtures,
       ...extraScope,
       section: {
         id,
-        settings: resolveSettings(
-          schema,
-          { ...defaultSettings(schema), ...(config.settings ?? {}) },
-          fixtures,
-        ),
+        settings: resolveSettings(schema, settings, fixtures),
         blocks: buildBlocks(schema, config),
         shopify_attributes: '',
       },

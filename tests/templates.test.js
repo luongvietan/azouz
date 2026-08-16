@@ -167,3 +167,54 @@ test('the quote enquiry page requires expected volume', async () => {
   assert.match(html, /Get a Quote for Your Project\./);
   assert.match(html, /name="contact\[Expected monthly volume\]"[^>]*required/);
 });
+
+/**
+ * Walk every settings object in a template, including block settings.
+ * @param {object} template
+ */
+function* everySetting(template) {
+  for (const [sectionId, section] of Object.entries(template.sections ?? {})) {
+    yield [sectionId, section.settings ?? {}];
+    for (const [blockId, block] of Object.entries(section.blocks ?? {})) {
+      yield [`${sectionId}.${blockId}`, block.settings ?? {}];
+    }
+  }
+}
+
+test('no shipped template hard-codes a file path in an image setting', async () => {
+  // Shopify validates image_picker settings against the store's media library.
+  // A path fails with "Setting 'image' does not point to an applicable
+  // resource" and Shopify discards the ENTIRE template — which is how six
+  // templates, the homepage among them, never reached the live theme and every
+  // route that needed one returned 404.
+  //
+  // Demo imagery for the preview lives in preview/demo-media.js instead.
+  const names = (await readdir(resolveInTheme('templates'))).filter((n) => n.endsWith('.json'));
+  assert.ok(names.length > 0);
+
+  const offenders = [];
+  for (const name of names) {
+    const template = JSON.parse(await readFile(resolveInTheme(`templates/${name}`), 'utf8'));
+    for (const [where, settings] of everySetting(template)) {
+      for (const [key, value] of Object.entries(settings)) {
+        if (typeof value !== 'string') continue;
+        const looksLikeImage = /image|logo|photo|picture/i.test(key) && !/_alt$|_url$/i.test(key);
+        if (looksLikeImage && (value.startsWith('/') || value.startsWith('http'))) {
+          offenders.push(`${name} → ${where}.${key} = ${value}`);
+        }
+      }
+    }
+  }
+
+  assert.deepEqual(offenders, [], `image settings must not be paths:\n  ${offenders.join('\n  ')}`);
+});
+
+test('the marketing templates still render their hero imagery in the preview', async () => {
+  // Removing the paths from the templates must not blank the preview — the
+  // demo imagery moved to preview/demo-media.js and is injected at render.
+  for (const name of MARKETING) {
+    const html = await renderAll(name);
+    assert.match(html, /class="hero__image"/, `${name} lost its hero image`);
+    assert.match(html, /preview-media/, `${name} hero image has no source`);
+  }
+});
