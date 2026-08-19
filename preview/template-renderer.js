@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { extractSchema, defaultSettings } from '../scripts/schema-parser.js';
+import { parseThemeJson } from '../scripts/theme-json.js';
 import { buildFixtures } from './fixtures.js';
 import { resolveSettings } from './settings-resolver.js';
 import { demoImageFor } from './demo-media.js';
@@ -48,7 +49,7 @@ function buildBlocks(schema, sectionConfig) {
  * @returns {Promise<string>} the HTML that belongs in content_for_layout
  */
 export async function renderTemplate(engine, themeDir, templatePath, extraScope = {}) {
-  const template = JSON.parse(
+  const template = parseThemeJson(
     await readFile(join(themeDir, ...templatePath.split('/')), 'utf8'),
   );
 

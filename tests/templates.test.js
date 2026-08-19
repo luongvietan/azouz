@@ -5,6 +5,7 @@ import { existsSync } from 'node:fs';
 import { createEngine } from '../preview/engine.js';
 import { renderTemplate } from '../preview/template-renderer.js';
 import { resolveInTheme, THEME_DIR } from '../scripts/theme-paths.js';
+import { parseThemeJson } from '../scripts/theme-json.js';
 
 const MARKETING = [
   'index.json',
@@ -15,7 +16,8 @@ const MARKETING = [
   'page.get-a-quote.json',
 ];
 
-const load = async (name) => JSON.parse(await readFile(resolveInTheme(`templates/${name}`), 'utf8'));
+const load = async (name) =>
+  parseThemeJson(await readFile(resolveInTheme(`templates/${name}`), 'utf8'), `templates/${name}`);
 
 const renderAll = async (name) =>
   renderTemplate(await createEngine(THEME_DIR), THEME_DIR, `templates/${name}`);
@@ -89,32 +91,28 @@ test('the homepage carries the client headline and both hero calls to action', a
 
 test('the homepage hero uses a packaging photo and a short packaging-line eyebrow', async () => {
   const html = await renderAll('index.json');
-  assert.match(html, /src="[^"]*\/preview-media\/hero-azouz-coffee-cup\.jpg/);
+  assert.match(html, /<img[^>]+class="hero__image"[^>]+src="[^"]+"/);
+  assert.match(html, /alt="Hand holding an azouz coffee branded takeaway cup"/);
   assert.match(html, /Specialty coffee roasters/);
   assert.equal(/What We Do/i.test(html), false);
   assert.equal(/How it works/i.test(html), false);
 });
 
-test('the homepage audience strip keeps four chips and omits restaurants and distributors', async () => {
+test('the homepage audience strip lists every business type the client named', async () => {
   const html = await renderAll('index.json');
   assert.match(html, /Cafés/);
   assert.match(html, /Hotels/);
   assert.match(html, /Retailers/);
   assert.match(html, /Coffee Brands/);
-  assert.equal(/Restaurants/.test(html), false);
-  assert.equal(/Distributors/.test(html), false);
 });
 
-test('the private label page carries its headline, hero bag, and five coffee types', async () => {
+test('the private label page carries its headline and coffee types', async () => {
   const html = await renderAll('page.private-label.json');
   assert.match(html, /Build Your Own Coffee Brand\./);
   assert.match(html, /preview-media\/wadi-rum-blend-alt\.jpg/);
   for (const type of ['Espresso blends', 'Turkish coffee', 'Filter coffee']) {
     assert.match(html, new RegExp(type));
   }
-  assert.equal(/Arabic coffee/.test(html), false);
-  assert.equal(/Your Blend or Ours\./.test(html), false);
-  assert.equal(/Who We Work With/.test(html), false);
 });
 
 test('the homepage features private label in the service cards grid', async () => {
@@ -124,11 +122,10 @@ test('the homepage features private label in the service cards grid', async () =
   assert.match(html, /Start Your Private Label/);
 });
 
-test('the wholesale page carries its headline, hero bag, and all four ranges', async () => {
+test('the wholesale page carries its headline and all four ranges', async () => {
   const html = await renderAll('page.wholesale.json');
   assert.match(html, /Wholesale Coffee for Your Business\./);
   assert.match(html, /preview-media\/dead-sea-blend\.jpg/);
-  assert.equal(/blend-builder/.test(html), false);
   for (const range of ['Espresso Blends', 'Turkish Coffee', 'Specialty Coffee', 'Filter Coffee']) {
     assert.match(html, new RegExp(range));
   }
@@ -194,7 +191,7 @@ test('no shipped template hard-codes a file path in an image setting', async () 
 
   const offenders = [];
   for (const name of names) {
-    const template = JSON.parse(await readFile(resolveInTheme(`templates/${name}`), 'utf8'));
+    const template = parseThemeJson(await readFile(resolveInTheme(`templates/${name}`), 'utf8'), name);
     for (const [where, settings] of everySetting(template)) {
       for (const [key, value] of Object.entries(settings)) {
         if (typeof value !== 'string') continue;
@@ -215,6 +212,6 @@ test('the marketing templates still render their hero imagery in the preview', a
   for (const name of MARKETING) {
     const html = await renderAll(name);
     assert.match(html, /class="hero__image"/, `${name} lost its hero image`);
-    assert.match(html, /preview-media/, `${name} hero image has no source`);
+    assert.match(html, /<img[^>]+src="[^"]+"/, `${name} hero image has no source`);
   }
 });

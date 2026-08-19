@@ -1,5 +1,6 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
+import { stripJsonComments } from './theme-json.js';
 import { THEME_SUBDIRS } from './theme-paths.js';
 
 async function* walk(dir) {
@@ -33,7 +34,7 @@ export async function findInvalidJson(themeDir) {
       if (!absolute.endsWith('.json')) continue;
       const contents = await readFile(absolute, 'utf8');
       try {
-        JSON.parse(contents);
+        JSON.parse(stripJsonComments(contents));
       } catch (error) {
         findings.push({
           file: relative(themeDir, absolute).split(sep).join('/'),
