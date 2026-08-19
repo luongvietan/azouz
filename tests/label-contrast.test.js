@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { resolveInTheme } from '../scripts/theme-paths.js';
 import { contrastRatio } from '../scripts/contrast.js';
+import { readCssTokens } from '../scripts/css-tokens.js';
 
 /*
   The .label-block component reproduces the coloured panel printed on the coffee
@@ -107,4 +108,19 @@ test('label colours inside section presets also pass AA', async () => {
   }
 
   assert.deepEqual(failures, [], 'a merchant adding the section fresh must not get a failing label');
+});
+
+test('the label-block CSS fallback fill passes AA for its 14px subtitle', async () => {
+  // A product with no label_color metafield falls through to this default.
+  // It was --color-accent (3.37:1 on white), which is how "Rich | Full Bodied"
+  // on the Filtered Coffee Bags card failed on the live store.
+  const css = await readFile(resolveInTheme('assets/base.css'), 'utf8');
+  const rule = /\.label-block\s*\{([\s\S]*?)\}/.exec(css)[1];
+
+  const tokens = readCssTokens(await readFile(resolveInTheme('assets/tokens.css'), 'utf8'));
+  const fill = tokens.get(/--label-bg:\s*var\((--[a-z0-9-]+)\)/.exec(rule)[1]);
+  const ink = tokens.get(/--label-fg:\s*var\((--[a-z0-9-]+)\)/.exec(rule)[1]);
+
+  const ratio = contrastRatio(ink, fill);
+  assert.ok(ratio >= REQUIRED, `.label-block default is ${ratio.toFixed(2)}:1, needs ${REQUIRED}:1`);
 });

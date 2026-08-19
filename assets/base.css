@@ -236,10 +236,15 @@ a {
    The signature component, taken directly from the coffee bags: a solid
    colour panel, a tight title, a hairline, then a spec grid. Its fill comes
    from the product's label_color metafield via the --label-bg custom property.
-   Titles inside are >=24px, which is why they may sit on the primary green. */
+
+   The fallback below is the DEEP green, not the primary. __subtitle is 14px at
+   weight 400, so the fill has to clear 4.5:1 against --label-fg — and the
+   primary green only reaches 3.37:1. A product with no label_color metafield
+   lands on this fallback, which is how the Filtered Coffee Bags card shipped a
+   failing "Rich | Full Bodied" line. Enforced by tests/label-contrast.test.js. */
 
 .label-block {
-  --label-bg: var(--color-accent);
+  --label-bg: var(--color-accent-deep);
   --label-fg: var(--color-on-accent);
 
   padding: var(--space-lg);
