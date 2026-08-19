@@ -36,6 +36,14 @@ export function resolveSettings(schema, settings, fixtures) {
           resolved[id] = null;
         } else if (String(value).startsWith('/') || String(value).startsWith('http')) {
           resolved[id] = imageDrop(value);
+        } else if (String(value).startsWith('shopify://')) {
+          // A merchant who picks an image in the Theme Editor stores a
+          // `shopify://shop_images/<file>` reference, and Shopify's GitHub
+          // integration commits that back into the template. Only the live
+          // store can resolve it, so the preview falls back to the demo file
+          // of the same name, then to the placeholder.
+          const file = String(value).split('/').pop();
+          resolved[id] = imageDrop(`/preview-media/${file}`);
         } else {
           resolved[id] = imageDrop(`/assets/${value}`);
         }
