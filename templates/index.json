@@ -33,7 +33,7 @@
             "title": "Private Label Coffee",
             "body": "Create coffee under your own brand.",
             "detail": "Custom blends, roasting, grinding and packaging",
-            "label_color": "#c4562e",
+            "label_color": "#BC5029",
             "link_label": "Start Your Private Label",
             "link": "/pages/private-label",
             "featured": true
@@ -45,7 +45,7 @@
             "title": "Wholesale Coffee",
             "body": "Reliable coffee for cafés, restaurants, hotels and businesses.",
             "detail": "Espresso · Turkish · Filter · Specialty",
-            "label_color": "#7c7f44",
+            "label_color": "#6B6E3A",
             "link_label": "View Wholesale",
             "link": "/pages/wholesale",
             "featured": false
@@ -57,7 +57,7 @@
             "title": "Specialty Coffee",
             "body": "Single origins and specialty coffees selected for quality and flavour.",
             "detail": "Selected for quality and flavour",
-            "label_color": "#67985e",
+            "label_color": "#4F7748",
             "link_label": "Discover Our Coffee",
             "link": "/collections/all",
             "featured": false
@@ -161,12 +161,26 @@
           "settings": {
             "title": "Coffee Brands"
           }
+        },
+        "restaurants": {
+          "type": "audience",
+          "settings": {
+            "title": "Restaurants"
+          }
+        },
+        "distributors": {
+          "type": "audience",
+          "settings": {
+            "title": "Distributors"
+          }
         }
       },
       "block_order": [
         "cafes",
         "hotels",
+        "restaurants",
         "retailers",
+        "distributors",
         "brands"
       ],
       "settings": {

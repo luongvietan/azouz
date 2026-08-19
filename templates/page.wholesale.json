@@ -16,14 +16,18 @@
     },
     "range": {
       "type": "coffee-range",
-      "settings": { "eyebrow": "", "heading": "Four ways we roast.", "background": "alt" },
+      "settings": {
+        "eyebrow": "",
+        "heading": "Four ways we roast.",
+        "background": "alt"
+      },
       "blocks": {
         "espresso": {
           "type": "range",
           "settings": {
             "title": "Espresso Blends",
             "body": "Balanced coffees developed for espresso and milk-based drinks.",
-            "label_color": "#C4562E",
+            "label_color": "#BC5029",
             "label_text": "light"
           }
         },
@@ -32,7 +36,7 @@
           "settings": {
             "title": "Turkish Coffee",
             "body": "Traditional profiles available plain or with cardamom.",
-            "label_color": "#7C7F44",
+            "label_color": "#6B6E3A",
             "label_text": "light"
           }
         },
@@ -55,7 +59,12 @@
           }
         }
       },
-      "block_order": ["espresso", "turkish", "specialty", "filter"]
+      "block_order": [
+        "espresso",
+        "turkish",
+        "specialty",
+        "filter"
+      ]
     },
     "audience": {
       "type": "audience-strip",
@@ -66,12 +75,51 @@
         "background": "alt"
       },
       "blocks": {
-        "shops": { "type": "audience", "settings": { "title": "Coffee Shops" } },
-        "restaurants": { "type": "audience", "settings": { "title": "Restaurants" } },
-        "hotels": { "type": "audience", "settings": { "title": "Hotels" } },
-        "distributors": { "type": "audience", "settings": { "title": "Distributors" } }
+        "shops": {
+          "type": "audience",
+          "settings": {
+            "title": "Coffee Shops"
+          }
+        },
+        "restaurants": {
+          "type": "audience",
+          "settings": {
+            "title": "Restaurants"
+          }
+        },
+        "hotels": {
+          "type": "audience",
+          "settings": {
+            "title": "Hotels"
+          }
+        },
+        "distributors": {
+          "type": "audience",
+          "settings": {
+            "title": "Distributors"
+          }
+        },
+        "offices": {
+          "type": "audience",
+          "settings": {
+            "title": "Offices"
+          }
+        },
+        "retailers": {
+          "type": "audience",
+          "settings": {
+            "title": "Retailers"
+          }
+        }
       },
-      "block_order": ["shops", "restaurants", "hotels", "distributors"]
+      "block_order": [
+        "shops",
+        "restaurants",
+        "hotels",
+        "offices",
+        "retailers",
+        "distributors"
+      ]
     },
     "consistency": {
       "type": "packaging-sizes",
@@ -82,12 +130,37 @@
         "background": "default"
       },
       "blocks": {
-        "whole": { "type": "format", "settings": { "title": "Whole Bean" } },
-        "ground": { "type": "format", "settings": { "title": "Ground Coffee" } },
-        "retail": { "type": "format", "settings": { "title": "Retail Bags" } },
-        "wholesale": { "type": "format", "settings": { "title": "Wholesale Bags" } }
+        "whole": {
+          "type": "format",
+          "settings": {
+            "title": "Whole Bean"
+          }
+        },
+        "ground": {
+          "type": "format",
+          "settings": {
+            "title": "Ground Coffee"
+          }
+        },
+        "retail": {
+          "type": "format",
+          "settings": {
+            "title": "Retail Bags"
+          }
+        },
+        "wholesale": {
+          "type": "format",
+          "settings": {
+            "title": "Wholesale Bags"
+          }
+        }
       },
-      "block_order": ["whole", "ground", "retail", "wholesale"]
+      "block_order": [
+        "whole",
+        "ground",
+        "retail",
+        "wholesale"
+      ]
     },
     "closing": {
       "type": "cta-band",
@@ -100,7 +173,81 @@
         "cta_secondary_link": "/pages/request-a-sample",
         "background": "accent"
       }
+    },
+    "blend": {
+      "type": "blend-builder",
+      "settings": {
+        "eyebrow": "We can adjust",
+        "heading": "Create Your Own House Blend.",
+        "body": "<p>Want something unique for your business? We can develop a custom blend based on the taste and price point you need.</p>",
+        "background": "default"
+      },
+      "blocks": {
+        "body": {
+          "type": "attribute",
+          "settings": {
+            "title": "Body",
+            "low": "Light",
+            "high": "Full"
+          }
+        },
+        "sweetness": {
+          "type": "attribute",
+          "settings": {
+            "title": "Sweetness",
+            "low": "Subtle",
+            "high": "Pronounced"
+          }
+        },
+        "acidity": {
+          "type": "attribute",
+          "settings": {
+            "title": "Acidity",
+            "low": "Low",
+            "high": "Bright"
+          }
+        },
+        "roast": {
+          "type": "attribute",
+          "settings": {
+            "title": "Roast Level",
+            "low": "Light",
+            "high": "Dark"
+          }
+        },
+        "ratio": {
+          "type": "attribute",
+          "settings": {
+            "title": "Arabica/Robusta Ratio",
+            "low": "100% Arabica",
+            "high": "Robusta blend"
+          }
+        },
+        "flavour": {
+          "type": "attribute",
+          "settings": {
+            "title": "Flavour Profile",
+            "low": "Chocolate",
+            "high": "Fruit"
+          }
+        }
+      },
+      "block_order": [
+        "body",
+        "sweetness",
+        "acidity",
+        "roast",
+        "ratio",
+        "flavour"
+      ]
     }
   },
-  "order": ["hero", "range", "audience", "consistency", "closing"]
+  "order": [
+    "hero",
+    "range",
+    "blend",
+    "audience",
+    "consistency",
+    "closing"
+  ]
 }
