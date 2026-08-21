@@ -71,6 +71,7 @@ test('the main menu links to the marketing pages, the shop and the journal', () 
   assert.deepEqual(urls, [
     '/pages/private-label',
     '/pages/wholesale',
+    '/pages/own-an-azouz-coffee',
     '/pages/our-brands',
     '/collections/all',
     '/blogs/journal',

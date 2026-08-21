@@ -94,6 +94,49 @@ test('support cards demote visually when one card is featured', async () => {
   assert.equal(countMatches(html, /service-card--support/g), 2);
 });
 
+const PHOTO = card('s1', {
+  title: 'Own an Azouz Coffee',
+  body: 'Bring Azouz Coffee to your neighbourhood.',
+  detail: 'Coffee · Equipment · Branding',
+  image: 'placeholder.svg',
+  image_alt: 'An Azouz Coffee counter with the espresso machine and grinder',
+  link_label: 'Explore Opportunities',
+  link: '/pages/own-an-azouz-coffee',
+});
+
+test('a card with a photograph leads with it instead of a coloured panel', async () => {
+  const html = await renderSection('service-cards', { blocks: [PHOTO] });
+  assert.match(html, /service-card--media/);
+  assert.match(html, /class="service-card__image"/);
+  assert.equal(/service-card__label/.test(html), false);
+});
+
+test('a photo-led card keeps the title an h3 and the detail line above it', async () => {
+  const html = await renderSection('service-cards', { blocks: [PHOTO] });
+  assert.match(html, /service-card__detail">Coffee · Equipment · Branding<\/span>/);
+  assert.match(html, /<h3 class="service-card__title">Own an Azouz Coffee<\/h3>/);
+});
+
+test('a photo-led card ends in a button — the client asked for photo, heading, sentence, button', async () => {
+  const html = await renderSection('service-cards', { blocks: [PHOTO] });
+  assert.match(html, /class="button service-card__cta"/);
+  assert.equal(/service-card__link/.test(html), false);
+});
+
+test('photographs widen the grid so they are shown large', async () => {
+  const withPhoto = await renderSection('service-cards', { blocks: [PHOTO, THREE[1]] });
+  assert.match(withPhoto, /service-cards__grid service-cards__grid--media/);
+
+  const withoutPhoto = await renderSection('service-cards', { blocks: THREE });
+  assert.match(withoutPhoto, /service-cards__grid grid grid--3/);
+});
+
+test('a card still waiting on photography falls back to the label block', async () => {
+  const html = await renderSection('service-cards', { blocks: [PHOTO, THREE[1]] });
+  assert.equal(countMatches(html, /service-card__image/g), 1);
+  assert.equal(countMatches(html, /label-block__title/g), 1);
+});
+
 test('declares a preset with three cards', async () => {
   const { extractSchema } = await import('../scripts/schema-parser.js');
   const schema = extractSchema(await readFile(resolveInTheme('sections/service-cards.liquid'), 'utf8'));

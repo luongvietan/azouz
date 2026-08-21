@@ -11,6 +11,24 @@
       break
     endif
   endfor
+
+  # A photograph of the work explains a service faster than a coloured panel
+  # does, so a card with an image leads with it and the label block becomes the
+  # fallback for cards still waiting on photography. Photographs need the room:
+  # once any card carries one the grid pins to two wide columns rather than
+  # auto-fitting, which is what keeps a fourth service off a row of its own.
+  assign has_media = false
+  for block in section.blocks
+    if block.settings.image
+      assign has_media = true
+      break
+    endif
+  endfor
+
+  assign grid_class = 'grid grid--3'
+  if has_media
+    assign grid_class = 'service-cards__grid--media'
+  endif
 -%}
 
 <section class="{{ section_class }}"{{ section.shopify_attributes }}>
@@ -23,25 +41,42 @@
     </div>
 
     <reveal-on-scroll>
-      <div class="service-cards__grid{% if has_featured %} service-cards__grid--lead{% else %} grid grid--3{% endif %}">
+      <div class="service-cards__grid{% if has_featured %} service-cards__grid--lead{% else %} {{ grid_class }}{% endif %}">
         {%- for block in section.blocks -%}
-          <article class="service-card reveal{% if block.settings.featured %} service-card--featured{% elsif has_featured %} service-card--support{% endif %}"{{ block.shopify_attributes }}>
-            <div
-              class="label-block service-card__label"
-              {% if block.settings.label_color != blank %}style="{% render 'label-ink', color: block.settings.label_color %}"{% endif %}>
-              <h3 class="label-block__title">{{ block.settings.title }}</h3>
+          <article class="service-card reveal{% if block.settings.image %} service-card--media{% endif %}{% if block.settings.featured %} service-card--featured{% elsif has_featured %} service-card--support{% endif %}"{{ block.shopify_attributes }}>
+            {%- if block.settings.image -%}
+              <div class="service-card__media">
+                {%- render 'responsive-image',
+                  image: block.settings.image,
+                  alt: block.settings.image_alt,
+                  class: 'service-card__image',
+                  width: 1000,
+                  sizes: '(min-width: 48em) 46vw, 92vw'
+                -%}
+              </div>
+
               {%- if block.settings.detail != blank -%}
-                <hr class="label-block__rule">
-                <p class="label-block__subtitle">{{ block.settings.detail }}</p>
+                <span class="eyebrow service-card__detail">{{ block.settings.detail }}</span>
               {%- endif -%}
-            </div>
+              <h3 class="service-card__title">{{ block.settings.title }}</h3>
+            {%- else -%}
+              <div
+                class="label-block service-card__label"
+                {% if block.settings.label_color != blank %}style="{% render 'label-ink', color: block.settings.label_color %}"{% endif %}>
+                <h3 class="label-block__title">{{ block.settings.title }}</h3>
+                {%- if block.settings.detail != blank -%}
+                  <hr class="label-block__rule">
+                  <p class="label-block__subtitle">{{ block.settings.detail }}</p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
 
             {%- if block.settings.body != blank -%}
               <p class="service-card__body">{{ block.settings.body }}</p>
             {%- endif -%}
 
             {%- if block.settings.link_label != blank and block.settings.link != blank -%}
-              {%- if block.settings.featured -%}
+              {%- if block.settings.featured or block.settings.image -%}
                 <a class="button service-card__cta" href="{{ block.settings.link }}">{{ block.settings.link_label }}</a>
               {%- else -%}
                 <a class="service-card__link" href="{{ block.settings.link }}">
@@ -82,7 +117,14 @@
       "settings": [
         { "type": "text", "id": "title", "label": "Title", "default": "Private Label Coffee" },
         { "type": "text", "id": "body", "label": "Body" },
-        { "type": "text", "id": "detail", "label": "Detail line", "info": "Shown inside the coloured label, under a hairline." },
+        { "type": "text", "id": "detail", "label": "Detail line", "info": "Shown inside the coloured label under a hairline, or above the title when the card has a photograph." },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photograph",
+          "info": "Leads the card and replaces the coloured label. Leave empty and the card falls back to the label block."
+        },
+        { "type": "text", "id": "image_alt", "label": "Photograph description", "info": "Describe the picture for screen readers. Do not repeat the title." },
         {
           "type": "color",
           "id": "label_color",

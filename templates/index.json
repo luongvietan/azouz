@@ -36,7 +36,7 @@
             "label_color": "#BC5029",
             "link_label": "Start Your Private Label",
             "link": "/pages/private-label",
-            "featured": true
+            "featured": false
           }
         },
         "wholesale": {
@@ -62,12 +62,25 @@
             "link": "/collections/all",
             "featured": false
           }
+        },
+        "coffee_shop": {
+          "type": "service",
+          "settings": {
+            "title": "Own an Azouz Coffee",
+            "body": "Bring Azouz Coffee to your neighbourhood.",
+            "detail": "Coffee · Equipment · Branding · Menu · Operations",
+            "label_color": "#303030",
+            "link_label": "Explore Opportunities",
+            "link": "/pages/own-an-azouz-coffee",
+            "featured": false
+          }
         }
       },
       "block_order": [
         "private_label",
         "wholesale",
-        "specialty"
+        "specialty",
+        "coffee_shop"
       ],
       "settings": {
         "eyebrow": "",
@@ -203,6 +216,19 @@
         "background": "default"
       }
     },
+    "roastery": {
+      "type": "brand-feature",
+      "settings": {
+        "eyebrow": "Our roastery",
+        "heading": "Roasted in Jordan.",
+        "body": "<p>We roast, blend, grind and pack in our own facility, so the coffee that carries your name is made under one roof and to one standard.</p>",
+        "cta_label": "About Azouz",
+        "cta_link": "/pages/our-brands",
+        "image_alt": "The Azouz roastery floor: the roaster, sacks of green coffee and the production area",
+        "media_position": "start",
+        "background": "alt"
+      }
+    },
     "closing": {
       "type": "cta-band",
       "settings": {
@@ -223,6 +249,7 @@
     "process",
     "audience",
     "featured",
+    "roastery",
     "closing"
   ]
 }

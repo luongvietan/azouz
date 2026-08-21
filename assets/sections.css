@@ -556,6 +556,53 @@
   }
 }
 
+/* A photo-led service card: the photograph carries the section, and the copy
+   under it is one detail line, one title, one sentence and a button. The fixed
+   ratio is what keeps four differently-shot photographs aligned in the grid. */
+
+.service-cards__grid--media {
+  gap: var(--space-xl);
+}
+
+@media (min-width: 48em) {
+  .service-cards__grid--media {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.service-card--media {
+  gap: var(--space-sm);
+}
+
+.service-card__media {
+  margin-block-end: var(--space-xs);
+}
+
+.service-card__image {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.service-card__detail {
+  color: var(--color-text-muted);
+}
+
+.service-card__title {
+  margin: 0;
+}
+
+.service-card--media .service-card__body {
+  max-inline-size: 46ch;
+}
+
+.service-card--media .service-card__cta {
+  margin-block-start: var(--space-xs);
+}
+
 /* ---------- Process steps ---------- */
 
 .process-steps__head {

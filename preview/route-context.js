@@ -37,6 +37,11 @@ export const ROUTES = {
     template: 'templates/page.our-brands.json',
     page: { title: 'Our Brands', handle: 'our-brands', content: '' },
   },
+  '/pages/own-an-azouz-coffee': {
+    page_type: 'page',
+    template: 'templates/page.own-an-azouz-coffee.json',
+    page: { title: 'Own an Azouz Coffee', handle: 'own-an-azouz-coffee', content: '' },
+  },
   '/pages/request-a-sample': {
     page_type: 'page',
     template: 'templates/page.enquiry.json',

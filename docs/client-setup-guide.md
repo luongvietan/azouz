@@ -79,7 +79,7 @@ anyone with low vision. The primary green is for fills and large headings only.
 
 ## 3. Create the pages
 
-Online Store → Pages → Add page, four times. **The handles must match exactly** —
+Online Store → Pages → Add page, six times. **The handles must match exactly** —
 they are what the buttons across the site link to.
 
 | Page title | Handle (must be exact) | Template to select |
@@ -87,6 +87,7 @@ they are what the buttons across the site link to.
 | Private Label | `private-label` | `page.private-label` |
 | Wholesale | `wholesale` | `page.wholesale` |
 | Our Brands | `our-brands` | `page.our-brands` |
+| Own an Azouz Coffee | `own-an-azouz-coffee` | `page.own-an-azouz-coffee` |
 | Request a Sample | `request-a-sample` | `page.enquiry` |
 | Get a Quote | `get-a-quote` | `page.get-a-quote` |
 
@@ -115,12 +116,25 @@ theme editor:
 | Page | Section | Image slot |
 |---|---|---|
 | Home | Hero | Hero image |
+| Home | Service cards → each of the four cards | Photograph |
+| Home | Brand feature (*Roasted in Jordan*) | Feature image |
 | Private Label | Hero | Hero image |
 | Wholesale | Hero | Hero image |
 | Our Brands | Hero | Hero image |
 | Our Brands | Brand feature | Feature image |
+| Own an Azouz Coffee | Hero | Hero image |
+| Own an Azouz Coffee | Brand feature | Feature image |
 | Request a Sample | Hero | Hero image |
 | Get a Quote | Hero | Hero image |
+
+The four homepage service cards are the ones that change the page most. Each
+card shows a coloured label panel until its **Photograph** slot is filled, and
+switches to a photo-led card — picture, detail line, title, one sentence,
+button — the moment it is. Set all four or none: a row that mixes photographs
+with coloured panels looks unfinished.
+
+What to shoot for each slot is in
+[the photography brief](#the-photography-brief) below.
 
 Set the **Image alt** text beside each one. It is what a screen reader announces
 and what shows if the image fails to load. Describe the picture, do not repeat
@@ -137,7 +151,9 @@ on the page — leaving it empty is the most visible gap on the site.
 Online Store → Navigation.
 
 - **Main menu** (handle `main-menu`) — the header. Suggested: Private Label,
-  Wholesale, Our Brands, Shop, Journal.
+  Wholesale, Own an Azouz Coffee, Our Brands, Shop, Journal. That is six items,
+  which is the measured ceiling — see below. If the Journal is not launching
+  with the site, leave it out.
 - **Footer menu** (handle `footer`) — the footer service links.
 
 Both are set per-section in the theme editor (Header → Menu, Footer → Menu), so
@@ -284,6 +300,37 @@ Then Online Store → Themes → **Publish**.
 
 ---
 
+## The photography brief
+
+The homepage now leads with photographs rather than coloured rectangles, which
+only works if the pictures do the explaining. The brief below is the client's
+own shot list, written as something a photographer can work from.
+
+House style throughout: bright, clean, almost architectural. Real production,
+not lifestyle. Plenty of empty space. Silver foil on off-white or light
+concrete. No burlap, no wood grain, no steam, no latte art.
+
+| Where it goes | The shot |
+|---|---|
+| **Home → Hero** | Close-up of the roasting operation: stainless steel, roasted coffee falling into the cooling tray, one or two silver Azouz bags positioned nearby |
+| **Home → Private Label card** | Three or four silver bags standing together, each carrying a different fictional brand label. It says *we manufacture coffee for your brand* without a word of copy |
+| **Home → Wholesale card** | A café counter: espresso machine, grinder, and a 1 kg coffee bag beside it. B2B, not lifestyle |
+| **Home → Specialty card** | Top-down: green beans, roasted beans, cupping bowls, origin cards. Very clean, plenty of empty space |
+| **Home → Own an Azouz Coffee card** | The counter of an Azouz location — signage, cups and the bag in one frame |
+| **Home → Roasted in Jordan** | A wider shot of the actual roaster, sacks and production area, or somebody working at the machine. Real manufacturing is what carries credibility |
+| **Our Brands** | The Amman, Downtown, Dead Sea, Petra and Wadi Rum bags photographed individually against off-white or light concrete |
+
+Two practical notes:
+
+- **The homepage hero is the current weak point.** The cup-in-hand photograph is
+  a nice picture, but it reads as a café rather than as a roaster, a wholesaler
+  or a manufacturer. It is the one image worth reshooting first — everything
+  else on the page is already telling a B2B story.
+- **Shoot the service cards to a landscape crop.** They are displayed at 4:3 and
+  centre-cropped, so anything critical at the top or bottom edge is at risk.
+
+---
+
 ## Still to come from you
 
 These are content gaps rather than defects. The pages are built and waiting for
@@ -296,7 +343,12 @@ the material:
   year, no roastery capacity, no reference customers. For a B2B audience this
   carries more weight than any of the design work.
 - **An About / Our Roastery page.** There is no template for one yet; the
-  default page template will carry it, or a purpose-built one can be added.
+  default page template will carry it, or a purpose-built one can be added. The
+  homepage *Roasted in Jordan* band currently points at Our Brands.
+- **The terms of a coffee-shop deal.** The Own an Azouz Coffee page describes
+  what a location opens with and how to enquire, but states no investment
+  range, no fee structure and no territory rules. Whatever of that is decided
+  belongs on the page before it is promoted.
 
 ---
 
@@ -312,6 +364,8 @@ the material:
 | No enquiry emails | The sender email is unset or unmonitored | Step 10 |
 | The footer shows no policies | None have been written | Step 11 |
 | A menu item does nothing | The menu link points at a page that does not exist | Step 5 |
+| The homepage services show coloured panels, not photographs | Those cards have no image set | Step 4, and the photography brief |
+| "Explore Opportunities" 404s | The coffee-shop page handle does not match | Step 3, the handle must be `own-an-azouz-coffee` |
 
 ---
 

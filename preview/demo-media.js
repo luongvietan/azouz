@@ -18,10 +18,21 @@
  * the preview can see it.
  *
  * Keyed by template path, then by the section id used inside that template.
+ * A block's image is keyed `sectionId.blockId`, which keeps the map flat and
+ * the lookup a single property read.
  */
 export const DEMO_MEDIA = {
   'templates/index.json': {
     hero: '/preview-media/hero-azouz-coffee-cup.jpg',
+    'services.private_label': '/preview-media/filtered-coffee-bags.jpg',
+    'services.wholesale': '/preview-media/dead-sea-blend.jpg',
+    'services.specialty': '/preview-media/downtown-blend.jpg',
+    'services.coffee_shop': '/preview-media/wadi-rum-blend.jpg',
+    roastery: '/preview-media/wadi-rum-blend-alt.jpg',
+  },
+  'templates/page.own-an-azouz-coffee.json': {
+    hero: '/preview-media/filtered-coffee-bags.jpg',
+    roastery: '/preview-media/wadi-rum-blend-alt.jpg',
   },
   'templates/page.private-label.json': {
     hero: '/preview-media/wadi-rum-blend-alt.jpg',
@@ -42,12 +53,15 @@ export const DEMO_MEDIA = {
 };
 
 /**
- * The demo image for one section of one template, if there is one.
+ * The demo image for one section — or one block inside it — of one template,
+ * if there is one.
  *
  * @param {string} templatePath e.g. 'templates/index.json'
  * @param {string} sectionId    the key under the template's `sections`
+ * @param {string} [blockId]    the key under that section's `blocks`
  * @returns {string|null}
  */
-export function demoImageFor(templatePath, sectionId) {
-  return DEMO_MEDIA[templatePath]?.[sectionId] ?? null;
+export function demoImageFor(templatePath, sectionId, blockId) {
+  const key = blockId ? `${sectionId}.${blockId}` : sectionId;
+  return DEMO_MEDIA[templatePath]?.[key] ?? null;
 }

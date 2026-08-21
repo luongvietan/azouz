@@ -10,8 +10,12 @@ import { demoImageFor } from './demo-media.js';
 /**
  * Expand a JSON template's blocks into the array shape Liquid sees as
  * `section.blocks`, honouring block_order and merging block-type defaults.
+ *
+ * `demoImage` is called with a block id and returns the preview-only image for
+ * it, if the demo map has one — blocks carry photography too, and it is unset
+ * in the shipped template for the same reason a section's image is.
  */
-function buildBlocks(schema, sectionConfig) {
+function buildBlocks(schema, sectionConfig, demoImage = () => null) {
   const declared = sectionConfig.blocks;
   if (!declared) return [];
 
@@ -23,19 +27,25 @@ function buildBlocks(schema, sectionConfig) {
 
   return ids
     .filter((id) => declared[id])
-    .map((id) => ({
-      id,
-      type: declared[id].type,
-      settings: resolveSettings(
-        (schema?.blocks ?? []).find((b) => b.type === declared[id].type) ?? null,
-        {
-          ...(typeDefaults.get(declared[id].type) ?? {}),
-          ...(declared[id].settings ?? {}),
-        },
-        buildFixtures(),
-      ),
-      shopify_attributes: '',
-    }));
+    .map((id) => {
+      const settings = {
+        ...(typeDefaults.get(declared[id].type) ?? {}),
+        ...(declared[id].settings ?? {}),
+      };
+      const demo = demoImage(id);
+      if (demo && !settings.image) settings.image = demo;
+
+      return {
+        id,
+        type: declared[id].type,
+        settings: resolveSettings(
+          (schema?.blocks ?? []).find((b) => b.type === declared[id].type) ?? null,
+          settings,
+          buildFixtures(),
+        ),
+        shopify_attributes: '',
+      };
+    });
 }
 
 /**
@@ -84,7 +94,7 @@ export async function renderTemplate(engine, themeDir, templatePath, extraScope 
       section: {
         id,
         settings: resolveSettings(schema, settings, fixtures),
-        blocks: buildBlocks(schema, config),
+        blocks: buildBlocks(schema, config, (blockId) => demoImageFor(templatePath, id, blockId)),
         shopify_attributes: '',
       },
     };

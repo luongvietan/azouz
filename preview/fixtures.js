@@ -233,6 +233,7 @@ export function buildFixtures() {
         links: [
           { title: 'Private Label', url: '/pages/private-label', active: false, links: [] },
           { title: 'Wholesale', url: '/pages/wholesale', active: false, links: [] },
+          { title: 'Own an Azouz Coffee', url: '/pages/own-an-azouz-coffee', active: false, links: [] },
           { title: 'Our Brands', url: '/pages/our-brands', active: false, links: [] },
           { title: 'Shop', url: '/collections/all', active: false, links: [] },
           { title: 'Journal', url: '/blogs/journal', active: false, links: [] },

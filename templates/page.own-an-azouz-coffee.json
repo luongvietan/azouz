@@ -1,0 +1,144 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-split",
+      "settings": {
+        "eyebrow": "Coffee shop opportunity",
+        "heading": "Own an Azouz Coffee.",
+        "body": "<p>Bring Azouz Coffee to your neighbourhood.</p><p>From coffee supply and equipment to branding, menu development and operational support — we help you open and run an Azouz Coffee location.</p>",
+        "cta_primary_label": "Explore Opportunities",
+        "cta_primary_link": "/pages/get-a-quote",
+        "cta_secondary_label": "Request a Sample",
+        "cta_secondary_link": "/pages/request-a-sample",
+        "image_alt": "An Azouz Coffee counter: espresso machine, grinder and a 1 kg coffee bag beside it",
+        "background": "default"
+      }
+    },
+    "included": {
+      "type": "feature-grid",
+      "settings": {
+        "eyebrow": "",
+        "heading": "What You Open With.",
+        "body": "Everything the location needs, from the coffee itself to the way it runs day to day.",
+        "background": "alt"
+      },
+      "blocks": {
+        "coffee": {
+          "type": "feature",
+          "settings": {
+            "title": "Coffee supply",
+            "body": "Espresso, Turkish, filter and specialty coffee roasted for the location and delivered on a regular schedule."
+          }
+        },
+        "equipment": {
+          "type": "feature",
+          "settings": {
+            "title": "Equipment",
+            "body": "Machine, grinder and brewing equipment specified for the volume you expect to serve."
+          }
+        },
+        "branding": {
+          "type": "feature",
+          "settings": {
+            "title": "Branding",
+            "body": "The Azouz identity applied to the space, the packaging and the signage."
+          }
+        },
+        "menu": {
+          "type": "feature",
+          "settings": {
+            "title": "Menu development",
+            "body": "A drinks menu built around the blends, with recipes and pricing guidance."
+          }
+        },
+        "training": {
+          "type": "feature",
+          "settings": {
+            "title": "Barista training",
+            "body": "Training on the machine, the grind and the recipes so the cup is the same every day."
+          }
+        },
+        "operations": {
+          "type": "feature",
+          "settings": {
+            "title": "Operational support",
+            "body": "Help with opening, ordering and the routines that keep the counter running."
+          }
+        }
+      },
+      "block_order": [
+        "coffee",
+        "equipment",
+        "branding",
+        "menu",
+        "training",
+        "operations"
+      ]
+    },
+    "formats": {
+      "type": "two-column-choice",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Two Ways to Open.",
+        "background": "default"
+      },
+      "blocks": {
+        "location": {
+          "type": "option",
+          "settings": {
+            "title": "A Full Azouz Coffee Location",
+            "body": "Your own shop, opened and fitted as an Azouz Coffee from the counter out.",
+            "link_label": "Explore Opportunities",
+            "link": "/pages/get-a-quote"
+          }
+        },
+        "corner": {
+          "type": "option",
+          "settings": {
+            "title": "An Azouz Corner in Your Business",
+            "body": "A coffee counter inside a hotel, restaurant, office or retail space you already run.",
+            "link_label": "Talk to Us",
+            "link": "/pages/get-a-quote"
+          }
+        }
+      },
+      "block_order": [
+        "location",
+        "corner"
+      ]
+    },
+    "roastery": {
+      "type": "brand-feature",
+      "settings": {
+        "eyebrow": "Behind the counter",
+        "heading": "Supplied by Our Own Roastery.",
+        "body": "<p>The coffee you serve is roasted, blended and packed by us, so supply, price and taste stay in one place rather than across three suppliers.</p>",
+        "cta_label": "View Wholesale",
+        "cta_link": "/pages/wholesale",
+        "image_alt": "Roasted coffee falling into the cooling tray at the Azouz roastery",
+        "media_position": "start",
+        "background": "alt"
+      }
+    },
+    "closing": {
+      "type": "cta-band",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Let's Talk About Your Location.",
+        "body": "<p>Tell us where you are and what size of space you have, and we'll come back with what opening an Azouz Coffee there involves.</p>",
+        "cta_primary_label": "Explore Opportunities",
+        "cta_primary_link": "/pages/get-a-quote",
+        "cta_secondary_label": "Request a Sample",
+        "cta_secondary_link": "/pages/request-a-sample",
+        "background": "accent"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "included",
+    "formats",
+    "roastery",
+    "closing"
+  ]
+}
