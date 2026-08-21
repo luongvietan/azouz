@@ -41,34 +41,36 @@
       {
         "type": "color",
         "id": "color_accent",
-        "label": "Primary green",
-        "default": "#67985E",
-        "info": "PANTONE 7731 C. Used for fills, large headings and buttons."
+        "label": "Sage green",
+        "default": "#687B5D",
+        "info": "The brand green. Dark enough to carry white button and body text, so it is used for fills, buttons and the green band."
       },
       {
         "type": "color",
         "id": "color_accent_deep",
-        "label": "Deep green",
-        "default": "#4F7748",
-        "info": "Darker shade used wherever green sits behind body-size text, so the contrast passes WCAG AA. Changing this can break accessibility."
+        "label": "Deep sage",
+        "default": "#5A6A50",
+        "info": "Used wherever green is the text rather than the fill — green links and green type on the page background. Sage itself only reaches 4.1:1 there, so lightening this breaks accessibility."
       },
       {
         "type": "color",
         "id": "color_background",
         "label": "Page background",
-        "default": "#FFFBF8"
+        "default": "#F6F3ED",
+        "info": "Warm White."
       },
       {
         "type": "color",
         "id": "color_background_alt",
         "label": "Alternate band background",
-        "default": "#F6F1E8"
+        "default": "#ECE9E4"
       },
       {
         "type": "color",
         "id": "color_text",
         "label": "Text",
-        "default": "#303030"
+        "default": "#171717",
+        "info": "Onyx Black."
       }
     ]
   },

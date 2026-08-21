@@ -41,9 +41,9 @@ test('label colours match the printed packaging', () => {
   const byHandle = Object.fromEntries(
     buildFixtures().collections.all.products.map((p) => [p.handle, p]),
   );
-  assert.equal(byHandle['wadi-rum-blend'].metafields.custom.label_color.value, '#C4562E');
-  assert.equal(byHandle['dead-sea-blend'].metafields.custom.label_color.value, '#BFDDD3');
-  assert.equal(byHandle['downtown-blend'].metafields.custom.label_color.value, '#7C7F44');
+  assert.equal(byHandle['wadi-rum-blend'].metafields.custom.label_color.value, '#B3522D');
+  assert.equal(byHandle['dead-sea-blend'].metafields.custom.label_color.value, '#B7B7B3');
+  assert.equal(byHandle['downtown-blend'].metafields.custom.label_color.value, '#5A6A50');
 });
 
 test('products expose variants with weight and grind options', () => {
@@ -63,7 +63,7 @@ test('the cart fixture is empty by default', () => {
 test('theme settings from settings_data are on the settings drop', () => {
   const { settings } = buildFixtures();
   assert.equal(settings.logo_height, 64);
-  assert.equal(settings.color_accent, '#67985E');
+  assert.equal(settings.color_accent, '#687B5D');
 });
 
 test('the main menu links to the marketing pages, the shop and the journal', () => {

@@ -88,13 +88,13 @@ test('link_to wraps text in an anchor', () => {
 });
 
 test('color_brightness of Dead Sea mint is above the dark-ink threshold', () => {
-  assert.ok(Number(render(`{{ '#BFDDD3' | color_brightness }}`)) > 160);
+  assert.ok(Number(render(`{{ '#B7B7B3' | color_brightness }}`)) > 160);
 });
 
 test('color_brightness of Wadi Rum rust is below the dark-ink threshold', () => {
-  assert.ok(Number(render(`{{ '#C4562E' | color_brightness }}`)) < 160);
+  assert.ok(Number(render(`{{ '#B3522D' | color_brightness }}`)) < 160);
 });
 
 test('color_brightness of Jet is below the dark-ink threshold', () => {
-  assert.ok(Number(render(`{{ '#303030' | color_brightness }}`)) < 160);
+  assert.ok(Number(render(`{{ '#171717' | color_brightness }}`)) < 160);
 });

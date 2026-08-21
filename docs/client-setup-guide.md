@@ -69,11 +69,20 @@ the header shows an old logo after you change it here, that is why.
 The five colour settings default to the brand palette and are safe to leave
 alone. If you change them, one rule matters more than the rest:
 
-**Deep green** is what the theme puts behind body-size white text. It is a
-darker shade of the primary green precisely so that combination clears the
-WCAG AA contrast minimum. Set it to something lighter and buttons, links and
-the green band become legally non-compliant and genuinely hard to read for
-anyone with low vision. The primary green is for fills and large headings only.
+**Deep sage** (`#5A6A50`) is what the theme puts behind body-size white text
+and uses for green links. It is a darker shade of Sage Green precisely so those
+combinations clear the WCAG AA minimum. Set it lighter and buttons, links and
+the green band become non-compliant and genuinely hard to read for anyone with
+low vision.
+
+Two colours from the brand board are deliberately **not** in these settings,
+because they are not safe to hand to a picker:
+
+- **Silver** (`#B7B7B3`) is 1.8:1 on the page background. It is a hairline and
+  rule colour, and a pale label fill that takes dark ink. It is never text.
+- **Burnt Orange** (`#C65B32`) fails in both directions — 3.8:1 as text, 4.3:1
+  behind white. Where an orange has to carry words the theme uses a deepened
+  `#B3522D` instead. Use the board orange for large type and small marks only.
 
 ---
 

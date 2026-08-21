@@ -20,7 +20,7 @@ test('the whole card links to the product', async () => {
 
 test('uses the blend label colour from the metafield', async () => {
   const html = await renderSnippet('product-card', { product: wadiRum });
-  assert.match(html, /--label-bg:\s*#C4562E/);
+  assert.match(html, /--label-bg:\s*#B3522D/);
 });
 
 test('renders the tasting notes as the label subtitle', async () => {

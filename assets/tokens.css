@@ -1,45 +1,68 @@
 /*
   Azouz Coffee — design tokens
-  Source of truth: Azouz Brand Guidelines (17pp), Colour Scheme Guide.
+  Source of truth: Azouz Coffee Colour Palette board — "a refined palette
+  inspired by stainless steel, coffee and nature". It supersedes the green-led
+  palette from the original 17pp guidelines.
 
   ACCESSIBILITY CONTRACT — enforced by tests/contrast.test.js.
   Measured WCAG 2.1 ratios:
-    Jet        on Off White  12.8:1  AAA
-    Muted grey on Off White   5.2:1  AA
-    White      on Asparagus   3.4:1  LARGE TEXT ONLY (>=24px, or >=18.66px bold)
-    Jet        on Asparagus   3.9:1  LARGE TEXT ONLY
-    Taupe      on Off White   1.9:1  NEVER FOR TEXT — borders and rules only
-    White      on Deep Green  5.2:1  AA
-    Deep Green on Off White   5.0:1  AA
+    Onyx         on Warm White  16.2:1  AAA
+    Onyx         on Alt band    14.8:1  AAA
+    Coffee Brown on Warm White  10.8:1  AAA
+    Grey         on Warm White   5.3:1  AA
+    Grey         on Alt band     4.8:1  AA
+    White        on Sage         4.6:1  AA      <- the brand green carries body text
+    White        on Sage Deep    5.8:1  AA
+    Sage Deep    on Warm White   5.3:1  AA
+    White        on Coffee Brown 11.9:1  AAA
+    White        on Orange Deep   5.1:1  AA
+    Sage         on Warm White   4.1:1  LARGE TEXT ONLY (>=24px, or >=18.66px bold)
+    Burnt Orange on Warm White   3.8:1  LARGE TEXT ONLY
+    White        on Burnt Orange 4.3:1  LARGE TEXT ONLY
+    Silver       on Warm White   1.8:1  NEVER FOR TEXT — hairlines and rules only
 
-  Therefore: --color-accent is for fills, large display type and button labels.
-  Wherever green must carry or sit behind body-size text, use --color-accent-deep.
+  Two rules follow, and they are the reverse of the old palette's:
+
+  Sage is dark enough to carry white body text as a fill, so buttons and green
+  bands may use --color-accent directly. What it cannot do is sit *as text* on
+  the page — 4.1:1 — so green type and green links use --color-accent-deep.
+
+  Burnt Orange is a highlight, not a surface for words: it fails in both inks.
+  Anything that must carry text uses --color-highlight (the deepened orange).
 */
 
 :root {
-  /* --- Brand palette, verbatim from the guidelines --- */
-  --azouz-asparagus: #67985e;  /* PRIMARY   — PANTONE 7731 C */
-  --azouz-warm-cream: #f6f1e8; /* SECONDARY */
-  --azouz-taupe: #c5b7a4;      /* ACCENT            — non-text */
-  --azouz-sage: #dee6d5;       /* SUPPORTING ACCENT — non-text */
-  --azouz-off-white: #fffbf8;  /* BASE */
-  --azouz-jet: #303030;        /* TEXT */
+  /* --- Brand palette, verbatim from the colour board --- */
+  --azouz-warm-white: #f6f3ed;   /* BASE     — primary background */
+  --azouz-silver: #b7b7b3;       /* ACCENT   — industrial silver, non-text */
+  --azouz-onyx: #171717;         /* TEXT     — strong contrast */
+  --azouz-coffee-brown: #4a3126; /* WARM     — coffee tone */
+  --azouz-sage: #687b5d;         /* PRIMARY  — natural balance */
+  --azouz-burnt-orange: #c65b32; /* HIGHLIGHT — subtle, non-text */
 
-  /* --- Derived for accessibility, same hue family --- */
-  --azouz-asparagus-deep: #4f7748;
-  --azouz-grey: #6b6b6b;
+  /* --- Derived for accessibility, each the nearest legal shade of its parent --- */
+  --azouz-sage-deep: #5a6a50;    /* sage that survives as body-size text */
+  --azouz-orange-deep: #b3522d;  /* orange that survives white body-size text */
+  --azouz-grey: #656563;         /* silver darkened until it is legal as text */
+
+  /* --- Derived neutrals. The alt band reproduces the old cream band's 1.09
+         step exactly, so section rhythm is unchanged by the repaint. --- */
+  --azouz-warm-white-alt: #ece9e4;
+  --azouz-sage-tint: #d4d6ca;    /* chips and tinted bands; Onyx only, never grey */
 
   /* --- Semantic --- */
-  --color-bg: var(--azouz-off-white);
-  --color-bg-alt: var(--azouz-warm-cream);
-  --color-bg-tint: var(--azouz-sage);
-  --color-text: var(--azouz-jet);
+  --color-bg: var(--azouz-warm-white);
+  --color-bg-alt: var(--azouz-warm-white-alt);
+  --color-bg-tint: var(--azouz-sage-tint);
+  --color-text: var(--azouz-onyx);
   --color-text-muted: var(--azouz-grey);
-  --color-accent: var(--azouz-asparagus);
-  --color-accent-deep: var(--azouz-asparagus-deep);
+  --color-accent: var(--azouz-sage);
+  --color-accent-deep: var(--azouz-sage-deep);
+  --color-warm: var(--azouz-coffee-brown);
+  --color-highlight: var(--azouz-orange-deep);
   --color-on-accent: #ffffff;
-  --color-hairline: var(--azouz-taupe);
-  --color-focus: var(--azouz-asparagus-deep);
+  --color-hairline: var(--azouz-silver);
+  --color-focus: var(--azouz-sage-deep);
 
   /* --- Typography --- */
   --font-body: 'Baloo Bhaijaan 2', system-ui, -apple-system, 'Segoe UI', sans-serif;

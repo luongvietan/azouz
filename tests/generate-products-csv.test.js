@@ -73,7 +73,7 @@ test('the metafields the theme reads are all present', () => {
   }
 
   const first = buildRows().find((row) => row.Handle === 'wadi-rum-blend');
-  assert.equal(first['Metafield: custom.label_color [color]'], '#C4562E');
+  assert.equal(first['Metafield: custom.label_color [color]'], '#B3522D');
   assert.equal(first['Metafield: custom.roast_level [number_integer]'], '4');
 });
 

@@ -20,7 +20,7 @@ Azouz Coffee is a hybrid Shopify theme: B2B lead-generation pages (Home, Private
 
 Swiss-minimal, packaging-led, restrained.
 
-Voice is direct and commercial: what Azouz roasts, for whom, and what to do next. No rustic warmth, no craft-theatre. Confidence comes from the label block, the silver-bag photography, and the Asparagus green used sparingly.
+Voice is direct and commercial: what Azouz roasts, for whom, and what to do next. No rustic warmth, no craft-theatre. Confidence comes from the label block, the silver-bag photography, the stainless-steel neutrals, and the sage green used sparingly.
 
 Emotional goals: competence for a B2B buyer; quiet premium for a retail customer.
 
@@ -29,14 +29,14 @@ Emotional goals: competence for a B2B buyer; quiet premium for a retail customer
 - Rustic coffee tropes: burlap, wood grain, rising-steam illustration, scattered bean icons, brown gradient heroes, stock latte-art photography
 - Script "handcrafted since" typefaces and a second display face next to Baloo
 - SaaS landing grammar: hero-metric rows, identical icon+heading+text card grids, numbered 01/02/03 eyebrows on every section
-- Cream-and-sage "warm café" palettes that bury the PANTONE 7731 C green
+- Cream-and-sage "warm café" palettes that bury the sage green under a wash
 - Dawn-default Shopify chrome and generic OS 2.0 starter aesthetics
 
 ## Design Principles
 
 1. **The packaging is the design system.** The bag label (solid colour panel, tight uppercase title, hairline, spec grid, roast dots) is the signature component. Product cards, range cards, and service cards derive from it.
-2. **Show the bag, don't decorate around it.** Product photography is silver foil on near-white. It sits on Off White with no treatment. Empty colour panels where a bag should be are a bug.
-3. **One green voice.** Asparagus is the only core brand colour. One deliberate green band per page. Body-size text on green uses the deep token, never the primary fill.
+2. **Show the bag, don't decorate around it.** Product photography is silver foil on near-white. It sits on Warm White with no treatment. Empty colour panels where a bag should be are a bug.
+3. **One green voice.** Sage is the only core brand colour; silver, coffee brown and burnt orange support it. One deliberate green band per page. Green that carries or is body-size text uses the deep token.
 4. **English now, Arabic later.** Logical CSS properties and externalised strings. No physical `left`/`right`. Adding `locales/ar.json` must not require a CSS rewrite.
 5. **Works with scripting off.** Forms post natively. Menus are `<details>`. Reveal motion never hides content until the custom element is defined.
 
@@ -44,9 +44,9 @@ Emotional goals: competence for a B2B buyer; quiet premium for a retail customer
 
 WCAG 2.1 AA is the floor, enforced in `tests/contrast.test.js`.
 
-- Body text ≥4.5:1 (Jet on Off White; muted grey on Off White is 5.2:1)
-- Taupe Beige is never text (1.9:1)
-- White on primary Asparagus is large-text only; buttons use `--color-accent-deep`
+- Body text ≥4.5:1 (Onyx on Warm White is 16.2:1; muted grey is 5.3:1)
+- Silver is never text (1.8:1); Burnt Orange is never a surface for it (4.3:1 behind white)
+- Sage is never body-size *text* (4.1:1); buttons and green copy use `--color-accent-deep`
 - Visible `:focus-visible` ring; skip link; one `h1` per page
 - `prefers-reduced-motion: reduce` disables reveal and smooth scroll
 - Touch targets ≥44px; RTL-ready logical properties

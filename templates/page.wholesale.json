@@ -27,7 +27,7 @@
           "settings": {
             "title": "Espresso Blends",
             "body": "Balanced coffees developed for espresso and milk-based drinks.",
-            "label_color": "#BC5029",
+            "label_color": "#B3522D",
             "label_text": "light"
           }
         },
@@ -36,7 +36,7 @@
           "settings": {
             "title": "Turkish Coffee",
             "body": "Traditional profiles available plain or with cardamom.",
-            "label_color": "#6B6E3A",
+            "label_color": "#4A3126",
             "label_text": "light"
           }
         },
@@ -45,7 +45,7 @@
           "settings": {
             "title": "Specialty Coffee",
             "body": "Single origins and specialty-grade coffees selected for quality and flavour.",
-            "label_color": "#BFDDD3",
+            "label_color": "#B7B7B3",
             "label_text": "dark"
           }
         },
@@ -54,7 +54,7 @@
           "settings": {
             "title": "Filter Coffee",
             "body": "Coffee roasted for V60, batch brew and other filter methods.",
-            "label_color": "#303030",
+            "label_color": "#171717",
             "label_text": "light"
           }
         }

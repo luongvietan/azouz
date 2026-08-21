@@ -20,7 +20,8 @@ import { readCssTokens } from '../scripts/css-tokens.js';
 */
 
 const WHITE = '#FFFFFF';
-const JET = '#303030';
+// The dark ink label-ink falls back to is --color-text, which is Onyx.
+const ONYX = '#171717';
 const REQUIRED = 4.5;
 
 const strip = (source) => source.replace(/^﻿/, '').replace(/\/\*[\s\S]*?\*\//g, '');
@@ -39,7 +40,7 @@ async function labelPairsFromTemplates() {
         pairs.push({
           where: `templates/${name} → ${sectionId}.${blockId}`,
           colour,
-          text: block.settings.label_text === 'dark' ? JET : WHITE,
+          text: block.settings.label_text === 'dark' ? ONYX : WHITE,
         });
       }
     }
@@ -98,7 +99,7 @@ test('label colours inside section presets also pass AA', async () => {
       for (const block of preset.blocks ?? []) {
         const colour = block.settings?.label_color;
         if (!colour) continue;
-        const text = block.settings.label_text === 'dark' ? JET : WHITE;
+        const text = block.settings.label_text === 'dark' ? ONYX : WHITE;
         const ratio = contrastRatio(text, colour);
         if (ratio < REQUIRED) {
           failures.push(`sections/${name} preset "${preset.name}": ${text} on ${colour} = ${ratio.toFixed(2)}:1`);

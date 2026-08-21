@@ -25,10 +25,41 @@ test('contrastRatio is symmetric', () => {
 });
 
 test('contrastRatio matches the hand-computed brand values', () => {
-  close(contrastRatio('#FFFFFF', '#67985E'), 3.37);
-  close(contrastRatio('#303030', '#FFFBF8'), 12.83);
-  close(contrastRatio('#C5B7A4', '#FFFBF8'), 1.91);
-  close(contrastRatio('#FFFFFF', '#4F7748'), 5.16);
+  close(contrastRatio('#171717', '#F6F3ED'), 16.19);
+  close(contrastRatio('#4A3126', '#F6F3ED'), 10.78);
+  close(contrastRatio('#FFFFFF', '#687B5D'), 4.59);
+  close(contrastRatio('#687B5D', '#F6F3ED'), 4.14);
+  close(contrastRatio('#B7B7B3', '#F6F3ED'), 1.82);
+});
+
+test('the brand green carries white body text as a fill, but not as text', async () => {
+  const map = await tokens();
+  // The reverse of the old palette: sage is dark enough to sit *behind* body
+  // text, and too light to *be* body text. Both halves matter — the first is
+  // why buttons may use --color-accent, the second is why links may not.
+  assert.ok(contrastRatio(map.get('--color-on-accent'), map.get('--color-accent')) >= 4.5);
+  assert.ok(contrastRatio(map.get('--color-accent'), map.get('--color-bg')) < 4.5);
+});
+
+test('burnt orange is never a surface for body text — the deepened one is', async () => {
+  const map = await tokens();
+  assert.ok(
+    contrastRatio('#FFFFFF', '#C65B32') < 4.5,
+    'if the board orange ever passes, --color-highlight can be simplified away',
+  );
+  assert.ok(contrastRatio(map.get('--color-on-accent'), map.get('--color-highlight')) >= 4.5);
+  assert.ok(contrastRatio(map.get('--color-highlight'), map.get('--color-bg')) >= 4.5);
+});
+
+test('the coffee brown tone is legal in both directions', async () => {
+  const map = await tokens();
+  assert.ok(contrastRatio(map.get('--color-warm'), map.get('--color-bg')) >= 7);
+  assert.ok(contrastRatio(map.get('--color-on-accent'), map.get('--color-warm')) >= 7);
+});
+
+test('text on the tinted band reaches AAA', async () => {
+  const map = await tokens();
+  assert.ok(contrastRatio(map.get('--color-text'), map.get('--color-bg-tint')) >= 7);
 });
 
 test('shorthand hex is expanded', () => {
@@ -57,6 +88,9 @@ test('readCssTokens does not hang on a circular reference', () => {
 const REQUIRED_TOKENS = [
   '--color-bg',
   '--color-bg-alt',
+  '--color-bg-tint',
+  '--color-warm',
+  '--color-highlight',
   '--color-text',
   '--color-text-muted',
   '--color-accent',
@@ -74,8 +108,23 @@ test('every semantic colour token is defined', async () => {
   for (const name of REQUIRED_TOKENS) assert.ok(map.has(name), `${name} must be defined`);
 });
 
-test('the brand primary is exactly the guideline value', async () => {
-  assert.equal((await tokens()).get('--color-accent').toUpperCase(), '#67985E');
+test('the brand primary is exactly the colour-board value', async () => {
+  assert.equal((await tokens()).get('--color-accent').toUpperCase(), '#687B5D');
+});
+
+test('every colour the board names is present, unaltered', async () => {
+  const map = await tokens();
+  const BOARD = {
+    '--azouz-warm-white': '#F6F3ED',
+    '--azouz-silver': '#B7B7B3',
+    '--azouz-onyx': '#171717',
+    '--azouz-coffee-brown': '#4A3126',
+    '--azouz-sage': '#687B5D',
+    '--azouz-burnt-orange': '#C65B32',
+  };
+  for (const [token, hex] of Object.entries(BOARD)) {
+    assert.equal(map.get(token)?.toUpperCase(), hex, `${token} must match the colour board`);
+  }
 });
 
 test('body text on both page grounds reaches AAA', async () => {

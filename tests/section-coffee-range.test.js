@@ -7,9 +7,9 @@ import { resolveInTheme } from '../scripts/theme-paths.js';
 const range = (id, settings) => ({ id, type: 'range', settings, shopify_attributes: '' });
 
 const FOUR = [
-  range('r1', { title: 'Espresso Blends', body: 'Balanced coffees developed for espresso and milk-based drinks.', label_color: '#C4562E' }),
-  range('r2', { title: 'Turkish Coffee', body: 'Traditional profiles available plain or with cardamom.', label_color: '#7C7F44' }),
-  range('r3', { title: 'Specialty Coffee', body: 'Single origins and specialty-grade coffees selected for quality and flavour.', label_color: '#BFDDD3' }),
+  range('r1', { title: 'Espresso Blends', body: 'Balanced coffees developed for espresso and milk-based drinks.', label_color: '#B3522D' }),
+  range('r2', { title: 'Turkish Coffee', body: 'Traditional profiles available plain or with cardamom.', label_color: '#4A3126' }),
+  range('r3', { title: 'Specialty Coffee', body: 'Single origins and specialty-grade coffees selected for quality and flavour.', label_color: '#B7B7B3' }),
   range('r4', { title: 'Filter Coffee', body: 'Coffee roasted for V60, batch brew and other filter methods.', label_color: '#303030' }),
 ];
 
@@ -26,12 +26,12 @@ test('each card is a packaging label block', async () => {
 
 test('the per-range colour drives the label fill', async () => {
   const html = await renderSection('coffee-range', { blocks: [FOUR[0]] });
-  assert.match(html, /--label-bg:\s*#C4562E/);
+  assert.match(html, /--label-bg:\s*#B3522D/);
 });
 
-test('a light label colour switches the text to jet for contrast', async () => {
+test('a light label colour switches the text to onyx for contrast', async () => {
   const html = await renderSection('coffee-range', {
-    blocks: [range('r1', { title: 'Specialty', label_color: '#BFDDD3', label_text: 'dark' })],
+    blocks: [range('r1', { title: 'Specialty', label_color: '#B7B7B3', label_text: 'dark' })],
   });
   assert.match(html, /--label-fg:\s*var\(--color-text\)/);
 });
