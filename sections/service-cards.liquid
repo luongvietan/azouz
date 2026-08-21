@@ -25,7 +25,14 @@
     endif
   endfor
 
+  # Three label blocks fit one row at grid--3 and a fourth drops to a row of
+  # its own, which is what the coffee-shop card did. Four narrower columns keep
+  # them on one row instead — and narrower is the right direction here, since
+  # the objection to these panels was their size.
   assign grid_class = 'grid grid--3'
+  if section.blocks.size > 3
+    assign grid_class = 'grid grid--4'
+  endif
   if has_media
     assign grid_class = 'service-cards__grid--media'
   endif

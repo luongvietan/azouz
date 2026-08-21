@@ -131,6 +131,13 @@ test('photographs widen the grid so they are shown large', async () => {
   assert.match(withoutPhoto, /service-cards__grid grid grid--3/);
 });
 
+test('a fourth label block gets a fourth column rather than a row of its own', async () => {
+  const html = await renderSection('service-cards', {
+    blocks: [...THREE, card('s4', { title: 'Own an Azouz Coffee' })],
+  });
+  assert.match(html, /service-cards__grid grid grid--4/);
+});
+
 test('a card still waiting on photography falls back to the label block', async () => {
   const html = await renderSection('service-cards', { blocks: [PHOTO, THREE[1]] });
   assert.equal(countMatches(html, /service-card__image/g), 1);

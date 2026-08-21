@@ -49,6 +49,7 @@ export const THEME_SUBDIRS = new Set([
  * They are excluded from the zip, which must contain THEME_SUBDIRS and nothing else.
  */
 export const PROJECT_ENTRIES = new Set([
+  '.claude',
   '.git',
   '.gitignore',
   '.github',
