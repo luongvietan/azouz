@@ -307,6 +307,11 @@ Each form's dropdowns are editable in the theme editor as comma-separated lists:
 
 Then Online Store → Themes → **Publish**.
 
+Once the store is live, set up the affiliate program and the marketing apps:
+[affiliate-and-ai-apps.md](affiliate-and-ai-apps.md). Affiliate tracking only
+works on a published theme, which is why it comes after this step and not
+before.
+
 ---
 
 ## The photography brief
@@ -384,6 +389,7 @@ the material:
 |---|---|
 | `dist/azouz-theme-1.0.0.zip` | The uploadable theme, from `npm run package` |
 | `dist/products.csv` | The product import file you edit |
+| [`docs/affiliate-and-ai-apps.md`](affiliate-and-ai-apps.md) | The affiliate program and the marketing apps — do this after step 11 |
 | `npm run preview` | Local preview of the real theme at `localhost:4321` |
 | `npm test` | The theme's own test suite |
 | `npm run check` | Shopify's theme linter |

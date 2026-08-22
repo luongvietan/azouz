@@ -1,5 +1,11 @@
 # Plan Completion Record — Plans A, B and C
 
+> **Historical record, superseded in part.** This note describes the repository
+> as it stood on 2026-08-16. Its *Still open* section has since been overtaken —
+> Plan D shipped, and `npm run package` works. Read
+> [2026-08-22-delivery-status.md](2026-08-22-delivery-status.md) for the current
+> state. Everything above that section is still accurate and is left unedited.
+
 **Date:** 2026-08-16
 **Branch:** `main` (the only branch; `plan-a-foundation` and `plan-b-marketing` were deleted after verifying both were fully contained in `main`)
 **HEAD at time of writing:** `4cb01a1`
@@ -156,6 +162,12 @@ ships.
 ---
 
 ## Still open
+
+> **As of 2026-08-22 this section is out of date.** The three content gaps below
+> still stand. The packaging claim does not: `scripts/package-theme.js` was
+> written in `ffd1f5c` and `npm run package` produces `dist/azouz-theme-1.0.0.zip`.
+> Plan D has since shipped in full. See
+> [2026-08-22-delivery-status.md](2026-08-22-delivery-status.md).
 
 These are not defects. They are content gaps for the primary B2B audience, and
 they need material from the client rather than code:
