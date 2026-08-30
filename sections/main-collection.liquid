@@ -1,8 +1,16 @@
+{%- comment -%}
+  The collection as a printed index: an oversized title closed by a rule, the
+  description under it, the sort control on its own line, and the coffees laid
+  out four to a row and divided by rules rather than by gaps.
+{%- endcomment -%}
 <section class="section main-collection"{{ section.shopify_attributes }}>
-  <div class="container">
-    <header class="collection__head">
-      <h1 class="collection__heading">{{ collection.title }}</h1>
+  <div class="container container--ultra">
+    <header class="collection__head section-head">
+      <h1 class="collection__heading section-head__heading section-head__heading--large">{{ collection.title }}</h1>
+      <hr class="section-head__rule">
+    </header>
 
+    <div class="collection__intro">
       {%- if collection.description != blank -%}
         <div class="collection__description rte">{{ collection.description }}</div>
       {%- endif -%}
@@ -10,7 +18,7 @@
       <p class="collection__count">
         {{ 'collections.general.product_count' | t: count: collection.products_count }}
       </p>
-    </header>
+    </div>
 
     {%- comment -%}
       A GET form, so a sorted collection is a URL the customer can share, and so
@@ -41,13 +49,13 @@
     {%- else -%}
       {%- paginate collection.products by 12 -%}
         <reveal-on-scroll>
-          <div class="grid grid--3 collection__grid">
+          <ul class="list-lines list-lines--4 collection__grid" role="list">
             {%- for product in collection.products -%}
-              <div class="reveal">
+              <li class="reveal">
                 {%- render 'product-card', product: product, heading_level: 2 -%}
-              </div>
+              </li>
             {%- endfor -%}
-          </div>
+          </ul>
         </reveal-on-scroll>
 
         {%- render 'pagination', paginate: paginate -%}

@@ -55,11 +55,42 @@ test('both cart counts carry a sync hook so ajax cannot desync them', async () =
   assert.match(html, /data-cart-count-label\b/, 'the screen-reader count needs its own hook');
 });
 
+test('an ajax cart change is announced, not only redrawn', async () => {
+  // syncCartCount rewrites this sentence after every ajax change. Without a
+  // live region the update is silent, and on the cart page — where a quantity
+  // change opens no drawer to announce itself — it is the only feedback there is.
+  const html = await render();
+  const label = /<span[^>]*data-cart-count-label[^>]*>/.exec(html);
+  assert.ok(label, 'the announced cart count is missing');
+  assert.match(label[0], /aria-live="polite"/);
+  // Without aria-atomic a screen reader reads the digit that changed and
+  // nothing else: "2", with no clue what two of.
+  assert.match(label[0], /aria-atomic="true"/);
+});
+
 test('search and cart actions expose a single action label', async () => {
   const html = await render();
   assert.match(html, /class="header__action-label"[^>]*>Search</);
   assert.match(html, /class="header__action-label"[^>]*>Your cart</);
   assert.equal((html.match(/class="header__action-label"/g) || []).length, 2);
+});
+
+test('a nested menu opens without javascript', async () => {
+  // The fixture menu nests three links under Shop. A scripted dropdown would
+  // leave them unreachable when theme.js fails to load; a <details> does not.
+  const html = await render();
+  assert.match(html, /<details class="header__disclosure">/);
+  assert.match(html, /<summary class="header__link header__link--parent/);
+  assert.match(html, /header__panel-link[^>]*>\s*Espresso blends/);
+});
+
+test('nesting a link under a parent does not bury the parent destination', async () => {
+  // Shop is both a heading and a page. The panel repeats it as its first item,
+  // so the collection is still one click away.
+  const html = await render();
+  const panel = /<ul class="header__panel"[\s\S]*?<\/ul>/.exec(html);
+  assert.ok(panel, 'expected a nested menu panel');
+  assert.match(panel[0], /href="\/collections\/all"[^>]*>\s*Shop/);
 });
 
 test('the mobile menu works without javascript', async () => {

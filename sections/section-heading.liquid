@@ -1,0 +1,45 @@
+{%- comment -%}
+  A section head on its own: the oversized label that introduces the block
+  below it, with its "see everything" link and the closing rule.
+
+  It carries no content of its own, so the heading it renders is the one the
+  following section would otherwise have had to repeat.
+{%- endcomment -%}
+{%- liquid
+  assign has_link = false
+  if section.settings.link_label != blank and section.settings.link != blank
+    assign has_link = true
+  endif
+-%}
+
+<div class="standalone-heading"{{ section.shopify_attributes }}>
+  <div class="container container--ultra">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="section-head__heading">{{ section.settings.heading }}</h2>
+      {%- if has_link -%}
+        <a class="anchor-arrow section-head__link" href="{{ section.settings.link }}">
+          {{ section.settings.link_label }}
+          {%- render 'icon', name: 'arrow-right' -%}
+        </a>
+      {%- endif -%}
+      <hr class="section-head__rule">
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Section heading",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our story" },
+    { "type": "text", "id": "link_label", "label": "Link label" },
+    { "type": "url", "id": "link", "label": "Link" }
+  ],
+  "presets": [{ "name": "Section heading" }]
+}
+{% endschema %}

@@ -1,0 +1,85 @@
+{%- comment -%}
+  A rule-divided list of entries, each a full-width row: the name at display
+  size on the inline start, the line that explains it on the other half.
+
+  The name carries the link. The description is not a second anchor to the same
+  place — one target per row, so a reader listing the links on this page hears
+  each destination once.
+{%- endcomment -%}
+{%- liquid
+  assign has_link = false
+  if section.settings.link_label != blank and section.settings.link != blank
+    assign has_link = true
+  endif
+-%}
+
+<div class="section section--tint flavour-finder"{{ section.shopify_attributes }}>
+  <div class="container container--ultra">
+    <div class="section-head">
+      <h2 class="section-head__heading">{{ section.settings.heading }}</h2>
+      {%- if has_link -%}
+        <a class="anchor-arrow section-head__link" href="{{ section.settings.link }}">
+          {{ section.settings.link_label }}
+          {%- render 'icon', name: 'arrow-right' -%}
+        </a>
+      {%- endif -%}
+      <hr class="section-head__rule">
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="flavour-finder__list" role="list">
+        {%- for block in section.blocks -%}
+          <li class="flavour-finder__row"{{ block.shopify_attributes }}>
+            {%- if block.settings.link != blank -%}
+              <a class="flavour-finder__name" href="{{ block.settings.link }}">
+                {{ block.settings.label }}
+                {%- render 'icon', name: 'arrow-right' -%}
+              </a>
+            {%- else -%}
+              <span class="flavour-finder__name">{{ block.settings.label }}</span>
+            {%- endif -%}
+
+            {%- if block.settings.note != blank -%}
+              <p class="flavour-finder__note">{{ block.settings.note }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if section.settings.statement != blank -%}
+      <p class="flavour-finder__statement">{{ section.settings.statement }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Flavour finder",
+  "tag": "section",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Find your profile" },
+    { "type": "text", "id": "link_label", "label": "Link label" },
+    { "type": "url", "id": "link", "label": "Link" },
+    {
+      "type": "textarea",
+      "id": "statement",
+      "label": "Statement",
+      "info": "One paragraph under the list. Keep it to a couple of sentences."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "flavour",
+      "name": "Entry",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Name" },
+        { "type": "text", "id": "note", "label": "Description", "info": "One line. It sits opposite the name." },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Flavour finder" }]
+}
+{% endschema %}

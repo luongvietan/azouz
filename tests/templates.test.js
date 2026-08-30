@@ -87,12 +87,15 @@ test('the homepage carries the client headline and both hero calls to action', a
   assert.match(html, /Your Coffee\. Your Brand\. Our Roastery\./);
   assert.match(html, /Request a Sample/);
   assert.match(html, /How private label works/);
-  assert.match(html, /class="button--quiet"[^>]*href="\/pages\/private-label"/);
+  // The hero's second path is an outlined button over the photograph, not the
+  // quiet text link the split hero used — over an image an underline alone is
+  // not a target a thumb can find.
+  assert.match(html, /class="button button--secondary[^"]*"[^>]*href="\/pages\/private-label"/);
 });
 
 test('the homepage hero uses a packaging photo and a short packaging-line eyebrow', async () => {
   const html = await renderAll('index.json');
-  assert.match(html, /<img[^>]+class="hero__image"[^>]+src="[^"]+"/);
+  assert.match(html, /<img[^>]+class="hero-overlay__image"[^>]+src="[^"]+"/);
   assert.match(html, /alt="Hand holding an azouz coffee branded takeaway cup"/);
   assert.match(html, /Specialty coffee roasters/);
   assert.equal(/What We Do/i.test(html), false);
@@ -125,16 +128,24 @@ test('the homepage leads with private label across four business areas', async (
   }
 });
 
-test('the homepage service cards are photography-led, not coloured panels', async () => {
+test('the homepage services read as a printed index, not as coloured panels', async () => {
+  // The four services are a rule-divided row now: title, a line of copy and
+  // the link that opens it. What the coloured-panel complaint was about still
+  // holds — no service is represented by an empty block of colour.
   const html = await renderAll('index.json');
-  assert.match(html, /service-card--media/);
+  assert.match(html, /list-lines--4 quick-links__list/);
   assert.equal(/service-card__label/.test(html), false);
+  assert.equal(/label-block service-card/.test(html), false);
 });
 
 test('the homepage shows the roastery itself, for manufacturing credibility', async () => {
+  // The claim and the photographs both moved: the claim onto the sample band,
+  // the roastery imagery into the three story columns. A B2B buyer still has
+  // to see the place the coffee is made without leaving the homepage.
   const html = await renderAll('index.json');
   assert.match(html, /Roasted in Jordan\./);
-  assert.match(html, /brand-feature__image/);
+  assert.match(html, /<img[^>]+class="story-column__image"[^>]+src="[^"]+"/);
+  assert.match(html, /<img[^>]+class="feature-band__image"[^>]+src="[^"]+"/);
 });
 
 test('the coffee shop opportunity page carries its offer and both formats', async () => {
@@ -234,7 +245,10 @@ test('the marketing templates still render their hero imagery in the preview', a
   // demo imagery moved to preview/demo-media.js and is injected at render.
   for (const name of MARKETING) {
     const html = await renderAll(name);
-    assert.match(html, /class="hero__image"/, `${name} lost its hero image`);
+    // The homepage hero is the full-bleed one; the marketing pages still use
+    // the split hero. Either is a hero image — what must not happen is a
+    // template rendering with none.
+    assert.match(html, /class="hero(-overlay)?__image"/, `${name} lost its hero image`);
     assert.match(html, /<img[^>]+src="[^"]+"/, `${name} hero image has no source`);
   }
 });

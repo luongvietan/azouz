@@ -24,11 +24,10 @@
 export const DEMO_MEDIA = {
   'templates/index.json': {
     hero: '/preview-media/hero-azouz-coffee-cup.jpg',
-    'services.private_label': '/preview-media/filtered-coffee-bags.jpg',
-    'services.wholesale': '/preview-media/dead-sea-blend.jpg',
-    'services.specialty': '/preview-media/downtown-blend.jpg',
-    'services.coffee_shop': '/preview-media/wadi-rum-blend.jpg',
-    roastery: '/preview-media/wadi-rum-blend-alt.jpg',
+    'story.sourcing': '/preview-media/downtown-blend.jpg',
+    'story.roasting': '/preview-media/wadi-rum-blend-alt.jpg',
+    'story.packing': '/preview-media/filtered-coffee-bags.jpg',
+    sample: '/preview-media/dead-sea-blend.jpg',
   },
   'templates/page.own-an-azouz-coffee.json': {
     hero: '/preview-media/filtered-coffee-bags.jpg',

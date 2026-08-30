@@ -259,6 +259,15 @@ a {
   line-height: var(--leading-heading);
   text-transform: uppercase;
   letter-spacing: -0.01em;
+
+  /* `anywhere`, not `break-word`, and the difference is the whole point: only
+     `anywhere` reduces the element's min-content size. `break-word` breaks the
+     line when it renders but still reports the longest word as the minimum
+     width, so the panel keeps forcing its track open. At the browser's 200%
+     text setting the panel's padding doubles along with the type and a single
+     blend name no longer fits the column that is left; measured, this one
+     declaration is what takes the page from 55px of sideways scroll to none. */
+  overflow-wrap: anywhere;
 }
 
 .label-block__subtitle {
@@ -376,4 +385,280 @@ a {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+}
+
+/* ---------- Editorial layout grammar ----------
+   The homepage and the shop templates are laid out on the same three moves:
+
+     1. an ultra-wide measure, so a four-up row is four real columns and not
+        four squeezed ones;
+     2. a section head — an oversized uppercase heading with its "see the rest"
+        link parked at the inline end, closed by a rule drawn in ink;
+     3. lists that are divided by those same rules instead of by gaps, so a
+        grid reads as a printed index rather than as a tray of cards.
+
+   Nothing here introduces a colour, a face or a radius. It is spacing,
+   alignment and 1px strokes. */
+
+.container--ultra { max-inline-size: var(--content-ultra); }
+
+/* Breaks a child out of its container to the full viewport width, keeping the
+   page's own gutter. Used by the full-bleed hero, the marquee and the bands. */
+.full-bleed {
+  inline-size: 100vw;
+  max-inline-size: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+
+/* margin-inline is reset explicitly: a UA gives <hr> `margin-inline: auto`,
+   and an auto inline margin on a grid item makes it size to its content — which
+   for a rule is nothing at all. It renders as a 0px-wide line and looks like a
+   missing border rather than a broken margin. */
+.rule--ink {
+  border: 0;
+  border-block-start: var(--rule-ink);
+  margin-block: 0;
+  margin-inline: 0;
+}
+
+/* ---------- Section head ---------- */
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-sm) var(--space-lg);
+  margin-block-end: var(--space-xl);
+}
+
+/* Measured on the source: 38px at 2.4px tracking, and 40px at 2.4px for the
+   large variant — roughly 0.06em, tracked OUT. --tracking-display is -0.02em,
+   which is right for a mixed-case display line and wrong for a short uppercase
+   label, where the caps need air between them to stay countable. */
+.section-head__heading {
+  font-size: var(--text-2xl);
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+/* Reserved for a page title — the collection h1 — not for section heads. On
+   the source every section head is the same size, 38px against 40px, and the
+   two read as one level. A homepage that jumps 44px to 56px between two heads
+   invents a hierarchy the content does not have. */
+.section-head__heading--large {
+  font-size: var(--text-3xl);
+  line-height: 1.15;
+}
+
+/* The link sits on the far side of the heading on a wide screen and drops
+   under it on a narrow one, which is what the wrap above already does — this
+   only pushes it over when both fit on one line. */
+.section-head__link { margin-inline-start: auto; }
+
+.section-head__rule {
+  border: 0;
+  border-block-start: var(--rule-ink);
+  margin-block: var(--space-md) 0;
+  flex-basis: 100%;
+}
+
+/* An eyebrow above the heading, not beside it. */
+.section-head .eyebrow { flex-basis: 100%; margin-block-end: 0; }
+
+/* ---------- Arrow link ---------- */
+
+/* Sentence case at body size, not an uppercase eyebrow: the source sets these
+   at 16px regular. They are sentences — "Read our sourcing approach" — and the
+   Short Caps Rule says a sentence is never set in caps. */
+.anchor-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-block-size: 2.75rem;
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  color: var(--color-text);
+  border-block-end: var(--rule-ink);
+}
+
+.anchor-arrow:hover { color: var(--color-accent-deep); }
+
+.anchor-arrow svg {
+  inline-size: 1em;
+  block-size: 1em;
+  flex: none;
+}
+
+/* The arrow points the way the language runs. */
+[dir='rtl'] .anchor-arrow svg { transform: scaleX(-1); }
+
+/* ---------- Rule-divided lists ----------
+   Cells are separated by strokes rather than by whitespace. The dividers are
+   drawn on the block-start and inline-start edges and clipped by the wrapper's
+   own overflow, so no cell ever ends with a stray line hanging off the grid. */
+
+.list-lines {
+  --lines-gutter: var(--space-xl);
+  --lines-half: calc(var(--lines-gutter) / 2);
+
+  display: grid;
+  column-gap: var(--lines-gutter);
+  row-gap: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-lines > * {
+  position: relative;
+  padding-block: var(--lines-half);
+  border-block-end: var(--rule-ink);
+}
+
+/* The column divider is drawn down the middle of the gutter, not on a cell
+   edge — half the gutter of clear space either side of the line. It is hidden
+   on the first cell of each row, so no line ever hangs off the inline start of
+   the grid. Which cell that is changes with the column count, so each
+   breakpoint restates it. */
+.list-lines > *::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: calc(var(--lines-half) * -1);
+  inline-size: 1px;
+  background-color: var(--color-text);
+}
+
+.list-lines--2 > *::before,
+.list-lines--3 > *::before,
+.list-lines--4 > *::before { display: none; }
+
+.list-lines--2,
+.list-lines--3,
+.list-lines--4 { grid-template-columns: 1fr; }
+
+/* minmax(0, …) rather than a bare 1fr on every one of these.
+
+   `1fr` is `minmax(auto, 1fr)`, and that `auto` floor is the cell's min-content
+   width. At the browser's 200% text setting the label-block titles and spec
+   rows outgrow their track, the track refuses to shrink to hold them, and the
+   grid pushes the page 417px wider than the viewport — a horizontal scrollbar
+   for exactly the readers who enlarged the text because they needed to. A zero
+   floor lets the track shrink and the text wrap instead.
+   WCAG 1.4.4 and 1.4.10. Enforced by tests/base-css.test.js. */
+@media (min-width: 40em) {
+  .list-lines--2,
+  .list-lines--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .list-lines--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  .list-lines--2 > *::before,
+  .list-lines--4 > *::before { display: block; }
+  .list-lines--2 > *:nth-child(2n + 1)::before,
+  .list-lines--4 > *:nth-child(2n + 1)::before { display: none; }
+
+  .list-lines--3 > *::before { display: block; }
+  .list-lines--3 > *:nth-child(3n + 1)::before { display: none; }
+}
+
+@media (min-width: 64em) {
+  .list-lines--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .list-lines--4 > *:nth-child(2n + 1)::before { display: block; }
+  .list-lines--4 > *:nth-child(4n + 1)::before { display: none; }
+}
+
+/* ---------- Marquee ----------
+   A single band of running text. The track is duplicated so the loop has no
+   seam, and the copy is aria-hidden so a screen reader hears the line once.
+   With reduced motion the track simply sits still and is clipped — the words
+   are still readable, which a paused animation would also give but without
+   asking the browser to keep a compositor layer alive. */
+
+/* Measured on the source: 12.5px of padding above and below a 38px uppercase
+   line, and a thick colour strip closing the band underneath. */
+.marquee {
+  /* display:block is load-bearing, not tidiness. `.marquee` is a
+     <marquee-band> custom element, and an undefined custom element defaults to
+     display:inline — an inline box cannot clip, so `overflow: hidden` silently
+     stops working and the 12,000px track sets the width of the whole document.
+     Enforced by tests/base-css.test.js. */
+  display: block;
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-sm);
+  border-block-start: var(--rule-ink);
+  border-block-end: 1.25rem solid var(--color-accent);
+  background-color: var(--color-bg-alt);
+}
+
+/* The pause control. WCAG 2.2.2 is a Level A criterion: motion that starts on
+   its own and runs past five seconds needs a mechanism to stop it, and
+   prefers-reduced-motion is not that mechanism — it serves only the readers who
+   already found the setting.
+
+   The button is a real control, so it only exists where it can work. With
+   scripting off it is hidden and the track does not move at all; there is no
+   dead button and no unstoppable motion. Hover and focus pause too, which
+   catches the reader who is trying to read the line rather than stop it. */
+.marquee__toggle {
+  position: absolute;
+  z-index: 1;
+  inset-block-end: var(--space-xs);
+  inset-inline-end: var(--space-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
+  padding: var(--space-2xs) var(--space-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  border: var(--rule-ink);
+  border-radius: var(--radius);
+}
+
+.marquee__toggle:hover { color: var(--color-bg); background-color: var(--color-text); }
+
+.no-js .marquee__toggle { display: none; }
+
+.marquee__track {
+  display: flex;
+  inline-size: max-content;
+  gap: var(--space-xl);
+  white-space: nowrap;
+}
+
+.marquee__item {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* :not(.no-js) — the animation is only started when the control that stops
+     it can exist. The class is swapped in the document head, before first
+     paint, so the track never moves and then freezes. */
+  html:not(.no-js) .marquee__track { animation: marquee-scroll 28s linear infinite; }
+
+  /* Paused by the button, by hover, by keyboard focus inside the band, and by
+     the runtime once the band scrolls out of view — the last one so an
+     offscreen band is not holding a compositor layer awake for the whole page. */
+  .marquee[data-paused='true'] .marquee__track,
+  .marquee:hover .marquee__track,
+  .marquee:focus-within .marquee__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-scroll {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
+  }
 }

@@ -1,0 +1,98 @@
+{%- comment -%}
+  Three columns, each a photograph over a heading, a paragraph and its link.
+
+  The image is the subject, so it is not decorated: no overlay, no coloured
+  panel, no crop gimmick. A column with no photograph still renders — it just
+  starts at the heading, rather than reserving an empty box.
+{%- endcomment -%}
+{%- liquid
+  assign section_class = 'section story-columns'
+  if section.settings.background == 'alt'
+    assign section_class = 'section section--alt story-columns'
+  endif
+-%}
+
+<div class="{{ section_class }}"{{ section.shopify_attributes }}>
+  <div class="container container--ultra">
+    {%- if section.settings.heading != blank -%}
+      <div class="section-head">
+        <h2 class="section-head__heading">{{ section.settings.heading }}</h2>
+        <hr class="section-head__rule">
+      </div>
+    {%- endif -%}
+
+    <reveal-on-scroll>
+      <ul class="story-columns__grid" role="list">
+        {%- for block in section.blocks -%}
+          <li class="story-column reveal"{{ block.shopify_attributes }}>
+            {%- if block.settings.image -%}
+              <div class="story-column__media">
+                {%- render 'responsive-image',
+                  image: block.settings.image,
+                  alt: block.settings.image_alt,
+                  class: 'story-column__image',
+                  width: 900,
+                  sizes: '(min-width: 64em) 31vw, (min-width: 40em) 46vw, 92vw'
+                -%}
+              </div>
+            {%- endif -%}
+
+            <h3 class="story-column__title">{{ block.settings.title }}</h3>
+
+            {%- if block.settings.body != blank -%}
+              <p class="story-column__body">{{ block.settings.body }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.link_label != blank and block.settings.link != blank -%}
+              <a class="anchor-arrow story-column__link" href="{{ block.settings.link }}">
+                {{ block.settings.link_label }}
+                {%- render 'icon', name: 'arrow-right' -%}
+              </a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </reveal-on-scroll>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Story columns",
+  "tag": "section",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "default", "label": "Page" },
+        { "value": "alt", "label": "Warm cream" }
+      ],
+      "default": "default"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image description",
+          "info": "Describe the image for screen readers and for when it fails to load."
+        },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "body", "label": "Body" },
+        { "type": "text", "id": "link_label", "label": "Link label" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Story columns" }]
+}
+{% endschema %}

@@ -15,7 +15,7 @@
 -%}
 
 <section class="section main-product" data-product-root{{ section.shopify_attributes }}>
-  <div class="container">
+  <div class="container container--ultra">
     <nav class="breadcrumb" aria-label="{{ 'general.accessibility.breadcrumb' | t }}">
       <ol class="breadcrumb__list" role="list">
         <li class="breadcrumb__item">
@@ -35,15 +35,24 @@
       {%- comment -%}
         The whole gallery, not just the featured shot — the packaging is the
         product here, and a merchant who uploads a second angle expects it to
-        appear. The first image is the LCP element; the rest lazy-load.
+        appear. The first image leads at full width and is the LCP element; the
+        rest sit beside it as a rail and lazy-load.
+
+        The rail is not a scripted carousel. Every angle is on the page and in
+        the document order a screen reader walks, so there is nothing to upgrade
+        and nothing that breaks when the runtime does not load.
       {%- endcomment -%}
       {%- for image in product.images -%}
         {%- liquid
           assign image_loading = 'lazy'
           assign image_priority = ''
+          assign image_class = 'main-product__image main-product__image--thumb'
+          assign image_sizes = '(min-width: 56em) 11vw, 28vw'
           if forloop.first
             assign image_loading = 'eager'
             assign image_priority = 'high'
+            assign image_class = 'main-product__image main-product__image--lead'
+            assign image_sizes = '(min-width: 56em) 45vw, 92vw'
           endif
 
           assign image_alt = image.alt | default: product.title
@@ -51,9 +60,9 @@
         {%- render 'responsive-image',
           image: image,
           alt: image_alt,
-          class: 'main-product__image',
+          class: image_class,
           width: 1200,
-          sizes: '(min-width: 56em) 45vw, 92vw',
+          sizes: image_sizes,
           loading: image_loading,
           fetchpriority: image_priority
         -%}

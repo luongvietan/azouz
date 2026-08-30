@@ -21,7 +21,9 @@
       "decrease_quantity": "Decrease quantity",
       "increase_quantity": "Increase quantity",
       "close_cart": "Close cart",
-      "breadcrumb": "Breadcrumb"
+      "breadcrumb": "Breadcrumb",
+      "pause_motion": "Pause the moving text",
+      "resume_motion": "Resume the moving text"
     },
     "search": {
       "title": "Search",
@@ -106,8 +108,8 @@
       "comment_email": "Email",
       "comment_body": "Comment",
       "comment_submit": "Post comment",
-      "comment_success": "Thanks — your comment has been posted.",
-      "comment_moderated": "Thanks — your comment will appear once it has been approved.",
+      "comment_success": "Thanks. Your comment has been posted.",
+      "comment_moderated": "Thanks. Your comment will appear once it has been approved.",
       "comment_error": "Please check the highlighted fields and try again."
     }
   },
@@ -167,7 +169,7 @@
       "business_type_prompt": "Select a business type",
       "coffee_type_prompt": "Select a coffee type",
       "send": "Send enquiry",
-      "success": "Thanks — we have your enquiry and will be in touch shortly.",
+      "success": "Thanks. We have your enquiry and will be in touch shortly.",
       "error": "Please check the highlighted fields and try again.",
       "honeypot": "Leave this field empty"
     }
@@ -246,7 +248,9 @@
       "menu": "Services",
       "contact": "Contact",
       "follow": "Follow",
-      "legal": "Legal"
+      "legal": "Legal",
+      "roastery": "Our roastery",
+      "newsletter": "Newsletter"
     }
   }
 }

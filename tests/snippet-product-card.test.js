@@ -34,8 +34,27 @@ test('renders the roast meter', async () => {
 });
 
 test('labels the roast meter so the dots are not read as a star rating', async () => {
+  // The card's spec list supplies the term, so the meter no longer prints its
+  // own label beside it — printing both would say "Roast level" twice. What has
+  // to survive is that the dots are still named: by the <dt> above them, and by
+  // the meter's own aria-label, which is what a screen reader actually reads.
   const html = await renderSnippet('product-card', { product: wadiRum });
-  assert.match(html, /roast-meter__label/);
+  assert.match(html, /<dt class="product-card__spec-term">Roast level<\/dt>/);
+  assert.match(html, /aria-label="Roast level 4 of 5"/);
+});
+
+test('every spec row on the card is a term and a value', async () => {
+  const html = await renderSnippet('product-card', { product: wadiRum });
+  const terms = html.match(/product-card__spec-term/g) ?? [];
+  const values = html.match(/product-card__spec-value/g) ?? [];
+  assert.equal(terms.length, values.length);
+  assert.ok(terms.length >= 3, 'expected the bag specs to be listed on the card');
+});
+
+test('a product with none of the spec metafields renders no empty spec list', async () => {
+  const plain = { ...wadiRum, metafields: { custom: {} } };
+  const html = await renderSnippet('product-card', { product: plain });
+  assert.equal(/product-card__specs/.test(html), false);
 });
 
 test('shows a from-price when the product spans a price range', async () => {

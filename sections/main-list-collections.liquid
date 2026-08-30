@@ -1,13 +1,18 @@
 <section class="section main-list-collections"{{ section.shopify_attributes }}>
-  <div class="container">
-    <h1 class="list-collections__heading">{{ 'collections.general.title' | t }}</h1>
+  <div class="container container--ultra">
+    <div class="section-head">
+      <h1 class="list-collections__heading section-head__heading section-head__heading--large">
+        {{- 'collections.general.title' | t -}}
+      </h1>
+      <hr class="section-head__rule">
+    </div>
 
     {%- if collections.size == 0 -%}
       <p class="collection__empty">{{ 'collections.general.empty' | t }}</p>
     {%- else -%}
-      <div class="grid grid--3 list-collections__grid">
+      <ul class="list-lines list-lines--3 list-collections__grid" role="list">
         {%- for item in collections -%}
-          <article class="collection-card">
+          <li class="collection-card">
             {%- if item.image -%}
               {%- render 'responsive-image',
                 image: item.image,
@@ -23,9 +28,9 @@
             <p class="collection-card__count">
               {{ 'collections.general.product_count' | t: count: item.products_count }}
             </p>
-          </article>
+          </li>
         {%- endfor -%}
-      </div>
+      </ul>
     {%- endif -%}
   </div>
 </section>

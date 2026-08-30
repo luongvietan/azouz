@@ -49,6 +49,28 @@ test('no user-visible english is hard-coded in the markup', async () => {
   assert.equal(/translation missing/.test(await render()), false);
 });
 
+test('the dark ground gets the light lockup', async () => {
+  // The footer paints Onyx. The black lockup would disappear into it, and the
+  // white one is the same artwork recoloured, so the declared box still matches.
+  const html = await render();
+  assert.match(html, /logo-white\.svg/);
+  assert.equal(/logo-black\.svg/.test(html), false);
+});
+
+test('the roastery address is marked up as an address, not a paragraph', async () => {
+  const html = await renderSection('footer', {
+    settings: { show_contact: true, address: 'Amman\nJordan' },
+  });
+  assert.match(html, /<address class="footer__address">/);
+  // The line breaks the merchant typed survive into the markup.
+  assert.match(html, /Amman<br\s*\/?>/);
+});
+
+test('a store with no contact details renders no roastery column', async () => {
+  const html = await renderSection('footer', { settings: { show_contact: false } });
+  assert.equal(/footer__address/.test(html), false);
+});
+
 test('declares a preset', async () => {
   const { extractSchema } = await import('../scripts/schema-parser.js');
   const schema = extractSchema(await readFile(resolveInTheme('sections/footer.liquid'), 'utf8'));

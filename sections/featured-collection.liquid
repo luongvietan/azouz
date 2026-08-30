@@ -15,31 +15,34 @@
 
 {%- if featured != blank -%}
   <section class="{{ section_class }}"{{ section.shopify_attributes }}>
-    <div class="container">
-      <div class="featured-collection__head">
+    <div class="container container--ultra">
+      <div class="section-head featured-collection__head">
         {%- if section.settings.eyebrow != blank -%}
           <span class="eyebrow">{{ section.settings.eyebrow }}</span>
         {%- endif -%}
-        <h2 class="featured-collection__heading">{{ section.settings.heading }}</h2>
+        <h2 class="section-head__heading featured-collection__heading">{{ section.settings.heading }}</h2>
+        {%- if has_link -%}
+          <a class="anchor-arrow section-head__link" href="{{ section.settings.link }}">
+            {{ section.settings.link_label }}
+            {%- render 'icon', name: 'arrow-right' -%}
+          </a>
+        {%- endif -%}
+        <hr class="section-head__rule">
       </div>
 
       <reveal-on-scroll>
-        <div class="grid grid--4 featured-collection__grid">
+        {%- comment -%}
+          The row is divided by rules rather than by gaps, so four coffees read
+          as one printed index instead of four floating cards.
+        {%- endcomment -%}
+        <ul class="list-lines list-lines--4 featured-collection__grid" role="list">
           {%- for product in featured.products limit: limit -%}
-            <div class="reveal">
+            <li class="reveal">
               {%- render 'product-card', product: product -%}
-            </div>
+            </li>
           {%- endfor -%}
-        </div>
+        </ul>
       </reveal-on-scroll>
-
-      {%- if has_link -%}
-        <div class="button-group featured-collection__actions">
-          <a class="button button--secondary" href="{{ section.settings.link }}">
-            {{ section.settings.link_label }}
-          </a>
-        </div>
-      {%- endif -%}
     </div>
   </section>
 {%- endif -%}

@@ -43,19 +43,19 @@
   </div>
 
   {%- if search.results_count > 0 -%}
-    <div class="container">
+    <div class="container container--ultra">
       {%- paginate search.results by 12 -%}
-        <div class="grid grid--3 search__grid">
+        <ul class="list-lines list-lines--4 search__grid" role="list">
           {%- comment -%}
             The hidden type field above keeps this to products, but a hand-typed
             ?type=article would still reach here — so only products become cards.
           {%- endcomment -%}
           {%- for item in search.results -%}
             {%- if item.object_type == 'product' -%}
-              {%- render 'product-card', product: item, heading_level: 2 -%}
+              <li>{%- render 'product-card', product: item, heading_level: 2 -%}</li>
             {%- endif -%}
           {%- endfor -%}
-        </div>
+        </ul>
 
         {%- render 'pagination', paginate: paginate -%}
       {%- endpaginate -%}

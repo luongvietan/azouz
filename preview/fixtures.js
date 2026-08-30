@@ -235,7 +235,18 @@ export function buildFixtures() {
           { title: 'Wholesale', url: '/pages/wholesale', active: false, links: [] },
           { title: 'Own an Azouz Coffee', url: '/pages/own-an-azouz-coffee', active: false, links: [] },
           { title: 'Our Brands', url: '/pages/our-brands', active: false, links: [] },
-          { title: 'Shop', url: '/collections/all', active: false, links: [] },
+          {
+            title: 'Shop',
+            url: '/collections/all',
+            active: false,
+            // One nested menu, so the header's no-script disclosure is exercised
+            // by the preview and by tests rather than only on a live store.
+            links: [
+              { title: 'All coffee', url: '/collections/all', active: false, links: [] },
+              { title: 'Espresso blends', url: '/collections/all', active: false, links: [] },
+              { title: 'Filter coffee', url: '/collections/all', active: false, links: [] },
+            ],
+          },
           { title: 'Journal', url: '/blogs/journal', active: false, links: [] },
         ],
       },

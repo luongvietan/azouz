@@ -1,0 +1,74 @@
+{%- comment -%}
+  A single running band of text.
+
+  The phrase is emitted twice: the first copy is the readable one, the second
+  is aria-hidden and exists only so the loop can translate a full 50% without a
+  gap appearing at the end. A screen reader hears the line once.
+{%- endcomment -%}
+{%- if section.settings.text != blank -%}
+  {%- liquid
+    assign repeats = section.settings.repeats | default: 3
+    assign separator = section.settings.separator | default: '→'
+  -%}
+
+  {%- comment -%}
+    <marquee-band> owns the pause control. WCAG 2.2.2 is Level A: motion that
+    starts by itself and runs past five seconds needs a mechanism to stop it,
+    and prefers-reduced-motion is not that mechanism.
+
+    The button is rendered unconditionally but hidden by `.no-js`, where the CSS
+    also refuses to start the animation at all. So the page never shows a dead
+    control, and never shows motion nobody can stop.
+  {%- endcomment -%}
+  <marquee-band class="marquee" data-paused="false"{{ section.shopify_attributes }}>
+    <button
+      class="marquee__toggle"
+      type="button"
+      data-marquee-toggle
+      aria-pressed="false"
+      data-label-pause="{{ 'general.accessibility.pause_motion' | t | escape }}"
+      data-label-resume="{{ 'general.accessibility.resume_motion' | t | escape }}">
+      <span class="visually-hidden" data-marquee-label>{{ 'general.accessibility.pause_motion' | t }}</span>
+      <span aria-hidden="true" data-marquee-glyph>&#10073;&#10073;</span>
+    </button>
+
+    <div class="marquee__track">
+      {%- for pass in (1..2) -%}
+        {%- for index in (1..repeats) -%}
+          <span
+            class="marquee__item"
+            {% if pass == 2 or index > 1 %}aria-hidden="true"{% endif %}>
+            {{- section.settings.text }} <span class="marquee__mark">{{ separator }}</span>
+          </span>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </marquee-band>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Marquee",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Roasted in Jordan",
+      "info": "Leave empty to hide the band. Keep it short: it repeats across the row."
+    },
+    { "type": "text", "id": "separator", "label": "Separator", "default": "→" },
+    {
+      "type": "range",
+      "id": "repeats",
+      "label": "Repeats",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    }
+  ],
+  "presets": [{ "name": "Marquee" }]
+}
+{% endschema %}

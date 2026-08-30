@@ -4,10 +4,25 @@
   # The header's own picker wins; the theme-level Brand logo is the fallback so
   # a merchant who sets it once in Theme settings sees it here.
   assign logo_source = section.settings.logo | default: settings.logo
+
+  assign has_feature = false
+  if section.settings.feature_label != blank and section.settings.feature_link != blank
+    assign has_feature = true
+  endif
 -%}
 
+{%- comment -%}
+  Two rows on a wide screen: the mark and the one standing invitation on the
+  first, the menu and the shop actions on the second. That is what lets the
+  navigation start at the inline edge rather than being squeezed between a logo
+  and a row of icons.
+
+  It is one grid, not two markup rows — on a narrow screen the same three
+  elements collapse into a single line, so nothing is duplicated and nothing
+  has to be hidden twice.
+{%- endcomment -%}
 <header class="header">
-  <div class="container header__inner">
+  <div class="container container--ultra header__inner">
     <a class="header__logo" href="{{ routes.root_url }}">
       {%- comment -%}
         width/height reserve the box before the file arrives, so they have to
@@ -33,16 +48,60 @@
       {%- endif -%}
     </a>
 
+    {%- if has_feature -%}
+      <p class="header__feature">
+        <a class="anchor-arrow header__feature-link" href="{{ section.settings.feature_link }}">
+          {{ section.settings.feature_label }}
+          {%- render 'icon', name: 'arrow-right' -%}
+        </a>
+      </p>
+    {%- endif -%}
+
     <nav class="header__nav" aria-label="{{ 'general.accessibility.primary_navigation' | t }}">
       <ul class="header__menu" role="list">
         {%- for link in section.settings.menu.links -%}
-          <li>
-            <a
-              class="header__link{% if link.active %} is-active{% endif %}"
-              href="{{ link.url }}"
-              {%- if link.active %} aria-current="page"{% endif %}>
-              {{ link.title }}
-            </a>
+          <li class="header__item">
+            {%- if link.links.size > 0 -%}
+              {%- comment -%}
+                A nested menu is a <details> disclosure, like the mobile one:
+                it opens, closes and takes focus with no script at all. The
+                parent's own destination stays reachable as the first item of
+                the panel, so nesting a link never buries it.
+              {%- endcomment -%}
+              <details class="header__disclosure">
+                <summary class="header__link header__link--parent{% if link.active %} is-active{% endif %}">
+                  {{ link.title }}
+                  {%- render 'icon', name: 'chevron-down' -%}
+                </summary>
+                <ul class="header__panel" role="list">
+                  <li>
+                    <a
+                      class="header__panel-link"
+                      href="{{ link.url }}"
+                      {%- if link.active %} aria-current="page"{% endif %}>
+                      {{ link.title }}
+                    </a>
+                  </li>
+                  {%- for child in link.links -%}
+                    <li>
+                      <a
+                        class="header__panel-link{% if child.active %} is-active{% endif %}"
+                        href="{{ child.url }}"
+                        {%- if child.active %} aria-current="page"{% endif %}>
+                        {{ child.title }}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </details>
+            {%- else -%}
+              <a
+                class="header__link{% if link.active %} is-active{% endif %}"
+                href="{{ link.url }}"
+                {%- if link.active %} aria-current="page"{% endif %}>
+                {{ link.title }}
+              </a>
+            {%- endif -%}
           </li>
         {%- endfor -%}
       </ul>
@@ -64,11 +123,21 @@
         {%- comment -%}
           Two counts, two hooks. The badge is decorative (aria-hidden); the
           visually-hidden sentence is what a screen reader announces. Both are
-          refreshed by syncCartCount after an ajax cart change — syncing only
-          the badge leaves the announced total stale.
+          refreshed by syncCartCount after an ajax cart change; syncing only the
+          badge leaves the announced total stale.
+
+          The sentence is a polite live region, so an ajax change is heard and
+          not only seen. aria-atomic reads the whole sentence rather than the
+          digit that changed, which on its own would announce "2" and nothing
+          else. It matters most on the cart page, where a quantity change
+          updates this count and opens no drawer to announce itself.
         {%- endcomment -%}
         <span class="header__cart-count" aria-hidden="true" data-cart-count>{{ cart.item_count | default: 0 }}</span>
-        <span class="visually-hidden" data-cart-count-label>{{ cart.item_count | default: 0 }} {{ 'general.accessibility.cart_count' | t }}</span>
+        <span
+          class="visually-hidden"
+          aria-live="polite"
+          aria-atomic="true"
+          data-cart-count-label>{{ cart.item_count | default: 0 }} {{ 'general.accessibility.cart_count' | t }}</span>
       </a>
     </div>
 
@@ -84,8 +153,20 @@
       <div class="header__mobile-panel">
         <ul class="header__mobile-menu" role="list">
           {%- for link in section.settings.menu.links -%}
-            <li><a class="header__mobile-link" href="{{ link.url }}">{{ link.title }}</a></li>
+            <li>
+              <a class="header__mobile-link" href="{{ link.url }}">{{ link.title }}</a>
+              {%- if link.links.size > 0 -%}
+                <ul class="header__mobile-sub" role="list">
+                  {%- for child in link.links -%}
+                    <li><a class="header__mobile-sublink" href="{{ child.url }}">{{ child.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </li>
           {%- endfor -%}
+          {%- if has_feature -%}
+            <li><a class="header__mobile-link" href="{{ section.settings.feature_link }}">{{ section.settings.feature_label }}</a></li>
+          {%- endif -%}
         </ul>
       </div>
     </details>
@@ -102,7 +183,20 @@
       "label": "Logo",
       "info": "Leave empty to use the bundled vector logo. Never display the full lockup below 57 px tall."
     },
-    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    {
+      "type": "text",
+      "id": "feature_label",
+      "label": "Standing invitation",
+      "default": "Request a Sample",
+      "info": "The one link that sits beside the logo. Leave empty to hide it."
+    },
+    {
+      "type": "url",
+      "id": "feature_link",
+      "label": "Standing invitation link",
+      "default": "/pages/request-a-sample"
+    }
   ],
   "presets": [{ "name": "Header" }]
 }

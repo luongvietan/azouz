@@ -1,0 +1,87 @@
+{%- comment -%}
+  The index row: four ways into the range, divided by rules rather than by
+  cards. Each entry is a heading, a line of copy and the link that opens it.
+
+  The whole cell is not a link — the heading and the trailing link point at the
+  same place, and duplicating a target across a block-level anchor makes the
+  block unreadable to a screen reader that lists links. One anchor per entry.
+{%- endcomment -%}
+{%- liquid
+  assign section_class = 'section quick-links'
+  if section.settings.background == 'alt'
+    assign section_class = 'section section--alt quick-links'
+  endif
+
+  assign has_link = false
+  if section.settings.link_label != blank and section.settings.link != blank
+    assign has_link = true
+  endif
+-%}
+
+<div class="{{ section_class }}"{{ section.shopify_attributes }}>
+  <div class="container container--ultra">
+    <div class="section-head">
+      <h2 class="section-head__heading">{{ section.settings.heading }}</h2>
+      {%- if has_link -%}
+        <a class="anchor-arrow section-head__link" href="{{ section.settings.link }}">
+          {{ section.settings.link_label }}
+          {%- render 'icon', name: 'arrow-right' -%}
+        </a>
+      {%- endif -%}
+      <hr class="section-head__rule">
+    </div>
+
+    <ul class="list-lines list-lines--4 quick-links__list" role="list">
+      {%- for block in section.blocks -%}
+        <li class="quick-links__item"{{ block.shopify_attributes }}>
+          <h3 class="quick-links__title">{{ block.settings.title }}</h3>
+          {%- if block.settings.body != blank -%}
+            <p class="quick-links__body">{{ block.settings.body }}</p>
+          {%- endif -%}
+          {%- if block.settings.link_label != blank and block.settings.link != blank -%}
+            <a class="anchor-arrow quick-links__link" href="{{ block.settings.link }}">
+              {{ block.settings.link_label }}
+              {%- render 'icon', name: 'arrow-right' -%}
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Quick links",
+  "tag": "section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What we do" },
+    { "type": "text", "id": "link_label", "label": "Link label" },
+    { "type": "url", "id": "link", "label": "Link" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "default", "label": "Page" },
+        { "value": "alt", "label": "Warm cream" }
+      ],
+      "default": "default"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Entry",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "text", "id": "body", "label": "Body" },
+        { "type": "text", "id": "link_label", "label": "Link label" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Quick links" }]
+}
+{% endschema %}

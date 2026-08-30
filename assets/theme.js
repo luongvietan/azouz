@@ -55,6 +55,80 @@ if (!customElements.get('reveal-on-scroll')) {
 }
 
 /**
+ * <marquee-band> gives the running text a stop button.
+ *
+ * WCAG 2.2.2 is a Level A criterion: content that moves automatically for more
+ * than five seconds needs a mechanism to pause it. `prefers-reduced-motion`
+ * does not satisfy it — that setting only reaches readers who already found it.
+ *
+ * The CSS refuses to start the animation while the document still carries the
+ * `no-js` class, so the control and the motion arrive together: a page with a
+ * dead runtime shows still text, never unstoppable text with an inert button.
+ *
+ * The observer is a second job on the same element: an animation that is never
+ * paused keeps a compositor layer alive for the life of the page, including
+ * while the band is nowhere near the viewport.
+ */
+class MarqueeBand extends HTMLElement {
+  connectedCallback() {
+    this.toggle = this.querySelector('[data-marquee-toggle]');
+    if (!this.toggle) return;
+
+    this.label = this.querySelector('[data-marquee-label]');
+    this.glyph = this.querySelector('[data-marquee-glyph]');
+
+    this.toggle.addEventListener('click', () => {
+      this.setPaused(this.dataset.paused !== 'true', { byUser: true });
+    });
+
+    if (!('IntersectionObserver' in window)) return;
+
+    // Only suspends an already-running band. A band the reader paused stays
+    // paused when it scrolls back into view; the observer must not undo a
+    // deliberate choice.
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (this.pausedByUser) return;
+          this.setPaused(!entry.isIntersecting);
+        });
+      },
+      { threshold: 0 },
+    );
+    this.observer.observe(this);
+  }
+
+  disconnectedCallback() {
+    if (this.observer) this.observer.disconnect();
+  }
+
+  /**
+   * @param {boolean} paused
+   * @param {{ byUser?: boolean }} [options]
+   */
+  setPaused(paused, options = {}) {
+    if (options.byUser) this.pausedByUser = paused;
+
+    this.dataset.paused = String(paused);
+    if (!this.toggle) return;
+
+    this.toggle.setAttribute('aria-pressed', String(paused));
+
+    // The button's name changes with what pressing it will now do, so a screen
+    // reader announces the next action rather than the current state twice.
+    const next = paused
+      ? this.toggle.dataset.labelResume
+      : this.toggle.dataset.labelPause;
+    if (this.label && next) this.label.textContent = next;
+    if (this.glyph) this.glyph.textContent = paused ? '▶' : '❙❙';
+  }
+}
+
+if (!customElements.get('marquee-band')) {
+  customElements.define('marquee-band', MarqueeBand);
+}
+
+/**
  * Coerce whatever is in a quantity field into a usable whole number.
  * @param {unknown} value
  * @param {number} min

@@ -1,86 +1,168 @@
+{%- comment -%}
+  The footer as a printed colophon on a dark ground: where the coffee is made,
+  what the site holds, where to find us, and the one thing worth asking for —
+  then the mark, the rule, and the legal line.
+
+  The address leads. For a roastery selling to businesses, "there is a real
+  building and here it is" is the most load-bearing thing on the page, and it
+  is the one fact a contact form cannot substitute for.
+
+  Every column is guarded. A store that has not set a phone number, a social
+  account or a policy renders one fewer column, never an empty heading.
+{%- endcomment -%}
+{%- liquid
+  assign has_social = false
+  if settings.social_instagram != blank or settings.social_facebook != blank or settings.social_whatsapp != blank
+    assign has_social = true
+  endif
+
+  # Liquid evaluates `and` / `or` right to left with no operator precedence, so
+  # a compound condition here would not mean what it reads as. Each side is
+  # computed on its own — see the same note in sections/hero-split.liquid.
+  assign has_details = false
+  if section.settings.address != blank or shop.email != blank
+    assign has_details = true
+  endif
+  if section.settings.phone != blank
+    assign has_details = true
+  endif
+
+  assign has_contact = false
+  if section.settings.show_contact and has_details
+    assign has_contact = true
+  endif
+-%}
+
 <footer class="footer">
-  <div class="container footer__inner">
-    <div class="footer__brand">
-      {%- comment -%} 59.014 x 47.775 viewBox, scaled — see sections/header.liquid. {%- endcomment -%}
-      <img
-        class="footer__logo"
-        src="{{ 'logo-black.svg' | asset_url }}"
-        alt="{{ shop.name | escape }}"
-        width="79"
-        height="64"
-        loading="lazy">
-      {%- if section.settings.tagline != blank -%}
-        <p class="footer__tagline">{{ section.settings.tagline }}</p>
+  <div class="container container--ultra footer__inner">
+    <div class="footer__index">
+      {%- if has_contact -%}
+        <div class="footer__column">
+          <h2 class="footer__column-heading">{{ 'layout.footer.roastery' | t }}</h2>
+
+          {%- if section.settings.address != blank -%}
+            <address class="footer__address">{{ section.settings.address | newline_to_br }}</address>
+          {%- endif -%}
+
+          <ul class="footer__menu" role="list">
+            {%- if shop.email != blank -%}
+              <li><a class="footer__link" href="mailto:{{ shop.email }}">{{ shop.email }}</a></li>
+            {%- endif -%}
+            {%- if section.settings.phone != blank -%}
+              <li><a class="footer__link" href="tel:{{ section.settings.phone | remove: ' ' }}">{{ section.settings.phone }}</a></li>
+            {%- endif -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.menu.links.size > 0 -%}
+        <nav class="footer__column" aria-label="{{ 'layout.footer.menu' | t }}">
+          <h2 class="footer__column-heading">{{ 'layout.footer.menu' | t }}</h2>
+          <ul class="footer__menu" role="list">
+            {%- for link in section.settings.menu.links -%}
+              <li><a class="footer__link" href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+
+      {%- if has_social -%}
+        <div class="footer__column">
+          <h2 class="footer__column-heading">{{ 'layout.footer.follow' | t }}</h2>
+          <ul class="footer__menu" role="list">
+            {%- if settings.social_instagram != blank -%}
+              <li><a class="footer__link" href="{{ settings.social_instagram }}">{{ 'general.accessibility.instagram' | t }}</a></li>
+            {%- endif -%}
+            {%- if settings.social_facebook != blank -%}
+              <li><a class="footer__link" href="{{ settings.social_facebook }}">{{ 'general.accessibility.facebook' | t }}</a></li>
+            {%- endif -%}
+            {%- if settings.social_whatsapp != blank -%}
+              <li><a class="footer__link" href="https://wa.me/{{ settings.social_whatsapp }}">{{ 'general.accessibility.whatsapp' | t }}</a></li>
+            {%- endif -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_newsletter -%}
+        {%- comment -%}
+          Shopify's own customer form, posting natively. With scripting off it
+          submits, redirects back with `form.posted_successfully?` and the
+          confirmation is rendered server-side — no component has to upgrade for
+          the sign-up to work.
+        {%- endcomment -%}
+        <div class="footer__column footer__column--newsletter">
+          <h2 class="footer__column-heading">{{ section.settings.newsletter_heading }}</h2>
+
+          {%- if section.settings.newsletter_body != blank -%}
+            <p class="footer__newsletter-body">{{ section.settings.newsletter_body }}</p>
+          {%- endif -%}
+
+          {%- form 'customer', class: 'footer__newsletter-form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="field">
+              <label class="field__label" for="FooterNewsletter">{{ 'general.newsletter.label' | t }}</label>
+              <input
+                class="field__input"
+                id="FooterNewsletter"
+                type="email"
+                name="contact[email]"
+                autocomplete="email"
+                required>
+            </div>
+            <button class="button footer__newsletter-submit" type="submit">{{ 'general.newsletter.submit' | t }}</button>
+
+            {%- if form.posted_successfully? -%}
+              <p class="footer__newsletter-success" role="status">{{ 'general.newsletter.success' | t }}</p>
+            {%- endif -%}
+          {%- endform -%}
+        </div>
       {%- endif -%}
     </div>
-
-    {%- if section.settings.menu.links.size > 0 -%}
-      <nav class="footer__column" aria-label="{{ 'layout.footer.menu' | t }}">
-        <h2 class="eyebrow">{{ 'layout.footer.menu' | t }}</h2>
-        <ul class="footer__menu" role="list">
-          {%- for link in section.settings.menu.links -%}
-            <li><a class="footer__link" href="{{ link.url }}">{{ link.title }}</a></li>
-          {%- endfor -%}
-        </ul>
-      </nav>
-    {%- endif -%}
-
-    {%- if section.settings.show_contact -%}
-      <div class="footer__column">
-        <h2 class="eyebrow">{{ 'layout.footer.contact' | t }}</h2>
-        <ul class="footer__menu" role="list">
-          {%- if shop.email != blank -%}
-            <li><a class="footer__link" href="mailto:{{ shop.email }}">{{ shop.email }}</a></li>
-          {%- endif -%}
-          {%- if section.settings.phone != blank -%}
-            <li><a class="footer__link" href="tel:{{ section.settings.phone | remove: ' ' }}">{{ section.settings.phone }}</a></li>
-          {%- endif -%}
-          {%- if section.settings.address != blank -%}
-            <li class="footer__address">{{ section.settings.address }}</li>
-          {%- endif -%}
-        </ul>
-      </div>
-    {%- endif -%}
-
-    {%- if settings.social_instagram != blank or settings.social_facebook != blank or settings.social_whatsapp != blank -%}
-      <div class="footer__column">
-        <h2 class="eyebrow">{{ 'layout.footer.follow' | t }}</h2>
-        <ul class="footer__social" role="list">
-          {%- if settings.social_instagram != blank -%}
-            <li><a class="footer__link" href="{{ settings.social_instagram }}">{{ 'general.accessibility.instagram' | t }}</a></li>
-          {%- endif -%}
-          {%- if settings.social_facebook != blank -%}
-            <li><a class="footer__link" href="{{ settings.social_facebook }}">{{ 'general.accessibility.facebook' | t }}</a></li>
-          {%- endif -%}
-          {%- if settings.social_whatsapp != blank -%}
-            <li><a class="footer__link" href="https://wa.me/{{ settings.social_whatsapp }}">{{ 'general.accessibility.whatsapp' | t }}</a></li>
-          {%- endif -%}
-        </ul>
-      </div>
-    {%- endif -%}
   </div>
 
-  <div class="container footer__legal">
-    <hr class="rule">
-
+  <div class="container container--ultra footer__close">
     {%- comment -%}
-      A store taking payment needs its policies reachable. shop.policies only
-      contains the ones the merchant has written, so an empty list renders
-      nothing rather than a row of dead links.
+      The mark closes the footer rather than heading it — by this point the
+      reader knows whose site this is, and the lockup reads as a signature
+      instead of a second logo competing with the header's.
+
+      The white lockup is the black one recoloured, so it carries the same
+      59.014 x 47.775 viewBox and the width/height below reserve the true shape.
     {%- endcomment -%}
-    {%- if shop.policies.size > 0 -%}
-      <nav class="footer__policies" aria-label="{{ 'layout.footer.legal' | t }}">
-        <ul class="footer__policy-list" role="list">
-          {%- for policy in shop.policies -%}
-            <li><a class="footer__link" href="{{ policy.url }}">{{ policy.title }}</a></li>
-          {%- endfor -%}
-        </ul>
-      </nav>
+    <img
+      class="footer__logo"
+      src="{{ 'logo-white.svg' | asset_url }}"
+      alt="{{ shop.name | escape }}"
+      width="79"
+      height="64"
+      loading="lazy">
+
+    {%- if section.settings.tagline != blank -%}
+      <p class="footer__tagline">{{ section.settings.tagline }}</p>
     {%- endif -%}
 
-    <p class="footer__copyright">
-      &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'layout.footer.rights' | t }}
-    </p>
+    <hr class="footer__rule">
+
+    <div class="footer__legal">
+      {%- comment -%}
+        A store taking payment needs its policies reachable. shop.policies only
+        contains the ones the merchant has written, so an empty list renders
+        nothing rather than a row of dead links.
+      {%- endcomment -%}
+      {%- if shop.policies.size > 0 -%}
+        <nav class="footer__policies" aria-label="{{ 'layout.footer.legal' | t }}">
+          <ul class="footer__policy-list" role="list">
+            {%- for policy in shop.policies -%}
+              <li><a class="footer__link" href="{{ policy.url }}">{{ policy.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+
+      <p class="footer__copyright">
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'layout.footer.rights' | t }}
+      </p>
+    </div>
   </div>
 </footer>
 
@@ -103,7 +185,25 @@
     },
     { "type": "checkbox", "id": "show_contact", "label": "Show contact details", "default": true },
     { "type": "text", "id": "phone", "label": "Phone" },
-    { "type": "text", "id": "address", "label": "Address" }
+    {
+      "type": "textarea",
+      "id": "address",
+      "label": "Address",
+      "info": "One line per line. The line breaks are kept."
+    },
+    { "type": "checkbox", "id": "show_newsletter", "label": "Show newsletter sign-up", "default": true },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Newsletter heading",
+      "default": "New coffees, straight to your inbox"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_body",
+      "label": "Newsletter body",
+      "default": "What we are roasting, what has just landed, and what it is good for."
+    }
   ],
   "presets": [{ "name": "Footer" }]
 }

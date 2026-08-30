@@ -17,6 +17,8 @@
   assign custom = product.metafields.custom
   assign notes = custom.tasting_notes.value
   assign label_color = custom.label_color.value
+  assign origin = custom.origin.value
+  assign process = custom.process.value
 
   assign ranged = false
   if product.price_min != product.price_max
@@ -56,6 +58,44 @@
       compare_at: product.compare_at_price,
       show_from: ranged
     -%}
-    {%- render 'roast-meter', level: custom.roast_level.value, show_label: true -%}
   </div>
+
+  {%- comment -%}
+    The spec rows, read straight off the bag: term on one line, value under it,
+    each pair divided by a rule. A <dl> rather than a table — these are name and
+    value, not a grid of data — and every row is guarded, so a store that has
+    only filled in some of the definitions gets a shorter list, not empty rows.
+  {%- endcomment -%}
+  {%- capture specs -%}
+    {%- if notes != blank -%}
+      <div class="product-card__spec">
+        <dt class="product-card__spec-term">{{ 'products.product.tasting_notes' | t }}</dt>
+        <dd class="product-card__spec-value">{{ notes | join: ', ' }}</dd>
+      </div>
+    {%- endif -%}
+    {%- if process != blank -%}
+      <div class="product-card__spec">
+        <dt class="product-card__spec-term">{{ 'products.product.process' | t }}</dt>
+        <dd class="product-card__spec-value">{{ process }}</dd>
+      </div>
+    {%- endif -%}
+    {%- if origin != blank -%}
+      <div class="product-card__spec">
+        <dt class="product-card__spec-term">{{ 'products.product.origin' | t }}</dt>
+        <dd class="product-card__spec-value">{{ origin }}</dd>
+      </div>
+    {%- endif -%}
+    {%- if custom.roast_level.value != blank -%}
+      <div class="product-card__spec">
+        <dt class="product-card__spec-term">{{ 'products.product.roast_level' | t }}</dt>
+        <dd class="product-card__spec-value">
+          {%- render 'roast-meter', level: custom.roast_level.value -%}
+        </dd>
+      </div>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- if specs != blank -%}
+    <dl class="product-card__specs">{{ specs }}</dl>
+  {%- endif -%}
 </article>

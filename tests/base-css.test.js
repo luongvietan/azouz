@@ -84,6 +84,55 @@ test('the body font resolves through the token', async () => {
   assert.match(await load(), /font-family:\s*var\(--font-body\)/);
 });
 
+test('grid tracks that hold text can shrink below their content', async () => {
+  // `1fr` is `minmax(auto, 1fr)`, and that `auto` floor is min-content. At the
+  // browser's 200% text setting the product index refused to shrink and pushed
+  // the page 417px sideways — a horizontal scrollbar for exactly the readers
+  // who enlarged the text. WCAG 1.4.4 and 1.4.10.
+  const css = await load();
+  const offenders = [];
+  for (const match of css.matchAll(/(\.list-lines--\d|\.story-columns__grid)[^{]*\{([^}]*)\}/g)) {
+    const columns = /grid-template-columns:([^;]*)/.exec(match[2]);
+    if (!columns) continue;
+    // A single-column template has nothing to overflow.
+    if (!/repeat\(\s*[2-9]/.test(columns[1])) continue;
+    if (!/minmax\(\s*0/.test(columns[1])) offenders.push(`${match[1]}: ${columns[1].trim()}`);
+  }
+  assert.deepEqual(offenders, [], `use minmax(0, 1fr) so the track can shrink: ${offenders.join(', ')}`);
+});
+
+test('the label title can break, so a long blend name cannot widen the page', async () => {
+  // `overflow-wrap: break-word` is not enough here: it breaks the rendered line
+  // but still reports the longest word as the element's min-content width, so
+  // the panel keeps forcing its grid track open. Only `anywhere` shrinks the
+  // reported minimum.
+  const css = await load();
+  const rule = /\.label-block__title\s*\{([^}]*)\}/.exec(css);
+  assert.ok(rule, '.label-block__title is missing');
+  assert.match(rule[1], /overflow-wrap:\s*anywhere/);
+});
+
+test('the marquee only animates where the control that stops it can exist', async () => {
+  // WCAG 2.2.2 is Level A. The pause button needs the runtime, so the animation
+  // waits for the runtime too: with scripting off the band is simply still,
+  // rather than moving with an inert button beside it.
+  const css = await load();
+  assert.match(css, /html:not\(\.no-js\)\s+\.marquee__track\s*\{[^}]*animation:/);
+  assert.match(css, /\.marquee\[data-paused='true'\][^{]*\{[^}]*animation-play-state:\s*paused/);
+  assert.match(css, /\.no-js \.marquee__toggle\s*\{\s*display:\s*none/);
+});
+
+test('every custom element used as a box declares a display', async () => {
+  // An undefined custom element is display:inline, and an inline box cannot
+  // clip. `.marquee` became a <marquee-band> and its `overflow: hidden` quietly
+  // stopped working, so a 12,000px track set the width of the whole document.
+  const css = await load();
+  const rule = /\.marquee\s*\{([^}]*)\}/.exec(css);
+  assert.ok(rule, '.marquee is missing');
+  assert.match(rule[1], /display:\s*block/, '.marquee is a custom element and must not be inline');
+  assert.match(rule[1], /overflow:\s*hidden/);
+});
+
 test('a skip link is styled', async () => {
   assert.match(await load(), /\.skip-link/);
 });

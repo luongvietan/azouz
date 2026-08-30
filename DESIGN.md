@@ -86,7 +86,7 @@ This system rejects burlap, wood, steam illustration, bean scatter, brown gradie
 
 **Key Characteristics:**
 - Single family (Baloo Bhaijaan 2) with weight contrast only
-- 4px radius; hairline silver at 40% opacity
+- 4px radius; silver hairline at 40% between quiet things, ink rules under headings and between index cells
 - One green band per page
 - Logical CSS properties; no physical left/right
 - Product photography sits untreated on Warm White
@@ -176,7 +176,50 @@ Flat by default. Depth is tonal (Warm White / Alt band / Sage Tint) and the labe
 ### Label block (signature)
 The bag label. Fill from `custom.label_color` via `--label-bg`. Title ≥24px so white type on orange / brown / silver / sage stays large-text legal. Spec grid is two columns. Roast meter is five dots.
 
-## 6. Do's and Don'ts
+## 6. Layout grammar
+
+The pages are laid out on three moves, shared by the homepage, the collection,
+the search results and the collections list.
+
+### The ultra measure
+`--content-ultra` (1800px) is the editorial width. A four-up row at that measure
+is four real columns; at the 1280px `--content-max` it is four squeezed ones.
+Prose keeps its own limit — 68ch on `p`, `--content-narrow` on an intro — so the
+wider container never widens a line of copy.
+
+### The section head
+An oversized uppercase `h2` (`--text-3xl`, or `--text-display` when it opens a
+whole block), its "see the rest" link parked at the inline end, and a rule
+across the full measure underneath. `.section-head` + `.anchor-arrow` +
+`.section-head__rule`. A section that renders its own head must not also
+re-declare `display` or `gap` on it, or the shared grammar is undone.
+
+### The rule-divided index
+`.list-lines` lays cells out four, three or two to a row and divides them with
+1px strokes rather than with gaps — a printed index, not a tray of cards. The
+dividers run continuously across the row, so these grids declare no column gap;
+cells are held apart by their own inline padding.
+
+### Named Rules
+
+**The Ink Rule Rule.** Silver is still never text, and still the hairline
+between quiet things. But a stroke closing a 56px heading has to carry that
+heading's weight, so the section-head rule, the list dividers and the marquee
+band are drawn in ink: `--rule-ink`, with `--rule-ink-soft` for the finer
+divisions inside a card. This does not soften the Silver Is Not Text rule — it
+is the opposite direction, a stronger stroke, and neither token ever colours a
+word.
+
+**The Scrim Is Fixed Rule.** Copy sits over a photograph in the hero and in the
+feature band. The scrim is a fixed gradient or wash of Onyx, never a tint keyed
+to the artwork, so the contrast the headline gets does not depend on which image
+a merchant uploads.
+
+**One Band, One Colour.** A template carries one green band. The feature band
+falls back to Coffee Brown rather than green when it has no photograph, so a
+page that ends on the green CTA band does not paint two.
+
+## 7. Do's and Don'ts
 
 ### Do:
 - **Do** put the silver-bag photograph on Warm White with no overlay, crop gimmick, or coloured panel substitute.
@@ -188,7 +231,7 @@ The bag label. Fill from `custom.label_color` via `--label-bg`. Title ≥24px so
 - **Don't** use rustic coffee tropes: burlap, wood grain, rising-steam illustration, scattered bean icons, brown gradient heroes, stock latte-art photography.
 - **Don't** introduce a second typeface or script "handcrafted since" lettering.
 - **Don't** use Silver for text, or Burnt Orange behind it.
-- **Don't** ship SaaS landing grammar: hero-metric rows, identical icon+heading+text card grids, numbered 01/02/03 eyebrows on every section.
+- **Don't** ship SaaS landing grammar: hero-metric rows, floating icon+heading+text card grids, numbered 01/02/03 eyebrows on every section. A rule-divided index is not that card grid — it has no card, no shadow and no border box, only the strokes between entries.
 - **Don't** bury Sage under a silver-and-brown wash, or let the highlight orange become a fourth surface colour.
 - **Don't** use Dawn-default Shopify chrome or generic OS 2.0 starter aesthetics.
 - **Don't** hide `.reveal` content before `reveal-on-scroll` is defined.

@@ -111,9 +111,12 @@ test('every product image is rendered, not just the featured one', async () => {
   // wadi-rum-blend has a second packaging shot; dropping it silently loses
   // merchandising the merchant uploaded.
   const html = await render();
-  const images = html.match(/class="main-product__image"/g) ?? [];
+  const images = html.match(/class="main-product__image /g) ?? [];
   assert.ok(images.length >= 2, `expected the full gallery, rendered ${images.length}`);
   assert.match(html, /wadi-rum-blend-alt/);
+  // One shot leads the column and the rest are the rail beneath it.
+  assert.equal((html.match(/main-product__image--lead/g) ?? []).length, 1);
+  assert.match(html, /main-product__image--thumb/);
 });
 
 test('a product on sale shows the struck-through was-price', async () => {

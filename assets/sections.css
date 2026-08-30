@@ -63,7 +63,7 @@
   inset-block-start: 0;
   z-index: 20;
   background-color: var(--color-bg);
-  border-block-end: var(--hairline);
+  border-block-end: var(--rule-ink);
 }
 
 @media (max-width: 47.99em) {
@@ -72,21 +72,45 @@
   }
 }
 
+/* One grid, two shapes. Narrow: a single line — mark, actions, disclosure.
+   Wide: two rows — the mark and the standing invitation above, the menu and
+   the shop actions below. Nothing is duplicated in the markup to achieve it. */
 .header__inner {
-  display: flex;
+  display: grid;
+  grid-template-areas: 'logo actions toggle';
+  grid-template-columns: minmax(0, 1fr) auto auto;
   align-items: center;
-  gap: var(--space-lg);
+  gap: var(--space-sm);
   padding-block: var(--space-md);
   min-inline-size: 0;
 }
 
-@media (max-width: 47.99em) {
+@media (min-width: 48em) {
   .header__inner {
-    gap: var(--space-sm);
+    grid-template-areas:
+      'logo feature'
+      'nav actions';
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--space-lg);
+    row-gap: 0;
+    padding-block: 0;
   }
 
+  /* A rule between the two rows. Both items span the row, so bordering each of
+     them draws one continuous line across the header — and each row keeps the
+     source's 12.5px of air above and below its own contents. */
+  .header__nav,
+  .header__actions {
+    padding-block: var(--space-sm);
+    border-block-start: var(--rule-ink);
+  }
+
+  .header__logo,
+  .header__feature { padding-block: var(--space-sm); }
+}
+
+@media (max-width: 47.99em) {
   .header__logo {
-    flex: 1 1 auto;
     min-inline-size: 0;
     max-inline-size: calc(100% - 7.5rem);
   }
@@ -96,7 +120,6 @@
   }
 
   .header__actions {
-    flex: none;
     gap: var(--space-2xs);
   }
 
@@ -106,9 +129,24 @@
 }
 
 .header__logo {
+  grid-area: logo;
   display: inline-flex;
-  flex: none;
+  justify-self: start;
   text-decoration: none;
+}
+
+/* The standing invitation. Hidden on a narrow screen, where it is repeated as
+   the last item of the disclosure menu instead — a header that has to hold a
+   logo, three icons and a call to action on one line holds none of them well. */
+.header__feature {
+  grid-area: feature;
+  display: none;
+  margin: 0;
+  justify-self: end;
+}
+
+@media (min-width: 48em) {
+  .header__feature { display: block; }
 }
 
 .header__logo-image {
@@ -117,9 +155,9 @@
 }
 
 .header__nav {
+  grid-area: nav;
   display: none;
   min-inline-size: 0;
-  margin-inline-start: auto;
 }
 
 .header__menu {
@@ -141,11 +179,77 @@
   border-block-end-color: var(--color-accent);
 }
 
-.header__actions {
+/* ---------- Nested menu ----------
+   A <details> disclosure, so it opens with no script. The panel is positioned,
+   which means the row height never changes as menus open and close. */
+
+.header__item { position: relative; }
+
+.header__disclosure > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  cursor: pointer;
+  list-style: none;
+}
+
+.header__disclosure > summary::-webkit-details-marker { display: none; }
+
+.header__link--parent .icon {
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+
+.header__panel {
+  position: absolute;
+  inset-block-start: calc(100% + var(--space-xs));
+  inset-inline-start: 0;
+  z-index: 30;
+  display: grid;
+  gap: var(--space-sm);
+  min-inline-size: 14rem;
+  padding: var(--space-md);
+  background-color: var(--color-bg);
+  border: var(--rule-ink);
+  border-radius: var(--radius);
+}
+
+/* 23px cleared nothing: WCAG 2.5.8 puts the pointer-target floor at 24px, and
+   this sat a pixel under it. Sized to the same 44px as everything else rather
+   than to the bare minimum. */
+.header__panel-link {
   display: flex;
   align-items: center;
+  min-block-size: 2.75rem;
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+
+.header__panel-link:hover,
+.header__panel-link.is-active { text-decoration: underline; }
+
+.header__mobile-sub {
+  display: grid;
   gap: var(--space-sm);
-  margin-inline-start: auto;
+  margin-block-start: var(--space-sm);
+  padding-inline-start: var(--space-md);
+  border-inline-start: var(--rule-ink-soft);
+}
+
+.header__mobile-sublink {
+  display: flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  font-size: var(--text-base);
+  text-decoration: none;
+}
+
+.header__actions {
+  grid-area: actions;
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  gap: var(--space-sm);
 }
 
 .header__action {
@@ -175,7 +279,7 @@
 }
 
 .header__mobile {
-  flex: none;
+  grid-area: toggle;
 }
 
 .header__mobile-toggle {
@@ -200,8 +304,13 @@
   gap: var(--space-md);
 }
 
+/* 44px is the floor PRODUCT.md sets, and the drawer is the whole navigation on
+   a phone. These were 33px and 28px: readable, but a thumb-sized miss away from
+   the next link. .anchor-arrow already sizes itself this way; same technique. */
 .header__mobile-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  min-block-size: 2.75rem;
   font-size: var(--text-lg);
   font-weight: var(--font-weight-semibold);
   text-decoration: none;
@@ -209,28 +318,21 @@
 
 @media (min-width: 48em) {
   .header__nav { display: block; }
-  .header__actions { margin-inline-start: 0; }
   .header__mobile { display: none; }
 }
 
 /*
-  Between the mobile breakpoint and a comfortable desktop the row has to carry
-  the logo, every menu link and both actions. Four links fitted; a fifth — a
-  merchant menu edit, not a theme change — did not, and the row either
-  overflowed the viewport or wrapped the last link onto a second line under a
-  sticky header.
+  The menu has its own row now, so it no longer competes with the logo for
+  width — but it still shares that row with the shop actions, and the labels on
+  those actions are worth about 120px. Below 64em the labels stay visually
+  hidden, exactly as they are on mobile; the icons keep their accessible names.
 
-  So across that band the spacing tightens and the action labels stay visually
-  hidden, exactly as they are on mobile. The icons keep their accessible names,
-  and roughly 120px of label text goes back to the menu.
-
-  Measured after the change: six menu items sit on one row at every width from
-  768px up. A seventh wraps to a second row at 768px and at 1024px — the menu
-  wraps rather than the page scrolling sideways, which is the failure mode
-  worth having.
+  Measured on the two-row header: eight menu items sit on one row at 768px and
+  above. A ninth wraps to a second line rather than pushing the page sideways,
+  which is the failure mode worth having.
 */
 @media (min-width: 48em) and (max-width: 63.99em) {
-  .header__inner { gap: var(--space-md); }
+  .header__inner { column-gap: var(--space-md); }
   .header__menu { gap: var(--space-md); }
   .header__actions { gap: var(--space-2xs); }
 }
@@ -245,52 +347,78 @@
   }
 }
 
-/* ---------- Footer ---------- */
+/* ---------- Footer ----------
+   Onyx ground, page-ground ink: 16.2:1, the same pair the body uses, inverted.
+   Every rule inside the footer has to invert with it, so --rule-ink is
+   redefined on the block rather than each rule being restated — anything that
+   draws a line in here picks the light one up automatically. */
 
 .footer {
+  --rule-ink: 1px solid var(--color-bg);
+  --rule-ink-soft: 1px solid color-mix(in srgb, var(--color-bg) 30%, transparent);
+
+  /* The focus ring inverts with everything else. Sage Deep measures 3.08:1 on
+     Onyx — past 1.4.11 by 0.08, which is the sort of margin this palette
+     refuses elsewhere ("rather than a 0.09 margin", tokens.css). The page
+     ground gives 16.2:1 instead, and the 3px offset keeps it clear of the
+     newsletter input's own light fill. */
+  --color-focus: var(--color-bg);
+
   margin-block-start: var(--space-2xl);
-  padding-block-start: var(--space-xl);
-  background-color: var(--color-bg-alt);
+  padding-block-start: var(--space-2xl);
+  color: var(--color-bg);
+  background-color: var(--color-text);
 }
 
 .footer__inner {
-  display: grid;
-  gap: var(--space-xl);
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-  padding-block-end: var(--space-xl);
+  padding-block-end: var(--space-2xl);
 }
 
-.footer__brand {
+.footer__index {
+  display: grid;
+  gap: var(--space-xl);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+}
+
+/* The sign-up column carries a form, so it needs more room than a column of
+   links — but the number of columns depends on what the merchant has filled
+   in, so a fixed four-track template leaves an empty track the moment one is
+   missing. A minimum on the item widens its own track instead, whether it is
+   the second column or the fifth. */
+.footer__column--newsletter { min-inline-size: min(100%, 20rem); }
+
+.footer__column {
   display: grid;
   gap: var(--space-md);
   align-content: start;
 }
 
-.footer__logo {
-  block-size: 3rem;
-  inline-size: auto;
+/* Measured on the source: 20px, regular, sentence case. These name the columns
+   under them, and a 12px tracked-out micro-label is too quiet to do that — it
+   reads as a caption on the first link rather than as a heading over the set. */
+.footer__column-heading {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.3;
+  letter-spacing: 0;
 }
 
-.footer__tagline {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  max-inline-size: 32ch;
+.footer__address {
+  font-style: normal;
+  line-height: 1.45;
 }
 
-.footer__column {
-  display: grid;
-  gap: var(--space-sm);
-  align-content: start;
-}
-
-.footer__menu,
-.footer__social {
+.footer__menu {
   display: grid;
   gap: var(--space-xs);
-  font-size: var(--text-sm);
+  justify-items: start;
 }
 
 .footer__link {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
   text-decoration: none;
 }
 
@@ -298,17 +426,92 @@
   text-decoration: underline;
 }
 
-.footer__address {
-  color: var(--color-text-muted);
+/* ---------- Footer newsletter ---------- */
+
+.footer__newsletter-body {
+  margin: 0;
+  line-height: 1.45;
 }
 
+.footer__newsletter-form {
+  display: grid;
+  gap: var(--space-md);
+  justify-items: start;
+}
+
+.footer__newsletter-form .field { inline-size: 100%; }
+
+.footer__newsletter-success {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Outlined in the light ink, matching the source. The filled green button is
+   for the conversion moment in the page body; down here it would be the
+   loudest thing on a quiet block. */
+.footer__newsletter-submit {
+  --button-bg: transparent;
+  --button-fg: var(--color-bg);
+  border-color: var(--color-bg);
+}
+
+.footer__newsletter-submit:hover {
+  --button-bg: var(--color-bg);
+  --button-fg: var(--color-text);
+}
+
+/* ---------- Footer close ---------- */
+
+.footer__close {
+  display: grid;
+  gap: var(--space-md);
+  padding-block-end: var(--space-xl);
+}
+
+/* 4rem, never less: the brand guidelines put the floor for the full lockup at
+   57px tall and below that the Arabic and Latin halves stop resolving. Locked
+   by tests/sections-css.test.js. */
+.footer__logo {
+  block-size: 4rem;
+  inline-size: auto;
+}
+
+.footer__tagline {
+  margin: 0;
+  max-inline-size: 44ch;
+  line-height: 1.45;
+}
+
+/* See .rule--ink in base.css: the UA's `margin-inline: auto` on an <hr> makes
+   a grid item shrink to its content, so the rule must reset it or it renders
+   0px wide. */
+.footer__rule {
+  border: 0;
+  border-block-start: var(--rule-ink);
+  margin-block: var(--space-md) 0;
+  margin-inline: 0;
+}
+
+/* Policies at the inline start, copyright at the end — one row on a wide
+   screen, stacked on a narrow one. */
 .footer__legal {
-  padding-block-end: var(--space-lg);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm) var(--space-lg);
+}
+
+.footer__policy-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  font-size: var(--text-sm);
 }
 
 .footer__copyright {
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
+  margin: 0;
+  font-size: var(--text-sm);
 }
 
 /* ---------- Hero ---------- */
@@ -1342,4 +1545,391 @@
 .article__comment-error ul {
   margin: 0;
   padding-inline-start: var(--space-lg);
+}
+
+/* ============================================================
+   Editorial sections
+   The homepage grammar: a full-bleed hero, rule-divided index rows, a running
+   band, three story columns, one statement band and a tinted chip row.
+   Primitives (.section-head, .list-lines, .anchor-arrow, .marquee) are in
+   base.css; this is only what each section adds.
+   ============================================================ */
+
+/* ---------- Hero overlay ---------- */
+
+.hero-overlay {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  border-radius: var(--radius);
+  isolation: isolate;
+}
+
+/* Measured on the source: a fixed 800px band, not a viewport fraction. A vh
+   hero collapses on a laptop in landscape and swallows a phone whole; a fixed
+   band is the same picture on every screen, capped so it can never exceed the
+   viewport on a short one. */
+.hero-overlay--tall { min-block-size: min(50rem, 100vh - 8rem); }
+.hero-overlay--medium { min-block-size: min(35rem, 100vh - 8rem); }
+
+/* Without a photograph the hero is a plain block on the page ground, so it
+   needs its own breathing room where the image would have supplied it. */
+.hero-overlay:not(.hero-overlay--media) {
+  padding-block: var(--space-2xl);
+  background-color: var(--color-bg-alt);
+}
+
+.hero-overlay__image {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* On a phone the copy fills the frame, and a centred crop puts the headline
+   straight across whatever the photograph's subject is — in the shipped hero,
+   across the Azouz wordmark printed on the cup. Two marks fight and both lose.
+   Pushing the crop toward the inline end moves the subject out from under the
+   text column. There is no logical form of object-position, so the RTL case is
+   mirrored explicitly, the same way the arrow icons are. */
+@media (max-width: 47.99em) {
+  .hero-overlay__image { object-position: 72% 50%; }
+  [dir='rtl'] .hero-overlay__image { object-position: 28% 50%; }
+}
+
+/* Two layers, and the split matters.
+
+   The scrim is the mood: a light wash that darkens toward the foot of the
+   frame. It is not what makes the copy legible, because a gradient tuned to
+   the band cannot know where inside the band the copy will sit. The first
+   version of this graded from 82% at the very bottom to 10% at the top, and
+   measured 0.43 alpha behind the eyebrow, because the content block is 547px
+   tall and its top edge lands where the gradient has already given up.
+
+   --scrim-floor is the number that carries the contract. Against a pure-white
+   pixel (the cup lid in the shipped hero photograph, luminance 0.93) white text
+   needs 0.81 alpha to clear 4.5:1. 0.84 is that number with margin, and it is
+   applied by the copy's own backing below, so it covers the copy wherever the
+   copy happens to be. Enforced by tests/scrim-contrast.test.js. */
+
+.hero-overlay {
+  --scrim-floor: 84%;
+}
+
+.hero-overlay__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--azouz-onyx) 45%, transparent) 0%,
+    color-mix(in srgb, var(--azouz-onyx) 28%, transparent) 55%,
+    color-mix(in srgb, var(--azouz-onyx) 12%, transparent) 100%
+  );
+}
+
+.hero-overlay__content {
+  position: relative;
+  padding: var(--space-lg);
+  max-inline-size: 46.875rem;   /* 750px, the source's measure */
+}
+
+@media (min-width: 48em) {
+  .hero-overlay__content { padding: var(--space-xl); }
+}
+
+/* The backing. It is a child of the copy, so it is exactly as tall as the copy
+   and cannot drift out from under it the way a band-sized gradient does. It
+   bleeds past both inline edges and is clipped by the hero's own overflow, so
+   there is no vertical seam where a panel would end; only the soft top edge is
+   visible, fading into the photograph above the first line of type. */
+.hero-overlay--media .hero-overlay__content::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+
+  /* The fade is a fixed 4rem and the box is extended by the same 4rem, so the
+     soft edge lives entirely in the overshoot above the copy and the copy
+     itself always sits on the full plateau. Expressing the fade as a
+     percentage instead put it inside the box, which is how the eyebrow — the
+     topmost line — still measured 2.0:1 after the first fix. */
+  inset-block: -4rem 0;
+  inset-inline: -100vw;
+  background-image: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--azouz-onyx) var(--scrim-floor), transparent) 0,
+    color-mix(in srgb, var(--azouz-onyx) var(--scrim-floor), transparent) calc(100% - 4rem),
+    transparent 100%
+  );
+}
+
+.hero-overlay--media .hero-overlay__content { color: var(--color-on-accent); }
+.hero-overlay--media .hero-overlay__eyebrow { color: var(--color-on-accent); }
+
+.hero-overlay__heading {
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+}
+
+.hero-overlay__body {
+  margin-block-start: var(--space-md);
+  font-size: var(--text-lg);
+}
+
+/* Two equal columns, not a flex row: the source gives both calls to action the
+   same width so neither reads as the afterthought. They stack below 30em. */
+.hero-overlay__actions {
+  display: grid;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-lg);
+}
+
+@media (min-width: 30em) {
+  .hero-overlay__actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Over a photograph the outlined button has to be drawn in the light ink, or
+   it is an invisible rectangle. */
+.hero-overlay--media .hero-overlay__cta-secondary {
+  --button-fg: var(--color-on-accent);
+  border-color: var(--color-on-accent);
+}
+
+.hero-overlay--media .hero-overlay__cta-secondary:hover {
+  --button-bg: var(--color-on-accent);
+  --button-fg: var(--color-text);
+}
+
+.hero-overlay-section { padding-block-start: var(--space-md); }
+
+/* ---------- Quick links ---------- */
+
+/* Sentence case, 26px on the source. Only the section head above it is set in
+   caps — putting the entry titles in caps too flattens the two levels into one. */
+.quick-links__title {
+  font-size: var(--text-xl);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.quick-links__body {
+  margin-block: var(--space-xs) var(--space-md);
+  font-size: var(--text-base);
+  line-height: 1.35;
+  color: var(--color-text-muted);
+}
+
+.quick-links__item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.quick-links__link { margin-block-start: auto; }
+
+/* ---------- Marquee ---------- */
+
+.marquee__mark { color: var(--color-highlight); }
+
+/* ---------- Story columns ---------- */
+
+/* 15px on the source — the three photographs are meant to read as one band,
+   which a 32px gutter breaks into three separate pictures. */
+.story-columns__grid {
+  display: grid;
+  gap: var(--space-xl) var(--space-md);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 48em) {
+  .story-columns__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.story-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.story-column__media {
+  inline-size: 100%;
+  margin-block-end: var(--space-md);
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+/* Portrait, 800x1126 on the source. A landscape crop of a roastery floor shows
+   the ceiling; the upright one shows the work. */
+.story-column__image {
+  inline-size: 100%;
+  aspect-ratio: 5 / 7;
+  object-fit: cover;
+}
+
+.story-column__title {
+  font-size: var(--text-xl);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.story-column__body {
+  margin-block: var(--space-sm) var(--space-md);
+  line-height: 1.35;
+  color: var(--color-text-muted);
+}
+
+.story-column__link { margin-block-start: auto; }
+
+/* ---------- Feature band ----------
+   Measured on the source: an 800px band with the copy set at the inline start,
+   not centred. Centred copy over a photograph makes the reader hunt for the
+   start of every line; ranged left it stacks against one edge and the
+   photograph keeps the rest of the frame. */
+
+.feature-band {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-block-size: min(50rem, 100vh - 8rem);
+  padding-block: var(--space-2xl);
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--color-on-accent);
+}
+
+/* Coffee Brown, not the green, when there is no photograph. A page that ends
+   on the green CTA band would otherwise carry two green bands, and brown is
+   11.9:1 behind white — the same white copy, legally, on a warm ground. */
+.feature-band--solid { background-color: var(--color-warm); }
+
+.feature-band__image {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* Flat rather than graded: the copy sits against the inline start over the
+   full height of the band, so an even wash is what holds every line at the
+   same ratio — and a flat wash is the one shape that cannot drift out from
+   under the copy.
+
+   84%, not the 66% this shipped with. At 66% the whole band measured between
+   3.35:1 and 4.10:1 against a white pixel; every line failed. Against a pure
+   white pixel, white text needs 0.82 alpha for 4.5:1. Enforced by
+   tests/scrim-contrast.test.js. */
+.feature-band__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: color-mix(in srgb, var(--azouz-onyx) 84%, transparent);
+}
+
+.feature-band__content {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-sm);
+}
+
+.feature-band__eyebrow { color: var(--color-on-accent); margin-block-end: 0; }
+
+.feature-band__heading {
+  font-size: var(--text-2xl);
+  line-height: 1.15;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* The source's "OVER 900 COFFEES AND COUNTING!" line: body size, heavy, and
+   tracked hard. It is a label, not a sentence, so caps are legal here. */
+.feature-band__subheading {
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.feature-band__body {
+  font-size: var(--text-lg);
+  max-inline-size: 35rem;
+}
+
+.feature-band__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  margin-block-start: var(--space-sm);
+}
+
+.feature-band__link {
+  color: var(--color-on-accent);
+  border-block-end-color: var(--color-on-accent);
+}
+
+.feature-band__link:hover { color: var(--color-on-accent); opacity: 0.75; }
+
+/* ---------- Flavour finder ----------
+   Measured on the source: not a row of pills. Each entry is a full-width row
+   divided by a rule — the name at display size on the inline start, a line
+   explaining it on the other half. The name is the link; the description is
+   what makes the row worth reading. */
+
+.flavour-finder__list {
+  display: grid;
+  border-block-start: var(--rule-ink);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.flavour-finder__row {
+  display: grid;
+  gap: var(--space-xs) var(--space-md);
+  align-items: baseline;
+  padding-block: var(--space-md);
+  border-block-end: var(--rule-ink);
+}
+
+@media (min-width: 48em) {
+  .flavour-finder__row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.flavour-finder__name {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  gap: var(--space-sm);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+a.flavour-finder__name:hover { color: var(--color-accent-deep); }
+
+.flavour-finder__name .icon {
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+}
+
+[dir='rtl'] .flavour-finder__name .icon { transform: scaleX(-1); }
+
+.flavour-finder__note {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.flavour-finder__statement {
+  margin-block-start: var(--space-xl);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-heading);
+  max-inline-size: 42ch;
 }

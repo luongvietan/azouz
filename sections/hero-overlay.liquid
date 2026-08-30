@@ -1,0 +1,118 @@
+{%- comment -%}
+  Full-bleed hero: one photograph, the headline set over it.
+
+  The scrim is a fixed gradient rather than a tint keyed to the artwork, so the
+  contrast the copy gets does not depend on which image a merchant uploads. If
+  no image is set the section keeps its shape and falls back to the page ground
+  with ink copy, which is the same layout without the risk.
+{%- endcomment -%}
+{%- liquid
+  assign has_primary = false
+  if section.settings.cta_primary_label != blank and section.settings.cta_primary_link != blank
+    assign has_primary = true
+  endif
+
+  assign has_secondary = false
+  if section.settings.cta_secondary_label != blank and section.settings.cta_secondary_link != blank
+    assign has_secondary = true
+  endif
+
+  assign hero_class = 'hero-overlay'
+  if section.settings.image
+    assign hero_class = 'hero-overlay hero-overlay--media'
+  endif
+
+  assign height_class = 'hero-overlay--' | append: section.settings.height
+-%}
+
+<div class="hero-overlay-section"{{ section.shopify_attributes }}>
+  <div class="container container--ultra">
+    <div class="{{ hero_class }} {{ height_class }}">
+      {%- if section.settings.image -%}
+        {%- comment -%}
+          The LCP element. Eager, high priority, and its box reserved from the
+          image's own dimensions so the headline does not jump when it lands.
+        {%- endcomment -%}
+        {%- render 'responsive-image',
+          image: section.settings.image,
+          alt: section.settings.image_alt,
+          class: 'hero-overlay__image',
+          width: 2000,
+          sizes: '100vw',
+          loading: 'eager',
+          fetchpriority: 'high'
+        -%}
+        <div class="hero-overlay__scrim" aria-hidden="true"></div>
+      {%- endif -%}
+
+      <div class="hero-overlay__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="eyebrow hero-overlay__eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+
+        <h1 class="hero-overlay__heading">{{ section.settings.heading }}</h1>
+
+        {%- if section.settings.body != blank -%}
+          <div class="hero-overlay__body">{{ section.settings.body }}</div>
+        {%- endif -%}
+
+        {%- if has_primary or has_secondary -%}
+          <div class="hero-overlay__actions">
+            {%- if has_primary -%}
+              <a class="button" href="{{ section.settings.cta_primary_link }}">{{ section.settings.cta_primary_label }}</a>
+            {%- endif -%}
+            {%- if has_secondary -%}
+              <a class="button button--secondary hero-overlay__cta-secondary" href="{{ section.settings.cta_secondary_link }}">
+                {{- section.settings.cta_secondary_label -}}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero overlay",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Coffee. Your Brand. Our Roastery."
+    },
+    { "type": "richtext", "id": "body", "label": "Body" },
+    { "type": "text", "id": "cta_primary_label", "label": "Primary button label" },
+    { "type": "url", "id": "cta_primary_link", "label": "Primary button link" },
+    { "type": "text", "id": "cta_secondary_label", "label": "Secondary button label" },
+    { "type": "url", "id": "cta_secondary_link", "label": "Secondary button link" },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image",
+      "info": "Landscape, at least 2000px wide. The headline sits over the lower half, so keep that area free of detail."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image description",
+      "info": "Describe the image for screen readers and for when it fails to load."
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "options": [
+        { "value": "tall", "label": "Tall" },
+        { "value": "medium", "label": "Medium" }
+      ],
+      "default": "tall"
+    }
+  ],
+  "presets": [{ "name": "Hero overlay" }]
+}
+{% endschema %}

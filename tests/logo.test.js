@@ -75,15 +75,23 @@ const viewBoxRatio = async (name) => {
 const imgTagsFor = (source, asset) =>
   (source.match(/<img[\s\S]*?>/g) ?? []).filter((tag) => tag.includes(asset));
 
-test('the header and footer declare the black logo at its real aspect ratio', async () => {
+test('the two lockups are the same artwork, so either can be swapped in', async () => {
+  // The footer prints the white one on its dark ground and the header the
+  // black one. That only works if they are the same drawing in two inks — a
+  // white variant on a different canvas would reserve a different box and sit
+  // at a different size from the header's mark.
+  assert.equal(await viewBoxRatio('logo-white'), await viewBoxRatio('logo-black'));
+});
+
+test('every section declares its lockup at the artwork real aspect ratio', async () => {
   // The attributes reserve the box before the SVG loads. Declaring 83x56 for a
   // 59.01x47.78 viewBox reserves the wrong shape and the header shifts.
   const truth = await viewBoxRatio('logo-black');
 
   for (const file of ['sections/header.liquid', 'sections/footer.liquid', 'sections/main-password.liquid']) {
     const source = await readFile(resolveInTheme(file), 'utf8');
-    const tags = imgTagsFor(source, 'logo-black.svg');
-    assert.ok(tags.length > 0, `${file} should render the black logo`);
+    const tags = [...imgTagsFor(source, 'logo-black.svg'), ...imgTagsFor(source, 'logo-white.svg')];
+    assert.ok(tags.length > 0, `${file} should render a lockup`);
 
     for (const tag of tags) {
       const width = Number(/\bwidth="(\d+)"/.exec(tag)[1]);

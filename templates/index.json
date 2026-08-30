@@ -10,198 +10,17 @@
 {
   "sections": {
     "hero": {
-      "type": "hero-split",
+      "type": "hero-overlay",
       "settings": {
         "eyebrow": "Specialty coffee roasters",
         "heading": "Your Coffee. Your Brand. Our Roastery.",
-        "body": "<p>We roast and produce coffee for cafés, hotels, retailers, distributors and growing coffee brands.</p><p>From selecting the coffee to roasting, blending and packaging — we help you create the right product for your business.</p>",
+        "body": "<p>We roast and produce coffee for cafés, hotels, retailers, distributors and growing coffee brands.</p>",
         "cta_primary_label": "Request a Sample",
         "cta_primary_link": "/pages/request-a-sample",
         "cta_secondary_label": "How private label works",
         "cta_secondary_link": "/pages/private-label",
-        "image": "shopify://shop_images/hero-azouz-coffee-cup.jpg",
         "image_alt": "Hand holding an azouz coffee branded takeaway cup",
-        "background": "default"
-      }
-    },
-    "services": {
-      "type": "service-cards",
-      "blocks": {
-        "private_label": {
-          "type": "service",
-          "settings": {
-            "title": "Private Label Coffee",
-            "body": "Create coffee under your own brand.",
-            "detail": "Custom blends, roasting, grinding and packaging",
-            "label_color": "#B3522D",
-            "link_label": "Start Your Private Label",
-            "link": "/pages/private-label",
-            "featured": false
-          }
-        },
-        "wholesale": {
-          "type": "service",
-          "settings": {
-            "title": "Wholesale Coffee",
-            "body": "Reliable coffee for cafés, restaurants, hotels and businesses.",
-            "detail": "Espresso · Turkish · Filter · Specialty",
-            "label_color": "#4A3126",
-            "link_label": "View Wholesale",
-            "link": "/pages/wholesale",
-            "featured": false
-          }
-        },
-        "specialty": {
-          "type": "service",
-          "settings": {
-            "title": "Specialty Coffee",
-            "body": "Single origins and specialty coffees selected for quality and flavour.",
-            "detail": "Selected for quality and flavour",
-            "label_color": "#5A6A50",
-            "link_label": "Discover Our Coffee",
-            "link": "/collections/all",
-            "featured": false
-          }
-        },
-        "coffee_shop": {
-          "type": "service",
-          "settings": {
-            "title": "Own an Azouz Coffee",
-            "body": "Bring Azouz Coffee to your neighbourhood.",
-            "detail": "Coffee · Equipment · Branding · Menu · Operations",
-            "label_color": "#171717",
-            "link_label": "Explore Opportunities",
-            "link": "/pages/own-an-azouz-coffee",
-            "featured": false
-          }
-        }
-      },
-      "block_order": [
-        "private_label",
-        "wholesale",
-        "specialty",
-        "coffee_shop"
-      ],
-      "settings": {
-        "eyebrow": "",
-        "heading": "Private label is where we start.",
-        "background": "default"
-      }
-    },
-    "process": {
-      "type": "process-steps",
-      "blocks": {
-        "source": {
-          "type": "step",
-          "settings": {
-            "title": "Source",
-            "body": "",
-            "icon": "source"
-          }
-        },
-        "blend": {
-          "type": "step",
-          "settings": {
-            "title": "Blend",
-            "body": "",
-            "icon": "blend"
-          }
-        },
-        "roast": {
-          "type": "step",
-          "settings": {
-            "title": "Roast",
-            "body": "",
-            "icon": "roast"
-          }
-        },
-        "grind": {
-          "type": "step",
-          "settings": {
-            "title": "Grind",
-            "body": "",
-            "icon": "grind"
-          }
-        },
-        "pack": {
-          "type": "step",
-          "settings": {
-            "title": "Pack",
-            "body": "",
-            "icon": "pack"
-          }
-        }
-      },
-      "block_order": [
-        "source",
-        "blend",
-        "roast",
-        "grind",
-        "pack"
-      ],
-      "settings": {
-        "eyebrow": "",
-        "heading": "From Bean to Bag.",
-        "body": "We manage the coffee production process so you can focus on growing your business.",
-        "show_numbers": true,
-        "layout": "flow",
-        "background": "alt"
-      }
-    },
-    "audience": {
-      "type": "audience-strip",
-      "blocks": {
-        "cafes": {
-          "type": "audience",
-          "settings": {
-            "title": "Cafés"
-          }
-        },
-        "hotels": {
-          "type": "audience",
-          "settings": {
-            "title": "Hotels"
-          }
-        },
-        "retailers": {
-          "type": "audience",
-          "settings": {
-            "title": "Retailers"
-          }
-        },
-        "brands": {
-          "type": "audience",
-          "settings": {
-            "title": "Coffee Brands"
-          }
-        },
-        "restaurants": {
-          "type": "audience",
-          "settings": {
-            "title": "Restaurants"
-          }
-        },
-        "distributors": {
-          "type": "audience",
-          "settings": {
-            "title": "Distributors"
-          }
-        }
-      },
-      "block_order": [
-        "cafes",
-        "hotels",
-        "restaurants",
-        "retailers",
-        "distributors",
-        "brands"
-      ],
-      "settings": {
-        "eyebrow": "",
-        "heading": "Coffee Made for Your Business.",
-        "intro": "We work with:",
-        "footnote": "Whether you need one house blend or a complete private-label range, we can help.",
-        "background": "default"
+        "height": "tall"
       }
     },
     "featured": {
@@ -216,17 +35,199 @@
         "background": "default"
       }
     },
-    "roastery": {
-      "type": "brand-feature",
+    "services": {
+      "type": "quick-links",
+      "blocks": {
+        "private_label": {
+          "type": "link",
+          "settings": {
+            "title": "Private Label Coffee",
+            "body": "Create coffee under your own brand: custom blends, roasting, grinding and packaging.",
+            "link_label": "Start Your Private Label",
+            "link": "/pages/private-label"
+          }
+        },
+        "wholesale": {
+          "type": "link",
+          "settings": {
+            "title": "Wholesale Coffee",
+            "body": "Reliable coffee for cafés, restaurants, hotels and businesses. Espresso, Turkish, filter and specialty.",
+            "link_label": "View Wholesale",
+            "link": "/pages/wholesale"
+          }
+        },
+        "specialty": {
+          "type": "link",
+          "settings": {
+            "title": "Specialty Coffee",
+            "body": "Single origins and specialty coffees selected for quality and flavour.",
+            "link_label": "Discover Our Coffee",
+            "link": "/collections/all"
+          }
+        },
+        "coffee_shop": {
+          "type": "link",
+          "settings": {
+            "title": "Own an Azouz Coffee",
+            "body": "Bring Azouz Coffee to your neighbourhood: coffee, equipment, branding, menu and operations.",
+            "link_label": "Explore Opportunities",
+            "link": "/pages/own-an-azouz-coffee"
+          }
+        }
+      },
+      "block_order": [
+        "private_label",
+        "wholesale",
+        "specialty",
+        "coffee_shop"
+      ],
       "settings": {
-        "eyebrow": "Our roastery",
-        "heading": "Roasted in Jordan.",
-        "body": "<p>We roast, blend, grind and pack in our own facility, so the coffee that carries your name is made under one roof and to one standard.</p>",
-        "cta_label": "About Azouz",
-        "cta_link": "/pages/our-brands",
-        "image_alt": "The Azouz roastery floor: the roaster, sacks of green coffee and the production area",
-        "media_position": "start",
-        "background": "alt"
+        "heading": "Private label is where we start.",
+        "link_label": "Request a Sample",
+        "link": "/pages/request-a-sample",
+        "background": "default"
+      }
+    },
+    "marquee": {
+      "type": "marquee",
+      "settings": {
+        "text": "Sourced, blended, roasted, ground and packed in Jordan",
+        "separator": "→",
+        "repeats": 3
+      }
+    },
+    "story_heading": {
+      "type": "section-heading",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Our Story",
+        "link_label": "About Azouz",
+        "link": "/pages/our-brands"
+      }
+    },
+    "story": {
+      "type": "story-columns",
+      "blocks": {
+        "sourcing": {
+          "type": "column",
+          "settings": {
+            "title": "Sourcing",
+            "body": "We buy green coffee for the blend it has to become, and we buy it from the same growers year after year.",
+            "image_alt": "Sacks of green coffee waiting on the roastery floor",
+            "link_label": "Read our sourcing approach",
+            "link": "/pages/our-brands"
+          }
+        },
+        "roasting": {
+          "type": "column",
+          "settings": {
+            "title": "Roasting",
+            "body": "Roasted in our own facility in Jordan, to a profile we develop with you and hold to from the first batch to the hundredth.",
+            "image_alt": "The roaster mid-batch on the Azouz production floor",
+            "link_label": "See what we can roast for you",
+            "link": "/pages/private-label"
+          }
+        },
+        "packing": {
+          "type": "column",
+          "settings": {
+            "title": "Packing",
+            "body": "Ground to your grind, filled to your weight and sealed in your bag. Whole bean, ground, or a full private-label range.",
+            "image_alt": "Filled and sealed Azouz coffee bags leaving the packing line",
+            "link_label": "See packaging and sizes",
+            "link": "/pages/private-label"
+          }
+        }
+      },
+      "block_order": [
+        "sourcing",
+        "roasting",
+        "packing"
+      ],
+      "settings": {
+        "heading": "",
+        "background": "default"
+      }
+    },
+    "sample": {
+      "type": "feature-band",
+      "settings": {
+        "eyebrow": "The sample box",
+        "heading": "Taste it before you commit.",
+        "subheading": "Roasted in Jordan.",
+        "body": "<p>Tell us the coffee your business needs and we will roast a sample set to match it.</p>",
+        "cta_primary_label": "Request a Sample",
+        "cta_primary_link": "/pages/request-a-sample",
+        "cta_secondary_label": "Get a Quote",
+        "cta_secondary_link": "/pages/get-a-quote",
+        "image_alt": "A sample set of Azouz coffee bags laid out on the roastery bench"
+      }
+    },
+    "audiences": {
+      "type": "flavour-finder",
+      "blocks": {
+        "cafes": {
+          "type": "flavour",
+          "settings": {
+            "label": "Cafés",
+            "note": "House espresso you can pour the same way every day, in the volumes a busy bar gets through.",
+            "link": "/pages/wholesale"
+          }
+        },
+        "hotels": {
+          "type": "flavour",
+          "settings": {
+            "label": "Hotels",
+            "note": "Breakfast service, room supply and banqueting from one roastery, under your own label if you want it.",
+            "link": "/pages/wholesale"
+          }
+        },
+        "restaurants": {
+          "type": "flavour",
+          "settings": {
+            "label": "Restaurants",
+            "note": "A darker roast that still reads after a heavy plate, in the pack sizes a dinner service gets through in a week.",
+            "link": "/pages/wholesale"
+          }
+        },
+        "retailers": {
+          "type": "flavour",
+          "settings": {
+            "label": "Retailers",
+            "note": "Shelf-ready bags in your weights and your artwork, with the barcodes and dates already on them.",
+            "link": "/pages/private-label"
+          }
+        },
+        "distributors": {
+          "type": "flavour",
+          "settings": {
+            "label": "Distributors",
+            "note": "Volume runs on a schedule you can plan around, from a single production floor.",
+            "link": "/pages/private-label"
+          }
+        },
+        "brands": {
+          "type": "flavour",
+          "settings": {
+            "label": "Coffee Brands",
+            "note": "Your blend, your grind, your bag. We make the coffee; the name on it stays yours.",
+            "link": "/pages/private-label"
+          }
+        }
+      },
+      "block_order": [
+        "cafes",
+        "hotels",
+        "restaurants",
+        "retailers",
+        "distributors",
+        "brands"
+      ],
+      "settings": {
+        "heading": "Coffee Made for Your Business.",
+        "link_label": "View Wholesale",
+        "link": "/pages/wholesale",
+        "statement": "Whether you need one house blend or a complete private-label range, we can help."
       }
     },
     "closing": {
@@ -246,10 +247,12 @@
   "order": [
     "hero",
     "services",
-    "process",
-    "audience",
     "featured",
-    "roastery",
+    "marquee",
+    "story_heading",
+    "story",
+    "sample",
+    "audiences",
     "closing"
   ]
 }
