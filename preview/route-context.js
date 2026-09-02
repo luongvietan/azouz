@@ -14,6 +14,40 @@ import {
 } from './fixtures.js';
 import { buildCart } from './cart-api.js';
 import { handleize } from './shims/filters.js';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { THEME_DIR } from '../scripts/theme-paths.js';
+
+/**
+ * Shopify populates `page_title` on every storefront template. This preview
+ * only set it where a fixture happened to carry a title, so the cart, search,
+ * the account pages, the collection index and 404 all rendered with the shop
+ * name alone in <title> — nine routes indistinguishable in a tab, a history
+ * list or a screen reader's page announcement. Worse, an audit of the preview
+ * reported that as the theme's behaviour, which it is not.
+ *
+ * The value used is each page's own <h1>, read from the same translation the
+ * template renders, so the preview mirrors the page rather than inventing
+ * copy. Shopify's exact wording for these is Shopify's own; what the harness
+ * has to be faithful about is that a title is there at all.
+ *
+ * The password page is deliberately not in this list. Shopify leaves
+ * page_title unset there, meta-tags.liquid carries a comment about that exact
+ * fallback, and forcing a title here would hide the case the comment exists
+ * for.
+ */
+const translations = JSON.parse(
+  readFileSync(join(THEME_DIR, 'locales', 'en.default.json'), 'utf8'),
+);
+
+/** One translation by dotted key, with {{ name }} placeholders filled. */
+function t(key, replacements = {}) {
+  const value = key.split('.').reduce((node, part) => node?.[part], translations);
+  if (typeof value !== 'string') return undefined;
+  return value.replace(/\{\{\s*(\w+)\s*\}\}/g, (match, name) =>
+    name in replacements ? String(replacements[name]) : match,
+  );
+}
 
 /** Static marketing routes. `page` supplies the Liquid `page` object. */
 export const ROUTES = {
@@ -61,27 +95,43 @@ export function templateForRoute(route) {
 }
 
 const ACCOUNT_ROUTES = {
-  '/account': { page_type: 'customers/account', template: 'templates/customers/account.json' },
-  '/account/login': { page_type: 'customers/login', template: 'templates/customers/login.json' },
+  '/account': {
+    page_type: 'customers/account',
+    template: 'templates/customers/account.json',
+    title_key: 'customer.account.title',
+  },
+  '/account/login': {
+    page_type: 'customers/login',
+    template: 'templates/customers/login.json',
+    title_key: 'customer.login.title',
+  },
   '/account/register': {
     page_type: 'customers/register',
     template: 'templates/customers/register.json',
+    title_key: 'customer.register.title',
   },
   '/account/addresses': {
     page_type: 'customers/addresses',
     template: 'templates/customers/addresses.json',
+    title_key: 'customer.addresses.title',
   },
   '/account/recover': {
     page_type: 'customers/reset_password',
     template: 'templates/customers/reset_password.json',
+    title_key: 'customer.recover_password.title',
   },
   '/account/activate': {
     page_type: 'customers/activate_account',
     template: 'templates/customers/activate_account.json',
+    title_key: 'customer.activate_account.title',
   },
 };
 
-const notFound = () => ({ page_type: '404', template: 'templates/404.json', scope: {} });
+const notFound = () => ({
+  page_type: '404',
+  template: 'templates/404.json',
+  scope: { page_title: t('general.404.title') },
+});
 
 /**
  * @param {string} pathname
@@ -142,7 +192,10 @@ export function resolveRoute(pathname, query = new URLSearchParams()) {
     return {
       page_type: 'list-collections',
       template: 'templates/list-collections.json',
-      scope: { collections: Object.values(fixtures.collections) },
+      scope: {
+        collections: Object.values(fixtures.collections),
+        page_title: t('collections.general.title'),
+      },
     };
   }
 
@@ -191,14 +244,21 @@ export function resolveRoute(pathname, query = new URLSearchParams()) {
   }
 
   if (path === '/cart') {
-    return { page_type: 'cart', template: 'templates/cart.json', scope: { cart: buildCart() } };
+    return {
+      page_type: 'cart',
+      template: 'templates/cart.json',
+      scope: { cart: buildCart(), page_title: t('cart.general.title') },
+    };
   }
 
   if (path === '/search') {
     return {
       page_type: 'search',
       template: 'templates/search.json',
-      scope: { search: buildSearchFixture(query.get('q') ?? '') },
+      scope: {
+        search: buildSearchFixture(query.get('q') ?? ''),
+        page_title: t('general.search.title'),
+      },
     };
   }
 
@@ -226,13 +286,21 @@ export function resolveRoute(pathname, query = new URLSearchParams()) {
     return {
       page_type: 'customers/order',
       template: 'templates/customers/order.json',
-      scope: { customer, order: found },
+      scope: {
+        customer,
+        order: found,
+        page_title: t('customer.order.title', { name: found.name }),
+      },
     };
   }
 
   const account = ACCOUNT_ROUTES[path];
   if (account) {
-    return { ...account, scope: { customer: buildCustomerFixture() } };
+    const { title_key: titleKey, ...route } = account;
+    return {
+      ...route,
+      scope: { customer: buildCustomerFixture(), page_title: t(titleKey) },
+    };
   }
 
   return notFound();

@@ -49,6 +49,39 @@ test('preview page titles follow the resolved resource', () => {
   assert.equal(resolveRoute('/').scope.page_title, 'Your Coffee. Your Brand. Our Roastery.');
 });
 
+test('the routes with no resource of their own still carry their own title', () => {
+  assert.equal(resolveRoute('/cart').scope.page_title, 'Your cart');
+  assert.equal(resolveRoute('/search').scope.page_title, 'Search');
+  assert.equal(resolveRoute('/collections').scope.page_title, 'Collections');
+  assert.equal(resolveRoute('/account/login').scope.page_title, 'Sign in');
+  assert.equal(resolveRoute('/nothing-here').scope.page_title, 'Page not found');
+});
+
+test('an order title fills the name placeholder rather than printing it', () => {
+  const title = resolveRoute('/account/orders/1002').scope.page_title;
+  assert.equal(title, 'Order #1002');
+  assert.doesNotMatch(title, /\{\{/, 'the {{ name }} placeholder must be substituted');
+});
+
+/*
+  The regression this guards: page_title was set only where a fixture happened
+  to carry a title, so nine routes rendered <title> as the bare shop name and
+  an audit of the preview reported that as the theme's behaviour. The password
+  page is the one deliberate exception — Shopify leaves page_title unset there
+  and meta-tags.liquid documents the fallback, so forcing one here would hide
+  the case that comment exists for.
+*/
+test('every preview route but the password page resolves with a page title', () => {
+  const untitled = listPreviewPaths()
+    .filter((path) => path !== '/password' && !path.startsWith('/gift_cards/'))
+    .filter((path) => {
+      const url = new URL(path, 'http://localhost');
+      return !resolveRoute(url.pathname, url.searchParams).scope.page_title;
+    });
+
+  assert.deepEqual(untitled, [], 'these routes would render <title> as the shop name alone');
+});
+
 test('the collection index lists every collection', () => {
   const route = resolveRoute('/collections');
   assert.equal(route.page_type, 'list-collections');
