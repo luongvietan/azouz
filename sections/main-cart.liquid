@@ -5,11 +5,55 @@
     <cart-form>
       <div data-cart-body>
         {%- if cart.items.size == 0 -%}
+          {%- comment -%}
+            An empty cart used to be a dead end: one sentence and one link back
+            to the shop, stranded across the full cart measure. Most of what
+            this roastery sells is not bought by the bag — it is a sample box,
+            a wholesale account or a private-label run — so the empty state
+            offers those routes too, on their own rule, for the visitor whose
+            reason for being here was never a checkout.
+
+            Both are optional and set on the section, so a merchant who does
+            not want them, or who renames the pages, is not left with two dead
+            links baked into the template.
+          {%- endcomment -%}
+          {%- liquid
+            assign has_enquiry = false
+            if section.settings.enquiry_label != blank and section.settings.enquiry_link != blank
+              assign has_enquiry = true
+            endif
+
+            assign has_wholesale = false
+            if section.settings.wholesale_label != blank and section.settings.wholesale_link != blank
+              assign has_wholesale = true
+            endif
+          -%}
+
           <div class="cart__empty">
             <p class="lead">{{ 'cart.general.empty' | t }}</p>
             <a class="button" href="{{ routes.all_products_collection_url }}">
               {{ 'cart.general.continue_shopping' | t }}
             </a>
+
+            {%- if has_enquiry or has_wholesale -%}
+              <div class="cart__empty-aside">
+                <p class="cart__empty-lead">{{ 'cart.general.empty_business' | t }}</p>
+                <div class="cart__empty-links">
+                  {%- if has_enquiry -%}
+                    <a class="anchor-arrow" href="{{ section.settings.enquiry_link }}">
+                      {{ section.settings.enquiry_label }}
+                      {%- render 'icon', name: 'arrow-right' -%}
+                    </a>
+                  {%- endif -%}
+                  {%- if has_wholesale -%}
+                    <a class="anchor-arrow" href="{{ section.settings.wholesale_link }}">
+                      {{ section.settings.wholesale_label }}
+                      {%- render 'icon', name: 'arrow-right' -%}
+                    </a>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
           </div>
         {%- else -%}
           {%- form 'cart', cart, id: 'CartForm', class: 'main-cart__form' -%}
@@ -43,6 +87,19 @@
 {
   "name": "Cart",
   "tag": "div",
-  "settings": []
+  "settings": [
+    {
+      "type": "header",
+      "content": "Empty cart"
+    },
+    {
+      "type": "paragraph",
+      "content": "Shown only when the cart is empty. Leave a label or a link blank to hide that route."
+    },
+    { "type": "text", "id": "enquiry_label", "label": "First link label" },
+    { "type": "url", "id": "enquiry_link", "label": "First link" },
+    { "type": "text", "id": "wholesale_label", "label": "Second link label" },
+    { "type": "url", "id": "wholesale_link", "label": "Second link" }
+  ]
 }
 {% endschema %}

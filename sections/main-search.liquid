@@ -40,6 +40,22 @@
         <p class="search__empty">{{ 'general.search.no_results' | t: terms: search.terms }}</p>
       {%- endif -%}
     {%- endif -%}
+
+    {%- comment -%}
+      A search box on its own is a question with no hint of what can be asked.
+      This is the way out for both readers who need one: the visitor who has
+      not searched yet and has nothing to look at, and the one whose search
+      found nothing. It is suppressed only on a page that already has results
+      to read.
+    {%- endcomment -%}
+    {%- unless search.performed and search.results_count > 0 -%}
+      <p class="search__browse">
+        <a class="anchor-arrow" href="{{ routes.all_products_collection_url }}">
+          {{ 'general.search.browse_all' | t }}
+          {%- render 'icon', name: 'arrow-right' -%}
+        </a>
+      </p>
+    {%- endunless -%}
   </div>
 
   {%- if search.results_count > 0 -%}

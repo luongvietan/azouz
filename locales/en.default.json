@@ -30,7 +30,8 @@
       "placeholder": "Search coffee",
       "submit": "Search",
       "no_results": "No results for \"{{ terms }}\".",
-      "results_count": "{{ count }} results"
+      "results_count": "{{ count }} results",
+      "browse_all": "Browse all coffee"
     },
     "meta": {
       "tags": "Tagged \"{{ tags }}\"",
@@ -127,7 +128,8 @@
       "remove_item": "Remove {{ title }}",
       "update": "Update cart",
       "drawer_title": "Added to your cart",
-      "view_cart": "View cart"
+      "view_cart": "View cart",
+      "empty_business": "Buying for a business?"
     }
   },
   "gift_card": {

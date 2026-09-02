@@ -330,6 +330,15 @@
   text-decoration: underline;
 }
 
+/* A full --space-section above this puts 128px between the header rule and a
+   breadcrumb that is itself a separator. The page below the breadcrumb is the
+   product; it should start near the top of the screen, not a third of the way
+   down it. The bottom keeps the section measure, so the rhythm against
+   whatever follows is unchanged. */
+.main-product {
+  padding-block-start: var(--space-xl);
+}
+
 .main-product__inner {
   display: grid;
   gap: var(--space-xl);
@@ -361,16 +370,15 @@
   object-fit: cover;
 }
 
+/* The buy column is a stack of five things and every gap between them was
+   --space-lg. Read down it: label, price, options, quantity, button — these
+   are one continuous act, not five sections, and at 32px apart they pushed
+   "Add to cart" 176px below an 800px fold. --space-md still separates them
+   clearly and gives 60px of that back. */
 .main-product__details {
   display: grid;
-  gap: var(--space-lg);
+  gap: var(--space-md);
   align-content: start;
-}
-
-.main-product__roast {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
 }
 
 .main-product__price {
@@ -382,7 +390,7 @@
 
 .main-product__form {
   display: grid;
-  gap: var(--space-lg);
+  gap: var(--space-md);
 }
 
 .main-product__purchase {
@@ -541,10 +549,34 @@
   margin: 0;
 }
 
+/* Held to a reading measure. The cart's own container is 1280px wide because
+   a line item needs it; one sentence and a button do not, and left to the full
+   width they read as debris at the top of an empty field. */
 .cart__empty {
   display: grid;
   gap: var(--space-lg);
   justify-items: start;
+  max-inline-size: var(--content-narrow);
+}
+
+.cart__empty-aside {
+  display: grid;
+  gap: var(--space-sm);
+  justify-items: start;
+  inline-size: 100%;
+  padding-block-start: var(--space-lg);
+  border-block-start: var(--rule-ink);
+}
+
+.cart__empty-lead {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+}
+
+.cart__empty-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
 }
 
 .cart__summary {
@@ -774,6 +806,10 @@ cart-drawer[inert] {
 .search__empty {
   margin: 0;
   color: var(--color-text-muted);
+}
+
+.search__browse {
+  margin: 0;
 }
 
 /* The results are a rule-divided index like the collection's; the strokes and

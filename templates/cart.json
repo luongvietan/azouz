@@ -1,6 +1,14 @@
 {
   "sections": {
-    "main": { "type": "main-cart" }
+    "main": {
+      "type": "main-cart",
+      "settings": {
+        "enquiry_label": "Request a Sample",
+        "enquiry_link": "/pages/request-a-sample",
+        "wholesale_label": "View Wholesale",
+        "wholesale_link": "/pages/wholesale"
+      }
+    }
   },
   "order": ["main"]
 }

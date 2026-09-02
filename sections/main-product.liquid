@@ -5,8 +5,12 @@
   assign brews = custom.brew_methods.value
   assign label_color = custom.label_color.value
 
+  # Roast level is one of the label's rows now, so it has to count towards
+  # whether there is a label to draw at all — a store that has filled in only
+  # the roast level would otherwise lose the meter along with the list. A flat
+  # chain of `or` is safe here where a mixed `and`/`or` would not be.
   assign has_specs = false
-  if custom.origin.value != blank or custom.process.value != blank or custom.altitude.value != blank
+  if custom.origin.value != blank or custom.process.value != blank or custom.altitude.value != blank or custom.roast_level.value != blank
     assign has_specs = true
   endif
 
@@ -88,16 +92,22 @@
             {%- if custom.altitude.value != blank -%}
               <div><dt>{{ 'products.product.altitude' | t }}</dt><dd>{{ custom.altitude.value }}</dd></div>
             {%- endif -%}
+            {%- comment -%}
+              Roast level belongs in the label with the rest of it. The bag
+              prints it there — the dots sit beside "whole bean, 100% arabica"
+              on the real thing — and standing it outside as its own row cost
+              72px between the label and the price, on a column that was
+              already pushing "Add to cart" below the fold.
+            {%- endcomment -%}
+            {%- if custom.roast_level.value != blank -%}
+              <div>
+                <dt>{{ 'products.product.roast_level' | t }}</dt>
+                <dd>{%- render 'roast-meter', level: custom.roast_level.value -%}</dd>
+              </div>
+            {%- endif -%}
           </dl>
         {%- endif -%}
       </div>
-
-      {%- if custom.roast_level.value != blank -%}
-        <div class="main-product__roast">
-          <span class="eyebrow">{{ 'products.product.roast_level' | t }}</span>
-          {%- render 'roast-meter', level: custom.roast_level.value -%}
-        </div>
-      {%- endif -%}
 
       {%- comment -%}
         A live region: <variant-picker> rewrites this when the selection

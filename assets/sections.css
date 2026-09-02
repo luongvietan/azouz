@@ -553,15 +553,31 @@
 .hero__body > :first-child { margin-block-start: 0; }
 .hero__body > :last-child { margin-block-end: 0; }
 
+/* Nothing capped this hero. Its height was the media's height plus the
+   section's padding, and with a 4:5 bag photo at 32rem that came to 896px —
+   on an 800px laptop it ran 293px past the fold and took the page's first
+   action with it: the buttons on Private Label and Wholesale, and on the
+   enquiry pages the form in the section below, which started 665px down.
+
+   Two changes. The measure steps down to 26rem, which is still a generous
+   half of a two-column hero. And the image is capped against what is actually
+   left of the screen once the chrome and this section's own padding are paid
+   for — width auto, so the cap shrinks the picture rather than cropping or
+   squashing it. On a tall viewport the cap never binds and the hero stands at
+   the size it was drawn at. */
 .hero__media {
   justify-self: center;
   inline-size: 100%;
-  max-inline-size: 32rem;
+  max-inline-size: 26rem;
 }
 
 .hero__image {
-  inline-size: 100%;
+  inline-size: auto;
+  max-inline-size: 100%;
   block-size: auto;
+  max-block-size: calc(100vh - var(--chrome-block-size) - (2 * var(--space-section)));
+  max-block-size: calc(100dvh - var(--chrome-block-size) - (2 * var(--space-section)));
+  margin-inline: auto;
   border-radius: var(--radius-lg);
 }
 
@@ -597,6 +613,20 @@
 /* The rules are on the section, not inside the container, so they run the full
    width of the band and read as its two edges. Inside the container they left
    a strip of unexplained colour above the rule at the top of the band. */
+/* Two bands in a row — our-brands closes with one ask for distributors and a
+   second for merchants who want their own label — stacked as 761px of asking
+   in two slabs, each with its own pair of rules. Between them sat two 1px ink
+   lines one pixel apart doing the work of one. They share a single rule now
+   and the second opens tighter, so the pair reads as one close with two doors
+   rather than as the page ending twice.
+
+   Sections are each wrapped in their own .shopify-section, so the two bands
+   are never siblings — the adjacency has to be drawn between the wrappers. */
+.shopify-section:has(> .cta-band) + .shopify-section > .cta-band {
+  border-block-start: 0;
+  padding-block-start: var(--space-xl);
+}
+
 .cta-band {
   border-block: var(--rule-ink);
 
@@ -1216,6 +1246,14 @@
 }
 
 /* ---------- Enquiry form ---------- */
+
+/* The form's own section follows a hero that has already named the page, so a
+   full --space-section above the heading is a second introduction to something
+   already introduced — and on the two enquiry pages it was part of what kept
+   the first field 665px below the fold. The bottom keeps the full measure. */
+.enquiry {
+  padding-block-start: var(--space-xl);
+}
 
 .enquiry__inner {
   display: grid;
