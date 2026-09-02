@@ -19,20 +19,9 @@
         "cta_primary_link": "/pages/request-a-sample",
         "cta_secondary_label": "How private label works",
         "cta_secondary_link": "/pages/private-label",
+        "image": "shopify://shop_images/hero-azouz-coffee-cup.jpg",
         "image_alt": "Hand holding an azouz coffee branded takeaway cup",
         "height": "tall"
-      }
-    },
-    "featured": {
-      "type": "featured-collection",
-      "settings": {
-        "eyebrow": "",
-        "heading": "Our Coffee",
-        "collection": "all",
-        "products_to_show": 4,
-        "link_label": "Discover Our Coffee",
-        "link": "/collections/all",
-        "background": "default"
       }
     },
     "services": {
@@ -88,6 +77,18 @@
         "background": "default"
       }
     },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Our Coffee",
+        "collection": "all",
+        "products_to_show": 4,
+        "link_label": "Discover Our Coffee",
+        "link": "/collections/all",
+        "background": "default"
+      }
+    },
     "marquee": {
       "type": "marquee",
       "settings": {
@@ -111,9 +112,9 @@
         "sourcing": {
           "type": "column",
           "settings": {
+            "image_alt": "Sacks of green coffee waiting on the roastery floor",
             "title": "Sourcing",
             "body": "We buy green coffee for the blend it has to become, and we buy it from the same growers year after year.",
-            "image_alt": "Sacks of green coffee waiting on the roastery floor",
             "link_label": "Read our sourcing approach",
             "link": "/pages/our-brands"
           }
@@ -121,9 +122,9 @@
         "roasting": {
           "type": "column",
           "settings": {
+            "image_alt": "The roaster mid-batch on the Azouz production floor",
             "title": "Roasting",
             "body": "Roasted in our own facility in Jordan, to a profile we develop with you and hold to from the first batch to the hundredth.",
-            "image_alt": "The roaster mid-batch on the Azouz production floor",
             "link_label": "See what we can roast for you",
             "link": "/pages/private-label"
           }
@@ -131,9 +132,9 @@
         "packing": {
           "type": "column",
           "settings": {
+            "image_alt": "Filled and sealed Azouz coffee bags leaving the packing line",
             "title": "Packing",
             "body": "Ground to your grind, filled to your weight and sealed in your bag. Whole bean, ground, or a full private-label range.",
-            "image_alt": "Filled and sealed Azouz coffee bags leaving the packing line",
             "link_label": "See packaging and sizes",
             "link": "/pages/private-label"
           }
@@ -160,6 +161,7 @@
         "cta_primary_link": "/pages/request-a-sample",
         "cta_secondary_label": "Get a Quote",
         "cta_secondary_link": "/pages/get-a-quote",
+        "image": "shopify://shop_images/dead-sea-blend_0ff54b46-be38-4443-b9af-f1e18b29ddd0.jpg",
         "image_alt": "A sample set of Azouz coffee bags laid out on the roastery bench"
       }
     },
