@@ -43,7 +43,7 @@ test('label colours match the printed packaging', () => {
   );
   assert.equal(byHandle['wadi-rum-blend'].metafields.custom.label_color.value, '#B3522D');
   assert.equal(byHandle['dead-sea-blend'].metafields.custom.label_color.value, '#B7B7B3');
-  assert.equal(byHandle['downtown-blend'].metafields.custom.label_color.value, '#5A6A50');
+  assert.equal(byHandle['downtown-blend'].metafields.custom.label_color.value, '#3E423C');
 });
 
 test('products expose variants with weight and grind options', () => {
@@ -63,7 +63,7 @@ test('the cart fixture is empty by default', () => {
 test('theme settings from settings_data are on the settings drop', () => {
   const { settings } = buildFixtures();
   assert.equal(settings.logo_height, 64);
-  assert.equal(settings.color_accent, '#687B5D');
+  assert.equal(settings.color_accent, '#DFE5D9');
 });
 
 test('the main menu links to the marketing pages, the shop and the journal', () => {

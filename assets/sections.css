@@ -20,12 +20,14 @@
 }
 
 /* ---------- Announcement bar ----------
-   Deep green, not the primary: this text is small and white-on-primary is
-   only 3.37:1. */
+   The pale green, not the dark one and not ink. This band sits on every page
+   of the site, which is exactly why it cannot be loud: at Sage Light it is a
+   tint of the ground rather than a stripe across it, and Onyx reads on it at
+   14:1 even at 14px. */
 
 .announcement {
-  background-color: var(--color-accent-deep);
-  color: var(--color-on-accent);
+  background-color: var(--color-accent);
+  color: var(--color-text);
   font-size: var(--text-sm);
 }
 
@@ -176,7 +178,9 @@
 
 .header__link:hover,
 .header__link.is-active {
-  border-block-end-color: var(--color-accent);
+  /* Ink, not the accent: Sage Light is 1.2:1 on the ground, so a 2px rule in
+     it would mark the active page with something nobody can see. */
+  border-block-end-color: var(--color-text);
 }
 
 /* ---------- Nested menu ----------
@@ -564,49 +568,79 @@
   }
 }
 
-/* ---------- CTA band ---------- */
+/* ---------- CTA band ----------
+   The closing band now speaks the page's own grammar: an ink rule, a line set
+   from the left, and the actions on the far side of it — the same shape as
+   every section head above it.
+
+   It used to be a centred block on a narrow measure, which worked while the
+   band was a dark green slab: the colour drew the edges and the symmetry read
+   as a deliberate full stop. The band is a pale tint a fifth of a step off the
+   ground now, and centring left the copy stranded in the middle of an empty
+   field with no edge anywhere. So the rule draws the edge the colour no longer
+   can, and the width the copy lost to centring it gets back as alignment. */
+
+/* The rules are on the section, not inside the container, so they run the full
+   width of the band and read as its two edges. Inside the container they left
+   a strip of unexplained colour above the rule at the top of the band. */
+.cta-band {
+  border-block: var(--rule-ink);
+
+  /* Tighter than --space-section on purpose. At the section measure this band
+     was 347px tall around 129px of content — nearly two thirds of it empty,
+     which is what made it read as a hole in the page rather than a close. A
+     band is not a section; it is a rule, a line and a way out. */
+  padding-block: clamp(2.75rem, 5vw, 4.5rem);
+}
 
 .cta-band__inner {
   display: grid;
   gap: var(--space-lg);
-  justify-items: center;
-  text-align: center;
 }
 
-.cta-band__heading { margin: 0; }
+.cta-band__copy {
+  display: grid;
+  gap: var(--space-md);
+}
 
-.cta-band__body { margin: 0; }
+/* The one heading on the page that is a sentence rather than a label, so it
+   keeps display tracking and mixed case instead of the section heads' tracked
+   caps. The measure is capped in ch: this line is set large, and a 1200px band
+   would otherwise run it to a width no one can track back from. */
+.cta-band__heading {
+  margin: 0;
+  font-size: var(--text-2xl);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-display);
+  max-inline-size: 18ch;
+}
+
+.cta-band__body { margin: 0; max-inline-size: 46ch; }
 .cta-band__body > :first-child { margin-block-start: 0; }
 .cta-band__body > :last-child { margin-block-end: 0; }
 
-.cta-band__actions { justify-content: center; }
+.cta-band__actions { align-items: center; }
 
-/* On the green band the secondary button must read against green, not page. */
-.section--accent .button--secondary {
-  --button-fg: var(--color-on-accent);
-  border-color: var(--color-on-accent);
+/* The quiet link carries 12px of inline padding to widen its tap target. In a
+   row that is invisible; stacked under the button on a phone it sets the only
+   two things in the band on two different left edges. Pulling the box out by
+   the same 12px puts the text back on the band's edge — left when stacked,
+   right when it sits at the end of the row — and keeps the target intact,
+   which setting padding-inline to 0 would not. */
+.cta-band__actions .button--quiet {
+  margin-inline: calc(var(--space-sm) * -1);
 }
 
-.section--accent .button--secondary:hover {
-  --button-bg: var(--color-on-accent);
-  --button-fg: var(--color-accent-deep);
-}
+@media (min-width: 56em) {
+  /* Copy left, actions hard right and sitting on the last line of the copy —
+     the section-head arrangement, one size up. */
+  .cta-band__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    column-gap: var(--space-2xl);
+  }
 
-.section--accent .button {
-  --button-bg: var(--color-on-accent);
-  --button-fg: var(--color-accent-deep);
-}
-
-.section--accent .button:hover {
-  --button-bg: var(--color-bg-alt);
-}
-
-.section--accent .button--quiet {
-  color: var(--color-on-accent);
-}
-
-.section--accent .button--quiet:hover {
-  color: var(--color-bg-alt);
+  .cta-band__actions { justify-content: flex-end; }
 }
 
 /* ---------- Audience strip ---------- */
@@ -639,7 +673,7 @@
   padding: var(--space-xs) var(--space-md);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-semibold);
-  background-color: var(--color-bg-tint);
+  background-color: var(--color-accent);
   border-radius: var(--radius);
 }
 

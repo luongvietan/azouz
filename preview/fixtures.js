@@ -116,7 +116,7 @@ export function buildFixtures() {
       title: 'Downtown Blend',
       roast: 4,
       notes: ['Chocolate', 'Caramel', 'Smooth'],
-      labelColor: '#5A6A50',
+      labelColor: '#3E423C',
       description: 'Smooth and approachable — chocolate and caramel, made for milk drinks.',
       saleOn: 'downtown-blend-250-wb',
     }),

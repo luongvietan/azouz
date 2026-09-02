@@ -32,13 +32,19 @@ test('contrastRatio matches the hand-computed brand values', () => {
   close(contrastRatio('#B7B7B3', '#F6F3ED'), 1.82);
 });
 
-test('the brand green carries white body text as a fill, but not as text', async () => {
+test('the pale green is a surface and only a surface', async () => {
   const map = await tokens();
-  // The reverse of the old palette: sage is dark enough to sit *behind* body
-  // text, and too light to *be* body text. Both halves matter — the first is
-  // why buttons may use --color-accent, the second is why links may not.
-  assert.ok(contrastRatio(map.get('--color-on-accent'), map.get('--color-accent')) >= 4.5);
-  assert.ok(contrastRatio(map.get('--color-accent'), map.get('--color-bg')) < 4.5);
+  // Both halves matter. Onyx on it is why the green band, the announcement bar
+  // and the chips may be painted in it at all; white failing on it is why
+  // nothing in the theme may put --color-on-accent over --color-accent, and
+  // why the band's own buttons are the page's graphite ones.
+  assert.ok(contrastRatio(map.get('--color-text'), map.get('--color-accent')) >= 7);
+  assert.ok(contrastRatio(map.get('--color-on-accent'), map.get('--color-accent')) < 4.5);
+});
+
+test('the pale green is far too light to be text', async () => {
+  const map = await tokens();
+  assert.ok(contrastRatio(map.get('--color-accent'), map.get('--color-bg')) < 1.5);
 });
 
 test('burnt orange is never a surface for body text — the deepened one is', async () => {
@@ -57,9 +63,20 @@ test('the coffee brown tone is legal in both directions', async () => {
   assert.ok(contrastRatio(map.get('--color-on-accent'), map.get('--color-warm')) >= 7);
 });
 
-test('text on the tinted band reaches AAA', async () => {
+test('no two of the light surfaces are the same colour', async () => {
+  // The palette once carried a --color-bg-tint of #E2E2DF alongside a pale
+  // green of #DFE5D9: 1.01:1 apart, which is to say identical. Three light
+  // surfaces is the budget, and each has to be one a reader can tell from the
+  // other two — otherwise the page has bands nobody can see the edges of.
   const map = await tokens();
-  assert.ok(contrastRatio(map.get('--color-text'), map.get('--color-bg-tint')) >= 7);
+  const surfaces = ['--color-bg', '--color-bg-alt', '--color-accent'];
+  for (const a of surfaces) {
+    for (const b of surfaces) {
+      if (a === b) continue;
+      const ratio = contrastRatio(map.get(a), map.get(b));
+      assert.ok(ratio >= 1.05, `${a} and ${b} are indistinguishable (${ratio.toFixed(3)}:1)`);
+    }
+  }
 });
 
 test('shorthand hex is expanded', () => {
@@ -88,7 +105,6 @@ test('readCssTokens does not hang on a circular reference', () => {
 const REQUIRED_TOKENS = [
   '--color-bg',
   '--color-bg-alt',
-  '--color-bg-tint',
   '--color-warm',
   '--color-highlight',
   '--color-text',
@@ -108,8 +124,13 @@ test('every semantic colour token is defined', async () => {
   for (const name of REQUIRED_TOKENS) assert.ok(map.has(name), `${name} must be defined`);
 });
 
-test('the brand primary is exactly the colour-board value', async () => {
-  assert.equal((await tokens()).get('--color-accent').toUpperCase(), '#687B5D');
+test('the brand primary is a lifted sage, not the colour-board value', async () => {
+  // The board's Sage is still defined below — it simply no longer paints
+  // anything. The client asked for a light green that sits level with the
+  // greys, so the surface token is the lifted shade.
+  const map = await tokens();
+  assert.equal(map.get('--color-accent').toUpperCase(), '#DFE5D9');
+  assert.notEqual(map.get('--color-accent').toUpperCase(), '#687B5D');
 });
 
 test('every colour the board names is present, unaltered', async () => {
@@ -139,9 +160,10 @@ test('muted text on both page grounds reaches AA', async () => {
   assert.ok(contrastRatio(map.get('--color-text-muted'), map.get('--color-bg-alt')) >= 4.5);
 });
 
-test('the primary green clears AA-large against its on-colour', async () => {
+test('the action ink clears AAA against the page, so buttons and links are safe at any size', async () => {
   const map = await tokens();
-  assert.ok(contrastRatio(map.get('--color-on-accent'), map.get('--color-accent')) >= 3);
+  assert.ok(contrastRatio(map.get('--color-on-accent'), map.get('--color-accent-deep')) >= 7);
+  assert.ok(contrastRatio(map.get('--color-accent-deep'), map.get('--color-bg')) >= 7);
 });
 
 test('the deep green clears AA-normal against its on-colour', async () => {

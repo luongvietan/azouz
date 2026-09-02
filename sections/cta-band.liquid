@@ -8,16 +8,18 @@
 -%}
 
 <section class="{{ section_class }}"{{ section.shopify_attributes }}>
-  <div class="container container--narrow cta-band__inner">
-    {%- if section.settings.eyebrow != blank -%}
-      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
-    {%- endif -%}
+  <div class="container cta-band__inner">
+    <div class="cta-band__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
 
-    <h2 class="cta-band__heading">{{ section.settings.heading }}</h2>
+      <h2 class="cta-band__heading">{{ section.settings.heading }}</h2>
 
-    {%- if section.settings.body != blank -%}
-      <div class="cta-band__body lead">{{ section.settings.body }}</div>
-    {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <div class="cta-band__body lead">{{ section.settings.body }}</div>
+      {%- endif -%}
+    </div>
 
     <div class="button-group cta-band__actions">
       {%- if section.settings.cta_primary_label != blank and section.settings.cta_primary_link != blank -%}
@@ -49,7 +51,7 @@
       "options": [
         { "value": "default", "label": "Page" },
         { "value": "alt", "label": "Warm cream" },
-        { "value": "accent", "label": "Green" }
+        { "value": "accent", "label": "Light green" }
       ],
       "default": "alt"
     }

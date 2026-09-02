@@ -41,29 +41,29 @@
       {
         "type": "color",
         "id": "color_accent",
-        "label": "Sage green",
-        "default": "#687B5D",
-        "info": "The brand green. Dark enough to carry white button and body text, so it is used for fills, buttons and the green band."
+        "label": "Light sage",
+        "default": "#DFE5D9",
+        "info": "The brand green, lifted until it sits level with the greys. A surface only — the green band, the announcement bar and the chips. It always takes dark text; white on it is unreadable, so darkening this is what breaks the theme."
       },
       {
         "type": "color",
         "id": "color_accent_deep",
-        "label": "Deep sage",
-        "default": "#5A6A50",
-        "info": "Used wherever green is the text rather than the fill — green links and green type on the page background. Sage itself only reaches 4.1:1 there, so lightening this breaks accessibility."
+        "label": "Graphite",
+        "default": "#3E423C",
+        "info": "The colour that acts: buttons, links, the focus ring, and small filled marks. Charcoal with a trace of the sage hue left in it. Lightening this breaks accessibility — white button labels need 4.5:1 and it currently gives 10.3:1."
       },
       {
         "type": "color",
         "id": "color_background",
         "label": "Page background",
-        "default": "#F6F3ED",
-        "info": "Warm White."
+        "default": "#F7F7F6",
+        "info": "Light grey. Brighter and greyer than the board's Warm White, so the storefront reads as light grey rather than as cream paper."
       },
       {
         "type": "color",
         "id": "color_background_alt",
         "label": "Alternate band background",
-        "default": "#ECE9E4"
+        "default": "#ECECEA"
       },
       {
         "type": "color",

@@ -30,12 +30,12 @@ test('every setting has a unique id', async () => {
   assert.deepEqual([...new Set(ids)], ids, 'duplicate setting ids');
 });
 
-test('the accent colour defaults to the brand sage green', async () => {
+test('the accent colour defaults to the lifted sage surface', async () => {
   const groups = (await loadJson('config/settings_schema.json')).slice(1);
   const accent = groups
     .flatMap((group) => group.settings)
     .find((setting) => setting.id === 'color_accent');
-  assert.equal(accent.default.toUpperCase(), '#687B5D');
+  assert.equal(accent.default.toUpperCase(), '#DFE5D9');
 });
 
 test('settings_data provides a current preset', async () => {

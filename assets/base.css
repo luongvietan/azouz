@@ -127,20 +127,31 @@ a {
   padding-block: var(--space-section);
 }
 
-.section--alt { background-color: var(--color-bg-alt); }
-.section--tint { background-color: var(--color-bg-tint); }
+/* The alt band is 1.10:1 off the ground — a real step in a palette this light,
+   but not one that draws its own edges. The soft rule does that. This is the
+   same device the CTA band uses, one notch quieter, and it is what lets the
+   page keep a visible rhythm without the palette having to get any darker. */
+.section--alt {
+  background-color: var(--color-bg-alt);
+  border-block: var(--rule-ink-soft);
+}
 
-/* The one deliberate green band per page. Body text inside uses the deep
-   green so white copy clears AA rather than AA-large. */
+/* .section--tint is gone. It resolved to the same colour as .section--accent
+   once the tint became the brand's pale green, and two class names for one
+   surface is not a system. Anything that wants the green band asks for the
+   accent band. */
+
+/* The one deliberate green band per page — now a pale one. It is the lightest
+   green the palette has, a step in tone off the alt band rather than a block
+   of colour dropped into the page, and it takes Onyx ink at 14:1 like every
+   other light surface here. Eyebrow and lead keep the page's own inks. */
 .section--accent {
-  background-color: var(--color-accent-deep);
-  color: var(--color-on-accent);
+  background-color: var(--color-accent);
+  color: var(--color-text);
 }
 
-.section--accent .eyebrow,
-.section--accent .lead {
-  color: var(--color-on-accent);
-}
+.section--accent .eyebrow { color: var(--color-text-muted); }
+.section--accent .lead { color: var(--color-text); }
 
 .stack > * + * { margin-block-start: var(--space-md); }
 .stack--lg > * + * { margin-block-start: var(--space-lg); }
@@ -175,9 +186,9 @@ a {
   padding-block: var(--space-sm);
 
   /* 18px at weight 600 is NOT "large scale text" by WCAG — that needs 24px, or
-     18.66px at weight 700. So this label requires the full 4.5:1, which the
-     primary green cannot give (3.37:1 on white). Hence the deep green above.
-     Enforced by tests/base-css.test.js. */
+     18.66px at weight 700. So this label requires the full 4.5:1, which no
+     light green can give at any size. Hence the graphite fill above, at
+     10.3:1. Enforced by tests/base-css.test.js. */
   font-size: 1.125rem;
   font-weight: var(--font-weight-semibold);
   line-height: 1.2;
@@ -589,7 +600,10 @@ a {
   overflow: hidden;
   padding-block: var(--space-sm);
   border-block-start: var(--rule-ink);
-  border-block-end: 1.25rem solid var(--color-accent);
+  /* Silver, not green: at 1.25rem this rule is a band, not a hairline, and a
+     green one read as a second green stripe under the marquee. Silver is
+     illegal as text and legal as a rule — this is a rule. */
+  border-block-end: 1.25rem solid var(--color-hairline);
   background-color: var(--color-bg-alt);
 }
 

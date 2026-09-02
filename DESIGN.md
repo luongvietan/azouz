@@ -8,11 +8,14 @@ colors:
   coffee-brown: "#4A3126"
   sage: "#687B5D"
   burnt-orange: "#C65B32"
+  sage-light: "#DFE5D9"
+  graphite: "#3E423C"
   sage-deep: "#5A6A50"
   orange-deep: "#B3522D"
   muted-grey: "#656563"
   warm-white-alt: "#ECE9E4"
-  sage-tint: "#D4D6CA"
+  mist: "#F7F7F6"
+  mist-alt: "#ECECEA"
   on-accent: "#FFFFFF"
 typography:
   display:
@@ -78,7 +81,7 @@ components:
 
 **Creative North Star: "The packaging is the design system."**
 
-The printed bag label is lifted into the UI: a solid colour rectangle, a tight uppercase title, a hairline rule, a two-column spec grid, and a roast-level dot meter. Everything around it is restraint: Warm White ground, generous section padding, one typeface, one green.
+The printed bag label is lifted into the UI: a solid colour rectangle, a tight uppercase title, a hairline rule, a two-column spec grid, and a roast-level dot meter. Everything around it is restraint: light-grey ground, generous section padding, one typeface, one green — and that green is a tint, not a block.
 
 The system is Swiss-minimal, not rustic. Confidence comes from the bags themselves, from stainless steel, and from Sage used as a voice rather than a wash. The alt band and the sage tint exist to rest the eye between label blocks.
 
@@ -87,9 +90,9 @@ This system rejects burlap, wood, steam illustration, bean scatter, brown gradie
 **Key Characteristics:**
 - Single family (Baloo Bhaijaan 2) with weight contrast only
 - 4px radius; silver hairline at 40% between quiet things, ink rules under headings and between index cells
-- One green band per page
+- One pale green band per page; nothing green is dark, and nothing green is text
 - Logical CSS properties; no physical left/right
-- Product photography sits untreated on Warm White
+- Product photography sits untreated on the light-grey ground
 
 ## 2. Colors
 
@@ -97,30 +100,48 @@ The palette is the Azouz colour board — stainless steel, coffee and nature —
 plus three derived shades so sage, orange and silver stay legal as text.
 
 ### Primary
-- **Sage Green** (`#687B5D`): the brand green. Fills, label blocks, large display type. White on it is 4.6:1 — legal for body text, which the old primary never was, but only by 0.09, so surfaces that actually carry 17px copy still take the deep shade.
-- **Sage Deep** (`#5A6A50`): green *as text* — links, green type on the page, the focus ring — and the button fill. Sage is 4.1:1 on Warm White and fails as text; and while Sage would pass behind a button label at 4.6:1, an 18px SemiBold label is not "large text" by WCAG, so buttons take the 5.8:1 shade rather than a 0.09 margin.
+- **Sage Light** (`#DFE5D9`): the brand green, lifted until it sits at the same lightness as the greys. A **surface only** — the green band, the announcement bar, the chips. Onyx on it is 14:1; white on it is 1.3:1, so nothing light ever sits on it.
+- **Graphite** (`#3E423C`): the colour that acts — buttons, links, the focus ring, small filled marks. The sage hue pushed to charcoal and drained of chroma, so it reads as ink with a trace of the brand in it. White on it is 10.3:1; on the ground it is 9.6:1.
+- **Sage Green** (`#687B5D`) and **Sage Deep** (`#5A6A50`): the colour board's greens. Still defined, no longer painted. The client asked for a green that matches the greys, and neither of these does.
 
 ### Neutral
-- **Warm White** (`#F6F3ED`): page ground.
-- **Warm White Alt** (`#ECE9E4`): alternating section bands. Derived; a 1.09 step off the ground, the same weight the old cream band had.
-- **Onyx Black** (`#171717`): body and headings (16.2:1).
-- **Muted Grey** (`#656563`): eyebrows and secondary text (5.3:1). Silver darkened until it is legal.
-- **Silver** (`#B7B7B3`): hairlines, rules and light label fills only. 1.8:1 as text.
+- **Mist** (`#F7F7F6`): page ground. Brighter and greyer than the board's Warm White — the client asked for light grey rather than cream, and the ground is where that reads.
+- **Mist Alt** (`#ECECEA`): alternating section bands. Derived; a 1.10 step off the ground, the same weight the old cream band had.
+- **Warm White** (`#F6F3ED`): the board's cream. Kept in the token file for warm surfaces; no longer the page ground.
+- **Onyx Black** (`#171717`): body and headings (16.7:1). Also the footer, which is the only dark surface left on the page.
+- **Muted Grey** (`#656563`): eyebrows and secondary text (5.5:1). Silver darkened until it is legal.
+- **Silver** (`#B7B7B3`): hairlines, rules and light label fills only. 1.9:1 as text. It also draws the 20px band under the marquee.
 
 ### Warm and highlight
 - **Coffee Brown** (`#4A3126`): the warm tone. Legal in both directions — 10.8:1 as text, 11.9:1 behind white — so it works as copy, as a label fill, or as a dark band.
 - **Burnt Orange** (`#C65B32`): highlight. Large type, rules, small non-text marks.
 - **Orange Deep** (`#B3522D`): the orange that carries words. Any orange behind or as body text is this one.
-- **Sage Tint** (`#D4D6CA`): chips and tinted bands. Onyx on it only — muted grey does not clear AA there.
 
 ### Named Rules
-**The One Green Voice Rule.** Sage is the only core brand colour. One deliberate green band per page — painted in Sage Deep, because the band carries body copy. Silver, brown and orange support it and never overshadow it.
+**The One Green Voice Rule.** Sage is the only core brand colour, and it is spoken quietly. One deliberate green band per page, painted in Sage Light, plus the announcement bar. Everything that acts is Graphite and every other surface is grey. Silver, brown and orange support the green and never overshadow it.
 
-**The Silver Is Not Text Rule.** Silver on Warm White is 1.8:1. If it carries words, it is a defect. It is the industrial accent — hairlines, rules, and pale label fills that take Onyx ink.
+**The Three Surfaces Rule.** The page has exactly three light surfaces and one
+dark one: Mist is the ground, Mist Alt is the alternating band, Sage Light is
+the brand's own — the announcement bar, the chips, the closing band — and Onyx
+is the footer. There was briefly a fourth, a Mist Tint that measured 1.01:1
+against Sage Light: two names for one colour, which is how a palette stops
+being a system. A surface that cannot be told apart from another surface is
+not a surface, it is a duplicate, and the fix is subtraction.
+
+**The Bands Are Ruled Rule.** A palette this light cannot separate sections by
+value alone — the alt band is 1.10:1 off the ground, which is a real step and
+not a visible edge. So bands draw their own edges: `--rule-ink-soft` top and
+bottom on the alt band, full `--rule-ink` on the green one, which is the
+louder band and earns the louder rule. Contrast the palette cannot spend in
+colour, it spends in line.
+
+**The Green Is A Surface Rule.** No green in this theme is text, and no green in this theme is dark. Sage Light takes Onyx ink and nothing else; the moment a green thing needs to carry a white label or be read as type, it is the wrong colour and Graphite is the right one.
+
+**The Silver Is Not Text Rule.** Silver on the grey ground is 1.9:1. If it carries words, it is a defect. It is the industrial accent — hairlines, rules, and pale label fills that take Onyx ink.
 
 **The Orange Is A Highlight Rule.** Burnt Orange fails in both inks — 3.8:1 as text, 4.3:1 behind white. Nothing that must be read sits on it or is set in it. Use Orange Deep the moment words are involved.
 
-**The Green Reversal.** In the old palette green was too light to sit behind text and fine as text. This one is the reverse. Buttons may use `--color-accent`; links may not.
+**The Green Reversal.** The green has now flipped twice. It began too light to sit behind text and fine as text; the stainless-steel repaint made it dark enough to fill and too light to set; this pass lifts it past both, to a tint that only ever sits behind Onyx. `--color-accent` is a surface, `--color-accent-deep` is the ink that acts, and neither may be used as the other.
 
 ## 3. Typography
 
@@ -144,7 +165,7 @@ plus three derived shades so sage, orange and silver stay legal as text.
 
 ## 4. Elevation
 
-Flat by default. Depth is tonal (Warm White / Alt band / Sage Tint) and the label-block's solid fill. Cards may use a single quiet shadow; they do not combine a 1px border with a wide drop shadow.
+Flat by default. Depth is tonal (Mist / Mist Alt / Sage Light) and the label-block's solid fill. Cards may use a single quiet shadow; they do not combine a 1px border with a wide drop shadow.
 
 ### Shadow Vocabulary
 - **Card** (`0 1px 2px rgb(48 48 48 / 4%), 0 8px 24px rgb(48 48 48 / 6%)`): product tiles only, if used. Never on buttons.
@@ -161,17 +182,17 @@ Flat by default. Depth is tonal (Warm White / Alt band / Sage Tint) and the labe
 
 ### Cards / Containers
 - **Corner Style:** 4px
-- **Background:** Warm White or the label-block fill
+- **Background:** Mist or the label-block fill
 - **Shadow Strategy:** optional quiet card shadow; never both border and wide shadow
 - **Internal Padding:** `--space-lg` (2rem) inside a label-block
 
 ### Inputs / Fields
-- **Style:** hairline stroke, Warm White fill, 4px radius
+- **Style:** hairline stroke, Mist fill, 4px radius
 - **Focus:** 2px Sage Deep outline, 3px offset
 - **Error / Disabled:** sold-out controls are disabled, not restyled as error theatre
 
 ### Navigation
-- Text links in the header, Onyx on Warm White. Active state is weight, not a new colour. Mobile is a `<details>` disclosure, not a scripted drawer. Cart is a link to `/cart` that upgrades to a drawer when JS runs.
+- Text links in the header, Onyx on Mist. Active state is weight, not a new colour. Mobile is a `<details>` disclosure, not a scripted drawer. Cart is a link to `/cart` that upgrades to a drawer when JS runs.
 
 ### Label block (signature)
 The bag label. Fill from `custom.label_color` via `--label-bg`. Title ≥24px so white type on orange / brown / silver / sage stays large-text legal. Spec grid is two columns. Roast meter is five dots.
@@ -215,16 +236,16 @@ feature band. The scrim is a fixed gradient or wash of Onyx, never a tint keyed
 to the artwork, so the contrast the headline gets does not depend on which image
 a merchant uploads.
 
-**One Band, One Colour.** A template carries one green band. The feature band
+**One Band, One Colour.** A template carries one pale green band. The feature band
 falls back to Coffee Brown rather than green when it has no photograph, so a
 page that ends on the green CTA band does not paint two.
 
 ## 7. Do's and Don'ts
 
 ### Do:
-- **Do** put the silver-bag photograph on Warm White with no overlay, crop gimmick, or coloured panel substitute.
+- **Do** put the silver-bag photograph on Mist with no overlay, crop gimmick, or coloured panel substitute.
 - **Do** use `--color-accent-deep` for any green that carries or is body-size text. `--color-accent` is for bands, fills and large display type.
-- **Do** keep one H1, one green band, and logical CSS properties on every template.
+- **Do** keep one H1, one pale green band, and logical CSS properties on every template.
 - **Do** let forms post natively so the page works with scripting off.
 
 ### Don't:
