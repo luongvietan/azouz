@@ -99,16 +99,25 @@
   }
 
   /* A rule between the two rows. Both items span the row, so bordering each of
-     them draws one continuous line across the header — and each row keeps the
-     source's 12.5px of air above and below its own contents. */
+     them draws one continuous line across the header — and each row keeps its
+     own air above and below its contents.
+
+     That air was 12px and is 8px. The header stood at 158px, 197px with the
+     announcement bar, which is a quarter of an 800px laptop viewport on every
+     page of the site. Almost all of it is floor rather than decoration: the
+     logo may not go under 57px (brand guidelines, and the height slider
+     enforces it) and a menu link may not go under 44px, so 101px of the 158
+     cannot move. Trimming the four bands of padding is the whole of what is
+     available without breaking one of those two, and it takes the header to
+     141px and the chrome above the fold to 180. */
   .header__nav,
   .header__actions {
-    padding-block: var(--space-sm);
+    padding-block: var(--space-xs);
     border-block-start: var(--rule-ink);
   }
 
   .header__logo,
-  .header__feature { padding-block: var(--space-sm); }
+  .header__feature { padding-block: var(--space-xs); }
 }
 
 @media (max-width: 55.99em) {
