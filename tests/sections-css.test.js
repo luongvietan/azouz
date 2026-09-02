@@ -42,6 +42,35 @@ test('the header action labels stay hidden until there is room for them', async 
   assert.equal(reveal[1], '64');
 });
 
+/*
+  The disclosure used to hand over to the horizontal menu at 48em. Six items of
+  the shipped length do not fit there: at 768px the nav wrapped to two lines and
+  the header stood at 222px, 261px with the announcement bar, with the shop
+  icons dropped onto a row of their own. It measures single-line from about
+  880px, so the handover is at 56em and iPad portrait keeps the phone header.
+*/
+test('the horizontal menu takes over only where six items fit on one line', async () => {
+  const css = await load();
+  const handover = /@media \(min-width: (\d+)em\) \{\s*\.header__nav \{ display: block; \}\s*\.header__mobile \{ display: none; \}/.exec(css);
+  assert.ok(handover, 'the header disclosure handover breakpoint is missing');
+  assert.equal(handover[1], '56');
+});
+
+/*
+  The photograph led on a narrow screen and took the page's opening with it: at
+  375x812 the headline started at 726 and the first action ended between 1060
+  and 1138, below the fold on all five hero-split templates. Nothing may put the
+  media back in front of the copy.
+*/
+test('the hero copy leads on a narrow screen', async () => {
+  const css = await load();
+  assert.doesNotMatch(
+    css,
+    /\.hero__media \{[^}]*order:\s*-1/,
+    'the hero media is ordered ahead of the copy again',
+  );
+});
+
 test('every navigation and list link meets the 44px target floor', async () => {
   // PRODUCT.md sets 44px. Measured at 375px before this was enforced: drawer
   // links 33px, nested sub-links 28px, footer links 29px, flavour rows 35px —

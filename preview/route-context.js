@@ -214,7 +214,7 @@ export function resolveRoute(pathname, query = new URLSearchParams()) {
       scope: {
         blog: { ...blog, articles, articles_count: articles.length },
         current_tags: [tag],
-        page_title: `${blog.title} — ${tag}`,
+        page_title: `${blog.title} - ${tag}`,
       },
     };
   }

@@ -174,13 +174,18 @@ Online Store → Navigation.
 Both are set per-section in the theme editor (Header → Menu, Footer → Menu), so
 a differently-named menu works — you just have to pick it there.
 
-Keep the header menu to **six items or fewer**. Measured across 768, 900, 1024,
-1280 and 1440 px, six sit on a single row at every width. A seventh wraps onto a
-second line on a tablet — the page never scrolls sideways, but the header gets
-taller and it looks unintended.
+Keep the header menu to **six items or fewer**. The horizontal menu only
+appears from 896 px up; below that — phones and iPad in portrait — the header is
+the logo, the icons and the disclosure toggle, so the menu length costs nothing
+there. Measured at 896, 1024, 1280 and 1440 px, six items of the suggested
+length sit on a single row at every width. A seventh, or a label longer than
+"Own an Azouz Coffee", wraps onto a second line and the header gets taller.
 
 The footer also has a Tagline, Phone and Address, and a switch to hide the
-contact block entirely.
+contact block entirely. **Fill in Phone and Address.** With both blank the
+roastery column is one line of email against two full columns beside it, and
+for a roastery selling to businesses the address is the most load-bearing fact
+on the page — it is the one thing a contact form cannot stand in for.
 
 ---
 

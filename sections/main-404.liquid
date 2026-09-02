@@ -3,10 +3,19 @@
     <h1 class="main-404__heading">{{ 'general.404.title' | t }}</h1>
     <p class="lead">{{ 'general.404.subtext' | t }}</p>
 
+    {%- comment -%}
+      Two filled-and-outlined buttons side by side used to offer "Back to home"
+      and "Continue shopping" — the same idea twice, and neither of them is what
+      someone who mistyped a URL wants. One action, and it is the shop; home is
+      the quiet way back, and the header carries it anyway.
+    {%- endcomment -%}
     <div class="button-group">
-      <a class="button" href="{{ routes.root_url }}">{{ 'general.404.link' | t }}</a>
-      <a class="button button--secondary" href="{{ routes.all_products_collection_url }}">
+      <a class="button" href="{{ routes.all_products_collection_url }}">
         {{ 'cart.general.continue_shopping' | t }}
+      </a>
+      <a class="anchor-arrow" href="{{ routes.root_url }}">
+        {{ 'general.404.link' | t }}
+        {%- render 'icon', name: 'arrow-right' -%}
       </a>
     </div>
   </div>

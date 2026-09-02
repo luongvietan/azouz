@@ -68,7 +68,7 @@
   border-block-end: var(--rule-ink);
 }
 
-@media (max-width: 47.99em) {
+@media (max-width: 55.99em) {
   .header {
     position: relative;
   }
@@ -87,7 +87,7 @@
   min-inline-size: 0;
 }
 
-@media (min-width: 48em) {
+@media (min-width: 56em) {
   .header__inner {
     grid-template-areas:
       'logo feature'
@@ -111,7 +111,7 @@
   .header__feature { padding-block: var(--space-sm); }
 }
 
-@media (max-width: 47.99em) {
+@media (max-width: 55.99em) {
   .header__logo {
     min-inline-size: 0;
     max-inline-size: calc(100% - 7.5rem);
@@ -153,7 +153,7 @@
   justify-self: end;
 }
 
-@media (min-width: 48em) {
+@media (min-width: 56em) {
   .header__feature { display: block; }
 }
 
@@ -309,6 +309,28 @@
   display: none;
 }
 
+/* The toggle draws its own state. Closed it is the bars and "Menu"; open it is
+   the cross and "Close menu". Both pairs ship in the markup so the swap costs
+   no script — see the note in sections/header.liquid. */
+.header__mobile-toggle .icon--close,
+.header__mobile-name--close { display: none; }
+
+.header__mobile[open] > .header__mobile-toggle .icon--menu,
+.header__mobile[open] > .header__mobile-toggle .header__mobile-name--open { display: none; }
+
+.header__mobile[open] > .header__mobile-toggle .icon--close { display: block; }
+.header__mobile[open] > .header__mobile-toggle .header__mobile-name--close { display: inline; }
+
+/* The list is links; this is the action. It needs the space a rule gives it,
+   not the 44px rhythm the links keep. */
+.header__mobile-feature {
+  margin-block-start: var(--space-sm);
+  padding-block-start: var(--space-md);
+  border-block-start: var(--rule-ink-soft);
+}
+
+.header__mobile-feature .button { inline-size: 100%; }
+
 .header__mobile-panel {
   position: absolute;
   inset-inline: 0;
@@ -334,7 +356,7 @@
   text-decoration: none;
 }
 
-@media (min-width: 48em) {
+@media (min-width: 56em) {
   .header__nav { display: block; }
   .header__mobile { display: none; }
 }
@@ -345,11 +367,19 @@
   those actions are worth about 120px. Below 64em the labels stay visually
   hidden, exactly as they are on mobile; the icons keep their accessible names.
 
-  Measured on the two-row header: eight menu items sit on one row at 768px and
-  above. A ninth wraps to a second line rather than pushing the page sideways,
-  which is the failure mode worth having.
+  Re-measured. That claim of "eight menu items on one row at 768px" did not
+  hold: the shipped menu has six, and at 768px it wrapped to two lines and
+  stood the header at 222px — 261px with the announcement bar, 29% of an iPad
+  in portrait, with the shop icons dropped onto a row of their own.
+
+  The nav needs about 880px before six items of this length fit, so the
+  disclosure now runs to 56em (896px) instead of 48em and iPad portrait keeps
+  the phone header. A seventh item, or a longer label than "Own an Azouz
+  Coffee", still wraps rather than pushing the page sideways — that is the
+  failure mode worth having, and it is now several hundred pixels away rather
+  than at the breakpoint itself.
 */
-@media (min-width: 48em) and (max-width: 63.99em) {
+@media (min-width: 56em) and (max-width: 63.99em) {
   .header__inner { column-gap: var(--space-md); }
   .header__menu { gap: var(--space-md); }
   .header__actions { gap: var(--space-2xs); }
@@ -581,9 +611,22 @@
   border-radius: var(--radius-lg);
 }
 
+/* The photograph used to lead on a narrow screen. It cost the page its opening:
+   at 375x812 the bag ran 188-607, the headline started at 726 with 86px of it
+   showing, and the first action ended between 1060 and 1138 — a quarter to a
+   third of a screen below the fold, on all five hero-split templates. A phone
+   opened on a picture of a bag and nothing else.
+
+   Copy leads instead, and the picture is capped so it is a companion to the
+   headline rather than a screen of its own. The desktop order is unchanged;
+   above 56em the grid places both columns and nothing here applies. */
 @media (max-width: 55.99em) {
-  .hero__inner:not(.hero__inner--full) .hero__media {
-    order: -1;
+  .hero__media {
+    max-inline-size: 20rem;
+  }
+
+  .hero__image {
+    max-block-size: 20rem;
   }
 }
 
@@ -1312,14 +1355,29 @@
   color: var(--color-text-muted);
 }
 
+/* The border is the only thing that says "this is a control". It was drawn in
+   Silver, and the enquiry form sits on the alt band: Silver on Mist Alt is
+   1.7:1, and the field's own fill is 1.1:1 against that band. WCAG 1.4.11 puts
+   the floor for the visual boundary of a control at 3:1, so the field had no
+   edge anyone could see and no fill to fall back on.
+
+   Muted Grey is the same hairline weight and 3.2:1 against the band, 5.3:1
+   against the field. Enforced by tests/contrast.test.js. */
 .field__input {
   inline-size: 100%;
   min-block-size: 3rem;
   padding: var(--space-xs) var(--space-sm);
   color: var(--color-text);
   background-color: var(--color-bg);
-  border: 1px solid var(--color-hairline);
+  border: 1px solid var(--color-text-muted);
   border-radius: var(--radius);
+}
+
+/* 4.3:1 against the field fill was under the 4.5:1 body floor. This is the
+   same Muted Grey the hints already use, which clears it at 5.3:1. */
+.field__input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
 }
 
 .field__input:focus-visible {

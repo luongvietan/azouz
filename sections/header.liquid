@@ -146,9 +146,18 @@
       even if theme.js never loads.
     {%- endcomment -%}
     <details class="header__mobile">
+      {%- comment -%}
+        Both icons and both names are in the markup, and CSS shows the pair that
+        matches [open]. The alternative — swapping them in script — would leave
+        the toggle stuck on "Menu" in exactly the case this disclosure exists
+        for, a page whose JavaScript never ran. <summary> supplies aria-expanded
+        on its own; this is the same state drawn for the people reading it.
+      {%- endcomment -%}
       <summary class="header__action header__mobile-toggle">
         {%- render 'icon', name: 'menu' -%}
-        <span class="visually-hidden">{{ 'general.accessibility.menu' | t }}</span>
+        {%- render 'icon', name: 'close' -%}
+        <span class="visually-hidden header__mobile-name--open">{{ 'general.accessibility.menu' | t }}</span>
+        <span class="visually-hidden header__mobile-name--close">{{ 'general.accessibility.close_menu' | t }}</span>
       </summary>
       <div class="header__mobile-panel">
         <ul class="header__mobile-menu" role="list">
@@ -164,8 +173,16 @@
               {%- endif -%}
             </li>
           {%- endfor -%}
+          {%- comment -%}
+            The standing invitation, and on a phone this is the only place it
+            appears. Drawn as a button rather than as a seventh navigation link,
+            so it keeps the weight it has in the desktop header instead of
+            disappearing into the list it closes.
+          {%- endcomment -%}
           {%- if has_feature -%}
-            <li><a class="header__mobile-link" href="{{ section.settings.feature_link }}">{{ section.settings.feature_label }}</a></li>
+            <li class="header__mobile-feature">
+              <a class="button" href="{{ section.settings.feature_link }}">{{ section.settings.feature_label }}</a>
+            </li>
           {%- endif -%}
         </ul>
       </div>

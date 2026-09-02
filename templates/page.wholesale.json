@@ -7,7 +7,7 @@
         "heading": "Wholesale Coffee for Your Business.",
         "body": "<p>Reliable, consistent coffee for cafés, restaurants, hotels, offices and distributors.</p><p>Choose from our existing blends or work with us to create your own.</p>",
         "image_alt": "Dead Sea Blend wholesale bag, silver foil on Off White",
-        "cta_primary_label": "Request Wholesale Pricing",
+        "cta_primary_label": "Get a Quote",
         "cta_primary_link": "/pages/get-a-quote",
         "cta_secondary_label": "Request a Sample",
         "cta_secondary_link": "/pages/request-a-sample",
@@ -167,9 +167,9 @@
       "settings": {
         "heading": "Need Help Choosing?",
         "body": "<p>Tell us what coffee machine you use, how much coffee you consume and the flavour profile you prefer. We can recommend a blend or prepare samples for you to try.</p>",
-        "cta_primary_label": "Get Wholesale Pricing",
+        "cta_primary_label": "Get a Quote",
         "cta_primary_link": "/pages/get-a-quote",
-        "cta_secondary_label": "Try a sample first",
+        "cta_secondary_label": "Request a Sample",
         "cta_secondary_link": "/pages/request-a-sample",
         "background": "accent"
       }

@@ -211,7 +211,6 @@
   flex-wrap: wrap;
   align-items: end;
   gap: var(--space-sm);
-  margin-block-end: var(--space-lg);
 }
 
 .field--inline {
@@ -368,6 +367,25 @@
 .main-product__image--thumb {
   aspect-ratio: 1 / 1;
   object-fit: cover;
+}
+
+/* On a phone the gallery is the whole first screen and then some: a 4:5 bag at
+   full column width stood 419px tall, the rail of angles under it, and the
+   product's own name did not start until y=801 of an 812px screen. The lead
+   shot is capped against the viewport instead — width auto, so it shrinks
+   rather than crops — and the rail is sized to what is left of the row.
+   Nothing is hidden; the same four angles are still in reading order. */
+@media (max-width: 55.99em) {
+  .main-product__image--lead {
+    inline-size: auto;
+    max-block-size: 40vh;
+    max-block-size: 40dvh;
+    margin-inline: auto;
+  }
+
+  .main-product__image--thumb {
+    max-block-size: 4.5rem;
+  }
 }
 
 /* The buy column is a stack of five things and every gap between them was
@@ -755,10 +773,31 @@ cart-drawer[inert] {
   margin: 0;
 }
 
+/* One row, not three. Stacked, the description, the count and the sort control
+   spent 694px of an 800px screen before the first product card — the shop's own
+   landing view showed about 100px of a coffee. Side by side they cost a single
+   row, and the grid starts inside the fold.
+
+   Narrow screens keep the stack; there is no second column to put anything in. */
+.collection__toolbar {
+  display: grid;
+  gap: var(--space-md);
+  margin-block-end: var(--space-lg);
+}
+
+@media (min-width: 48em) {
+  .collection__toolbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    column-gap: var(--space-xl);
+  }
+
+  .collection__sort { justify-self: end; }
+}
+
 .collection__intro {
   display: grid;
   gap: var(--space-sm);
-  margin-block-end: var(--space-xl);
   max-inline-size: var(--content-narrow);
 }
 

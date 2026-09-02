@@ -184,3 +184,40 @@ test('the hairline token is documented as non-text — it fails text contrast by
     'if this ever passes, update the spec: hairline could then be used for text',
   );
 });
+
+/*
+  WCAG 1.4.11 puts the floor for the visual boundary of a control at 3:1.
+
+  The form fields drew their border in Silver and the enquiry form sits on the
+  alt band: 1.7:1, with the field's own fill at 1.1:1 against that band, so
+  there was neither an edge you could see nor a fill to fall back on. The
+  border is Muted Grey now — the same hairline weight, and legal against both
+  grounds and against the field itself.
+*/
+test('a form field has a visible boundary on both page grounds', async () => {
+  const map = await tokens();
+  const border = map.get('--color-text-muted');
+
+  assert.ok(
+    contrastRatio(border, map.get('--color-bg-alt')) >= 3,
+    'the field border is invisible on the alt band, where the enquiry form sits',
+  );
+  assert.ok(contrastRatio(border, map.get('--color-bg')) >= 3);
+
+  assert.ok(
+    contrastRatio(map.get('--color-hairline'), map.get('--color-bg-alt')) < 3,
+    'if Silver ever clears 3:1 on the alt band it can go back to drawing controls',
+  );
+});
+
+/* The placeholder is text, so it answers to 4.5:1 and not to 3:1. It was
+   #757575 on the field fill, which measured 4.3:1. */
+test('the placeholder ink clears AA-normal inside a field', async () => {
+  const map = await tokens();
+  const css = await readFile(resolveInTheme('assets/sections.css'), 'utf8');
+  const rule = /\.field__input::placeholder \{([^}]*)\}/.exec(css);
+
+  assert.ok(rule, 'the placeholder rule is missing from sections.css');
+  assert.match(rule[1], /color:\s*var\(--color-text-muted\)/);
+  assert.ok(contrastRatio(map.get('--color-text-muted'), map.get('--color-bg')) >= 4.5);
+});

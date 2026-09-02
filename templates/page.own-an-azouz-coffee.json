@@ -6,7 +6,7 @@
         "eyebrow": "Coffee shop opportunity",
         "heading": "Own an Azouz Coffee.",
         "body": "<p>Bring Azouz Coffee to your neighbourhood.</p><p>From coffee supply and equipment to branding, menu development and operational support, we help you open and run an Azouz Coffee location.</p>",
-        "cta_primary_label": "Explore Opportunities",
+        "cta_primary_label": "Get a Quote",
         "cta_primary_link": "/pages/get-a-quote",
         "cta_secondary_label": "Request a Sample",
         "cta_secondary_link": "/pages/request-a-sample",
@@ -88,7 +88,7 @@
           "settings": {
             "title": "A Full Azouz Coffee Location",
             "body": "Your own shop, opened and fitted as an Azouz Coffee from the counter out.",
-            "link_label": "Explore Opportunities",
+            "link_label": "Get a Quote",
             "link": "/pages/get-a-quote"
           }
         },
@@ -97,7 +97,7 @@
           "settings": {
             "title": "An Azouz Corner in Your Business",
             "body": "A coffee counter inside a hotel, restaurant, office or retail space you already run.",
-            "link_label": "Talk to Us",
+            "link_label": "Get a Quote",
             "link": "/pages/get-a-quote"
           }
         }
@@ -126,7 +126,7 @@
         "eyebrow": "",
         "heading": "Let's Talk About Your Location.",
         "body": "<p>Tell us where you are and what size of space you have, and we'll come back with what opening an Azouz Coffee there involves.</p>",
-        "cta_primary_label": "Explore Opportunities",
+        "cta_primary_label": "Get a Quote",
         "cta_primary_link": "/pages/get-a-quote",
         "cta_secondary_label": "Request a Sample",
         "cta_secondary_link": "/pages/request-a-sample",

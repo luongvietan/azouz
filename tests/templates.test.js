@@ -165,16 +165,70 @@ test('the wholesale page carries its headline and all four ranges', async () => 
   }
 });
 
+/*
+  Both closing bands lead with the quote and offer the sample second. The
+  labels used to say that in four different ways — "Get a Private Label Quote",
+  "Get Wholesale Pricing", "Try a sample first" — so the assertion is now on the
+  order of the two actions rather than on wording that says the same thing.
+*/
+const closingActions = (html) => {
+  const band = /<section[^>]*cta-band[\s\S]*?<\/section>/.exec(html);
+  assert.ok(band, 'the closing cta-band is missing');
+  return [...band[0].matchAll(/<a[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)].map((match) => [
+    match[1],
+    match[2].replace(/<[^>]+>/g, '').trim(),
+  ]);
+};
+
 test('the private label closing band leads with a quote, not a repeated sample CTA', async () => {
-  const html = await renderAll('page.private-label.json');
-  assert.match(html, /Get a Private Label Quote/);
-  assert.match(html, /Try a sample first/);
+  const actions = closingActions(await renderAll('page.private-label.json'));
+  assert.deepEqual(actions, [
+    ['/pages/get-a-quote', 'Get a Quote'],
+    ['/pages/request-a-sample', 'Request a Sample'],
+  ]);
 });
 
-test('the wholesale closing band leads with pricing, not a repeated sample CTA', async () => {
-  const html = await renderAll('page.wholesale.json');
-  assert.match(html, /Get Wholesale Pricing/);
-  assert.match(html, /Try a sample first/);
+test('the wholesale closing band leads with a quote, not a repeated sample CTA', async () => {
+  const actions = closingActions(await renderAll('page.wholesale.json'));
+  assert.deepEqual(actions, [
+    ['/pages/get-a-quote', 'Get a Quote'],
+    ['/pages/request-a-sample', 'Request a Sample'],
+  ]);
+});
+
+/*
+  Eight labels pointed at /pages/get-a-quote: "Start Your Project", "Get a
+  Private Label Quote", "Request Wholesale Pricing", "Get Wholesale Pricing",
+  "Become a Distributor", "Explore Opportunities", "Talk to Us" and "Get a
+  Quote". One destination reached under eight names is eight things as far as a
+  reader is concerned, and "Explore Opportunities" promised a page to read and
+  opened a form. One label per destination; the heading above each band carries
+  the context the label used to carry.
+*/
+test('every route to the enquiry forms is called the same thing', async () => {
+  const destinations = {
+    '/pages/get-a-quote': 'Get a Quote',
+    '/pages/request-a-sample': 'Request a Sample',
+  };
+
+  for (const template of [
+    'index.json',
+    'page.private-label.json',
+    'page.wholesale.json',
+    'page.our-brands.json',
+    'page.own-an-azouz-coffee.json',
+  ]) {
+    const html = await renderAll(template);
+    for (const [href, expected] of Object.entries(destinations)) {
+      const links = [...html.matchAll(new RegExp(`<a[^>]*href="${href}"[^>]*>([\s\S]*?)</a>`, 'g'))];
+      const labels = [...new Set(links.map((match) => match[1].replace(/<[^>]+>/g, '').trim()))];
+      assert.deepEqual(
+        labels.filter((label) => label !== expected),
+        [],
+        `${template} calls ${href} something other than "${expected}"`,
+      );
+    }
+  }
 });
 
 test('the our brands page bridges into the shop with packaging photography', async () => {
