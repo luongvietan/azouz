@@ -65,14 +65,14 @@
     each pair divided by a rule. A <dl> rather than a table — these are name and
     value, not a grid of data — and every row is guarded, so a store that has
     only filled in some of the definitions gets a shorter list, not empty rows.
+
+    Tasting notes are deliberately NOT among them. They are already the label
+    block's subtitle a few lines up, set the way the bag sets them — pipe
+    separated, on the colour. Repeating the same metafield as a comma-separated
+    spec row said one thing twice in one card and was the single largest
+    contributor to its height. The bag wins; the spec list starts at process.
   {%- endcomment -%}
   {%- capture specs -%}
-    {%- if notes != blank -%}
-      <div class="product-card__spec">
-        <dt class="product-card__spec-term">{{ 'products.product.tasting_notes' | t }}</dt>
-        <dd class="product-card__spec-value">{{ notes | join: ', ' }}</dd>
-      </div>
-    {%- endif -%}
     {%- if process != blank -%}
       <div class="product-card__spec">
         <dt class="product-card__spec-term">{{ 'products.product.process' | t }}</dt>

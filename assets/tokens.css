@@ -133,6 +133,15 @@
   --content-narrow: 44rem;
   --gutter: clamp(1.25rem, 4vw, 2rem);
 
+  /* The chrome standing above the hero: announcement bar plus header. The hero
+     is capped against the viewport minus this, so its bottom edge — and the
+     call to action sitting on it — lands inside the first screen rather than
+     just under it. Measured: 39px announcement + 85px single-line header on a
+     phone; the two-row header takes it to 197px from 48em up, restated below.
+     A merchant who switches the announcement bar off loses 39px of hero rather
+     than losing the button, which is the failure worth having. */
+  --chrome-block-size: 7.75rem;   /* 124px — measured below 48em */
+
   /* --- Surface --- */
   --radius: 4px;
   --radius-lg: 8px;
@@ -151,4 +160,26 @@
   --duration-fast: 160ms;
   --duration: 280ms;
   --duration-slow: 560ms;
+}
+
+/* The header goes from one line to two at 48em, and the hero cap has to follow
+   it. This is the only token that changes with the viewport, because it is the
+   only one that describes a measured height rather than a chosen value.
+
+   Three bands, because the header has three shapes. Between 48em and 64em the
+   action labels are hidden and the menu no longer fits on one line, so it wraps
+   to a second row and the header stands at 222px — the wrap the header's own
+   comment calls the failure mode worth having. The cap has to respect it, not
+   argue with it. From 64em the labels return, the menu fits, and the header
+   settles at the 158px it keeps for the rest of the range.
+
+   Measured: 261px at 768–1023, 197px at 1024 and above, both with the
+   announcement bar on. Each value is rounded up, so the cap can only ever
+   reserve slightly too much room — never too little. */
+@media (min-width: 48em) {
+  :root { --chrome-block-size: 16.5rem; }
+}
+
+@media (min-width: 64em) {
+  :root { --chrome-block-size: 12.5rem; }
 }

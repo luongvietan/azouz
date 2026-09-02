@@ -125,7 +125,13 @@
     gap: var(--space-2xs);
   }
 
+  /* Tightening the inline padding to fit logo, search, cart and toggle on one
+     line left these 28px and 39px wide against a 44px height — a target that
+     is only square in one direction. The floor is restated on the inline axis
+     so the row stays as narrow as it was without the icons shrinking with it. */
   .header__action {
+    justify-content: center;
+    min-inline-size: 2.75rem;
     padding-inline: var(--space-2xs);
   }
 }
@@ -169,10 +175,17 @@
   align-items: center;
 }
 
+/* 44px, the same floor the drawer links and .anchor-arrow already keep. These
+   measured 39px: fine under a mouse, a thumb-width short as the primary
+   navigation of the whole site. The height is spent inside the row, not on it —
+   the actions beside them already stand 44px tall, so the menu row does not
+   grow and neither does the header. */
 .header__link {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
   font-weight: var(--font-weight-semibold);
   text-decoration: none;
-  padding-block: var(--space-2xs);
   border-block-end: 2px solid transparent;
 }
 
@@ -192,6 +205,7 @@
 .header__disclosure > summary {
   display: inline-flex;
   align-items: center;
+  min-block-size: 2.75rem;
   gap: var(--space-2xs);
   cursor: pointer;
   list-style: none;
@@ -1603,9 +1617,23 @@
 /* Measured on the source: a fixed 800px band, not a viewport fraction. A vh
    hero collapses on a laptop in landscape and swallows a phone whole; a fixed
    band is the same picture on every screen, capped so it can never exceed the
-   viewport on a short one. */
-.hero-overlay--tall { min-block-size: min(50rem, 100vh - 8rem); }
-.hero-overlay--medium { min-block-size: min(35rem, 100vh - 8rem); }
+   viewport on a short one.
+
+   The cap subtracts the chrome that stands above the hero. It used to subtract
+   a flat 8rem, which was about right for the phone header and 69px short of
+   the two-row desktop one — so on any laptop under roughly 950px of viewport
+   the hero ran past the fold and took the primary call to action with it. The
+   token is measured per breakpoint now, and dvh keeps the mobile browser bars
+   out of the sum. */
+.hero-overlay--tall {
+  min-block-size: min(50rem, 100vh - var(--chrome-block-size));
+  min-block-size: min(50rem, 100dvh - var(--chrome-block-size));
+}
+
+.hero-overlay--medium {
+  min-block-size: min(35rem, 100vh - var(--chrome-block-size));
+  min-block-size: min(35rem, 100dvh - var(--chrome-block-size));
+}
 
 /* Without a photograph the hero is a plain block on the page ground, so it
    needs its own breathing room where the image would have supplied it. */

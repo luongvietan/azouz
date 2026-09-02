@@ -483,6 +483,13 @@ a {
 /* Sentence case at body size, not an uppercase eyebrow: the source sets these
    at 16px regular. They are sentences — "Read our sourcing approach" — and the
    Short Caps Rule says a sentence is never set in caps. */
+/* The underline is drawn soft, and only the underline. Inside a .list-lines
+   item the link sits about 40px above that item's own divider, and both used
+   to be a 1px ink rule — two identical lines that close together read as two
+   dividers rather than as a link above a divider. The soft stroke keeps the
+   affordance (the arrow and the semibold weight carry most of it anyway) and
+   lets the structural rule be the only full-strength line in the block. It
+   goes to ink on hover and focus, where it is the thing being pointed at. */
 .anchor-arrow {
   display: inline-flex;
   align-items: center;
@@ -492,10 +499,14 @@ a {
   font-weight: var(--font-weight-semibold);
   text-decoration: none;
   color: var(--color-text);
-  border-block-end: var(--rule-ink);
+  border-block-end: var(--rule-ink-soft);
 }
 
-.anchor-arrow:hover { color: var(--color-accent-deep); }
+.anchor-arrow:hover,
+.anchor-arrow:focus-visible {
+  color: var(--color-accent-deep);
+  border-block-end-color: currentcolor;
+}
 
 .anchor-arrow svg {
   inline-size: 1em;
