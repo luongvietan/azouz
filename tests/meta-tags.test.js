@@ -45,10 +45,10 @@ test('structured-data emits valid Organization JSON-LD', async () => {
 
 test('structured-data emits Product JSON-LD on a product page', async () => {
   const fixtureProduct = {
-    title: 'Wadi Rum Blend',
+    title: 'Espresso Arabica Beans',
     description: 'An espresso roast.',
-    url: '/products/wadi-rum-blend',
-    featured_image: '/preview-media/wadi-rum-blend.jpg',
+    url: '/products/espresso-arabica-beans',
+    featured_image: '/preview-media/espresso-arabica-beans.jpg',
     vendor: 'Azouz Coffee',
     price: 750,
     available: true,
@@ -66,10 +66,10 @@ test('structured-data emits BreadcrumbList on a product page', async () => {
   const out = await renderSnippet('structured-data', {
     request: { page_type: 'product' },
     product: {
-      title: 'Wadi Rum Blend',
+      title: 'Espresso Arabica Beans',
       description: 'An espresso roast.',
-      url: '/products/wadi-rum-blend',
-      featured_image: '/preview-media/wadi-rum-blend.jpg',
+      url: '/products/espresso-arabica-beans',
+      featured_image: '/preview-media/espresso-arabica-beans.jpg',
       vendor: 'Azouz Coffee',
       price: 750,
       available: true,

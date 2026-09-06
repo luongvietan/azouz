@@ -9,7 +9,7 @@ const render = (cart) => renderSection('cart-drawer', { scope: { cart } });
 
 function filled() {
   resetCart();
-  addLine('wadi-rum-blend-250-wb', 1);
+  addLine('espresso-arabica-beans-500g', 1);
   return buildCart();
 }
 
@@ -39,7 +39,7 @@ test('the refreshable region is marked so a refresh does not destroy the element
 test('renders the cart lines', async () => {
   const html = await render(filled());
   assert.match(html, /cart-line/);
-  assert.match(html, /Wadi Rum Blend/);
+  assert.match(html, /Espresso Arabica Beans/);
 });
 
 test('renders the empty state when the cart is empty', async () => {

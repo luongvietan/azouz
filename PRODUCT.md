@@ -20,7 +20,7 @@ Azouz Coffee is a hybrid Shopify theme: B2B lead-generation pages (Home, Private
 
 Swiss-minimal, packaging-led, restrained.
 
-Voice is direct and commercial: what Azouz roasts, for whom, and what to do next. No rustic warmth, no craft-theatre. Confidence comes from the label block, the silver-bag photography, the stainless-steel neutrals, and the sage green used sparingly.
+Voice is direct and commercial: what Azouz roasts, for whom, and what to do next. No rustic warmth, no craft-theatre. Confidence comes from the label block, the packaging photography, the stainless-steel neutrals, and the sage green used sparingly.
 
 Emotional goals: competence for a B2B buyer; quiet premium for a retail customer.
 
@@ -35,7 +35,7 @@ Emotional goals: competence for a B2B buyer; quiet premium for a retail customer
 ## Design Principles
 
 1. **The packaging is the design system.** The bag label (solid colour panel, tight uppercase title, hairline, spec grid, roast dots) is the signature component. Product cards, range cards, and service cards derive from it.
-2. **Show the bag, don't decorate around it.** Product photography is silver foil on near-white. It sits on the light-grey ground with no treatment. Empty colour panels where a bag should be are a bug.
+2. **Show the bag, don't decorate around it.** Product photography is the packaging shot on near-white: the navy espresso bag, the pale blue Turkish sachet, the yellow filter can. It sits on the light-grey ground with no treatment. Empty colour panels where a bag should be are a bug. Each bag's own colour is its `label_color`, so the card and the bag are the same object.
 3. **One green voice, and a quiet one.** Sage is the only core brand colour; silver, coffee brown and burnt orange support it. It appears as a pale tint — one band per page plus the announcement bar — never as a dark fill and never as text. Anything that acts is graphite.
 4. **English now, Arabic later.** Logical CSS properties and externalised strings. No physical `left`/`right`. Adding `locales/ar.json` must not require a CSS rewrite.
 5. **Works with scripting off.** Forms post natively. Menus are `<details>`. Reveal motion never hides content until the custom element is defined.

@@ -18,21 +18,30 @@ test('every variant has a url carrying its own variant id', () => {
   }
 });
 
-test('one variant is unavailable so the picker disabled state can be reviewed', () => {
+/*
+  The catalogue used to carry a sold-out variant and a discounted one so the
+  preview could show both states. It cannot any more: dist/products.csv is
+  generated from these fixtures and imported into the client's live store, so a
+  demo compare-at price would ship as a real "was" price against a real bag, and
+  a demo zero would ship the bag out of stock. Both states are still covered,
+  against products the tests build themselves: snippet-price.test.js,
+  snippet-product-card.test.js, section-main-product.test.js.
+*/
+test('no bag carries a compare-at price the client did not set', () => {
   const all = buildFixtures().products.flatMap((product) => product.variants);
-  assert.ok(all.some((variant) => variant.available === false));
+  assert.ok(all.every((variant) => variant.compare_at_price === null));
 });
 
-test('one variant is on sale so compare-at pricing can be reviewed', () => {
+test('every bag is in stock, which is the state the client imports', () => {
   const all = buildFixtures().products.flatMap((product) => product.variants);
-  assert.ok(all.some((variant) => variant.compare_at_price > variant.price));
+  assert.ok(all.every((variant) => variant.available === true));
 });
 
 test('search returns the products whose title or notes match the terms', () => {
-  const search = buildSearchFixture('wadi');
+  const search = buildSearchFixture('turkish');
   assert.equal(search.performed, true);
-  assert.equal(search.terms, 'wadi');
-  assert.deepEqual(search.results.map((r) => r.handle), ['wadi-rum-blend']);
+  assert.equal(search.terms, 'turkish');
+  assert.deepEqual(search.results.map((r) => r.handle), ['turkish-coffee']);
   assert.equal(search.results_count, 1);
 });
 

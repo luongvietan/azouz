@@ -78,7 +78,7 @@ const list = (values) => JSON.stringify(values ?? []);
  * groups rows into a product.
  *
  * @param {object} [options]
- * @param {string} [options.imageBase] prefix turning `wadi-rum-blend.jpg` into a URL
+ * @param {string} [options.imageBase] prefix turning `espresso-arabica-beans.jpg` into a URL
  */
 export function buildRows({ imageBase = '' } = {}) {
   const { products } = buildFixtures();

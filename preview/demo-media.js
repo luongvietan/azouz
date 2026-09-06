@@ -24,30 +24,30 @@
 export const DEMO_MEDIA = {
   'templates/index.json': {
     hero: '/preview-media/hero-azouz-coffee-cup.jpg',
-    'story.sourcing': '/preview-media/downtown-blend.jpg',
-    'story.roasting': '/preview-media/wadi-rum-blend-alt.jpg',
-    'story.packing': '/preview-media/filtered-coffee-bags.jpg',
-    sample: '/preview-media/dead-sea-blend.jpg',
+    'story.sourcing': '/preview-media/turkish-coffee.jpg',
+    'story.roasting': '/preview-media/espresso-arabica-beans.jpg',
+    'story.packing': '/preview-media/filter-coffee-can.jpg',
+    sample: '/preview-media/espresso-arabica-beans-alt.jpg',
   },
   'templates/page.own-an-azouz-coffee.json': {
-    hero: '/preview-media/filtered-coffee-bags.jpg',
-    roastery: '/preview-media/wadi-rum-blend-alt.jpg',
+    hero: '/preview-media/filter-coffee-can.jpg',
+    roastery: '/preview-media/espresso-arabica-beans.jpg',
   },
   'templates/page.private-label.json': {
-    hero: '/preview-media/wadi-rum-blend-alt.jpg',
+    hero: '/preview-media/espresso-arabica-beans-alt.jpg',
   },
   'templates/page.wholesale.json': {
-    hero: '/preview-media/dead-sea-blend.jpg',
+    hero: '/preview-media/filter-coffee-can.jpg',
   },
   'templates/page.our-brands.json': {
-    hero: '/preview-media/downtown-blend.jpg',
-    azouz: '/preview-media/wadi-rum-blend.jpg',
+    hero: '/preview-media/turkish-coffee.jpg',
+    azouz: '/preview-media/espresso-arabica-beans.jpg',
   },
   'templates/page.enquiry.json': {
-    hero: '/preview-media/wadi-rum-blend.jpg',
+    hero: '/preview-media/espresso-arabica-beans.jpg',
   },
   'templates/page.get-a-quote.json': {
-    hero: '/preview-media/dead-sea-blend.jpg',
+    hero: '/preview-media/turkish-coffee-alt.jpg',
   },
 };
 

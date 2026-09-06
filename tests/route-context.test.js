@@ -15,18 +15,18 @@ test('templateForRoute falls back to the default page template', () => {
 });
 
 test('a product url resolves to the product template with that product in scope', () => {
-  const route = resolveRoute('/products/wadi-rum-blend');
+  const route = resolveRoute('/products/espresso-arabica-beans');
   assert.equal(route.page_type, 'product');
   assert.equal(route.template, 'templates/product.json');
-  assert.equal(route.scope.product.title, 'Wadi Rum Blend');
+  assert.equal(route.scope.product.title, 'Espresso Arabica Beans');
 });
 
 test('a product url with ?variant= selects that variant', () => {
   const route = resolveRoute(
-    '/products/wadi-rum-blend',
-    new URLSearchParams('variant=wadi-rum-blend-1kg-wb'),
+    '/products/espresso-arabica-beans',
+    new URLSearchParams('variant=espresso-arabica-beans-500g'),
   );
-  assert.equal(route.scope.product.selected_or_first_available_variant.id, 'wadi-rum-blend-1kg-wb');
+  assert.equal(route.scope.product.selected_or_first_available_variant.id, 'espresso-arabica-beans-500g');
 });
 
 test('an unknown product handle resolves to the 404 template', () => {
@@ -38,11 +38,11 @@ test('an unknown product handle resolves to the 404 template', () => {
 test('a collection url resolves to the collection template', () => {
   const route = resolveRoute('/collections/all');
   assert.equal(route.page_type, 'collection');
-  assert.equal(route.scope.collection.products.length, 4);
+  assert.equal(route.scope.collection.products.length, 3);
 });
 
 test('preview page titles follow the resolved resource', () => {
-  assert.equal(resolveRoute('/products/wadi-rum-blend').scope.page_title, 'Wadi Rum Blend');
+  assert.equal(resolveRoute('/products/espresso-arabica-beans').scope.page_title, 'Espresso Arabica Beans');
   assert.equal(resolveRoute('/collections/all').scope.page_title, 'Our Coffee');
   assert.equal(resolveRoute('/pages/private-label').scope.page_title, 'Private Label');
   assert.equal(resolveRoute('/pages/wholesale').scope.page_title, 'Wholesale');
@@ -96,9 +96,9 @@ test('the cart route renders the live preview cart', () => {
 });
 
 test('the search route reads its terms from the query string', () => {
-  const route = resolveRoute('/search', new URLSearchParams('q=wadi'));
+  const route = resolveRoute('/search', new URLSearchParams('q=turkish'));
   assert.equal(route.page_type, 'search');
-  assert.equal(route.scope.search.terms, 'wadi');
+  assert.equal(route.scope.search.terms, 'turkish');
   assert.equal(route.scope.search.results_count, 1);
 });
 

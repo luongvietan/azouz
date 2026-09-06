@@ -7,7 +7,7 @@ import { resetCart, addLine, buildCart } from '../preview/cart-api.js';
 
 function filled() {
   resetCart();
-  addLine('wadi-rum-blend-250-wb', 2);
+  addLine('espresso-arabica-beans-500g', 2);
   return buildCart();
 }
 

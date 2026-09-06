@@ -41,9 +41,9 @@ export function setLine(variantId, quantity) {
 /** Fill the cart with three lines so the populated state is reviewable. */
 export function seedCart() {
   resetCart();
-  addLine('wadi-rum-blend-250-wb', 2);
-  addLine('dead-sea-blend-1kg-wb', 1);
-  addLine('fcb-box10', 3);
+  addLine('espresso-arabica-beans-500g', 2);
+  addLine('turkish-coffee-200g', 1);
+  addLine('filter-coffee-can-400g', 3);
 }
 
 /** @returns {object} a Liquid `cart` drop. */

@@ -225,9 +225,18 @@ itself.
 there, not in the theme. Open it in Excel or Google Sheets, set the real prices,
 then import at Products → **Import**.
 
-Prices in the shipped file are placeholders. Everything else — the option
-structure (Weight × Grind), the metafield columns and the tasting notes — is
-already correct and matches what the theme reads.
+The shipped file carries the three products and the prices you supplied:
+Espresso Arabica Beans 500g at 7.500, Turkish Coffee 200g at 2.800, Filter
+Coffee Can 400g at 7.250. Each is a single variant, because each ships in one
+size and one grind; adding a second weight means adding a variant row, not a
+new option.
+
+Three metafield columns are deliberately blank, because they are printed on
+none of the bags and we have not been told them: `custom.origin`,
+`custom.process` and `custom.altitude`. Fill them in and the product page and
+the cards grow those spec rows on their own. Everything else — the option
+structure (Weight × Grind), the roast level, the tasting notes and the label
+colour — matches what the theme reads.
 
 To regenerate the file after changing the catalogue:
 
@@ -343,7 +352,7 @@ concrete. No burlap, no wood grain, no steam, no latte art.
 | **Home → Specialty card** | Top-down: green beans, roasted beans, cupping bowls, origin cards. Very clean, plenty of empty space |
 | **Home → Own an Azouz Coffee card** | The counter of an Azouz location — signage, cups and the bag in one frame |
 | **Home → Roasted in Jordan** | A wider shot of the actual roaster, sacks and production area, or somebody working at the machine. Real manufacturing is what carries credibility |
-| **Our Brands** | The Amman, Downtown, Dead Sea, Petra and Wadi Rum bags photographed individually against off-white or light concrete |
+| **Our Brands** | The Espresso Arabica Beans bag, the Turkish Coffee sachet and the Filter Coffee can photographed individually against off-white or light concrete |
 
 Two practical notes:
 

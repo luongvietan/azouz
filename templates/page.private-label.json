@@ -15,7 +15,7 @@
         "eyebrow": "Private Label",
         "heading": "Build Your Own Coffee Brand.",
         "body": "<p>We help businesses create coffee products under their own brand: from coffee selection and roasting to grinding and packaging.</p>",
-        "image_alt": "Wadi Rum Blend retail bag, silver foil on Off White",
+        "image_alt": "Espresso Arabica Beans, the 500g bag, Arabic front",
         "cta_primary_label": "Get a Quote",
         "cta_primary_link": "/pages/get-a-quote",
         "cta_secondary_label": "Request a Sample",
@@ -148,6 +148,59 @@
         "filter",
         "whole_bean",
         "ground"
+      ]
+    },
+    "white_label": {
+      "type": "feature-grid",
+      "settings": {
+        "eyebrow": "Ready to label",
+        "heading": "Our white label espresso blend.",
+        "body": "A blend already developed, roasted and proven, waiting for your name on the bag.",
+        "background": "alt"
+      },
+      "blocks": {
+        "profile": {
+          "type": "feature",
+          "settings": {
+            "title": "Flavour profile",
+            "body": "Dark chocolate, toasted nuts and caramel sweetness."
+          }
+        },
+        "roast": {
+          "type": "feature",
+          "settings": {
+            "title": "Medium-dark roast",
+            "body": "Roasted for optimal extraction on a bar machine."
+          }
+        },
+        "label": {
+          "type": "feature",
+          "settings": {
+            "title": "Private or quiet label",
+            "body": "Your branding, our roast."
+          }
+        },
+        "packs": {
+          "type": "feature",
+          "settings": {
+            "title": "Bulk or portion packs",
+            "body": "Available either way, in the sizes your service runs on."
+          }
+        },
+        "fresh": {
+          "type": "feature",
+          "settings": {
+            "title": "Fresh roasted",
+            "body": "Shipped weekly, so the bag you open is at its peak."
+          }
+        }
+      },
+      "block_order": [
+        "profile",
+        "roast",
+        "label",
+        "packs",
+        "fresh"
       ]
     },
     "blend": {
@@ -364,6 +417,7 @@
     "hero",
     "capabilities",
     "options",
+    "white_label",
     "choice",
     "blend",
     "packaging",

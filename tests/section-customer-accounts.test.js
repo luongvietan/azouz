@@ -87,7 +87,7 @@ test('an account with no orders shows an empty state', async () => {
 
 test('the order page lists its line items and the total', async () => {
   const html = await renderSection('main-order', { scope });
-  assert.match(html, /Wadi Rum Blend/);
+  assert.match(html, /Espresso Arabica Beans/);
   assert.match(html, /order__total/);
 });
 

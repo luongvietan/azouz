@@ -80,6 +80,31 @@ test('wholesale lists all six business types the client named', async () => {
   ]);
 });
 
+test('private label carries the white label espresso blend the client described', async () => {
+  await expectAll('page.private-label.json', [
+    'Our white label espresso blend.',
+    'Dark chocolate, toasted nuts and caramel sweetness.',
+    'Medium-dark roast',
+    'Private or quiet label',
+    'Bulk or portion packs',
+    'Fresh roasted',
+  ]);
+});
+
+test('the franchise pitch the client wrote closes the coffee shop page', async () => {
+  await expectAll('page.own-an-azouz-coffee.json', [
+    'Want to pour Azouz in your neighbourhood?',
+    'affordable setup, premium product, and a community that cares',
+  ]);
+});
+
+test('our brands carries the roastery line the client wrote', async () => {
+  await expectAll('page.our-brands.json', [
+    'Small-batch roasting, and a big, bold flavour.',
+    'Fresh, ethically sourced coffee from bean to brew, delivered straight to your door.',
+  ]);
+});
+
 test('our brands lists all eight retail formats the client named', async () => {
   await expectAll('page.our-brands.json', [
     'Espresso coffee', 'Turkish coffee', 'Specialty coffee', 'Single-origin coffee',

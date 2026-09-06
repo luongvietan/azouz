@@ -6,8 +6,8 @@ import { resetCart, addLine, buildCart } from '../preview/cart-api.js';
 
 function filledCart() {
   resetCart();
-  addLine('wadi-rum-blend-250-wb', 2);
-  addLine('dead-sea-blend-1kg-wb', 1);
+  addLine('espresso-arabica-beans-500g', 2);
+  addLine('turkish-coffee-200g', 1);
   return buildCart();
 }
 
@@ -18,19 +18,19 @@ test('renders one row per line', async () => {
 
 test('each line shows the product title, the variant and the line total', async () => {
   const html = await renderSnippet('cart-line-items', { cart: filledCart() });
-  assert.match(html, /Wadi Rum Blend/);
-  assert.match(html, /250g \/ Whole Bean/);
+  assert.match(html, /Espresso Arabica Beans/);
+  assert.match(html, /500g \/ Whole Bean/);
   assert.match(html, /cart-line__total/);
 });
 
 test('each line links to its product', async () => {
   const html = await renderSnippet('cart-line-items', { cart: filledCart() });
-  assert.match(html, /href="\/products\/wadi-rum-blend\?variant=/);
+  assert.match(html, /href="\/products\/espresso-arabica-beans\?variant=/);
 });
 
 test('quantity is editable and carries the line key', async () => {
   const html = await renderSnippet('cart-line-items', { cart: filledCart() });
-  assert.match(html, /name="updates\[wadi-rum-blend-250-wb\]"/);
+  assert.match(html, /name="updates\[espresso-arabica-beans-500g\]"/);
 });
 
 test('each line has a remove control', async () => {
@@ -41,7 +41,7 @@ test('each line has a remove control', async () => {
 
 test('the remove control names the product it removes', async () => {
   const html = await renderSnippet('cart-line-items', { cart: filledCart() });
-  assert.match(html, /visually-hidden[^>]*>[^<]*Wadi Rum Blend/);
+  assert.match(html, /visually-hidden[^>]*>[^<]*Espresso Arabica Beans/);
 });
 
 test('an empty cart renders nothing rather than an empty table', async () => {
@@ -53,7 +53,7 @@ test('an empty cart renders nothing rather than an empty table', async () => {
 test('line images are lazy and have alt text', async () => {
   const html = await renderSnippet('cart-line-items', { cart: filledCart() });
   assert.match(html, /loading="lazy"/);
-  assert.match(html, /alt="Wadi Rum Blend"/);
+  assert.match(html, /alt="Espresso Arabica Beans"/);
 });
 
 test('the remove link escapes its ampersand and encodes the line key', async () => {

@@ -19,36 +19,45 @@ function themeSettings() {
 
 const metafield = (value, type) => ({ value, type });
 
-function makeBlend({ handle, title, roast, notes, labelColor, description, soldOut, saleOn, extraImages = [] }) {
+/**
+ * One bag from the Azouz retail range.
+ *
+ * Every product the client sells ships in a single size and a single grind, so
+ * a bag is one variant. The Weight and Grind options stay on the product all
+ * the same: they are what the store is set up with, and a 1kg espresso later
+ * has to arrive as another variant row rather than as a new option.
+ */
+function makeBag({
+  handle,
+  title,
+  weight,
+  grind,
+  price,
+  roast,
+  notes,
+  labelColor,
+  tags,
+  description,
+  brewMethods,
+  extraImages = [],
+}) {
   const url = `/products/${handle}`;
+  const image = imageDrop(`/preview-media/${handle}.jpg`, title);
+  const variantId = `${handle}-${weight}`;
 
-  const variant = ({ id, weight, grind, price, compareAt = null }) => ({
-    id,
+  const variant = {
+    id: variantId,
     title: `${weight} / ${grind}`,
     option1: weight,
     option2: grind,
     options: [weight, grind],
     price,
-    compare_at_price: compareAt,
-    available: id !== soldOut,
-    url: `${url}?variant=${id}`,
-    featured_image: imageDrop(`/preview-media/${handle}.jpg`, title),
-    inventory_quantity: id === soldOut ? 0 : 25,
-  });
-
-  const variants = [
-    variant({
-      id: `${handle}-250-wb`,
-      weight: '250g',
-      grind: 'Whole Bean',
-      price: 750,
-      compareAt: saleOn === `${handle}-250-wb` ? 900 : null,
-    }),
-    variant({ id: `${handle}-1kg-wb`, weight: '1kg', grind: 'Whole Bean', price: 2600 }),
-    variant({ id: `${handle}-1kg-esp`, weight: '1kg', grind: 'Espresso', price: 2600 }),
-  ];
-
-  const available = variants.filter((item) => item.available);
+    compare_at_price: null,
+    available: true,
+    url: `${url}?variant=${variantId}`,
+    featured_image: image,
+    inventory_quantity: 25,
+  };
 
   return {
     id: handle,
@@ -60,31 +69,35 @@ function makeBlend({ handle, title, roast, notes, labelColor, description, soldO
     object_type: 'product',
     description,
     url,
-    available: available.length > 0,
-    price: variants[0].price,
-    price_min: 750,
-    price_max: 2600,
-    compare_at_price: variants[0].compare_at_price,
+    available: true,
+    price,
+    price_min: price,
+    price_max: price,
+    compare_at_price: null,
     options: ['Weight', 'Grind'],
     options_with_values: [
-      { name: 'Weight', values: ['250g', '1kg'] },
-      { name: 'Grind', values: ['Whole Bean', 'Espresso'] },
+      { name: 'Weight', values: [weight] },
+      { name: 'Grind', values: [grind] },
     ],
-    variants,
-    selected_or_first_available_variant: available[0] ?? variants[0],
-    featured_image: imageDrop(`/preview-media/${handle}.jpg`, title),
+    variants: [variant],
+    selected_or_first_available_variant: variant,
+    featured_image: image,
     images: [`/preview-media/${handle}.jpg`, ...extraImages].map((path) => imageDrop(path, title)),
-    tags: ['espresso', 'arabica'],
+    tags,
     type: 'Coffee',
     vendor: 'Azouz Coffee',
     metafields: {
       custom: {
         roast_level: metafield(roast, 'number_integer'),
         tasting_notes: metafield(notes, 'list.single_line_text_field'),
-        origin: metafield('Blend', 'single_line_text_field'),
-        process: metafield('Washed', 'single_line_text_field'),
-        altitude: metafield('1,400–1,900 masl', 'single_line_text_field'),
-        brew_methods: metafield(['Espresso', 'Moka Pot'], 'list.single_line_text_field'),
+        // Origin, process and altitude are printed on none of the three bags
+        // and the client has not supplied them. Every read of them is guarded,
+        // so blank shortens the spec list rather than leaving an empty row —
+        // and dist/products.csv still carries the columns to fill in.
+        origin: metafield('', 'single_line_text_field'),
+        process: metafield('', 'single_line_text_field'),
+        altitude: metafield('', 'single_line_text_field'),
+        brew_methods: metafield(brewMethods, 'list.single_line_text_field'),
         label_color: metafield(labelColor, 'color'),
       },
     },
@@ -92,102 +105,63 @@ function makeBlend({ handle, title, roast, notes, labelColor, description, soldO
 }
 
 export function buildFixtures() {
+  /*
+    The three products the client actually sells, with the prices and pack
+    sizes supplied on 2026-09-07. Label colours are sampled off the packaging
+    photography in preview/media: navy for the espresso bag, the pale blue of
+    the Turkish sachet, the yellow of the filter can. label-ink picks the ink
+    from the fill's brightness, so the two pale ones take Onyx type.
+  */
   const products = [
-    makeBlend({
-      handle: 'wadi-rum-blend',
-      title: 'Wadi Rum Blend',
-      roast: 4,
-      notes: ['Dark Chocolate', 'Caramel', 'Spice'],
-      labelColor: '#B3522D',
-      description: 'An espresso roast built for depth — dark chocolate and caramel with a warm spice finish.',
-      extraImages: ['/preview-media/wadi-rum-blend-alt.jpg'],
+    makeBag({
+      handle: 'espresso-arabica-beans',
+      title: 'Espresso Arabica Beans',
+      weight: '500g',
+      grind: 'Whole Bean',
+      price: 750,
+      roast: 3,
+      notes: ['100% Arabica', 'Medium Roast'],
+      labelColor: '#1E2B55',
+      tags: ['espresso', 'whole bean'],
+      description: 'Medium roast Arabica beans for espresso, in a 500g valve bag.',
+      brewMethods: ['Espresso'],
+      extraImages: ['/preview-media/espresso-arabica-beans-alt.jpg'],
     }),
-    makeBlend({
-      handle: 'dead-sea-blend',
-      title: 'Dead Sea Blend',
-      roast: 4,
-      notes: ['Dark Chocolate', 'Toffee', 'Balanced'],
-      labelColor: '#B7B7B3',
-      description: 'Balanced and rounded, with dark chocolate and toffee through the cup.',
-      soldOut: 'dead-sea-blend-1kg-esp',
+    makeBag({
+      handle: 'turkish-coffee',
+      title: 'Turkish Coffee',
+      weight: '200g',
+      grind: 'Ground',
+      price: 280,
+      roast: 3,
+      notes: ['100% Arabica', 'Cardamom'],
+      labelColor: '#A9C8E5',
+      tags: ['turkish', 'ground'],
+      description:
+        'Medium roast 100% Arabica, ground with cardamom. Add 3 tsp to 125ml of water, and store the sachet somewhere cool and dry, away from strong odours.',
+      brewMethods: ['Turkish Pot'],
+      extraImages: ['/preview-media/turkish-coffee-alt.jpg'],
     }),
-    makeBlend({
-      handle: 'downtown-blend',
-      title: 'Downtown Blend',
-      roast: 4,
-      notes: ['Chocolate', 'Caramel', 'Smooth'],
-      labelColor: '#3E423C',
-      description: 'Smooth and approachable — chocolate and caramel, made for milk drinks.',
-      saleOn: 'downtown-blend-250-wb',
+    makeBag({
+      handle: 'filter-coffee-can',
+      title: 'Filter Coffee Can',
+      weight: '400g',
+      grind: 'Ground',
+      price: 725,
+      roast: 3,
+      notes: ['Medium Roast', 'Filter Grind'],
+      labelColor: '#F5AF13',
+      tags: ['filter', 'ground'],
+      description: 'Medium roast ground coffee in a 400g resealable can, for filter machines and the French press.',
+      brewMethods: ['Filter Machine', 'French Press'],
     }),
-    {
-      id: 'filtered-coffee-bags',
-      handle: 'filtered-coffee-bags',
-      title: 'Filtered Coffee Bags',
-      description: 'Single-serve filter bags, 12 g each. Specialty coffee wherever you are.',
-      url: '/products/filtered-coffee-bags',
-      available: true,
-      price: 900,
-      price_min: 900,
-      price_max: 900,
-      compare_at_price: null,
-      options: ['Weight', 'Grind'],
-      options_with_values: [
-        { name: 'Weight', values: ['Box of 10'] },
-        { name: 'Grind', values: ['Filter'] },
-      ],
-      variants: [
-        {
-          id: 'fcb-box10',
-          title: 'Box of 10 / Filter',
-          option1: 'Box of 10',
-          option2: 'Filter',
-          options: ['Box of 10', 'Filter'],
-          price: 900,
-          compare_at_price: null,
-          available: true,
-          url: '/products/filtered-coffee-bags?variant=fcb-box10',
-          featured_image: imageDrop('/preview-media/filtered-coffee-bags.jpg', 'Filtered Coffee Bags'),
-          inventory_quantity: 40,
-        },
-      ],
-      selected_or_first_available_variant: {
-        id: 'fcb-box10',
-        title: 'Box of 10 / Filter',
-        option1: 'Box of 10',
-        option2: 'Filter',
-        options: ['Box of 10', 'Filter'],
-        price: 900,
-        compare_at_price: null,
-        available: true,
-        url: '/products/filtered-coffee-bags?variant=fcb-box10',
-        featured_image: imageDrop('/preview-media/filtered-coffee-bags.jpg', 'Filtered Coffee Bags'),
-        inventory_quantity: 40,
-      },
-      featured_image: imageDrop('/preview-media/filtered-coffee-bags.jpg', 'Filtered Coffee Bags'),
-      images: [imageDrop('/preview-media/filtered-coffee-bags.jpg', 'Filtered Coffee Bags')],
-      tags: ['filter'],
-      type: 'Coffee',
-      vendor: 'Azouz Coffee',
-      metafields: {
-        custom: {
-          roast_level: metafield(4, 'number_integer'),
-          tasting_notes: metafield(['Rich', 'Full Bodied'], 'list.single_line_text_field'),
-          origin: metafield('Blend', 'single_line_text_field'),
-          process: metafield('Washed', 'single_line_text_field'),
-          altitude: metafield('1,400 masl', 'single_line_text_field'),
-          brew_methods: metafield(['Pour Over'], 'list.single_line_text_field'),
-          label_color: metafield('#171717', 'color'),
-        },
-      },
-    },
   ];
 
   const allCollection = {
     id: 'all',
     handle: 'all',
     title: 'Our Coffee',
-    description: 'Espresso, Turkish, specialty and filter coffee, roasted in Jordan.',
+    description: 'Espresso beans, Turkish coffee and filter coffee, roasted in Jordan.',
     url: '/collections/all',
     products,
     products_count: products.length,
@@ -348,7 +322,7 @@ export function buildBlogFixture() {
       title: 'What private label coffee actually involves',
       published: '2026-07-28T09:00:00Z',
       author: 'Azouz Coffee',
-      image: '/preview-media/wadi-rum-blend-alt.jpg',
+      image: '/preview-media/espresso-arabica-beans-alt.jpg',
       excerpt: 'From the first cupping to a pallet of your own bags — the steps, and what we need from you at each one.',
       content:
         '<p>Private label starts with a conversation about what you pour today and what you want it to taste like.</p>' +
@@ -369,7 +343,7 @@ export function buildBlogFixture() {
       title: 'Choosing a house espresso',
       published: '2026-07-14T09:00:00Z',
       author: 'Azouz Coffee',
-      image: '/preview-media/dead-sea-blend.jpg',
+      image: '/preview-media/filter-coffee-can.jpg',
       excerpt: 'A house espresso has to hold up in milk, survive a busy bar, and still taste like a decision rather than a default.',
       content:
         '<p>Most cafés taste espresso black and then serve nine drinks in ten with milk.</p>' +
@@ -381,7 +355,7 @@ export function buildBlogFixture() {
       title: 'Roasting notes: Turkish coffee',
       published: '2026-06-30T09:00:00Z',
       author: 'Azouz Coffee',
-      image: '/preview-media/downtown-blend.jpg',
+      image: '/preview-media/turkish-coffee.jpg',
       excerpt: 'Ground finer than anything else we make, and roasted for a cup that is boiled rather than brewed.',
       content: '<p>Turkish coffee is unforgiving of a roast that was built for a filter cone.</p>',
       tags: ['Turkish coffee'],
@@ -472,8 +446,8 @@ export function buildCustomerFixture() {
     created_at: '2026-07-28T09:15:00Z',
     financial_status: 'paid',
     fulfillment_status: 'fulfilled',
-    subtotal_price: 4100,
-    total_price: 4400,
+    subtotal_price: 1310,
+    total_price: 1610,
     shipping_price: 300,
     customer_url: '/account/orders/1002',
     shipping_address: ADDRESS,
@@ -481,23 +455,23 @@ export function buildCustomerFixture() {
     line_items: [
       {
         id: 'line-1',
-        title: 'Wadi Rum Blend — 1kg / Whole Bean',
+        title: 'Espresso Arabica Beans — 500g / Whole Bean',
         product: products[0],
-        variant: products[0].variants[1],
+        variant: products[0].variants[0],
         quantity: 1,
-        price: 2600,
-        line_price: 2600,
+        price: 750,
+        line_price: 750,
         image: products[0].featured_image,
         url: products[0].url,
       },
       {
         id: 'line-2',
-        title: 'Dead Sea Blend — 250g / Whole Bean',
+        title: 'Turkish Coffee — 200g / Ground',
         product: products[1],
         variant: products[1].variants[0],
         quantity: 2,
-        price: 750,
-        line_price: 1500,
+        price: 280,
+        line_price: 560,
         image: products[1].featured_image,
         url: products[1].url,
       },
@@ -513,7 +487,7 @@ export function buildCustomerFixture() {
     phone: ADDRESS.phone,
     accepts_marketing: false,
     orders_count: 1,
-    total_spent: 4400,
+    total_spent: 1610,
     orders: [order],
     default_address: ADDRESS,
     addresses: [ADDRESS],

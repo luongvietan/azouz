@@ -14,8 +14,8 @@ test('a protocol-relative cdn url gains https', async () => {
 });
 
 test('a site-relative path gains the shop origin', async () => {
-  const out = await render('/products/wadi-rum-blend');
-  assert.match(out, /^https?:\/\/[^/]+\/products\/wadi-rum-blend$/, `got ${out}`);
+  const out = await render('/products/espresso-arabica-beans');
+  assert.match(out, /^https?:\/\/[^/]+\/products\/espresso-arabica-beans$/, `got ${out}`);
 });
 
 test('an already absolute url is passed through untouched', async () => {

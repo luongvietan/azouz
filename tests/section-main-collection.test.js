@@ -17,7 +17,7 @@ test('the collection title is the page h1, and the only one', async () => {
 
 test('renders a card per product', async () => {
   const html = await render();
-  assert.equal(countMatches(html, /class="product-card"/g), 4);
+  assert.equal(countMatches(html, /class="product-card"/g), 3);
 });
 
 test('renders the collection description when there is one', async () => {

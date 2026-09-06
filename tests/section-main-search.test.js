@@ -27,17 +27,17 @@ test('the search field is labelled', async () => {
 });
 
 test('the field keeps the terms that were searched for', async () => {
-  const html = await render('wadi');
-  assert.match(html, /value="wadi"/);
+  const html = await render('turkish');
+  assert.match(html, /value="turkish"/);
 });
 
 test('renders a card per result', async () => {
-  const html = await render('blend');
-  assert.equal(countMatches(html, /class="product-card"/g), 3);
+  const html = await render('coffee');
+  assert.equal(countMatches(html, /class="product-card"/g), 2);
 });
 
 test('states how many results were found', async () => {
-  const html = await render('wadi');
+  const html = await render('turkish');
   assert.match(html, /search__count/);
 });
 
@@ -77,8 +77,8 @@ test('a non-product result is never rendered as a product card', async () => {
           { object_type: 'page', title: 'Private Label', url: '/pages/private-label' },
           {
             object_type: 'product',
-            title: 'Wadi Rum Blend',
-            url: '/products/wadi-rum-blend',
+            title: 'Espresso Arabica Beans',
+            url: '/products/espresso-arabica-beans',
             price: 7500,
             price_min: 7500,
             price_max: 7500,

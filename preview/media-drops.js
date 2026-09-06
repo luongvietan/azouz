@@ -50,7 +50,7 @@ function svgSize(source) {
 const cache = new Map();
 
 /**
- * @param {string} path e.g. '/preview-media/wadi-rum-blend.jpg'
+ * @param {string} path e.g. '/preview-media/espresso-arabica-beans.jpg'
  * @returns {{width: number, height: number}} falls back to a 4:5 bag crop
  */
 function measure(path) {

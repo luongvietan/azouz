@@ -62,8 +62,8 @@ test('the button group is omitted entirely when neither cta is configured', asyn
 });
 
 test('the image carries the alt text from its setting', async () => {
-  const html = await render({ image: 'placeholder.svg', image_alt: 'Wadi Rum Blend, 1kg bag' });
-  assert.match(html, /alt="Wadi Rum Blend, 1kg bag"/);
+  const html = await render({ image: 'placeholder.svg', image_alt: 'Espresso Arabica Beans, 500g bag' });
+  assert.match(html, /alt="Espresso Arabica Beans, 500g bag"/);
 });
 
 test('the hero image loads eagerly with high priority — it is the LCP element', async () => {

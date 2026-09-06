@@ -243,7 +243,7 @@ page that ends on the green CTA band does not paint two.
 ## 7. Do's and Don'ts
 
 ### Do:
-- **Do** put the silver-bag photograph on Mist with no overlay, crop gimmick, or coloured panel substitute.
+- **Do** put the packaging photograph on Mist with no overlay, crop gimmick, or coloured panel substitute.
 - **Do** use `--color-accent-deep` for any green that carries or is body-size text. `--color-accent` is for bands, fills and large display type.
 - **Do** keep one H1, one pale green band, and logical CSS properties on every template.
 - **Do** let forms post natively so the page works with scripting off.

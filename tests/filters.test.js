@@ -38,11 +38,11 @@ test('money renders zero rather than blank for a nil amount', () => {
 });
 
 test('handleize lowercases and hyphenates', () => {
-  assert.equal(render(`{{ 'Wadi Rum Blend' | handleize }}`), 'wadi-rum-blend');
+  assert.equal(render(`{{ 'Espresso Arabica Beans' | handleize }}`), 'espresso-arabica-beans');
 });
 
 test('handleize strips punctuation and collapses separators', () => {
-  assert.equal(render(`{{ '  Espresso — 250g / 1kg!  ' | handle }}`), 'espresso-250g-1kg');
+  assert.equal(render(`{{ '  Espresso — 500g / 1kg!  ' | handle }}`), 'espresso-500g-1kg');
 });
 
 test('t looks a translation up by dotted key', () => {
@@ -73,10 +73,10 @@ test('script_tag emits a script element', () => {
 
 test('within builds a collection-scoped product URL', () => {
   const out = render(`{{ product.url | within: collection }}`, {
-    product: { url: '/products/wadi-rum' },
+    product: { url: '/products/espresso-arabica-beans' },
     collection: { handle: 'espresso' },
   });
-  assert.equal(out, '/collections/espresso/products/wadi-rum');
+  assert.equal(out, '/collections/espresso/products/espresso-arabica-beans');
 });
 
 test('weight_with_unit appends the unit to a gram weight', () => {
@@ -87,12 +87,12 @@ test('link_to wraps text in an anchor', () => {
   assert.equal(render(`{{ 'Shop' | link_to: '/collections/all' }}`), '<a href="/collections/all">Shop</a>');
 });
 
-test('color_brightness of Dead Sea mint is above the dark-ink threshold', () => {
-  assert.ok(Number(render(`{{ '#B7B7B3' | color_brightness }}`)) > 160);
+test('color_brightness of the Turkish sachet blue is above the dark-ink threshold', () => {
+  assert.ok(Number(render(`{{ '#A9C8E5' | color_brightness }}`)) > 160);
 });
 
-test('color_brightness of Wadi Rum rust is below the dark-ink threshold', () => {
-  assert.ok(Number(render(`{{ '#B3522D' | color_brightness }}`)) < 160);
+test('color_brightness of the espresso bag navy is below the dark-ink threshold', () => {
+  assert.ok(Number(render(`{{ '#1E2B55' | color_brightness }}`)) < 160);
 });
 
 test('color_brightness of Jet is below the dark-ink threshold', () => {

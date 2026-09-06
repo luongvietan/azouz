@@ -5,10 +5,42 @@ import { renderSnippet } from './helpers/render-snippet.js';
 import { countMatches } from './helpers/render-section.js';
 
 const fixtures = buildFixtures();
-const wadiRum = fixtures.products[0];
-const deadSea = fixtures.products[1];
 
-const render = (product = wadiRum) =>
+/*
+  Every bag the client sells ships in one size and one grind, and main-product
+  renders a hidden id field instead of a picker for those. The picker is what a
+  product with a second weight gets, so the product it is exercised against is
+  built here rather than taken from the catalogue.
+*/
+const variant = (weight, grind, price, available = true) => ({
+  id: `espresso-${weight}-${grind}`,
+  title: `${weight} / ${grind}`,
+  option1: weight,
+  option2: grind,
+  options: [weight, grind],
+  price,
+  compare_at_price: null,
+  available,
+  url: `/products/espresso-arabica-beans?variant=espresso-${weight}-${grind}`,
+});
+
+const variants = [
+  variant('250g', 'Whole Bean', 450),
+  variant('1kg', 'Whole Bean', 1400),
+  variant('1kg', 'Espresso', 1400, false),
+];
+
+const ranged = {
+  ...fixtures.products[0],
+  options_with_values: [
+    { name: 'Weight', values: ['250g', '1kg'] },
+    { name: 'Grind', values: ['Whole Bean', 'Espresso'] },
+  ],
+  variants,
+  selected_or_first_available_variant: variants[0],
+};
+
+const render = (product = ranged) =>
   renderSnippet('variant-picker', { product, form_id: 'AddToCart' });
 
 test('renders one select per product option', async () => {
@@ -39,7 +71,7 @@ test('the variant data is emitted as parseable json', async () => {
 });
 
 test('the json marks unavailable variants so the picker can disable them', async () => {
-  const html = await render(deadSea);
+  const html = await render();
   const json = /<script type="application\/json" data-variant-data>([\s\S]*?)<\/script>/.exec(html);
   const variants = JSON.parse(json[1]);
   assert.ok(variants.some((variant) => variant.available === false));
@@ -64,7 +96,7 @@ test('only the noscript select is named id — the option selects never are', as
 });
 
 test('the fallback marks sold-out variants disabled', async () => {
-  const html = await render(deadSea);
+  const html = await render();
   const noscript = /<noscript>([\s\S]*?)<\/noscript>/.exec(html)[1];
   assert.match(noscript, /disabled/);
 });
@@ -77,7 +109,7 @@ test('option field ids are namespaced so two pickers can coexist', async () => {
   // A bare "Option-1" collides the moment the product section renders twice —
   // a quick view beside the main product — and the label points at the wrong
   // select.
-  const html = await renderSnippet('variant-picker', { product: wadiRum, form_id: 'AddToCart' });
+  const html = await renderSnippet('variant-picker', { product: ranged, form_id: 'AddToCart' });
   const ids = [...html.matchAll(/<select[^>]*\sid="([^"]+)"/g)].map((m) => m[1]);
   assert.ok(ids.length >= 2, `expected the option selects, got ${ids}`);
   for (const id of ids) {

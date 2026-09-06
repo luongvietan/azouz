@@ -118,7 +118,18 @@
       </p>
 
       {%- form 'product', product, id: 'AddToCart', class: 'main-product__form' -%}
-        {%- render 'variant-picker', product: product, form_id: 'AddToCart' -%}
+        {%- comment -%}
+          Every bag in the range ships in one size and one grind, so most
+          products have a single variant. A picker there is two selects the
+          customer cannot change — and <variant-picker> is what writes the
+          hidden name="id" input, so the field has to be written here instead
+          or the form posts without a variant.
+        {%- endcomment -%}
+        {%- if product.variants.size > 1 -%}
+          {%- render 'variant-picker', product: product, form_id: 'AddToCart' -%}
+        {%- else -%}
+          <input type="hidden" name="id" value="{{ current.id }}">
+        {%- endif -%}
 
         <div class="main-product__purchase">
           {%- render 'quantity-input', name: 'quantity', value: 1, min: 1, form: 'AddToCart' -%}

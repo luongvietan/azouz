@@ -20,7 +20,7 @@ test('renders a card per product up to the limit', async () => {
 
 test('renders every product when the limit exceeds the collection', async () => {
   const html = await render({ products_to_show: 12 });
-  assert.equal(countMatches(html, /class="product-card"/g), 4);
+  assert.equal(countMatches(html, /class="product-card"/g), 3);
 });
 
 test('renders a link to the whole collection when one is configured', async () => {

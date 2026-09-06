@@ -10,7 +10,7 @@ const render = async (scope) => {
   return out.trim();
 };
 
-const bag = () => imageDrop('/preview-media/wadi-rum-blend.jpg', 'Wadi Rum Blend');
+const bag = () => imageDrop('/preview-media/espresso-arabica-beans.jpg', 'Espresso Arabica Beans');
 const hero = () => imageDrop('/preview-media/hero-azouz-coffee-cup.jpg', 'A cup of Azouz coffee');
 
 /** Parse "url 400w, url 600w" into the numeric widths. */
@@ -18,7 +18,7 @@ const srcsetWidths = (html) =>
   [...(/srcset="([\s\S]*?)"/.exec(html)?.[1] ?? '').matchAll(/(\d+)w/g)].map((m) => Number(m[1]));
 
 test('width and height come from the image, not a constant', async () => {
-  const html = await render({ image: bag(), alt: 'Wadi Rum Blend' });
+  const html = await render({ image: bag(), alt: 'Espresso Arabica Beans' });
   assert.match(html, /width="1122"/);
   assert.match(html, /height="1402"/);
 });

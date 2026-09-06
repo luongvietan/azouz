@@ -312,7 +312,7 @@ export function listPreviewPaths() {
     ...Object.keys(ROUTES),
     '/collections',
     '/collections/all',
-    '/products/wadi-rum-blend',
+    '/products/espresso-arabica-beans',
     '/blogs/journal',
     '/blogs/journal/what-private-label-coffee-actually-involves',
     '/blogs/journal/tagged/private-label',

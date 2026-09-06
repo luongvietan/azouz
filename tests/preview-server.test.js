@@ -23,8 +23,8 @@ test('the homepage renders a full document', async () => {
 });
 
 test('a product page renders that product', async () => {
-  const html = await (await fetch(`${origin}/products/wadi-rum-blend`)).text();
-  assert.match(html, /Wadi Rum Blend/);
+  const html = await (await fetch(`${origin}/products/espresso-arabica-beans`)).text();
+  assert.match(html, /Espresso Arabica Beans/);
 });
 
 test('an unknown url renders the theme 404, not a server error', async () => {
@@ -38,11 +38,11 @@ test('the remove link works — GET /cart/change with quantity 0 drops the line'
   await fetch(`${origin}/cart/add`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
-    body: new URLSearchParams({ id: 'wadi-rum-blend-250-wb', quantity: '1' }),
+    body: new URLSearchParams({ id: 'espresso-arabica-beans-500g', quantity: '1' }),
   });
 
   const response = await fetch(
-    `${origin}/cart/change?id=wadi-rum-blend-250-wb&quantity=0`,
+    `${origin}/cart/change?id=espresso-arabica-beans-500g&quantity=0`,
     { redirect: 'manual' },
   );
   assert.equal(response.status, 302);
@@ -62,7 +62,7 @@ test('posting to /cart/add adds a line and returns json for fetch callers', asyn
   const response = await fetch(`${origin}/cart/add`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
-    body: new URLSearchParams({ id: 'wadi-rum-blend-250-wb', quantity: '2' }),
+    body: new URLSearchParams({ id: 'espresso-arabica-beans-500g', quantity: '2' }),
   });
   assert.equal(response.status, 200);
   const body = await response.json();
@@ -74,7 +74,7 @@ test('posting to /cart/add without an ajax Accept header redirects to the cart p
   const response = await fetch(`${origin}/cart/add`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ id: 'wadi-rum-blend-250-wb', quantity: '1' }),
+    body: new URLSearchParams({ id: 'espresso-arabica-beans-500g', quantity: '1' }),
     redirect: 'manual',
   });
   assert.equal(response.status, 302);
@@ -131,7 +131,7 @@ test('the enquiry page does not show the success banner without the query', asyn
 test('posting multipart form data to /cart/add works — that is what product-form fetch sends', async () => {
   resetCart();
   const body = new FormData();
-  body.set('id', 'wadi-rum-blend-250-wb');
+  body.set('id', 'espresso-arabica-beans-500g');
   body.set('quantity', '1');
   const response = await fetch(`${origin}/cart/add`, {
     method: 'POST',
@@ -143,7 +143,7 @@ test('posting multipart form data to /cart/add works — that is what product-fo
 });
 
 test('product images under /preview-media/ are the client packaging shots', async () => {
-  for (const handle of ['wadi-rum-blend', 'dead-sea-blend', 'downtown-blend', 'filtered-coffee-bags']) {
+  for (const handle of ['espresso-arabica-beans', 'turkish-coffee', 'filter-coffee-can', 'filter-coffee-can']) {
     const response = await fetch(`${origin}/preview-media/${handle}.jpg`);
     assert.equal(response.status, 200, handle);
     assert.match(response.headers.get('content-type') ?? '', /image\/jpeg/);

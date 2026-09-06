@@ -3,6 +3,9 @@ import assert from 'node:assert/strict';
 import { buildCsv, buildRows, COLUMNS } from '../scripts/generate-products-csv.js';
 import { buildFixtures } from '../preview/fixtures.js';
 
+/** The CRLF line ending RFC 4180 asks for, and generate-products-csv writes. */
+const SEP = String.fromCharCode(13, 10);
+
 /** Split one CSV line honouring quoted fields. */
 function splitCsvLine(line) {
   const fields = [];
@@ -72,24 +75,25 @@ test('the metafields the theme reads are all present', () => {
     );
   }
 
-  const first = buildRows().find((row) => row.Handle === 'wadi-rum-blend');
-  assert.equal(first['Metafield: custom.label_color [color]'], '#B3522D');
-  assert.equal(first['Metafield: custom.roast_level [number_integer]'], '4');
+  const first = buildRows().find((row) => row.Handle === 'espresso-arabica-beans');
+  assert.equal(first['Metafield: custom.label_color [color]'], '#1E2B55');
+  assert.equal(first['Metafield: custom.roast_level [number_integer]'], '3');
 });
 
 test('list metafields are JSON arrays, which is what Shopify parses', () => {
-  const row = buildRows().find((entry) => entry.Handle === 'wadi-rum-blend');
+  const row = buildRows().find((entry) => entry.Handle === 'espresso-arabica-beans');
   const notes = JSON.parse(row['Metafield: custom.tasting_notes [list.single_line_text_field]']);
-  assert.deepEqual(notes, ['Dark Chocolate', 'Caramel', 'Spice']);
+  assert.deepEqual(notes, ['100% Arabica', 'Medium Roast']);
 });
 
-test('the sold-out and on-sale variants survive the export', () => {
-  const rows = buildRows();
-  const soldOut = rows.find((row) => row['Variant SKU'] === 'dead-sea-blend-1kg-esp');
-  assert.equal(soldOut['Variant Inventory Qty'], '0');
-
-  const onSale = rows.find((row) => row['Variant SKU'] === 'downtown-blend-250-wb');
-  assert.equal(onSale['Variant Compare At Price'], '9.000');
+test('the export invents neither a discount nor an out-of-stock bag', () => {
+  // This file is imported into the client's live store. A compare-at price the
+  // client never set would go up as a real "was" price against a real bag, and
+  // a zero quantity would take it off sale on import.
+  for (const row of buildRows()) {
+    assert.equal(row['Variant Compare At Price'], '', `${row['Variant SKU']} carries a was-price`);
+    assert.ok(Number(row['Variant Inventory Qty']) > 0, `${row['Variant SKU']} imports out of stock`);
+  }
 });
 
 test('image columns stay empty unless a reachable base url is given', () => {
@@ -97,13 +101,16 @@ test('image columns stay empty unless a reachable base url is given', () => {
   for (const row of buildRows()) assert.equal(row['Image Src'], '');
 
   const withImages = buildRows({ imageBase: 'https://cdn.example/files/' });
-  const first = withImages.find((row) => row.Handle === 'wadi-rum-blend');
-  assert.equal(first['Image Src'], 'https://cdn.example/files/wadi-rum-blend.jpg');
+  const first = withImages.find((row) => row.Handle === 'espresso-arabica-beans');
+  assert.equal(first['Image Src'], 'https://cdn.example/files/espresso-arabica-beans.jpg');
   assert.equal(first['Image Position'], '1');
 });
 
 test('a field containing a comma or quote round-trips', () => {
-  const line = buildCsv().trim().split('\r\n').find((entry) => entry.includes('1,400'));
-  assert.ok(line, 'expected the altitude field with a comma in it');
-  assert.ok(splitCsvLine(line).includes('1,400–1,900 masl'));
+  const description = buildRows().find((row) => row.Handle === 'turkish-coffee')['Body (HTML)'];
+  assert.match(description, /,/, 'expected a description with a comma in it');
+
+  const line = buildCsv().trim().split(SEP).find((entry) => entry.includes('cardamom'));
+  assert.ok(line, 'expected the Turkish coffee row');
+  assert.ok(splitCsvLine(line).includes(description));
 });

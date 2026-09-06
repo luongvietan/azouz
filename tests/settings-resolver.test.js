@@ -40,15 +40,15 @@ test('an empty image_picker resolves to null so {% if %} guards work', () => {
 test('an image_picker path becomes a drop keeping the original src', () => {
   const resolved = resolveSettings(
     schema,
-    { image: '/preview-media/wadi-rum-blend.jpg' },
+    { image: '/preview-media/espresso-arabica-beans.jpg' },
     fixtures,
   );
-  assert.equal(resolved.image.src, '/preview-media/wadi-rum-blend.jpg');
+  assert.equal(resolved.image.src, '/preview-media/espresso-arabica-beans.jpg');
 });
 
 test('an image_picker drop carries the real pixel dimensions', () => {
   // The theme sizes every <img> from these, so a wrong number is layout shift.
-  const { image } = resolveSettings(schema, { image: '/preview-media/wadi-rum-blend.jpg' }, fixtures);
+  const { image } = resolveSettings(schema, { image: '/preview-media/espresso-arabica-beans.jpg' }, fixtures);
   assert.equal(image.width, 1122);
   assert.equal(image.height, 1402);
 });
@@ -61,12 +61,12 @@ test('a portrait hero is not silently reported as the 4:5 bag crop', () => {
 
 test('a collection handle becomes the collection object', () => {
   const resolved = resolveSettings(schema, { featured: 'all' }, fixtures);
-  assert.equal(resolved.featured.products.length, 4);
+  assert.equal(resolved.featured.products.length, 3);
 });
 
 test('a product handle becomes the product object', () => {
-  const resolved = resolveSettings(schema, { hero_product: 'wadi-rum-blend' }, fixtures);
-  assert.equal(resolved.hero_product.title, 'Wadi Rum Blend');
+  const resolved = resolveSettings(schema, { hero_product: 'espresso-arabica-beans' }, fixtures);
+  assert.equal(resolved.hero_product.title, 'Espresso Arabica Beans');
 });
 
 test('primitive setting types pass through untouched', () => {

@@ -40,7 +40,7 @@ test('quantity-input is registered', async () => {
 
 test('parseCartLineKey reads the line key from a cart quantity input name', async () => {
   const { AzouzTheme } = await loadThemeJs();
-  assert.equal(AzouzTheme.parseCartLineKey('updates[wadi-rum-blend-250-wb]'), 'wadi-rum-blend-250-wb');
+  assert.equal(AzouzTheme.parseCartLineKey('updates[espresso-arabica-beans-500g]'), 'espresso-arabica-beans-500g');
   assert.equal(AzouzTheme.parseCartLineKey('quantity'), null);
   assert.equal(AzouzTheme.parseCartLineKey(''), null);
 });

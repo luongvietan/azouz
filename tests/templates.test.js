@@ -113,7 +113,7 @@ test('the homepage audience strip lists every business type the client named', a
 test('the private label page carries its headline and coffee types', async () => {
   const html = await renderAll('page.private-label.json');
   assert.match(html, /Build Your Own Coffee Brand\./);
-  assert.match(html, /preview-media\/wadi-rum-blend-alt\.jpg/);
+  assert.match(html, /preview-media\/espresso-arabica-beans-alt\.jpg/);
   for (const type of ['Espresso blends', 'Turkish coffee', 'Filter coffee']) {
     assert.match(html, new RegExp(type));
   }
@@ -159,7 +159,7 @@ test('the coffee shop opportunity page carries its offer and both formats', asyn
 test('the wholesale page carries its headline and all four ranges', async () => {
   const html = await renderAll('page.wholesale.json');
   assert.match(html, /Wholesale Coffee for Your Business\./);
-  assert.match(html, /preview-media\/dead-sea-blend\.jpg/);
+  assert.match(html, /preview-media\/filter-coffee-can\.jpg/);
   for (const range of ['Espresso Blends', 'Turkish Coffee', 'Specialty Coffee', 'Filter Coffee']) {
     assert.match(html, new RegExp(range));
   }
@@ -234,8 +234,8 @@ test('every route to the enquiry forms is called the same thing', async () => {
 test('the our brands page bridges into the shop with packaging photography', async () => {
   const html = await renderAll('page.our-brands.json');
   assert.match(html, /Our Brands\./);
-  assert.match(html, /preview-media\/downtown-blend\.jpg/);
-  assert.match(html, /preview-media\/wadi-rum-blend\.jpg/);
+  assert.match(html, /preview-media\/turkish-coffee\.jpg/);
+  assert.match(html, /preview-media\/espresso-arabica-beans\.jpg/);
   assert.match(html, /href="\/collections\/all"/);
   assert.match(html, /href="\/pages\/wholesale"[^>]*>[\s\S]*View Wholesale/);
 });
@@ -243,7 +243,7 @@ test('the our brands page bridges into the shop with packaging photography', asy
 test('the sample enquiry page uses a sample-specific headline and hero bag', async () => {
   const html = await renderAll('page.enquiry.json');
   assert.match(html, /Request a Sample\./);
-  assert.match(html, /preview-media\/wadi-rum-blend\.jpg/);
+  assert.match(html, /preview-media\/espresso-arabica-beans\.jpg/);
   assert.match(html, /action="\/contact#contact"/);
 });
 

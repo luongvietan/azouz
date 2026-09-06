@@ -114,7 +114,7 @@ test('label colours inside section presets also pass AA', async () => {
 test('the label-block CSS fallback fill passes AA for its 14px subtitle', async () => {
   // A product with no label_color metafield falls through to this default.
   // It was --color-accent (3.37:1 on white), which is how "Rich | Full Bodied"
-  // on the Filtered Coffee Bags card failed on the live store.
+  // on the filter coffee card failed on the live store.
   const css = await readFile(resolveInTheme('assets/base.css'), 'utf8');
   const rule = /\.label-block\s*\{([\s\S]*?)\}/.exec(css)[1];
 

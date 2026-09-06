@@ -18,18 +18,13 @@ test('each product featured image is a real file in preview/media', () => {
   }
 });
 
-test('the four packaging products from the client mockups are present', () => {
+test('the three products the client sells are present', () => {
   const handles = buildFixtures().collections.all.products.map((product) => product.handle);
-  assert.deepEqual(handles, [
-    'wadi-rum-blend',
-    'dead-sea-blend',
-    'downtown-blend',
-    'filtered-coffee-bags',
-  ]);
+  assert.deepEqual(handles, ['espresso-arabica-beans', 'turkish-coffee', 'filter-coffee-can']);
 });
 
-test('each blend carries the metafields the theme reads', () => {
-  for (const product of buildFixtures().collections.all.products.slice(0, 3)) {
+test('each bag carries the metafields the theme reads', () => {
+  for (const product of buildFixtures().collections.all.products) {
     const custom = product.metafields.custom;
     assert.equal(typeof custom.roast_level.value, 'number');
     assert.ok(Array.isArray(custom.tasting_notes.value));
@@ -41,17 +36,23 @@ test('label colours match the printed packaging', () => {
   const byHandle = Object.fromEntries(
     buildFixtures().collections.all.products.map((p) => [p.handle, p]),
   );
-  assert.equal(byHandle['wadi-rum-blend'].metafields.custom.label_color.value, '#B3522D');
-  assert.equal(byHandle['dead-sea-blend'].metafields.custom.label_color.value, '#B7B7B3');
-  assert.equal(byHandle['downtown-blend'].metafields.custom.label_color.value, '#3E423C');
+  assert.equal(byHandle['espresso-arabica-beans'].metafields.custom.label_color.value, '#1E2B55');
+  assert.equal(byHandle['turkish-coffee'].metafields.custom.label_color.value, '#A9C8E5');
+  assert.equal(byHandle['filter-coffee-can'].metafields.custom.label_color.value, '#F5AF13');
 });
 
-test('products expose variants with weight and grind options', () => {
-  const product = buildFixtures().collections.all.products[0];
-  assert.deepEqual(product.options, ['Weight', 'Grind']);
-  assert.ok(product.variants.length >= 2);
-  assert.equal(typeof product.variants[0].price, 'number');
-  assert.equal(product.variants[0].available, true);
+test('every bag is one variant, carrying its weight and grind', () => {
+  // The client sells one size and one grind of each. main-product drops the
+  // picker on a single-variant product, so nothing here may grow a second
+  // variant without that branch being looked at again.
+  for (const product of buildFixtures().collections.all.products) {
+    assert.deepEqual(product.options, ['Weight', 'Grind']);
+    assert.equal(product.variants.length, 1);
+    assert.equal(product.variants[0].options.length, 2);
+    assert.equal(typeof product.variants[0].price, 'number');
+    assert.equal(product.variants[0].available, true);
+    assert.equal(product.price_min, product.price_max);
+  }
 });
 
 test('the cart fixture is empty by default', () => {

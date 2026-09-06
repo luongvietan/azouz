@@ -15,7 +15,7 @@
         "eyebrow": "Wholesale",
         "heading": "Wholesale Coffee for Your Business.",
         "body": "<p>Reliable, consistent coffee for cafés, restaurants, hotels, offices and distributors.</p>",
-        "image_alt": "Dead Sea Blend wholesale bag, silver foil on Off White",
+        "image_alt": "Filter Coffee, the 400g can",
         "cta_primary_label": "Get a Quote",
         "cta_primary_link": "/pages/get-a-quote",
         "cta_secondary_label": "Request a Sample",
@@ -36,7 +36,7 @@
           "settings": {
             "title": "Espresso Blends",
             "body": "Balanced coffees developed for espresso and milk-based drinks.",
-            "label_color": "#B3522D",
+            "label_color": "#1E2B55",
             "label_text": "light"
           }
         },
@@ -45,8 +45,8 @@
           "settings": {
             "title": "Turkish Coffee",
             "body": "Traditional profiles available plain or with cardamom.",
-            "label_color": "#4A3126",
-            "label_text": "light"
+            "label_color": "#A9C8E5",
+            "label_text": "dark"
           }
         },
         "specialty": {
@@ -63,8 +63,8 @@
           "settings": {
             "title": "Filter Coffee",
             "body": "Coffee roasted for V60, batch brew and other filter methods.",
-            "label_color": "#171717",
-            "label_text": "light"
+            "label_color": "#F5AF13",
+            "label_text": "dark"
           }
         }
       },
