@@ -7,6 +7,7 @@ import { createEngine, renderThemeFile } from '../preview/engine.js';
 import { renderTemplate } from '../preview/template-renderer.js';
 import { buildFixtures } from '../preview/fixtures.js';
 import { resolveInTheme, THEME_DIR } from '../scripts/theme-paths.js';
+import { parseThemeJson } from '../scripts/theme-json.js';
 
 const BLOG = '/blogs/journal';
 const POST = `${BLOG}/what-private-label-coffee-actually-involves`;
@@ -33,7 +34,8 @@ test('the blog templates exist and name real sections', async () => {
     ['blog.json', 'main-blog'],
     ['article.json', 'main-article'],
   ]) {
-    const template = JSON.parse(await readFile(resolveInTheme(`templates/${name}`), 'utf8'));
+    const source = await readFile(resolveInTheme(`templates/${name}`), 'utf8');
+    const template = parseThemeJson(source, `templates/${name}`);
     assert.deepEqual([...template.order].sort(), Object.keys(template.sections).sort());
     assert.equal(template.sections.main.type, type);
     assert.ok(existsSync(resolveInTheme(`sections/${type}.liquid`)), `${type} is missing`);

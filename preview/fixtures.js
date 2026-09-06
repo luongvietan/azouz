@@ -6,11 +6,13 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { THEME_DIR } from '../scripts/theme-paths.js';
+import { parseThemeJson } from '../scripts/theme-json.js';
 import { imageDrop } from './media-drops.js';
 
 function themeSettings() {
   try {
-    const data = JSON.parse(readFileSync(join(THEME_DIR, 'config/settings_data.json'), 'utf8'));
+    const source = readFileSync(join(THEME_DIR, 'config/settings_data.json'), 'utf8');
+    const data = parseThemeJson(source, 'config/settings_data.json');
     return data.current ?? {};
   } catch {
     return {};

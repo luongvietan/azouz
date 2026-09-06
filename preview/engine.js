@@ -5,10 +5,12 @@ import { registerShopifyFilters } from './shims/filters.js';
 import { registerShopifyTags } from './shims/tags.js';
 import { buildFixtures } from './fixtures.js';
 import { resolveSettings } from './settings-resolver.js';
+import { parseThemeJson } from '../scripts/theme-json.js';
 
 async function readTranslations(themeDir) {
   try {
-    return JSON.parse(await readFile(join(themeDir, 'locales', 'en.default.json'), 'utf8'));
+    const source = await readFile(join(themeDir, 'locales', 'en.default.json'), 'utf8');
+    return parseThemeJson(source, 'locales/en.default.json');
   } catch {
     return {};
   }

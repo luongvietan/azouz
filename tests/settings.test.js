@@ -2,8 +2,9 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { resolveInTheme } from '../scripts/theme-paths.js';
+import { parseThemeJson } from '../scripts/theme-json.js';
 
-const loadJson = async (path) => JSON.parse(await readFile(resolveInTheme(path), 'utf8'));
+const loadJson = async (path) => parseThemeJson(await readFile(resolveInTheme(path), 'utf8'), path);
 
 test('settings_schema is an array whose first entry is theme_info', async () => {
   const schema = await loadJson('config/settings_schema.json');

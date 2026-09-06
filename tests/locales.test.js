@@ -2,8 +2,10 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { resolveInTheme } from '../scripts/theme-paths.js';
+import { parseThemeJson } from '../scripts/theme-json.js';
 
-const load = async (name) => JSON.parse(await readFile(resolveInTheme(`locales/${name}`), 'utf8'));
+const load = async (name) =>
+  parseThemeJson(await readFile(resolveInTheme(`locales/${name}`), 'utf8'), `locales/${name}`);
 
 const REQUIRED_KEYS = [
   'general.accessibility.skip_to_content',

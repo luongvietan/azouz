@@ -4,6 +4,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { resolveInTheme } from '../scripts/theme-paths.js';
 import { contrastRatio } from '../scripts/contrast.js';
 import { readCssTokens } from '../scripts/css-tokens.js';
+import { parseThemeJson } from '../scripts/theme-json.js';
 
 /*
   The .label-block component reproduces the coloured panel printed on the coffee
@@ -24,15 +25,14 @@ const WHITE = '#FFFFFF';
 const ONYX = '#171717';
 const REQUIRED = 4.5;
 
-const strip = (source) => source.replace(/^﻿/, '').replace(/\/\*[\s\S]*?\*\//g, '');
-
 /** Every {label_color, label_text} pair a template ships, with where it came from. */
 async function labelPairsFromTemplates() {
   const names = (await readdir(resolveInTheme('templates'))).filter((n) => n.endsWith('.json'));
   const pairs = [];
 
   for (const name of names) {
-    const template = JSON.parse(strip(await readFile(resolveInTheme(`templates/${name}`), 'utf8')));
+    const source = await readFile(resolveInTheme(`templates/${name}`), 'utf8');
+    const template = parseThemeJson(source, `templates/${name}`);
     for (const [sectionId, section] of Object.entries(template.sections ?? {})) {
       for (const [blockId, block] of Object.entries(section.blocks ?? {})) {
         const colour = block.settings?.label_color;

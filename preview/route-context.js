@@ -17,6 +17,7 @@ import { handleize } from './shims/filters.js';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { THEME_DIR } from '../scripts/theme-paths.js';
+import { parseThemeJson } from '../scripts/theme-json.js';
 
 /**
  * Shopify populates `page_title` on every storefront template. This preview
@@ -36,8 +37,9 @@ import { THEME_DIR } from '../scripts/theme-paths.js';
  * fallback, and forcing a title here would hide the case the comment exists
  * for.
  */
-const translations = JSON.parse(
+const translations = parseThemeJson(
   readFileSync(join(THEME_DIR, 'locales', 'en.default.json'), 'utf8'),
+  'locales/en.default.json',
 );
 
 /** One translation by dotted key, with {{ name }} placeholders filled. */
