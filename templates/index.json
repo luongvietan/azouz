@@ -161,7 +161,8 @@
         "cta_primary_link": "/pages/request-a-sample",
         "cta_secondary_label": "Get a Quote",
         "cta_secondary_link": "/pages/get-a-quote",
-        "image_alt": "A sample set of Azouz coffee bags laid out on the roastery bench"
+        "image": "shopify://shop_images/espresso-arabica-beans.jpg",
+        "image_alt": "The Espresso Arabica Beans bag, 500g, whole bean"
       }
     },
     "audiences": {
