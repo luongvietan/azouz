@@ -238,6 +238,19 @@ the cards grow those spec rows on their own. Everything else — the option
 structure (Weight × Grind), the roast level, the tasting notes and the label
 colour — matches what the theme reads.
 
+One thing to know if you ever edit the metafield columns by hand. Shopify reads
+a metafield column only when its header matches the shape of its own export,
+`Roast Level (product.metafields.custom.roast_level)`, and a list value only
+when the entries sit on separate lines inside the cell. Get either wrong and the
+import still reports success: it creates the products and drops the columns, and
+the first sign of it is cards rendering as bare titles on the live store. If you
+rename a definition in Settings → Custom data, rename it in
+`scripts/generate-products-csv.js` too.
+
+Re-importing to fix products that already exist needs **Overwrite any products
+with matching handles** ticked in the import dialog, or Shopify skips every row
+whose handle it already has.
+
 To regenerate the file after changing the catalogue:
 
 ```bash

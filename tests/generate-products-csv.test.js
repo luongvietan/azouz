@@ -64,26 +64,45 @@ test('prices are decimal strings in the shop currency, not minor units', () => {
   }
 });
 
-test('the metafields the theme reads are all present', () => {
-  // The label colour, roast meter, tasting notes and spec grid all come from
-  // these. Import without them and every card renders as a bare title.
+/*
+  The header shape is the whole test. Shopify reads a metafield column only when
+  it matches its own export: the definition name, then the qualified key in
+  brackets. The first live import of this file used `Metafield: custom.x [type]`
+  instead; Shopify reported success, created the three products and silently
+  dropped all seven columns, so every card rendered as a bare title.
+*/
+test('every metafield the theme reads has a column Shopify will recognise', () => {
   const required = ['roast_level', 'tasting_notes', 'origin', 'process', 'altitude', 'brew_methods', 'label_color'];
   for (const key of required) {
     assert.ok(
-      COLUMNS.some((column) => column.startsWith(`Metafield: custom.${key} `)),
-      `no column for custom.${key}`,
+      COLUMNS.some((column) => column.endsWith(`(product.metafields.custom.${key})`)),
+      `no column Shopify will read for custom.${key}`,
     );
   }
 
+  assert.deepEqual(
+    COLUMNS.filter((column) => /^Metafield:/.test(column)),
+    [],
+    'the old header shape imports as an unknown column and is dropped',
+  );
+
   const first = buildRows().find((row) => row.Handle === 'espresso-arabica-beans');
-  assert.equal(first['Metafield: custom.label_color [color]'], '#1E2B55');
-  assert.equal(first['Metafield: custom.roast_level [number_integer]'], '3');
+  assert.equal(first['Label Color (product.metafields.custom.label_color)'], '#1E2B55');
+  assert.equal(first['Roast Level (product.metafields.custom.roast_level)'], '3');
 });
 
-test('list metafields are JSON arrays, which is what Shopify parses', () => {
+test('list metafields are newline separated, which is what Shopify parses', () => {
+  // A JSON array survives the CSV but imports as one string that happens to
+  // look like JSON. Shopify's own export puts one value per line.
   const row = buildRows().find((entry) => entry.Handle === 'espresso-arabica-beans');
-  const notes = JSON.parse(row['Metafield: custom.tasting_notes [list.single_line_text_field]']);
+  const notes = row['Tasting Notes (product.metafields.custom.tasting_notes)'].split(String.fromCharCode(10));
   assert.deepEqual(notes, ['100% Arabica', 'Medium Roast']);
+
+  const brews = buildRows().find((entry) => entry.Handle === 'filter-coffee-can');
+  assert.deepEqual(
+    brews['Brew Methods (product.metafields.custom.brew_methods)'].split(String.fromCharCode(10)),
+    ['Filter Machine', 'French Press'],
+  );
 });
 
 test('the export invents neither a discount nor an out-of-stock bag', () => {

@@ -28,6 +28,32 @@ import { join } from 'node:path';
 import { buildFixtures } from '../preview/fixtures.js';
 import { DIST_DIR } from './theme-paths.js';
 
+/** One list value per line, which is the separator Shopify writes and reads. */
+const NEWLINE = String.fromCharCode(10);
+
+/*
+  Shopify's importer recognises a metafield column only when the header has
+  the shape its own export writes: the definition's display name, then the
+  fully qualified key in brackets. The shape this file wrote until the first
+  live import, Metafield: custom.roast_level [number_integer], is read as an
+  ordinary unknown column and dropped without a warning. That is how three
+  products reached the store with no label colour, no roast meter and no
+  tasting notes, on an import Shopify reported as successful.
+
+  The names on the left are the definition names in Settings, Custom data,
+  Products. They are part of the contract: renaming a definition in the admin
+  means renaming it here.
+*/
+const METAFIELD_COLUMNS = {
+  'Roast Level (product.metafields.custom.roast_level)': { key: 'roast_level' },
+  'Tasting Notes (product.metafields.custom.tasting_notes)': { key: 'tasting_notes', isList: true },
+  'Origin (product.metafields.custom.origin)': { key: 'origin' },
+  'Process (product.metafields.custom.process)': { key: 'process' },
+  'Altitude (product.metafields.custom.altitude)': { key: 'altitude' },
+  'Brew Methods (product.metafields.custom.brew_methods)': { key: 'brew_methods', isList: true },
+  'Label Color (product.metafields.custom.label_color)': { key: 'label_color' },
+};
+
 /** Columns Shopify reads on import, in the order its own export uses. */
 export const COLUMNS = [
   'Handle',
@@ -54,13 +80,7 @@ export const COLUMNS = [
   'Image Position',
   'Image Alt Text',
   'Status',
-  'Metafield: custom.roast_level [number_integer]',
-  'Metafield: custom.tasting_notes [list.single_line_text_field]',
-  'Metafield: custom.origin [single_line_text_field]',
-  'Metafield: custom.process [single_line_text_field]',
-  'Metafield: custom.altitude [single_line_text_field]',
-  'Metafield: custom.brew_methods [list.single_line_text_field]',
-  'Metafield: custom.label_color [color]',
+  ...Object.keys(METAFIELD_COLUMNS),
 ];
 
 /** Shopify stores money in minor units; the CSV wants a decimal string. */
@@ -69,8 +89,23 @@ const money = (minor) => (minor / 100).toFixed(3);
 /** RFC 4180: quote every field, double any embedded quote. */
 const csvEscape = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
 
-/** A metafield list type is imported as a JSON array. */
-const list = (values) => JSON.stringify(values ?? []);
+/*
+  A list metafield arrives as one value per line inside the quoted field, which
+  is what Shopify's own export writes and the only shape its importer reads. A
+  JSON array is imported as the literal string "[\"a\",\"b\"]" at best; here it
+  was one of the seven columns dropped outright.
+*/
+const list = (values) => (values ?? []).join(NEWLINE);
+
+/** The metafield cells for one row; blank on every row but a product's first. */
+function metafieldCells(custom, first) {
+  const cells = {};
+  for (const [column, { key, isList }] of Object.entries(METAFIELD_COLUMNS)) {
+    const value = custom[key]?.value;
+    cells[column] = first ? (isList ? list(value) : String(value ?? '')) : '';
+  }
+  return cells;
+}
 
 /**
  * Turn the fixture catalogue into CSV rows — one row per variant, with the
@@ -118,20 +153,7 @@ export function buildRows({ imageBase = '' } = {}) {
         'Image Alt Text': first ? product.title : '',
         Status: first ? 'active' : '',
 
-        'Metafield: custom.roast_level [number_integer]':
-          first ? String(custom.roast_level?.value ?? '') : '',
-        'Metafield: custom.tasting_notes [list.single_line_text_field]':
-          first ? list(custom.tasting_notes?.value) : '',
-        'Metafield: custom.origin [single_line_text_field]':
-          first ? (custom.origin?.value ?? '') : '',
-        'Metafield: custom.process [single_line_text_field]':
-          first ? (custom.process?.value ?? '') : '',
-        'Metafield: custom.altitude [single_line_text_field]':
-          first ? (custom.altitude?.value ?? '') : '',
-        'Metafield: custom.brew_methods [list.single_line_text_field]':
-          first ? list(custom.brew_methods?.value) : '',
-        'Metafield: custom.label_color [color]':
-          first ? (custom.label_color?.value ?? '') : '',
+        ...metafieldCells(custom, first),
       });
     });
   }
