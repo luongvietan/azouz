@@ -214,8 +214,21 @@ export function registerShopifyTags(engine, options = {}) {
       ctx.push({
         section: resolveSection(schema, name, sectionOverrides[name] ?? {}, fixturesFrom(ctx)),
       });
+
+      // Shopify wraps every section in an element of its own, named by the
+      // schema's `tag` and `class`. The preview rendered the section bare,
+      // which is not a cosmetic difference: a sticky header inside that
+      // wrapper can only travel as far as the wrapper goes, so the header
+      // read as sticky here and scrolled away on the live store, for as long
+      // as the rule has existed. What the preview renders has to be what
+      // ships, or it hides exactly this kind of fault.
+      const wrapper = schema?.tag ?? 'div';
+      const classes = ['shopify-section', schema?.class].filter(Boolean).join(' ');
+
+      emitter.write(`<${wrapper} id="shopify-section-${name}" class="${classes}">`);
       const templates = engine.parse(source, file);
       yield engine.renderer.renderTemplates(templates, ctx, emitter);
+      emitter.write(`</${wrapper}>`);
       ctx.pop();
     },
   });

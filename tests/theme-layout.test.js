@@ -150,3 +150,25 @@ test('the password layout decides direction the same way the main layout does', 
     assert.match(out, /<html[^>]+dir="ltr"/, `${locale} should be ltr on the password page`);
   }
 });
+
+/*
+  Shopify wraps every {% section %} in an element of its own, named by the
+  schema's `tag` and `class`. The preview rendered layout sections bare, and
+  that is not a cosmetic difference: a sticky element travels only inside its
+  parent's box, so the sticky header read as sticky here and scrolled away on
+  the live store, where the wrapper exists and is exactly as tall as the
+  header. The preview has to render the wrapper or it hides that class of
+  fault entirely.
+*/
+test('a layout section is wrapped the way Shopify wraps it', async () => {
+  const out = await renderLayout();
+  assert.match(out, /<div id="shopify-section-header" class="shopify-section header-section">/);
+  assert.match(out, /<aside id="shopify-section-announcement-bar" class="shopify-section">/);
+});
+
+test('the header the sticky rule needs is the wrapper, and it holds the whole header', async () => {
+  const out = await renderLayout();
+  const wrapper = /<div id="shopify-section-header"[^>]*>([\s\S]*?)<\/div>\s*<main/.exec(out);
+  assert.ok(wrapper, 'the header wrapper must close before <main>');
+  assert.match(wrapper[1], /<header[^>]+class="header"/);
+});

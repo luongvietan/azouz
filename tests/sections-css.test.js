@@ -162,3 +162,31 @@ test('the layout links sections.css after base.css', async () => {
   assert.ok(sections > -1, 'sections.css must be linked from the layout');
   assert.ok(sections > base, 'sections.css must come after base.css so it can override');
 });
+
+/*
+  The sticky rule has to sit on the section wrapper. A sticky element travels
+  only inside its own parent's box, and on .header that parent is a wrapper
+  exactly as tall as the header: nothing to stick to, so it left with the page
+  on every live store while the preview — which rendered no wrapper — showed it
+  sticking. Measured on the live store at 1440x900 before the fix: scroll
+  1,500px and the header's top was at -1,359.
+*/
+test('the header sticks from its section wrapper', async () => {
+  const css = await load();
+  const wrapper = /\.header-section\s*\{([^}]*)\}/.exec(css);
+  assert.ok(wrapper, '.header-section rule is missing');
+  assert.match(wrapper[1], /position:\s*sticky/);
+  assert.match(wrapper[1], /inset-block-start:\s*0/);
+});
+
+test('the header itself stays positioned, because the menu panel measures from it', async () => {
+  const css = await load();
+  const header = /\.header\s*\{([^}]*)\}/.exec(css);
+  assert.ok(header, '.header rule is missing');
+  assert.match(header[1], /position:\s*relative/);
+  assert.equal(
+    /position:\s*sticky/.test(header[1]),
+    false,
+    'sticky here has no room to travel — it belongs on .header-section',
+  );
+});

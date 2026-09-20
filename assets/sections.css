@@ -75,19 +75,29 @@
 
 /* ---------- Header ---------- */
 
-/* Sticky at every width. It used to go back to `relative` below 56em, and the
-   reason that rule existed is easy to lose: the disclosure panel is absolutely
-   positioned and hangs off the header, so the header has to be a containing
-   block on a phone or the menu would anchor to the page instead. Sticky is one
-   too, so the panel still hangs where it did and the page keeps its way back
-   to the menu from 9,000px down the coffee-shop page.
+/* The sticky element is the section wrapper, not the <header> inside it.
 
-   Only the header sticks. The announcement bar above it scrolls away, which
-   is what keeps the standing chrome on a phone at 85px rather than 124. */
-.header {
+   Shopify wraps every {% section %} in a div of its own, and a sticky element
+   can only travel inside its own parent's box: with the rule on .header, the
+   parent was a wrapper exactly as tall as the header, so there was nowhere to
+   stick and the header left with the rest of the page. It read as sticky in
+   the preview for a year because the preview's {% section %} shim rendered no
+   wrapper at all. The shim wraps sections now, and this rule is on the wrapper
+   the schema names (`"class": "header-section"`).
+
+   Only the header sticks. The announcement bar above it is its own section and
+   scrolls away, which keeps the standing chrome on a phone at 85px, not 124. */
+.header-section {
   position: sticky;
   inset-block-start: 0;
   z-index: 20;
+}
+
+/* Relative, and load-bearing: the disclosure panel is absolutely positioned
+   and hangs off the header, so this is the containing block it measures from.
+   Take the positioning off and the menu anchors to the page instead. */
+.header {
+  position: relative;
   background-color: var(--color-bg);
   border-block-end: var(--rule-ink);
 }

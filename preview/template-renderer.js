@@ -99,9 +99,14 @@ export async function renderTemplate(engine, themeDir, templatePath, extraScope 
       },
     };
 
+    // The wrapper Shopify puts around a section, named by the schema's `tag`
+    // and `class` the same way {% section %} does in the layout.
     const html = await engine.parseAndRender(source, scope);
+    const wrapper = schema?.tag ?? 'div';
+    const classes = ['shopify-section', schema?.class].filter(Boolean).join(' ');
+
     rendered.push(
-      `<div id="shopify-section-${id}" class="shopify-section">${html}</div>`,
+      `<${wrapper} id="shopify-section-${id}" class="${classes}">${html}</${wrapper}>`,
     );
   }
 
