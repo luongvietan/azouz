@@ -91,10 +91,83 @@ test('private label carries the white label espresso blend the client described'
   ]);
 });
 
-test('the franchise pitch the client wrote closes the coffee shop page', async () => {
+/*
+  The client rewrote the coffee-shop page end to end on 11 September 2026. The
+  franchise pitch that used to close it ("Want to pour Azouz in your
+  neighbourhood?") went with the rewrite, by their hand: what they sent is the
+  page now, and every heading, every point of every list and every call to
+  action in it is held below.
+
+  One edit was made on the way in. "Imagine your own Azouz Coffee shop — or an
+  Azouz counter..." lost its em dash to a comma, which is what copy.test.js
+  asks of every string a customer reads. And "Tell us your: City · Location ·
+  Space Size · Business Type" became a sentence, because the four items are now
+  the four fields of the form directly below it.
+*/
+test('the coffee shop page carries every section the client wrote', async () => {
   await expectAll('page.own-an-azouz-coffee.json', [
-    'Want to pour Azouz in your neighbourhood?',
-    'affordable setup, premium product, and a community that cares',
+    'Bring Azouz Coffee to Your Area.',
+    'Open your own Azouz Coffee location with the coffee, equipment, branding, menu and support already built around you.',
+    'Whether you want a complete coffee shop or a smaller Azouz Coffee corner inside an existing business, we help you get from location to opening.',
+    'A Coffee Business Without Starting From Zero.',
+    'Opening a coffee shop involves more than finding a location.',
+    'You need the right coffee, equipment, menu, branding, training and reliable supply.',
+    'With Azouz Coffee, the system is already there.',
+    'You focus on your location and your customers. We support the coffee operation behind it.',
+    'Two Ways to Open.',
+    'What You Get.',
+    'Powered by Our Own Roastery.',
+    'Built to Make Opening Simpler.',
+    'Put Azouz Coffee in Your Neighbourhood.',
+  ]);
+});
+
+test('the coffee shop page describes both formats the client named', async () => {
+  await expectAll('page.own-an-azouz-coffee.json', [
+    'Full Azouz Coffee Location',
+    'Open a complete Azouz Coffee shop using our brand, coffee, menu and operating model.',
+    'Ideal for entrepreneurs looking to operate their own branded coffee business.',
+    'Azouz Coffee Corner',
+    'Add an Azouz Coffee counter inside a business you already operate.',
+    'Suitable for:',
+    'Hotels', 'Restaurants', 'Offices', 'Retail Spaces', 'Universities', 'Commercial Buildings',
+    'A simpler way to introduce a premium coffee offer without opening a full standalone café.',
+  ]);
+});
+
+test('the coffee shop page lists all six things a location gets', async () => {
+  await expectAll('page.own-an-azouz-coffee.json', [
+    'Coffee Supply', 'Espresso, Turkish, filter and specialty coffee roasted by our own roastery.',
+    'Equipment', 'Coffee machine, grinder and brewing equipment selected around your expected volume.',
+    'Azouz Branding', 'Brand identity, packaging and signage for your location.',
+    'Menu Development', 'A proven drinks menu with recipes and pricing guidance.',
+    'Barista Training', 'Training on coffee preparation, equipment and drink consistency.',
+    'Opening & Operational Support', 'Support with setup, ordering and the day-to-day coffee operation.',
+  ]);
+});
+
+test('the coffee shop page keeps the roastery argument and all four things an owner is spared', async () => {
+  await expectAll('page.own-an-azouz-coffee.json', [
+    "Your coffee isn't coming from an outside supplier.",
+    'We roast it ourselves.',
+    'That gives your location direct access to coffee sourcing, custom roasting, blending and ongoing supply from the same team supporting the brand.',
+    'It means fewer suppliers and greater consistency in the cup.',
+    "You don't need to develop your own coffee brand.",
+    "You don't need to build your own roasting operation.",
+    "You don't need to create a menu from scratch.",
+    "You don't need to figure out the coffee equipment alone.",
+    'We have already done the coffee work. You build the business around it.',
+  ]);
+});
+
+test('the coffee shop page asks for the four details the client needs, under every action they wrote', async () => {
+  await expectAll('page.own-an-azouz-coffee.json', [
+    'Imagine your own Azouz Coffee shop, or an Azouz counter operating inside a business you already own.',
+    "we'll explain which Azouz Coffee format could work for you.",
+    'City', 'Location', 'Space size', 'Business type',
+    'Start Your Azouz Coffee', 'Request Information',
+    'Enquire About a Location', 'Enquire About a Coffee Corner',
+    'Start My Azouz Coffee', 'Request More Information',
   ]);
 });
 

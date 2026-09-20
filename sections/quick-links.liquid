@@ -1,10 +1,17 @@
 {%- comment -%}
   The index row: four ways into the range, divided by rules rather than by
-  cards. Each entry is a heading, a line of copy and the link that opens it.
+  cards. Each entry is a photograph, a heading, a line of copy and the link
+  that opens it.
+
+  The photograph is optional per entry and the entry still reads without one,
+  starting at its heading rather than reserving an empty box. The client asked
+  for pictures beside the services because a column of four headings gives a
+  reader nothing to tell them apart at a glance.
 
   The whole cell is not a link — the heading and the trailing link point at the
   same place, and duplicating a target across a block-level anchor makes the
-  block unreadable to a screen reader that lists links. One anchor per entry.
+  block unreadable to a screen reader that lists links. One anchor per entry,
+  and the photograph is not a second one.
 {%- endcomment -%}
 {%- liquid
   assign section_class = 'section quick-links'
@@ -33,7 +40,18 @@
 
     <ul class="list-lines list-lines--4 quick-links__list" role="list">
       {%- for block in section.blocks -%}
-        <li class="quick-links__item"{{ block.shopify_attributes }}>
+        <li class="quick-links__item{% if block.settings.image %} quick-links__item--media{% endif %}"{{ block.shopify_attributes }}>
+          {%- if block.settings.image -%}
+            <div class="quick-links__media">
+              {%- render 'responsive-image',
+                image: block.settings.image,
+                alt: block.settings.image_alt,
+                class: 'quick-links__image',
+                width: 900,
+                sizes: '(min-width: 64em) 23vw, (min-width: 40em) 46vw, 8rem'
+              -%}
+            </div>
+          {%- endif -%}
           <h3 class="quick-links__title">{{ block.settings.title }}</h3>
           {%- if block.settings.body != blank -%}
             <p class="quick-links__body">{{ block.settings.body }}</p>
@@ -75,6 +93,18 @@
       "type": "link",
       "name": "Entry",
       "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photograph",
+          "info": "Beside the copy on a phone, above the title on a larger screen, cropped from the centre either way. Set all four entries or none: a row where only some carry a picture looks unfinished."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Photograph description",
+          "info": "Describe the picture for screen readers. Do not repeat the title."
+        },
         { "type": "text", "id": "title", "label": "Title" },
         { "type": "text", "id": "body", "label": "Body" },
         { "type": "text", "id": "link_label", "label": "Link label" },

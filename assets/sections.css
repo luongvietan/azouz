@@ -19,6 +19,21 @@
   flex: none;
 }
 
+/* ---------- Rich text bodies ----------
+   A richtext setting hands back one <p> per paragraph, and the reset in
+   base.css takes every paragraph's margin to zero. So every body here that
+   carried more than one paragraph ran them together with only a line break
+   between them: the two in the Our Brands hero read as one paragraph with a
+   stray return in it. The gap is the one the default page puts between its
+   paragraphs (.rte), so prose is spaced the same wherever it is set. */
+.hero__body > * + *,
+.cta-band__body > * + *,
+.brand-feature__body > * + *,
+.enquiry__intro > * + *,
+.rich-text__body > * + * {
+  margin-block-start: var(--space-md);
+}
+
 /* ---------- Announcement bar ----------
    The pale green, not the dark one and not ink. This band sits on every page
    of the site, which is exactly why it cannot be loud: at Sage Light it is a
@@ -650,6 +665,21 @@
   }
 }
 
+/* From 80em the container has stopped growing, and the picture is capped at
+   26rem, so a 0.9fr column held it with about 50px of empty ground either
+   side while the headline beside it wrapped for want of 29px: "Bring Azouz
+   Coffee" is 658px at display size and the copy column was 629px. Three lines
+   of an 80px headline put the coffee-shop page's first action at 922px, 122px
+   past an 800px fold. The picture's column is sized to the picture instead
+   and the copy takes the rest, 696px: the headline sets on two lines, and the
+   picture is not made any smaller. Below 80em the fractions still share out
+   a container that is itself still shrinking. */
+@media (min-width: 80em) {
+  .hero__inner:not(.hero__inner--full) {
+    grid-template-columns: minmax(0, 1fr) 28rem;
+  }
+}
+
 /* ---------- CTA band ----------
    The closing band now speaks the page's own grammar: an ink rule, a line set
    from the left, and the actions on the far side of it — the same shape as
@@ -1233,15 +1263,37 @@
 .two-column-choice__head { margin-block-end: var(--space-xl); }
 .two-column-choice__heading { margin: 0; }
 
+/* A column, not a grid, so the button can take the slack. The two options are
+   stretched to one height by the row they share, and one carries a list the
+   other does not; with the button on the last line of its own copy, the two
+   buttons sat at two different heights across the pair. */
 .choice-column {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: var(--space-md);
-  align-content: start;
-  justify-items: start;
+  align-items: flex-start;
   padding: var(--space-xl);
   background-color: var(--color-bg);
   border: var(--hairline);
   border-radius: var(--radius);
+}
+
+.choice-column > .button { margin-block-start: auto; }
+
+/* On a phone the column is 335px wide, and 48px of padding each side left the
+   option's own copy 237px: five words to a line, and both of the coffee-shop
+   page's buttons broken over two lines, "Enquire About a Coffee Corner" at
+   243px of text against 173px of room. The padding comes down to the page
+   gutter and the button takes the column's full width with a tighter inset,
+   which holds that label on one line down to a 360px screen and gives the
+   thumb a target the width of the card. */
+@media (max-width: 39.99em) {
+  .choice-column { padding: var(--space-md); }
+
+  .choice-column > .button {
+    align-self: stretch;
+    padding-inline: var(--space-sm);
+  }
 }
 
 .choice-column__title {
@@ -1252,6 +1304,31 @@
 .choice-column__body {
   margin: 0;
   color: var(--color-text-muted);
+}
+
+.choice-column__fit {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.choice-column__fit-label {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+}
+
+.choice-column__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+/* The audience strip's chip: Onyx on the pale green, 14:1. */
+.choice-column__tag {
+  padding: var(--space-2xs) var(--space-sm);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  background-color: var(--color-accent);
+  border-radius: var(--radius);
 }
 
 /* ---------- Brand feature ---------- */
@@ -1295,6 +1372,63 @@
   /* Order, not float — this flips correctly under RTL on its own. */
   .brand-feature__inner--media-start .brand-feature__content { order: 2; }
   .brand-feature__inner--media-start .brand-feature__media { order: 1; }
+}
+
+/* ---------- Rich text ----------
+   A heading and its argument, side by side from 56em, the breakpoint the hero
+   and the brand feature split at too. Five to seven, because the heading is a
+   short sentence and the prose is the part being read. Stacked below that. */
+
+.rich-text__inner {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.rich-text__heading { margin: 0; }
+
+.rich-text__content {
+  display: grid;
+  gap: var(--space-xl);
+  align-content: start;
+}
+
+/* At the lead size. These are statements of four or five lines, and at body
+   size under a 56px heading they read as the small print. */
+.rich-text__body { font-size: var(--text-lg); }
+
+/* A list is a ruled index: the ink rule above the first point and the soft
+   one under each, the pair DESIGN.md gives a heading's rule and the finer
+   divisions beneath it. No bullets and no icons. The strokes already say
+   "these are separate points", and an icon beside each would be the SaaS
+   feature grid DESIGN.md rules out. */
+.rich-text__body ul,
+.rich-text__body ol {
+  list-style: none;
+  padding: 0;
+  border-block-start: var(--rule-ink);
+}
+
+.rich-text__body li {
+  padding-block: var(--space-md);
+  border-block-end: var(--rule-ink-soft);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-heading);
+}
+
+.rich-text__closing {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-display);
+  max-inline-size: 32ch;
+}
+
+@media (min-width: 56em) {
+  .rich-text__inner {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: var(--space-2xl);
+    align-items: start;
+  }
 }
 
 /* ---------- Enquiry form ---------- */
@@ -1347,8 +1481,15 @@
   line-height: var(--leading-heading);
 }
 
+/* align-content, because a field shares a row with others and the row is as
+   tall as the tallest of them. Where one carries a hint under it, the fields
+   beside it were stretched to match, and a grid stretches by growing its
+   rows: City ended up a 74px control next to Location's 48px one, with their
+   tops on different lines. The field keeps its own height and sits at the top
+   of whatever room the row has. */
 .field {
   display: grid;
+  align-content: start;
   gap: var(--space-2xs);
 }
 
@@ -1398,7 +1539,10 @@
   resize: vertical;
 }
 
-.enquiry__submit { justify-self: start; }
+/* The form is a block, not a grid, so nothing spaced the button off the last
+   field: it sat flush under the message hint, 0px from it, and read as a
+   footnote to that field rather than as the act that sends the whole form. */
+.enquiry__submit { margin-block-start: var(--space-lg); }
 
 .enquiry__success,
 .enquiry__error {
@@ -1452,6 +1596,28 @@
 .field__input[aria-invalid='true'] {
   border-color: var(--color-text);
   border-width: 2px;
+}
+
+/* ---------- Location enquiry ----------
+   The same form grammar as the enquiry pages, closing a long page instead of
+   following a hero, so it takes the full section measure above its heading
+   rather than the tighter top .enquiry gives a form the hero has already
+   introduced. */
+.location-enquiry {
+  padding-block-start: var(--space-section);
+}
+
+/* The hero and both format options jump to #enquire. From 56em the header is
+   sticky and would land on the heading the jump was meant to show, so the jump
+   stops the chrome's height short of it. The token is measured and rounded up
+   in tokens.css, so this errs toward a little too much room, never too little. */
+@media (min-width: 56em) {
+  .location-enquiry { scroll-margin-block-start: var(--chrome-block-size); }
+}
+
+.location-enquiry__actions {
+  align-items: center;
+  margin-block-start: var(--space-lg);
 }
 
 /* ---------- Default page ---------- */
@@ -1896,6 +2062,56 @@
 }
 
 .quick-links__link { margin-block-start: auto; }
+
+/* The photograph leads the entry at one fixed crop, so four pictures of four
+   different shapes still stand the titles under them on a single line.
+   Landscape where the story columns below are portrait: these pictures show
+   the work (a counter, a production line, a shelf of bags), and an upright
+   crop of a counter is mostly floor. The crop is taken from the centre, which
+   is what the photography brief in the setup guide asks the subject to fill. */
+.quick-links__media {
+  inline-size: 100%;
+  margin-block-end: var(--space-md);
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+.quick-links__image {
+  inline-size: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+/* On a phone the four entries are one column, and a photograph stacked over
+   each of them took the section from 1,170px to 2,255px: nearly three screens
+   of pictures between the hero and the range. The client asked for pictures
+   next to the services, and on a phone that is where they go, beside the
+   copy at the inline end, so every title still starts on the edge the section
+   head starts on. Upright at this size, which shows a whole bag where a 4:3
+   crop showed its middle. The link takes the full row under both, where a
+   label like "Start Your Private Label" is never squeezed into two lines. */
+@media (max-width: 39.99em) {
+  .quick-links__item--media {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 8rem;
+    grid-template-areas:
+      'title media'
+      'body media'
+      'link link';
+    column-gap: var(--space-md);
+    align-items: start;
+  }
+
+  .quick-links__item--media .quick-links__media {
+    grid-area: media;
+    margin-block-end: 0;
+  }
+
+  .quick-links__item--media .quick-links__title { grid-area: title; }
+  .quick-links__item--media .quick-links__body { grid-area: body; }
+  .quick-links__item--media .quick-links__link { grid-area: link; }
+  .quick-links__item--media .quick-links__image { aspect-ratio: 4 / 5; }
+}
 
 /* ---------- Marquee ---------- */
 

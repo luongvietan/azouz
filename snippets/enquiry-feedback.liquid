@@ -1,0 +1,31 @@
+{%- comment -%}
+  What a contact form says back after a post: the success line, or the named
+  list of what failed. Shared by every enquiry form so they fail the same way.
+
+  Accepts:
+    form - required, the form object from inside {% form 'contact' %}
+    uid  - required, the section id, so the summary's id is unique on the page
+
+  A named list, not a bare "check the highlighted fields" — nothing was
+  highlighted. The summary is focusable so the browser can land on it via
+  the #contact fragment Shopify redirects to after a rejected post.
+{%- endcomment -%}
+<div aria-live="polite">
+  {%- if form.posted_successfully? -%}
+    <p class="enquiry__success" role="status">{{ 'contact.form.success' | t }}</p>
+  {%- endif -%}
+
+  {%- if form.errors -%}
+    <div class="enquiry__error" role="alert" tabindex="-1" id="EnquiryErrors-{{ uid }}">
+      <p class="enquiry__error-lead">{{ 'contact.form.error' | t }}</p>
+      <ul class="enquiry__error-list" role="list">
+        {%- for field in form.errors -%}
+          <li>
+            {{- form.errors.translated_fields[field] | default: field | capitalize }}:
+            {{ form.errors.messages[field] -}}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endif -%}
+</div>

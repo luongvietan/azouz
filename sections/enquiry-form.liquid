@@ -19,56 +19,10 @@
     </div>
 
     {% form 'contact' %}
-      <div aria-live="polite">
-        {%- if form.posted_successfully? -%}
-          <p class="enquiry__success" role="status">{{ 'contact.form.success' | t }}</p>
-        {%- endif -%}
-
-        {%- comment -%}
-          A named list, not a bare "check the highlighted fields" — nothing was
-          highlighted. The summary is focusable so the browser can land on it via
-          the #contact fragment Shopify redirects to after a rejected post.
-        {%- endcomment -%}
-        {%- if form.errors -%}
-          <div class="enquiry__error" role="alert" tabindex="-1" id="EnquiryErrors-{{ uid }}">
-            <p class="enquiry__error-lead">{{ 'contact.form.error' | t }}</p>
-            <ul class="enquiry__error-list" role="list">
-              {%- for field in form.errors -%}
-                <li>
-                  {{- form.errors.translated_fields[field] | default: field | capitalize }}:
-                  {{ form.errors.messages[field] -}}
-                </li>
-              {%- endfor -%}
-            </ul>
-          </div>
-        {%- endif -%}
-      </div>
+      {%- render 'enquiry-feedback', form: form, uid: uid -%}
 
       <div class="enquiry__groups">
-        <fieldset class="enquiry__group">
-          <legend class="enquiry__legend">{{ 'contact.form.contact_group' | t }}</legend>
-          <div class="enquiry__grid">
-            <div class="field">
-              <label class="field__label" for="EnquiryName-{{ uid }}">{{ 'contact.form.name' | t }}</label>
-              <input class="field__input" type="text" id="EnquiryName-{{ uid }}" name="contact[name]" autocomplete="name"{% if form.errors contains 'name' %} aria-invalid="true"{% endif %} required>
-            </div>
-
-            <div class="field">
-              <label class="field__label" for="EnquiryCompany-{{ uid }}">{{ 'contact.form.company' | t }}</label>
-              <input class="field__input" type="text" id="EnquiryCompany-{{ uid }}" name="contact[Company]" autocomplete="organization">
-            </div>
-
-            <div class="field">
-              <label class="field__label" for="EnquiryEmail-{{ uid }}">{{ 'contact.form.email' | t }}</label>
-              <input class="field__input" type="email" id="EnquiryEmail-{{ uid }}" name="contact[email]" autocomplete="email"{% if form.errors contains 'email' %} aria-invalid="true"{% endif %} required>
-            </div>
-
-            <div class="field">
-              <label class="field__label" for="EnquiryPhone-{{ uid }}">{{ 'contact.form.phone' | t }}</label>
-              <input class="field__input" type="tel" id="EnquiryPhone-{{ uid }}" name="contact[phone]" autocomplete="tel">
-            </div>
-          </div>
-        </fieldset>
+        {%- render 'enquiry-contact', form: form, uid: uid -%}
 
         <fieldset class="enquiry__group">
           <legend class="enquiry__legend">{{ 'contact.form.project_group' | t }}</legend>
@@ -133,22 +87,7 @@
         </fieldset>
       </div>
 
-      {%- comment -%}
-        Honeypot. Bots fill every field they find; a person never sees this one.
-        aria-hidden and tabindex="-1" keep it away from screen readers and the
-        keyboard, so it costs a real customer nothing. Shopify has no server-side
-        hook to reject on, but the value arrives in the notification email and
-        makes a submission trivially filterable.
-      {%- endcomment -%}
-      <div class="enquiry__honeypot" aria-hidden="true">
-        <label for="EnquiryWebsite-{{ uid }}">{{ 'contact.form.honeypot' | t }}</label>
-        <input
-          type="text"
-          id="EnquiryWebsite-{{ uid }}"
-          name="contact[Website]"
-          tabindex="-1"
-          autocomplete="off">
-      </div>
+      {%- render 'enquiry-honeypot', uid: uid -%}
 
       <button class="button enquiry__submit" type="submit">{{ 'contact.form.send' | t }}</button>
     {% endform %}

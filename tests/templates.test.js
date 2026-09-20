@@ -138,6 +138,16 @@ test('the homepage services read as a printed index, not as coloured panels', as
   assert.equal(/label-block service-card/.test(html), false);
 });
 
+test('each homepage service has a picture beside it', async () => {
+  // The client's note on the index row: pictures next to Private Label,
+  // Wholesale and the rest. The shipped template leaves the four slots for the
+  // store's own photographs; the preview fills them from demo-media.js, so a
+  // slot that stops rendering shows up here rather than on the client's phone.
+  const html = await renderAll('index.json');
+  const list = /<ul class="list-lines list-lines--4 quick-links__list"[\s\S]*?<\/ul>/.exec(html)[0];
+  assert.equal((list.match(/<img[^>]+class="quick-links__image"/g) ?? []).length, 4);
+});
+
 test('the homepage shows the roastery itself, for manufacturing credibility', async () => {
   // The claim and the photographs both moved: the claim onto the sample band,
   // the roastery imagery into the three story columns. A B2B buyer still has
@@ -150,10 +160,44 @@ test('the homepage shows the roastery itself, for manufacturing credibility', as
 
 test('the coffee shop opportunity page carries its offer and both formats', async () => {
   const html = await renderAll('page.own-an-azouz-coffee.json');
-  assert.match(html, /Own an Azouz Coffee\./);
-  assert.match(html, /Bring Azouz Coffee to your neighbourhood\./);
-  assert.match(html, /A Full Azouz Coffee Location/);
-  assert.match(html, /An Azouz Corner in Your Business/);
+  assert.match(html, /<h1 class="hero__heading">Bring Azouz Coffee to Your Area\.<\/h1>/);
+  assert.match(html, /Full Azouz Coffee Location/);
+  assert.match(html, /Azouz Coffee Corner/);
+});
+
+/*
+  The client's copy for this page carries six calls to action: two in the hero,
+  one under each format and two to close it. All of them are the same act,
+  telling the roastery where you are and what you have, so all of them arrive
+  at the one form that asks exactly that, and the close's two actions are the
+  form's own two buttons rather than links away from it.
+*/
+test('every call to action on the coffee shop page lands on its enquiry form', async () => {
+  const html = await renderAll('page.own-an-azouz-coffee.json');
+  assert.match(html, /<section[^>]+id="enquire"/);
+
+  const hrefs = [...html.matchAll(/<a[^>]*href="([^"]+)"/g)].map((match) => match[1]);
+  assert.equal(hrefs.length, 4);
+  assert.deepEqual([...new Set(hrefs)], ['/pages/own-an-azouz-coffee#enquire']);
+
+  const submits = [...html.matchAll(/<button[^>]*type="submit"[^>]*name="contact\[Enquiry\]"[^>]*value="([^"]+)"/g)];
+  assert.deepEqual(
+    submits.map((match) => match[1]),
+    ['Start My Azouz Coffee', 'Request More Information'],
+  );
+});
+
+test('no two alt bands meet on the coffee shop page', async () => {
+  // Seven sections, alternating from the formats down. Two alt bands in a row
+  // would merge into one block of grey with a soft rule through the middle.
+  const template = await load('page.own-an-azouz-coffee.json');
+  const backgrounds = template.order.map((id) => template.sections[id].settings.background);
+  for (let index = 1; index < backgrounds.length; index += 1) {
+    assert.ok(
+      !(backgrounds[index] === 'alt' && backgrounds[index - 1] === 'alt'),
+      `${template.order[index - 1]} and ${template.order[index]} are both on the alt band`,
+    );
+  }
 });
 
 test('the wholesale page carries its headline and all four ranges', async () => {

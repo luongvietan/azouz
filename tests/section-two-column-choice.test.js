@@ -41,6 +41,42 @@ test('an optional cta renders only when fully configured', async () => {
   assert.equal(/href=""/.test(halfLink), false);
 });
 
+const CORNER = option('corner', {
+  title: 'Azouz Coffee Corner',
+  body: 'Add an Azouz Coffee counter inside a business you already operate.',
+  list_label: 'Suitable for:',
+  list: 'Hotels, Restaurants, Offices,, Retail Spaces ',
+  note: 'A simpler way to introduce a premium coffee offer without opening a full standalone café.',
+  link_label: 'Enquire About a Coffee Corner',
+  link: '/pages/own-an-azouz-coffee#enquire',
+});
+
+test('an option can list who it suits, one chip per entry', async () => {
+  const html = await renderSection('two-column-choice', { blocks: [CORNER] });
+  assert.match(html, /<p class="choice-column__fit-label">Suitable for:<\/p>/);
+  const tags = [...html.matchAll(/<li class="choice-column__tag">([^<]*)<\/li>/g)].map((m) => m[1]);
+  // Trimmed, and the doubled comma does not become an empty chip.
+  assert.deepEqual(tags, ['Hotels', 'Restaurants', 'Offices', 'Retail Spaces']);
+});
+
+test('the copy runs description, list, closing line, then the button', async () => {
+  const html = await renderSection('two-column-choice', { blocks: [CORNER] });
+  const order = [
+    'Add an Azouz Coffee counter',
+    'choice-column__tags',
+    'A simpler way to introduce',
+    'Enquire About a Coffee Corner',
+  ].map((marker) => html.indexOf(marker));
+  assert.ok(order.every((at) => at > -1), 'every part of the option must render');
+  assert.deepEqual(order, [...order].sort((a, b) => a - b));
+});
+
+test('an option without a list renders no empty list or label', async () => {
+  const html = await renderSection('two-column-choice', { blocks: TWO });
+  assert.equal(/choice-column__fit/.test(html), false);
+  assert.equal(/choice-column__tags/.test(html), false);
+});
+
 test('declares a preset with two options', async () => {
   const { extractSchema } = await import('../scripts/schema-parser.js');
   const schema = extractSchema(await readFile(resolveInTheme('sections/two-column-choice.liquid'), 'utf8'));

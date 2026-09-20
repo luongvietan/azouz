@@ -24,6 +24,13 @@
 export const DEMO_MEDIA = {
   'templates/index.json': {
     hero: '/preview-media/hero-azouz-coffee-cup.jpg',
+    // Stand-ins until the service photography is shot: the packaging and the
+    // cup are what there is. The brief in the setup guide says what each of
+    // these four should really be.
+    'services.private_label': '/preview-media/espresso-arabica-beans-alt.jpg',
+    'services.wholesale': '/preview-media/filter-coffee-can.jpg',
+    'services.specialty': '/preview-media/turkish-coffee.jpg',
+    'services.coffee_shop': '/preview-media/hero-azouz-coffee-cup.jpg',
     'story.sourcing': '/preview-media/turkish-coffee.jpg',
     'story.roasting': '/preview-media/espresso-arabica-beans.jpg',
     'story.packing': '/preview-media/filter-coffee-can.jpg',

@@ -1,0 +1,173 @@
+{%- comment -%}
+  The coffee-shop enquiry: what someone who wants an Azouz Coffee location has
+  to tell the roastery before anyone can say which format suits them.
+
+  The client named the four things they need: city, location, space size and
+  business type. Those are the second fieldset. Nothing past name and email is
+  required, because the reader who only wants information may not have a site
+  yet, and a form that demands one loses them.
+
+  One form, two submit buttons. The client's close offers two actions, "Start
+  My Azouz Coffee" and "Request More Information", and both need the same
+  details, so each button submits this form and names itself in it: the one a
+  person presses posts its own label as contact[Enquiry], which arrives in the
+  notification email as the line that says which conversation to start. That
+  is plain HTML and holds with scripting off. Enter in a text field submits
+  through the first button, the one that starts.
+
+  The section carries its own anchor, #enquire, so the hero and the two format
+  options above can send a reader straight here. A page has one contact form,
+  so one fixed id is enough.
+{%- endcomment -%}
+{%- liquid
+  assign section_class = 'section enquiry location-enquiry'
+  if section.settings.background == 'alt'
+    assign section_class = 'section section--alt enquiry location-enquiry'
+  endif
+  assign uid = section.id
+
+  assign primary_label = 'contact.form.send' | t
+  if section.settings.submit_label != blank
+    assign primary_label = section.settings.submit_label
+  endif
+-%}
+
+<section class="{{ section_class }}" id="enquire"{{ section.shopify_attributes }}>
+  <div class="container container--narrow enquiry__inner">
+    <div class="enquiry__head">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="enquiry__heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.body != blank -%}
+        <div class="enquiry__intro lead">{{ section.settings.body }}</div>
+      {%- endif -%}
+    </div>
+
+    {% form 'contact' %}
+      {%- render 'enquiry-feedback', form: form, uid: uid -%}
+
+      <div class="enquiry__groups">
+        {%- render 'enquiry-contact', form: form, uid: uid -%}
+
+        <fieldset class="enquiry__group">
+          <legend class="enquiry__legend">{{ 'contact.form.location_group' | t }}</legend>
+          <div class="enquiry__grid">
+            <div class="field">
+              <label class="field__label" for="EnquiryCity-{{ uid }}">{{ 'contact.form.city' | t }}</label>
+              <input class="field__input" type="text" id="EnquiryCity-{{ uid }}" name="contact[City]" autocomplete="address-level2">
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="EnquiryLocation-{{ uid }}">{{ 'contact.form.location' | t }}</label>
+              <input
+                class="field__input"
+                type="text"
+                id="EnquiryLocation-{{ uid }}"
+                name="contact[Location]"
+                aria-describedby="EnquiryLocationHint-{{ uid }}">
+              <p class="field__hint" id="EnquiryLocationHint-{{ uid }}">{{ 'contact.form.location_hint' | t }}</p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="EnquirySpace-{{ uid }}">{{ 'contact.form.space_size' | t }}</label>
+              <input
+                class="field__input"
+                type="text"
+                id="EnquirySpace-{{ uid }}"
+                name="contact[Space size]"
+                placeholder="{{ 'contact.form.space_size_placeholder' | t }}">
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="EnquiryBusiness-{{ uid }}">{{ 'contact.form.business_type' | t }}</label>
+              <select class="field__input" id="EnquiryBusiness-{{ uid }}" name="contact[Business type]">
+                <option value="">{{ 'contact.form.business_type_prompt' | t }}</option>
+                {%- assign business_types = section.settings.business_types | split: ',' -%}
+                {%- for type in business_types -%}
+                  {%- assign type_name = type | strip -%}
+                  {%- if type_name != blank -%}
+                    <option value="{{ type_name | escape }}">{{ type_name }}</option>
+                  {%- endif -%}
+                {%- endfor -%}
+              </select>
+            </div>
+
+            <div class="field field--wide">
+              <label class="field__label" for="EnquiryMessage-{{ uid }}">{{ 'contact.form.message' | t }}</label>
+              <textarea
+                class="field__input field__input--textarea"
+                id="EnquiryMessage-{{ uid }}"
+                name="contact[body]"
+                rows="4"
+                aria-describedby="EnquiryMessageHint-{{ uid }}"
+                {% if form.errors contains 'body' %}aria-invalid="true" {% endif %}></textarea>
+              <p class="field__hint" id="EnquiryMessageHint-{{ uid }}">{{ 'contact.form.location_message_hint' | t }}</p>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      {%- render 'enquiry-honeypot', uid: uid -%}
+
+      <div class="button-group location-enquiry__actions">
+        <button class="button" type="submit" name="contact[Enquiry]" value="{{ primary_label | escape }}">
+          {{- primary_label -}}
+        </button>
+        {%- if section.settings.secondary_label != blank -%}
+          <button
+            class="button button--secondary"
+            type="submit"
+            name="contact[Enquiry]"
+            value="{{ section.settings.secondary_label | escape }}">
+            {{- section.settings.secondary_label -}}
+          </button>
+        {%- endif -%}
+      </div>
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Location enquiry",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Put Azouz Coffee in Your Neighbourhood." },
+    { "type": "richtext", "id": "body", "label": "Intro" },
+    {
+      "type": "textarea",
+      "id": "business_types",
+      "label": "Business types",
+      "default": "New coffee shop, Hotel, Restaurant, Office, Retail space, University, Commercial building, Other",
+      "info": "Comma separated."
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Button label",
+      "default": "Start My Azouz Coffee",
+      "info": "Also the line the enquiry email carries, so you can see which button was pressed."
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Second button label",
+      "default": "Request More Information",
+      "info": "Optional. Sends the same form, marked with this label instead."
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "default", "label": "Page" },
+        { "value": "alt", "label": "Warm cream" }
+      ],
+      "default": "alt"
+    }
+  ],
+  "presets": [{ "name": "Location enquiry" }]
+}
+{% endschema %}

@@ -131,7 +131,7 @@ theme editor:
 | Page | Section | Image slot |
 |---|---|---|
 | Home | Hero | Hero image |
-| Home | Service cards → each of the four cards | Photograph |
+| Home | Quick links → each of the four services | Photograph |
 | Home | Brand feature (*Roasted in Jordan*) | Feature image |
 | Private Label | Hero | Hero image |
 | Wholesale | Hero | Hero image |
@@ -142,11 +142,12 @@ theme editor:
 | Request a Sample | Hero | Hero image |
 | Get a Quote | Hero | Hero image |
 
-The four homepage service cards are the ones that change the page most. Each
-card shows a coloured label panel until its **Photograph** slot is filled, and
-switches to a photo-led card — picture, detail line, title, one sentence,
-button — the moment it is. Set all four or none: a row that mixes photographs
-with coloured panels looks unfinished.
+The four homepage services — Private Label, Wholesale, Specialty and Own an
+Azouz Coffee — are the ones that change the page most. Each is a heading, a
+line of copy and a link until its **Photograph** slot is filled. Filled, the
+picture sits beside the copy on a phone and above the heading on a larger
+screen. Set all four or none: a row where only some entries carry a picture
+looks unfinished.
 
 What to shoot for each slot is in
 [the photography brief](#the-photography-brief) below.
@@ -308,20 +309,33 @@ link itself as you would a password.
 
 ## 10. Enquiry forms
 
-Both enquiry forms — Request a Sample and Get a Quote — post through Shopify's
-own contact form. Submissions arrive at the **store sender email**, set at
-Settings → **Notifications**. Set that to a mailbox someone actually reads
-before launch; there is no other copy of an enquiry.
+Three forms — Request a Sample, Get a Quote, and the coffee-shop enquiry that
+closes Own an Azouz Coffee — post through Shopify's own contact form.
+Submissions arrive at the **store sender email**, set at Settings →
+**Notifications**. Set that to a mailbox someone actually reads before launch;
+there is no other copy of an enquiry.
 
-**Test both forms before launch.** Submit each one, confirm the email arrives,
+**Test all three before launch.** Submit each one, confirm the email arrives,
 and check the reply-to address is the enquirer's.
 
-Each form's dropdowns are editable in the theme editor as comma-separated lists:
+The sample and quote forms' dropdowns are editable in the theme editor as
+comma-separated lists:
 
 - **Business types** — Coffee Shop, Restaurant, Hotel, Office, Retailer, …
 - **Coffee types** — Espresso, Turkish, Arabic, Specialty, …
 - **Pre-selected business type** — sets the dropdown's starting value
 - **Require expected volume** — off on the sample form, on for quotes
+
+The coffee-shop form asks for the four things you need before you can say which
+format fits: city, location, space size and business type. Only a name and an
+email are required, so someone who has not found a site yet can still write to
+you. Its business types are a list of their own — New coffee shop, Hotel,
+Restaurant, Office, Retail space, University, Commercial building, Other — and
+its two buttons, **Start My Azouz Coffee** and **Request More Information**,
+send the same form. Whichever one they press arrives in the email as an
+*Enquiry* line, so you can see which of the two they asked for before you
+reply. Both labels are editable in the theme editor; whatever you write there
+is what the email says.
 
 ---
 
@@ -333,8 +347,8 @@ Each form's dropdowns are editable in the theme editor as comma-separated lists:
 - [ ] Preferences → **Password page** is on until you are ready; the theme has a
       styled password page
 - [ ] Walk the site on a phone: home, private label, wholesale, a product, the
-      cart, both enquiry forms
-- [ ] Submit both enquiry forms and confirm the emails arrive
+      cart, all three enquiry forms
+- [ ] Submit all three enquiry forms and confirm the emails arrive
 - [ ] Check a product page shows the roast meter and the tasting notes — that is
       the fastest way to confirm step 6a worked
 
@@ -360,10 +374,10 @@ concrete. No burlap, no wood grain, no steam, no latte art.
 | Where it goes | The shot |
 |---|---|
 | **Home → Hero** | Close-up of the roasting operation: stainless steel, roasted coffee falling into the cooling tray, one or two silver Azouz bags positioned nearby |
-| **Home → Private Label card** | Three or four silver bags standing together, each carrying a different fictional brand label. It says *we manufacture coffee for your brand* without a word of copy |
-| **Home → Wholesale card** | A café counter: espresso machine, grinder, and a 1 kg coffee bag beside it. B2B, not lifestyle |
-| **Home → Specialty card** | Top-down: green beans, roasted beans, cupping bowls, origin cards. Very clean, plenty of empty space |
-| **Home → Own an Azouz Coffee card** | The counter of an Azouz location — signage, cups and the bag in one frame |
+| **Home → Private Label** | Three or four silver bags standing together, each carrying a different fictional brand label. It says *we manufacture coffee for your brand* without a word of copy |
+| **Home → Wholesale** | A café counter: espresso machine, grinder, and a 1 kg coffee bag beside it. B2B, not lifestyle |
+| **Home → Specialty** | Top-down: green beans, roasted beans, cupping bowls, origin cards. Very clean, plenty of empty space |
+| **Home → Own an Azouz Coffee** | The counter of an Azouz location — signage, cups and the bag in one frame |
 | **Home → Roasted in Jordan** | A wider shot of the actual roaster, sacks and production area, or somebody working at the machine. Real manufacturing is what carries credibility |
 | **Our Brands** | The Espresso Arabica Beans bag, the Turkish Coffee sachet and the Filter Coffee can photographed individually against off-white or light concrete |
 
@@ -373,8 +387,10 @@ Two practical notes:
   a nice picture, but it reads as a café rather than as a roaster, a wholesaler
   or a manufacturer. It is the one image worth reshooting first — everything
   else on the page is already telling a B2B story.
-- **Shoot the service cards to a landscape crop.** They are displayed at 4:3 and
-  centre-cropped, so anything critical at the top or bottom edge is at risk.
+- **Keep the subject in the middle of the four service pictures.** They are
+  centre-cropped twice over: upright beside the copy on a phone, 4:3 landscape
+  above the heading on a larger screen. Shoot them landscape, and keep anything
+  that must survive both crops away from all four edges.
 
 ---
 
@@ -411,7 +427,7 @@ the material:
 | No enquiry emails | The sender email is unset or unmonitored | Step 10 |
 | The footer shows no policies | None have been written | Step 11 |
 | A menu item does nothing | The menu link points at a page that does not exist | Step 5 |
-| The homepage services show coloured panels, not photographs | Those cards have no image set | Step 4, and the photography brief |
+| The homepage services have no pictures beside them | Those four entries have no image set | Step 4, and the photography brief |
 | "Explore Opportunities" 404s | The coffee-shop page handle does not match | Step 3, the handle must be `own-an-azouz-coffee` |
 
 ---

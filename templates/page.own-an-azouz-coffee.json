@@ -12,66 +12,110 @@
     "hero": {
       "type": "hero-split",
       "settings": {
-        "eyebrow": "Coffee shop opportunity",
-        "heading": "Own an Azouz Coffee.",
-        "body": "<p>Bring Azouz Coffee to your neighbourhood.</p><p>From coffee supply and equipment to branding, menu development and operational support, we help you open and run an Azouz Coffee location.</p>",
-        "cta_primary_label": "Get a Quote",
-        "cta_primary_link": "/pages/get-a-quote",
-        "cta_secondary_label": "Request a Sample",
-        "cta_secondary_link": "/pages/request-a-sample",
+        "eyebrow": "",
+        "heading": "Bring Azouz Coffee to Your Area.",
+        "body": "<p>Open your own Azouz Coffee location with the coffee, equipment, branding, menu and support already built around you.</p><p>Whether you want a complete coffee shop or a smaller Azouz Coffee corner inside an existing business, we help you get from location to opening.</p>",
+        "cta_primary_label": "Start Your Azouz Coffee",
+        "cta_primary_link": "/pages/own-an-azouz-coffee#enquire",
+        "cta_secondary_label": "Request Information",
+        "cta_secondary_link": "/pages/own-an-azouz-coffee#enquire",
         "image_alt": "An Azouz Coffee counter: espresso machine, grinder and a 1 kg coffee bag beside it",
         "background": "default"
       }
+    },
+    "intro": {
+      "type": "rich-text",
+      "settings": {
+        "eyebrow": "",
+        "heading": "A Coffee Business Without Starting From Zero.",
+        "body": "<p>Opening a coffee shop involves more than finding a location.</p><p>You need the right coffee, equipment, menu, branding, training and reliable supply.</p><p>With Azouz Coffee, the system is already there.</p><p>You focus on your location and your customers. We support the coffee operation behind it.</p>",
+        "background": "default"
+      }
+    },
+    "formats": {
+      "type": "two-column-choice",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Two Ways to Open.",
+        "background": "alt"
+      },
+      "blocks": {
+        "location": {
+          "type": "option",
+          "settings": {
+            "title": "Full Azouz Coffee Location",
+            "body": "Open a complete Azouz Coffee shop using our brand, coffee, menu and operating model.",
+            "note": "Ideal for entrepreneurs looking to operate their own branded coffee business.",
+            "link_label": "Enquire About a Location",
+            "link": "/pages/own-an-azouz-coffee#enquire"
+          }
+        },
+        "corner": {
+          "type": "option",
+          "settings": {
+            "title": "Azouz Coffee Corner",
+            "body": "Add an Azouz Coffee counter inside a business you already operate.",
+            "list_label": "Suitable for:",
+            "list": "Hotels, Restaurants, Offices, Retail Spaces, Universities, Commercial Buildings",
+            "note": "A simpler way to introduce a premium coffee offer without opening a full standalone café.",
+            "link_label": "Enquire About a Coffee Corner",
+            "link": "/pages/own-an-azouz-coffee#enquire"
+          }
+        }
+      },
+      "block_order": [
+        "location",
+        "corner"
+      ]
     },
     "included": {
       "type": "feature-grid",
       "settings": {
         "eyebrow": "",
-        "heading": "What You Open With.",
-        "body": "Everything the location needs, from the coffee itself to the way it runs day to day.",
-        "background": "alt"
+        "heading": "What You Get.",
+        "background": "default"
       },
       "blocks": {
         "coffee": {
           "type": "feature",
           "settings": {
-            "title": "Coffee supply",
-            "body": "Espresso, Turkish, filter and specialty coffee roasted for the location and delivered on a regular schedule."
+            "title": "Coffee Supply",
+            "body": "Espresso, Turkish, filter and specialty coffee roasted by our own roastery."
           }
         },
         "equipment": {
           "type": "feature",
           "settings": {
             "title": "Equipment",
-            "body": "Machine, grinder and brewing equipment specified for the volume you expect to serve."
+            "body": "Coffee machine, grinder and brewing equipment selected around your expected volume."
           }
         },
         "branding": {
           "type": "feature",
           "settings": {
-            "title": "Branding",
-            "body": "The Azouz identity applied to the space, the packaging and the signage."
+            "title": "Azouz Branding",
+            "body": "Brand identity, packaging and signage for your location."
           }
         },
         "menu": {
           "type": "feature",
           "settings": {
-            "title": "Menu development",
-            "body": "A drinks menu built around the blends, with recipes and pricing guidance."
+            "title": "Menu Development",
+            "body": "A proven drinks menu with recipes and pricing guidance."
           }
         },
         "training": {
           "type": "feature",
           "settings": {
-            "title": "Barista training",
-            "body": "Training on the machine, the grind and the recipes so the cup is the same every day."
+            "title": "Barista Training",
+            "body": "Training on coffee preparation, equipment and drink consistency."
           }
         },
         "operations": {
           "type": "feature",
           "settings": {
-            "title": "Operational support",
-            "body": "Help with opening, ordering and the routines that keep the counter running."
+            "title": "Opening & Operational Support",
+            "body": "Support with setup, ordering and the day-to-day coffee operation."
           }
         }
       },
@@ -84,70 +128,48 @@
         "operations"
       ]
     },
-    "formats": {
-      "type": "two-column-choice",
-      "settings": {
-        "eyebrow": "",
-        "heading": "Two Ways to Open.",
-        "background": "default"
-      },
-      "blocks": {
-        "location": {
-          "type": "option",
-          "settings": {
-            "title": "A Full Azouz Coffee Location",
-            "body": "Your own shop, opened and fitted as an Azouz Coffee from the counter out.",
-            "link_label": "Get a Quote",
-            "link": "/pages/get-a-quote"
-          }
-        },
-        "corner": {
-          "type": "option",
-          "settings": {
-            "title": "An Azouz Corner in Your Business",
-            "body": "A coffee counter inside a hotel, restaurant, office or retail space you already run.",
-            "link_label": "Get a Quote",
-            "link": "/pages/get-a-quote"
-          }
-        }
-      },
-      "block_order": [
-        "location",
-        "corner"
-      ]
-    },
     "roastery": {
       "type": "brand-feature",
       "settings": {
         "eyebrow": "Behind the counter",
-        "heading": "Supplied by Our Own Roastery.",
-        "body": "<p>The coffee you serve is roasted, blended and packed by us, so supply, price and taste stay in one place rather than across three suppliers.</p>",
-        "cta_label": "View Wholesale",
-        "cta_link": "/pages/wholesale",
+        "heading": "Powered by Our Own Roastery.",
+        "body": "<p>Your coffee isn't coming from an outside supplier.</p><p>We roast it ourselves.</p><p>That gives your location direct access to coffee sourcing, custom roasting, blending and ongoing supply from the same team supporting the brand.</p><p>It means fewer suppliers and greater consistency in the cup.</p>",
+        "cta_label": "",
         "image_alt": "Roasted coffee falling into the cooling tray at the Azouz roastery",
         "media_position": "start",
         "background": "alt"
       }
     },
-    "closing": {
-      "type": "cta-band",
+    "simpler": {
+      "type": "rich-text",
       "settings": {
         "eyebrow": "",
-        "heading": "Let's Talk About Your Location.",
-        "body": "<p>Want to pour Azouz in your neighbourhood? We are opening small franchise spots for the right people: affordable setup, premium product, and a community that cares.</p><p>Tell us where you are and what size of space you have, and we'll come back with what opening an Azouz Coffee there involves.</p>",
-        "cta_primary_label": "Get a Quote",
-        "cta_primary_link": "/pages/get-a-quote",
-        "cta_secondary_label": "Request a Sample",
-        "cta_secondary_link": "/pages/request-a-sample",
-        "background": "accent"
+        "heading": "Built to Make Opening Simpler.",
+        "body": "<ul><li>You don't need to develop your own coffee brand.</li><li>You don't need to build your own roasting operation.</li><li>You don't need to create a menu from scratch.</li><li>You don't need to figure out the coffee equipment alone.</li></ul>",
+        "closing": "We have already done the coffee work. You build the business around it.",
+        "background": "default"
+      }
+    },
+    "enquire": {
+      "type": "location-enquiry",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Put Azouz Coffee in Your Neighbourhood.",
+        "body": "<p>Imagine your own Azouz Coffee shop, or an Azouz counter operating inside a business you already own.</p><p>Tell us your city, location, space size and business type, and we'll explain which Azouz Coffee format could work for you.</p>",
+        "business_types": "New coffee shop, Hotel, Restaurant, Office, Retail space, University, Commercial building, Other",
+        "submit_label": "Start My Azouz Coffee",
+        "secondary_label": "Request More Information",
+        "background": "alt"
       }
     }
   },
   "order": [
     "hero",
-    "included",
+    "intro",
     "formats",
+    "included",
     "roastery",
-    "closing"
+    "simpler",
+    "enquire"
   ]
 }
