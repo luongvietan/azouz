@@ -81,13 +81,21 @@
    can only travel inside its own parent's box: with the rule on .header, the
    parent was a wrapper exactly as tall as the header, so there was nowhere to
    stick and the header left with the rest of the page. It read as sticky in
-   the preview for a year because the preview's {% section %} shim rendered no
-   wrapper at all. The shim wraps sections now, and this rule is on the wrapper
-   the schema names (`"class": "header-section"`).
+   the preview because the preview's {% section %} shim rendered no wrapper at
+   all. The shim wraps sections now.
+
+   Two selectors, and the id is the one that carries it. The schema's `class`
+   did not reach the wrapper on the live store: the stylesheet from the same
+   commit was already serving while the wrapper still rendered as a plain
+   `class="shopify-section"`. The id is not a preference, it is what Shopify
+   guarantees for a section rendered from the layout — `shopify-section-` and
+   the file name. The class stays for the day the schema attribute lands, and
+   it is what the preview and the tests read.
 
    Only the header sticks. The announcement bar above it is its own section and
    scrolls away, which keeps the standing chrome on a phone at 85px, not 124. */
-.header-section {
+.header-section,
+#shopify-section-header {
   position: sticky;
   inset-block-start: 0;
   z-index: 20;

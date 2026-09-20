@@ -173,10 +173,14 @@ test('the layout links sections.css after base.css', async () => {
 */
 test('the header sticks from its section wrapper', async () => {
   const css = await load();
-  const wrapper = /\.header-section\s*\{([^}]*)\}/.exec(css);
-  assert.ok(wrapper, '.header-section rule is missing');
-  assert.match(wrapper[1], /position:\s*sticky/);
-  assert.match(wrapper[1], /inset-block-start:\s*0/);
+  const rule = /(\.header-section[^{]*)\{([^}]*)\}/.exec(css);
+  assert.ok(rule, 'the wrapper rule is missing');
+  assert.match(rule[2], /position:\s*sticky/);
+  assert.match(rule[2], /inset-block-start:\s*0/);
+
+  // The schema's `class` did not reach the wrapper on the live store, so the
+  // id Shopify guarantees for a layout section has to be in the selector too.
+  assert.match(rule[1], /#shopify-section-header/);
 });
 
 test('the header itself stays positioned, because the menu panel measures from it', async () => {
