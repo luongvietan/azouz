@@ -361,6 +361,11 @@ a {
 
 .skip-link:focus { transform: translateY(0); }
 
+/* The header sticks, so anything the browser scrolls to by fragment has to
+   keep the chrome's height clear of itself or it arrives underneath it. The
+   skip link's own target is the first of those. */
+#MainContent { scroll-margin-block-start: var(--chrome-block-size); }
+
 :focus-visible {
   outline: 2px solid var(--color-focus);
   outline-offset: 3px;

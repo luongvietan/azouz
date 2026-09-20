@@ -75,18 +75,21 @@
 
 /* ---------- Header ---------- */
 
+/* Sticky at every width. It used to go back to `relative` below 56em, and the
+   reason that rule existed is easy to lose: the disclosure panel is absolutely
+   positioned and hangs off the header, so the header has to be a containing
+   block on a phone or the menu would anchor to the page instead. Sticky is one
+   too, so the panel still hangs where it did and the page keeps its way back
+   to the menu from 9,000px down the coffee-shop page.
+
+   Only the header sticks. The announcement bar above it scrolls away, which
+   is what keeps the standing chrome on a phone at 85px rather than 124. */
 .header {
   position: sticky;
   inset-block-start: 0;
   z-index: 20;
   background-color: var(--color-bg);
   border-block-end: var(--rule-ink);
-}
-
-@media (max-width: 55.99em) {
-  .header {
-    position: relative;
-  }
 }
 
 /* One grid, two shapes. Narrow: a single line — mark, actions, disclosure.
@@ -355,12 +358,22 @@
 
 .header__mobile-feature .button { inline-size: 100%; }
 
+/* The panel hangs off the header, and the header is sticky now, so the panel
+   can no longer be read by scrolling the page: it travels with the header. At
+   375x812 it stands 674px tall, which fits — on a 667px phone the last item of
+   the menu and the call to action under it would have been below the fold and
+   out of reach. It is capped at the viewport less the chrome (124px on a
+   phone, rounded up to 8rem) and scrolls inside itself past that. */
 .header__mobile-panel {
   position: absolute;
   inset-inline: 0;
   padding: var(--space-md) var(--gutter) var(--space-lg);
   background-color: var(--color-bg);
   border-block-end: var(--hairline);
+  max-block-size: calc(100vh - 8rem);
+  max-block-size: calc(100dvh - 8rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .header__mobile-menu {
@@ -1607,13 +1620,13 @@
   padding-block-start: var(--space-section);
 }
 
-/* The hero and both format options jump to #enquire. From 56em the header is
-   sticky and would land on the heading the jump was meant to show, so the jump
-   stops the chrome's height short of it. The token is measured and rounded up
-   in tokens.css, so this errs toward a little too much room, never too little. */
-@media (min-width: 56em) {
-  .location-enquiry { scroll-margin-block-start: var(--chrome-block-size); }
-}
+/* The hero and both format options jump to #enquire, and the sticky header
+   would land on the heading the jump was meant to show, so the jump stops the
+   chrome's height short of it. The token is measured per breakpoint and
+   rounded up in tokens.css, and it counts the announcement bar too, which has
+   scrolled away by then: this errs toward a little too much room, never too
+   little. */
+.location-enquiry { scroll-margin-block-start: var(--chrome-block-size); }
 
 .location-enquiry__actions {
   align-items: center;
