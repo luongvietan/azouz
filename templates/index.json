@@ -30,6 +30,8 @@
         "private_label": {
           "type": "link",
           "settings": {
+            "image": "shopify://shop_images/espresso-arabica-beans.jpg",
+            "image_alt": "The 500g Espresso Arabica Beans bag",
             "title": "Private Label Coffee",
             "body": "Create coffee under your own brand: custom blends, roasting, grinding and packaging.",
             "link_label": "Start Your Private Label",
@@ -39,6 +41,8 @@
         "wholesale": {
           "type": "link",
           "settings": {
+            "image": "shopify://shop_images/filter-coffee-can.jpg",
+            "image_alt": "The 400g Filter Coffee can",
             "title": "Wholesale Coffee",
             "body": "Reliable coffee for cafés, restaurants, hotels and businesses. Espresso, Turkish, filter and specialty.",
             "link_label": "View Wholesale",
@@ -48,6 +52,8 @@
         "specialty": {
           "type": "link",
           "settings": {
+            "image": "shopify://shop_images/turkish-coffee.jpg",
+            "image_alt": "The 200g Turkish Coffee sachet",
             "title": "Specialty Coffee",
             "body": "Single origins and specialty coffees selected for quality and flavour.",
             "link_label": "Discover Our Coffee",
@@ -57,6 +63,8 @@
         "coffee_shop": {
           "type": "link",
           "settings": {
+            "image": "shopify://shop_images/hero-azouz-coffee-cup.jpg",
+            "image_alt": "A hand holding an Azouz Coffee takeaway cup",
             "title": "Own an Azouz Coffee",
             "body": "Bring Azouz Coffee to your neighbourhood: coffee, equipment, branding, menu and operations.",
             "link_label": "Explore Opportunities",
