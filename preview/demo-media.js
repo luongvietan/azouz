@@ -23,7 +23,7 @@
  */
 export const DEMO_MEDIA = {
   'templates/index.json': {
-    hero: '/preview-media/hero-azouz-coffee-cup.jpg',
+    hero: '/preview-media/hero-roastery.jpg',
     // Stand-ins until the service photography is shot: the packaging and the
     // cup are what there is. The brief in the setup guide says what each of
     // these four should really be.

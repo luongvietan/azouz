@@ -93,10 +93,16 @@ test('the homepage carries the client headline and both hero calls to action', a
   assert.match(html, /class="button button--secondary[^"]*"[^>]*href="\/pages\/private-label"/);
 });
 
-test('the homepage hero uses a packaging photo and a short packaging-line eyebrow', async () => {
+/*
+  The client's note on 20 September: the opening needed a big photograph, and
+  a roaster. The cup-in-hand shot that opened the page read as a café, which
+  is what the setup guide's brief had said about it since August. The cup is
+  still on the page, one entry down, where a coffee shop is what it is for.
+*/
+test('the homepage opens on the roastery, not on a cup', async () => {
   const html = await renderAll('index.json');
   assert.match(html, /<img[^>]+class="hero-overlay__image"[^>]+src="[^"]+"/);
-  assert.match(html, /alt="Hand holding an azouz coffee branded takeaway cup"/);
+  assert.match(html, /alt="Roasted coffee falling from the roaster drum into the cooling tray"/);
   assert.match(html, /Specialty coffee roasters/);
   assert.equal(/What We Do/i.test(html), false);
   assert.equal(/How it works/i.test(html), false);

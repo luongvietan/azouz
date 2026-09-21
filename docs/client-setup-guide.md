@@ -383,10 +383,15 @@ concrete. No burlap, no wood grain, no steam, no latte art.
 
 Two practical notes:
 
-- **The homepage hero is the current weak point.** The cup-in-hand photograph is
-  a nice picture, but it reads as a café rather than as a roaster, a wholesaler
-  or a manufacturer. It is the one image worth reshooting first — everything
-  else on the page is already telling a B2B story.
+- **The homepage hero is a stand-in, and it is somebody else's roastery.** The
+  cup-in-hand photograph that opened the page read as a café rather than as a
+  roaster, so it has moved down to the *Own an Azouz Coffee* entry, where a
+  café is the point, and the hero carries a licensed stock photograph of a
+  roaster dropping coffee into a cooling tray (Unsplash, free for commercial
+  use, no attribution required). It is the right *kind* of picture and the
+  wrong roastery: the page underneath it says the coffee is roasted in your own
+  facility, so this is the first shot to replace with your own. Ten minutes at
+  the roaster with a phone would beat it.
 - **Keep the subject in the middle of the four service pictures.** They are
   centre-cropped twice over: upright beside the copy on a phone, 4:3 landscape
   above the heading on a larger screen. Shoot them landscape, and keep anything

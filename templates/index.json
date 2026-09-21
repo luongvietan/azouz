@@ -19,8 +19,8 @@
         "cta_primary_link": "/pages/request-a-sample",
         "cta_secondary_label": "How private label works",
         "cta_secondary_link": "/pages/private-label",
-        "image": "shopify://shop_images/hero-azouz-coffee-cup.jpg",
-        "image_alt": "Hand holding an azouz coffee branded takeaway cup",
+        "image": "shopify://shop_images/hero-roastery.jpg",
+        "image_alt": "Roasted coffee falling from the roaster drum into the cooling tray",
         "height": "tall"
       }
     },

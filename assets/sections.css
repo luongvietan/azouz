@@ -1953,16 +1953,15 @@
   z-index: -2;
 }
 
-/* On a phone the copy fills the frame, and a centred crop puts the headline
-   straight across whatever the photograph's subject is — in the shipped hero,
-   across the Azouz wordmark printed on the cup. Two marks fight and both lose.
-   Pushing the crop toward the inline end moves the subject out from under the
-   text column. There is no logical form of object-position, so the RTL case is
-   mirrored explicitly, the same way the arrow icons are. */
-@media (max-width: 47.99em) {
-  .hero-overlay__image { object-position: 72% 50%; }
-  [dir='rtl'] .hero-overlay__image { object-position: 28% 50%; }
-}
+/* Centred, and that is a decision rather than the default left alone.
+
+   On a phone this band crops to one upright slice of the photograph, so which
+   slice it takes is the whole picture. The cup photograph that used to open
+   the page printed the Azouz wordmark dead centre, under the headline: two
+   marks fighting, which is why the crop was pushed to 72% and mirrored for
+   RTL. The roastery photograph's subject is the coffee falling into the tray,
+   in the middle of the frame and above where the copy starts, so the push
+   would now hide the one thing the picture is of. Centre shows the work. */
 
 /* Two layers, and the split matters.
 
