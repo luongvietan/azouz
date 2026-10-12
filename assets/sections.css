@@ -2140,7 +2140,7 @@
   .quick-links__item--media .quick-links__title { grid-area: title; }
   .quick-links__item--media .quick-links__body { grid-area: body; }
   .quick-links__item--media .quick-links__link { grid-area: link; }
-  .quick-links__item--media .quick-links__image { aspect-ratio: 4 / 5; }
+  .quick-links__item--media .quick-links__image { aspect-ratio: 3 / 2; }
 }
 
 /* ---------- Marquee ---------- */
