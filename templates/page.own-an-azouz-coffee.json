@@ -19,8 +19,9 @@
         "cta_primary_link": "/pages/own-an-azouz-coffee#enquire",
         "cta_secondary_label": "Request Information",
         "cta_secondary_link": "/pages/own-an-azouz-coffee#enquire",
-        "image_alt": "An Azouz Coffee counter: espresso machine, grinder and a 1 kg coffee bag beside it",
-        "background": "default"
+        "image_alt": "A hand holding an Azouz Coffee takeaway cup",
+        "background": "default",
+        "image": "shopify://shop_images/hero-azouz-coffee-cup.jpg"
       }
     },
     "intro": {
@@ -135,9 +136,10 @@
         "heading": "Powered by Our Own Roastery.",
         "body": "<p>Your coffee isn't coming from an outside supplier.</p><p>We roast it ourselves.</p><p>That gives your location direct access to coffee sourcing, custom roasting, blending and ongoing supply from the same team supporting the brand.</p><p>It means fewer suppliers and greater consistency in the cup.</p>",
         "cta_label": "",
-        "image_alt": "Roasted coffee falling into the cooling tray at the Azouz roastery",
+        "image_alt": "Roasted coffee falling from the roaster into the cooling tray",
         "media_position": "start",
-        "background": "alt"
+        "background": "alt",
+        "image": "shopify://shop_images/hero-roastery.jpg"
       }
     },
     "simpler": {

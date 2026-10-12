@@ -15,12 +15,13 @@
         "eyebrow": "Wholesale",
         "heading": "Wholesale Coffee for Your Business.",
         "body": "<p>Reliable, consistent coffee for cafés, restaurants, hotels, offices and distributors.</p>",
-        "image_alt": "Filter Coffee, the 400g can",
+        "image_alt": "Espresso machine, grinder and a one kilogram silver coffee bag on a café counter",
         "cta_primary_label": "Get a Quote",
         "cta_primary_link": "/pages/get-a-quote",
         "cta_secondary_label": "Request a Sample",
         "cta_secondary_link": "/pages/request-a-sample",
-        "background": "default"
+        "background": "default",
+        "image": "shopify://shop_images/photo-wholesale-espresso.png"
       }
     },
     "range": {
@@ -249,11 +250,26 @@
         "ratio",
         "flavour"
       ]
+    },
+    "filter_brewing": {
+      "type": "brand-feature",
+      "settings": {
+        "eyebrow": "Filter coffee",
+        "heading": "Coffee for Every Brewing Method.",
+        "body": "<p>Whole bean or ground coffee for filter brewing, selected around the flavour and service your business needs.</p>",
+        "cta_label": "Request a Sample",
+        "cta_link": "/pages/request-a-sample",
+        "image": "shopify://shop_images/photo-filter-v60.jpg",
+        "image_alt": "A hand lifting a V60 dripper over a glass server of fresh filter coffee",
+        "media_position": "start",
+        "background": "default"
+      }
     }
   },
   "order": [
     "hero",
     "range",
+    "filter_brewing",
     "blend",
     "audience",
     "consistency",
