@@ -1256,9 +1256,15 @@
 
 .packaging-sizes__inner {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-lg);
   justify-items: center;
   text-align: center;
+}
+
+.packaging-sizes__inner > * {
+  min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 .packaging-sizes__heading { margin: 0; }
