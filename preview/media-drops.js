@@ -61,7 +61,9 @@ function measure(path) {
 
   if (existsSync(file)) {
     const buffer = readFileSync(file);
-    size = /\.svg$/i.test(file) ? svgSize(buffer.toString('utf8')) : jpegSize(buffer);
+    size = /\.svg$/i.test(file) ? svgSize(buffer.toString('utf8'))
+      : /\.png$/i.test(file) && buffer.length >= 24 ? { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) }
+      : jpegSize(buffer);
   }
 
   size ??= { width: 1122, height: 1402 };

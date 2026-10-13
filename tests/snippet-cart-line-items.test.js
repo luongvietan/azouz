@@ -28,6 +28,29 @@ test('each line links to its product', async () => {
   assert.match(html, /href="\/products\/espresso-arabica-beans\?variant=/);
 });
 
+test('Shopify Liquid line items show titles without Ajax-only fields', async () => {
+  const cart = filledCart();
+  for (const item of cart.items) {
+    delete item.product_title;
+    delete item.variant_title;
+  }
+  const html = await renderSnippet('cart-line-items', { cart });
+  assert.match(html, /cart-line__title[^>]*>Espresso Arabica Beans<\/a>/);
+  assert.match(html, /cart-line__variant[^>]*>500g \/ Whole Bean<\/p>/);
+  assert.match(html, /alt="Espresso Arabica Beans"/);
+  assert.match(html, /visually-hidden[^>]*>[^<]*Espresso Arabica Beans/);
+});
+
+test('line images fall back to the product image when a line image is absent', async () => {
+  const cart = filledCart();
+  for (const item of cart.items) {
+    item.product.featured_image = item.image;
+    item.image = null;
+  }
+  const html = await renderSnippet('cart-line-items', { cart });
+  assert.equal(countMatches(html, /class="cart-line__image"/g), 2);
+});
+
 test('quantity is editable and carries the line key', async () => {
   const html = await renderSnippet('cart-line-items', { cart: filledCart() });
   assert.match(html, /name="updates\[espresso-arabica-beans-500g\]"/);

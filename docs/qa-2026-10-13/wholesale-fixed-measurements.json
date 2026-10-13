@@ -1,0 +1,20 @@
+[
+  {
+    "documentWidth": 305,
+    "headingWidth": 265,
+    "listWidth": 265,
+    "viewport": 320
+  },
+  {
+    "documentWidth": 345,
+    "headingWidth": 305,
+    "listWidth": 305,
+    "viewport": 360
+  },
+  {
+    "documentWidth": 360,
+    "headingWidth": 320,
+    "listWidth": 320,
+    "viewport": 375
+  }
+]

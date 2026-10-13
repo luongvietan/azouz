@@ -14,7 +14,7 @@ const MARKETING = [
   'page.our-brands.json',
   'page.enquiry.json',
   'page.get-a-quote.json',
-  'page.own-an-azouz-coffee.json',
+  'page.own-your-azouz-coffee-branch.json',
 ];
 
 const load = async (name) =>
@@ -93,10 +93,10 @@ test('the homepage carries the client headline and both hero calls to action', a
   assert.match(html, /class="button button--secondary[^"]*"[^>]*href="\/pages\/private-label"/);
 });
 
-test('the homepage hero uses a packaging photo and a short packaging-line eyebrow', async () => {
+test('the homepage hero uses the roastery photo and its roasters eyebrow', async () => {
   const html = await renderAll('index.json');
   assert.match(html, /<img[^>]+class="hero-overlay__image"[^>]+src="[^"]+"/);
-  assert.match(html, /alt="Hand holding an azouz coffee branded takeaway cup"/);
+  assert.match(html, /alt="Roasted coffee falling from the roaster drum into the cooling tray"/);
   assert.match(html, /Specialty coffee roasters/);
   assert.equal(/What We Do/i.test(html), false);
   assert.equal(/How it works/i.test(html), false);
@@ -113,7 +113,7 @@ test('the homepage audience strip lists every business type the client named', a
 test('the private label page carries its headline and coffee types', async () => {
   const html = await renderAll('page.private-label.json');
   assert.match(html, /Build Your Own Coffee Brand\./);
-  assert.match(html, /preview-media\/espresso-arabica-beans-alt\.jpg/);
+  assert.match(html, /preview-media\/photo-private-label-silver\.png/);
   for (const type of ['Espresso blends', 'Turkish coffee', 'Filter coffee']) {
     assert.match(html, new RegExp(type));
   }
@@ -123,7 +123,7 @@ test('the homepage leads with private label across four business areas', async (
   const html = await renderAll('index.json');
   assert.match(html, /Private label is where we start\./);
   assert.match(html, /Start Your Private Label/);
-  for (const area of ['Private Label Coffee', 'Wholesale Coffee', 'Specialty Coffee', 'Own an Azouz Coffee']) {
+  for (const area of ['Private Label Coffee', 'Wholesale Coffee', 'Specialty Coffee', 'Own Your Azouz Coffee Branch']) {
     assert.match(html, new RegExp(area));
   }
 });
@@ -149,8 +149,8 @@ test('the homepage shows the roastery itself, for manufacturing credibility', as
 });
 
 test('the coffee shop opportunity page carries its offer and both formats', async () => {
-  const html = await renderAll('page.own-an-azouz-coffee.json');
-  assert.match(html, /Own an Azouz Coffee\./);
+  const html = await renderAll('page.own-your-azouz-coffee-branch.json');
+  assert.match(html, /Own Your Azouz Coffee Branch\./);
   assert.match(html, /Bring Azouz Coffee to your neighbourhood\./);
   assert.match(html, /A Full Azouz Coffee Location/);
   assert.match(html, /An Azouz Corner in Your Business/);
@@ -159,7 +159,8 @@ test('the coffee shop opportunity page carries its offer and both formats', asyn
 test('the wholesale page carries its headline and all four ranges', async () => {
   const html = await renderAll('page.wholesale.json');
   assert.match(html, /Wholesale Coffee for Your Business\./);
-  assert.match(html, /preview-media\/filter-coffee-can\.jpg/);
+  assert.match(html, /preview-media\/photo-wholesale-espresso\.png/);
+  assert.match(html, /preview-media\/photo-filter-v60\.jpg/);
   for (const range of ['Espresso Blends', 'Turkish Coffee', 'Specialty Coffee', 'Filter Coffee']) {
     assert.match(html, new RegExp(range));
   }
@@ -216,7 +217,7 @@ test('every route to the enquiry forms is called the same thing', async () => {
     'page.private-label.json',
     'page.wholesale.json',
     'page.our-brands.json',
-    'page.own-an-azouz-coffee.json',
+    'page.own-your-azouz-coffee-branch.json',
   ]) {
     const html = await renderAll(template);
     for (const [href, expected] of Object.entries(destinations)) {

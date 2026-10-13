@@ -74,9 +74,15 @@
                   {%- render 'icon', name: 'chevron-down' -%}
                 </summary>
                 <ul class="header__panel" role="list">
+                  {%- comment -%}
+                    The parent's own destination, marked as the overview rather
+                    than left to look like the label stuttering: it carries the
+                    panel's one heavy rule under it, and the children read as
+                    the index beneath it.
+                  {%- endcomment -%}
                   <li>
                     <a
-                      class="header__panel-link"
+                      class="header__panel-link header__panel-link--overview{% if link.active %} is-active{% endif %}"
                       href="{{ link.url }}"
                       {%- if link.active %} aria-current="page"{% endif %}>
                       {{ link.title }}
@@ -163,11 +169,11 @@
         <ul class="header__mobile-menu" role="list">
           {%- for link in section.settings.menu.links -%}
             <li>
-              <a class="header__mobile-link" href="{{ link.url }}">{{ link.title }}</a>
+              <a class="header__mobile-link" href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
               {%- if link.links.size > 0 -%}
                 <ul class="header__mobile-sub" role="list">
                   {%- for child in link.links -%}
-                    <li><a class="header__mobile-sublink" href="{{ child.url }}">{{ child.title }}</a></li>
+                    <li><a class="header__mobile-sublink" href="{{ child.url }}"{% if child.active %} aria-current="page"{% endif %}>{{ child.title }}</a></li>
                   {%- endfor -%}
                 </ul>
               {%- endif -%}

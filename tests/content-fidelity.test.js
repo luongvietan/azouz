@@ -92,7 +92,7 @@ test('private label carries the white label espresso blend the client described'
 });
 
 test('the franchise pitch the client wrote closes the coffee shop page', async () => {
-  await expectAll('page.own-an-azouz-coffee.json', [
+  await expectAll('page.own-your-azouz-coffee-branch.json', [
     'Want to pour Azouz in your neighbourhood?',
     'affordable setup, premium product, and a community that cares',
   ]);

@@ -209,8 +209,7 @@ export function buildFixtures() {
         links: [
           { title: 'Private Label', url: '/pages/private-label', active: false, links: [] },
           { title: 'Wholesale', url: '/pages/wholesale', active: false, links: [] },
-          { title: 'Own an Azouz Coffee', url: '/pages/own-an-azouz-coffee', active: false, links: [] },
-          { title: 'Our Brands', url: '/pages/our-brands', active: false, links: [] },
+          { title: 'Own Your Azouz Coffee Branch', url: '/pages/own-your-azouz-coffee-branch', active: false, links: [] },
           {
             title: 'Shop',
             url: '/collections/all',
@@ -223,6 +222,11 @@ export function buildFixtures() {
               { title: 'Filter coffee', url: '/collections/all', active: false, links: [] },
             ],
           },
+          // Six items, one more than the setup guide now recommends: "Own Your
+          // Azouz Coffee Branch" is long enough that six wrap onto two rows
+          // below 1088px. Kept here anyway because it is the preview's only
+          // route into the blog, so the header renders its wrapped state at
+          // narrow desktop widths on purpose rather than by accident.
           { title: 'Journal', url: '/blogs/journal', active: false, links: [] },
         ],
       },

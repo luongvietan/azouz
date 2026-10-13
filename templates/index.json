@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero": {
@@ -19,8 +10,8 @@
         "cta_primary_link": "/pages/request-a-sample",
         "cta_secondary_label": "How private label works",
         "cta_secondary_link": "/pages/private-label",
-        "image": "shopify://shop_images/hero-azouz-coffee-cup.jpg",
-        "image_alt": "Hand holding an azouz coffee branded takeaway cup",
+        "image": "shopify://shop_images/hero-roastery.jpg",
+        "image_alt": "Roasted coffee falling from the roaster drum into the cooling tray",
         "height": "tall"
       }
     },
@@ -33,7 +24,9 @@
             "title": "Private Label Coffee",
             "body": "Create coffee under your own brand: custom blends, roasting, grinding and packaging.",
             "link_label": "Start Your Private Label",
-            "link": "/pages/private-label"
+            "link": "/pages/private-label",
+            "image": "shopify://shop_images/photo-private-label-silver.png",
+            "image_alt": "Four silver coffee pouches with different sample brand labels"
           }
         },
         "wholesale": {
@@ -42,7 +35,9 @@
             "title": "Wholesale Coffee",
             "body": "Reliable coffee for cafés, restaurants, hotels and businesses. Espresso, Turkish, filter and specialty.",
             "link_label": "View Wholesale",
-            "link": "/pages/wholesale"
+            "link": "/pages/wholesale",
+            "image": "shopify://shop_images/photo-wholesale-espresso.png",
+            "image_alt": "Espresso machine, grinder and a one kilogram silver coffee bag on a café counter"
           }
         },
         "specialty": {
@@ -51,16 +46,20 @@
             "title": "Specialty Coffee",
             "body": "Single origins and specialty coffees selected for quality and flavour.",
             "link_label": "Discover Our Coffee",
-            "link": "/collections/all"
+            "link": "/collections/all",
+            "image": "shopify://shop_images/photo-specialty-cupping.png",
+            "image_alt": "Green and roasted coffee beans, cupping bowls and origin cards viewed from above"
           }
         },
         "coffee_shop": {
           "type": "link",
           "settings": {
-            "title": "Own an Azouz Coffee",
+            "title": "Own Your Azouz Coffee Branch",
             "body": "Bring Azouz Coffee to your neighbourhood: coffee, equipment, branding, menu and operations.",
             "link_label": "Explore Opportunities",
-            "link": "/pages/own-an-azouz-coffee"
+            "link": "/pages/own-your-azouz-coffee-branch",
+            "image": "shopify://shop_images/hero-azouz-coffee-cup.jpg",
+            "image_alt": "A hand holding an Azouz Coffee takeaway cup"
           }
         }
       },
@@ -102,8 +101,8 @@
       "settings": {
         "eyebrow": "",
         "heading": "Our Story",
-        "link_label": "About Azouz",
-        "link": "/pages/our-brands"
+        "link_label": "",
+        "link": ""
       }
     },
     "story": {
@@ -112,31 +111,34 @@
         "sourcing": {
           "type": "column",
           "settings": {
-            "image_alt": "Sacks of green coffee waiting on the roastery floor",
+            "image_alt": "Coffee beans and cupping bowls prepared for tasting",
             "title": "Sourcing",
             "body": "We buy green coffee for the blend it has to become, and we buy it from the same growers year after year.",
-            "link_label": "Read our sourcing approach",
-            "link": "/pages/our-brands"
+            "link_label": "Explore Wholesale Coffee",
+            "link": "/pages/wholesale",
+            "image": "shopify://shop_images/photo-specialty-cupping.png"
           }
         },
         "roasting": {
           "type": "column",
           "settings": {
-            "image_alt": "The roaster mid-batch on the Azouz production floor",
+            "image_alt": "Roasted coffee falling from the roaster into the cooling tray",
             "title": "Roasting",
             "body": "Roasted in our own facility in Jordan, to a profile we develop with you and hold to from the first batch to the hundredth.",
             "link_label": "See what we can roast for you",
-            "link": "/pages/private-label"
+            "link": "/pages/private-label",
+            "image": "shopify://shop_images/hero-roastery.jpg"
           }
         },
         "packing": {
           "type": "column",
           "settings": {
-            "image_alt": "Filled and sealed Azouz coffee bags leaving the packing line",
+            "image_alt": "Silver pouches showing different example private label coffee brands",
             "title": "Packing",
             "body": "Ground to your grind, filled to your weight and sealed in your bag. Whole bean, ground, or a full private-label range.",
             "link_label": "See packaging and sizes",
-            "link": "/pages/private-label"
+            "link": "/pages/private-label",
+            "image": "shopify://shop_images/photo-private-label-silver.png"
           }
         }
       },

@@ -123,11 +123,15 @@
 @media (max-width: 55.99em) {
   .header__logo {
     min-inline-size: 0;
-    max-inline-size: calc(100% - 7.5rem);
+    max-inline-size: 100%;
   }
 
   .header__logo-image {
-    max-block-size: 2.75rem;
+    /* The grid already reserves the actions. Preserve the lockup's ratio and
+       the brand's 57px floor instead of subtracting that space a second time. */
+    min-block-size: 3.5625rem;
+    max-block-size: 3.5625rem;
+    object-fit: contain;
   }
 
   .header__actions {
@@ -227,33 +231,133 @@
   block-size: 1rem;
 }
 
+/* The open panel was drawn with nothing tying it to the item that opened it:
+   the chevron sat pointing down and the summary looked exactly as it does
+   closed. Both now state the disclosure's own state — the same 2px ink rule a
+   hovered or current item wears, and a chevron that turns over. The rotation
+   is state, not decoration, so it applies whatever the motion preference; only
+   its transition is withheld below. */
+.header__disclosure[open] > summary { border-block-end-color: var(--color-text); }
+
+.header__disclosure[open] > summary .icon { transform: rotate(180deg); }
+
+/* The panel is the one floating surface in the header, and it stays flat: ink
+   hairline, no drop shadow. The Flat-By-Default Rule forbids the ghost-card
+   pairing of a 1px border with a wide shadow, and a shadow is what would be
+   reached for here by reflex.
+
+   Gaps became rules. The panel used to hold its items apart with --space-sm,
+   which read as four links adrift in a box; the rule-divided index is the
+   grammar this theme already uses for a list of destinations, so the items are
+   divided by strokes and the padding moved onto the rows. Rows now run the
+   full width of the panel, which is what makes a hover state possible at all —
+   under the old rule the only feedback was an underline on the text itself.
+
+   max-block-size is for the merchant who nests twelve links under one heading:
+   the panel scrolls instead of running off the bottom of the screen. */
 .header__panel {
   position: absolute;
   inset-block-start: calc(100% + var(--space-xs));
   inset-inline-start: 0;
   z-index: 30;
   display: grid;
-  gap: var(--space-sm);
-  min-inline-size: 14rem;
-  padding: var(--space-md);
+  min-inline-size: 15rem;
+  max-inline-size: min(22rem, calc(100vw - 2 * var(--gutter)));
+  max-block-size: calc(100vh - var(--chrome-block-size) - var(--space-lg));
+  overflow-y: auto;
+  padding-block: var(--space-2xs);
   background-color: var(--color-bg);
   border: var(--rule-ink);
   border-radius: var(--radius);
 }
 
+/* A panel hanging off one of the last items would otherwise run past the
+   inline edge of the viewport at narrow desktop widths. These two anchor to
+   their own inline end instead, which is the only place the overflow can come
+   from — a panel on an early item has the whole row to open into. */
+.header__item:last-child .header__panel,
+.header__item:nth-last-child(2) .header__panel {
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+}
+
 /* 23px cleared nothing: WCAG 2.5.8 puts the pointer-target floor at 24px, and
    this sat a pixel under it. Sized to the same 44px as everything else rather
-   than to the bare minimum. */
+   than to the bare minimum.
+
+   The size went up too. These were --text-sm, 14px, in a theme whose stated
+   digital body minimum is 17px and whose own phone sub-menu already used it.
+   A destination list is not fine print. */
 .header__panel-link {
   display: flex;
   align-items: center;
   min-block-size: 2.75rem;
-  font-size: var(--text-sm);
+  padding-inline: var(--space-md);
+  padding-block: var(--space-2xs);
+  font-size: var(--text-base);
   text-decoration: none;
+  border-block-start: var(--rule-ink-soft);
+  /* Carried transparent by every row so the current one can colour it without
+     moving its own label 2px. Logical, so it lands on the correct edge when
+     the locale flips the header to rtl. */
+  border-inline-start: 2px solid transparent;
 }
 
+.header__panel > li:first-child .header__panel-link { border-block-start: 0; }
+
+/* Sage Light is the palette's surface, and this is the one place in the header
+   where the brand colour gets to appear. It takes Onyx at 14:1, so the row
+   reads at full contrast while it is under the pointer. One Band, One Colour
+   governs the pale green *band* a template paints; a transient hover state in
+   fixed chrome is not that band. */
 .header__panel-link:hover,
-.header__panel-link.is-active { text-decoration: underline; }
+.header__panel-link:focus-visible {
+  background-color: var(--color-accent);
+}
+
+/* Active is weight and an ink marker, never a new colour — the same rule the
+   top-level items keep, which spends 2px of ink rather than introducing a
+   colour the palette reserves for surfaces. */
+.header__panel-link.is-active {
+  font-weight: var(--font-weight-semibold);
+  border-inline-start-color: var(--color-text);
+}
+
+/* The overview repeats the parent's label, so it is set as the head of the
+   index rather than as another entry: heavier, and closed by the panel's one
+   full-strength rule. */
+.header__panel-link--overview {
+  font-weight: var(--font-weight-semibold);
+  border-block-end: var(--rule-ink);
+  padding-block-end: var(--space-xs);
+  margin-block-end: var(--space-2xs);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .header__disclosure > summary .icon {
+    transition: transform var(--duration-fast) var(--ease);
+  }
+
+  .header__panel-link {
+    transition: background-color var(--duration-fast) var(--ease);
+  }
+
+  /* The panel arrives rather than appearing. 4px and 160ms — the distance is
+     short enough that it never reads as a slide, only as the panel settling
+     under the item that opened it. */
+  .header__disclosure[open] > .header__panel {
+    animation: panel-drop-in var(--duration-fast) var(--ease) both;
+  }
+}
+
+/* Shared with the select picker further down: both are a surface that drops
+   from the control that opened it. */
+@keyframes panel-drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
 
 .header__mobile-sub {
   display: grid;
@@ -342,7 +446,10 @@
 
 .header__mobile-panel {
   position: absolute;
+  inset-block-start: 100%;
   inset-inline: 0;
+  max-block-size: calc(100dvh - var(--chrome-block-size));
+  overflow-y: auto;
   padding: var(--space-md) var(--gutter) var(--space-lg);
   background-color: var(--color-bg);
   border-block-end: var(--hairline);
@@ -365,6 +472,21 @@
   text-decoration: none;
 }
 
+.header__mobile-link[aria-current='page'],
+.header__mobile-sublink[aria-current='page'] {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.25em;
+}
+
+/* Keep the enquiry heading visible beneath the sticky desktop header when
+   arriving from the hero link or Shopify's native contact redirect. */
+@media (min-width: 56em) {
+  .enquiry[id='contact'] {
+    scroll-margin-block-start: var(--chrome-block-size);
+  }
+}
+
 @media (min-width: 56em) {
   .header__nav { display: block; }
   .header__mobile { display: none; }
@@ -383,10 +505,23 @@
 
   The nav needs about 880px before six items of this length fit, so the
   disclosure now runs to 56em (896px) instead of 48em and iPad portrait keeps
-  the phone header. A seventh item, or a longer label than "Own an Azouz
-  Coffee", still wraps rather than pushing the page sideways — that is the
+  the phone header. A seventh item, or a label longer than the ones measured
+  below, still wraps rather than pushing the page sideways — that is the
   failure mode worth having, and it is now several hundred pixels away rather
   than at the breakpoint itself.
+
+  Re-measured again when the coffee-shop page was renamed "Own Your Azouz
+  Coffee Branch". That label is nine characters longer than the one this
+  budget was set against, and six items no longer fit: two rows at 896, 1024,
+  1040, 1056, 1072 and 1080px, with the header at 206px and then 218px once
+  the 64em action labels come back. One row returns only at 1088px, which is
+  too high a price — it would hand iPad landscape and any 1024px window the
+  phone header.
+
+  Five items carry the long label instead: one row at both 896 and 1024px,
+  header 142px, which is what six short items used to measure. So the ceiling
+  is now five items rather than six while that label is in the menu, and the
+  setup guide says so. No breakpoint moved; the budget is spent on the label.
 */
 @media (min-width: 56em) and (max-width: 63.99em) {
   .header__inner { column-gap: var(--space-md); }
@@ -1195,9 +1330,15 @@
 
 .packaging-sizes__inner {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-lg);
   justify-items: center;
   text-align: center;
+}
+
+.packaging-sizes__inner > * {
+  min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 .packaging-sizes__heading { margin: 0; }
@@ -1391,6 +1532,152 @@
 
 .field__input:focus-visible {
   border-color: var(--color-accent-deep);
+}
+
+/* ---------- Select ----------
+   A <select> is two surfaces: the control, which has always taken the theme's
+   field styling, and the picker it opens, which until now was drawn entirely
+   by the operating system — a blue-highlighted system list hanging off an
+   Azouz control. The sort control on the collection page is where it showed.
+
+   Both halves are handled here, in two layers.
+
+   Layer one, everywhere: the control drops the native arrow and draws the
+   theme's own chevron, so the closed control is the same shape in every
+   browser. The stroke is hard-coded rather than currentColor because a
+   background image cannot read it; onyx is what --color-text resolves to on
+   every ground a field sits on in this theme.
+
+   Layer two, where the browser supports customizable select: the picker
+   itself is restyled to match the header's nested menu — ink hairline, no
+   shadow, rule-divided rows at 44px and --text-base. Browsers without it keep
+   the system picker, which is the correct fallback: the element is still a
+   real <select>, so it works with no script, submits natively, and stays
+   whatever the platform expects on touch. */
+select.field__input {
+  appearance: none;
+  padding-inline-end: var(--space-xl);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9' stroke='%23171717' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-sm) center;
+  background-size: 1rem 1rem;
+}
+
+[dir='rtl'] select.field__input { background-position: left var(--space-sm) center; }
+
+@supports (appearance: base-select) {
+  select.field__input,
+  select.field__input::picker(select) {
+    appearance: base-select;
+  }
+
+  /* base-select resets the control to the UA's own base styling, so the field
+     shape has to be restated rather than inherited from .field__input. The
+     background chevron goes with it — in this mode the control draws a real
+     ::picker-icon, and keeping both would hang two chevrons off one field. */
+  select.field__input {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    inline-size: 100%;
+    min-block-size: 3rem;
+    padding: var(--space-xs) var(--space-sm);
+    text-align: start;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    background-image: none;
+    border: 1px solid var(--color-text-muted);
+    border-radius: var(--radius);
+  }
+
+  /* The UA draws a solid triangle here. Every other chevron in the theme is
+     the 1.5px stroked one from the icon set, so the glyph is hidden behind a
+     transparent colour and the real icon painted as a mask — a mask rather
+     than a background image so it takes currentColor and stays correct on any
+     ground a field is placed on. */
+  select.field__input::picker-icon {
+    margin-inline-start: auto;
+    inline-size: 1rem;
+    block-size: 1rem;
+    /* The glyph is collapsed by font-size rather than by a transparent
+       colour, because the mask is painted in currentColor and a transparent
+       colour would paint the icon away with it. */
+    font-size: 0;
+    background-color: currentColor;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3C/svg%3E");
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+  }
+
+  select.field__input:open::picker-icon { transform: rotate(180deg); }
+
+  /* The same surface the header's nested menu uses: flat, ink hairline, no
+     drop shadow. anchor-* keeps the picker pinned to the control it belongs
+     to rather than to the viewport. */
+  select.field__input::picker(select) {
+    inline-size: anchor-size(self-inline);
+    min-inline-size: 12rem;
+    max-block-size: 20rem;
+    overflow-y: auto;
+    padding-block: var(--space-2xs);
+    background-color: var(--color-bg);
+    border: var(--rule-ink);
+    border-radius: var(--radius);
+  }
+
+  select.field__input option {
+    display: flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+    padding-inline: var(--space-md);
+    padding-block: var(--space-2xs);
+    font-size: var(--text-base);
+    color: var(--color-text);
+    background-color: transparent;
+    border-block-start: var(--rule-ink-soft);
+    /* Carried transparent by every row so the selected one can colour it
+       without moving its own label. Logical, for rtl. */
+    border-inline-start: 2px solid transparent;
+  }
+
+  select.field__input option:first-of-type { border-block-start: 0; }
+
+  /* Sage Light, exactly as the header panel does it: the palette's surface,
+     which takes Onyx at 14:1. The system blue this replaces belonged to the
+     operating system, not to Azouz. */
+  select.field__input option:hover,
+  select.field__input option:focus,
+  select.field__input option:checked:hover {
+    background-color: var(--color-accent);
+  }
+
+  /* Selected is weight and an ink marker rather than a fill, so it stays
+     legible under the hover fill instead of fighting it. */
+  select.field__input option:checked {
+    font-weight: var(--font-weight-semibold);
+    border-inline-start-color: var(--color-text);
+  }
+
+  /* The marker says which option is current, so the UA tick would say it
+     twice — and it indents every row to make space for itself. */
+  select.field__input option::checkmark { display: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (appearance: base-select) {
+    select.field__input::picker-icon {
+      transition: transform var(--duration-fast) var(--ease);
+    }
+
+    select.field__input option {
+      transition: background-color var(--duration-fast) var(--ease);
+    }
+
+    select.field__input::picker(select):popover-open {
+      animation: panel-drop-in var(--duration-fast) var(--ease) both;
+    }
+  }
 }
 
 .field__input--textarea {
@@ -1897,6 +2184,8 @@
 
 .quick-links__link { margin-block-start: auto; }
 
+.quick-links__content { display: contents; }
+
 /* ---------- Marquee ---------- */
 
 .marquee__mark { color: var(--color-highlight); }
@@ -2099,4 +2388,171 @@ a.flavour-finder__name:hover { color: var(--color-accent-deep); }
   font-weight: var(--font-weight-semibold);
   line-height: var(--leading-heading);
   max-inline-size: 42ch;
+}
+/* Service photographs use the same crop across all four entries. */
+.quick-links__media { aspect-ratio: 3 / 2; overflow: hidden; margin-block-end: 1.25rem; }
+.quick-links__image { display: block; inline-size: 100%; block-size: 100%; object-fit: cover; }
+
+/* ---------- Homepage visual refinement ----------
+   Packaging supplies the identity. Space separates the marketing content;
+   rules remain for navigation states and actual product specifications. */
+
+.template-index .section-head__heading {
+  font-size: var(--text-3xl);
+  text-transform: none;
+  letter-spacing: var(--tracking-display);
+  max-inline-size: 22ch;
+}
+
+.template-index .section-head__rule { display: none; }
+.template-index .section-head { margin-block-end: var(--space-xl); }
+.template-index .section-head__link { margin-inline-start: 0; }
+.template-index .section-head { justify-content: space-between; }
+
+.template-index .hero-overlay-section { padding-block-start: 0; }
+.template-index .hero-overlay-section > .container { max-inline-size: none; padding-inline: 0; }
+.template-index .hero-overlay { border-radius: 0; }
+.template-index .hero-overlay--tall {
+  min-block-size: min(45rem, 100dvh - var(--chrome-block-size));
+}
+.template-index .hero-overlay__content {
+  max-inline-size: 65rem;
+  padding: clamp(1.5rem, 5vw, 5rem);
+}
+.template-index .hero-overlay__heading {
+  max-inline-size: 20ch;
+}
+.template-index .hero-overlay__body { max-inline-size: 54ch; }
+.template-index .hero-overlay__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+.template-index .hero-overlay__actions > .button:not(.button--secondary) {
+  --button-bg: var(--color-bg);
+  --button-fg: var(--color-text);
+  border-color: var(--color-bg);
+}
+.template-index .hero-overlay__actions > .button:not(.button--secondary):hover {
+  --button-bg: var(--color-bg-alt);
+}
+
+.template-index .quick-links__list {
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-xl);
+}
+.template-index .quick-links__list > li,
+.template-index .featured-collection__grid > li {
+  padding-block: 0;
+  border-block-end: 0;
+  min-inline-size: 0;
+}
+.template-index .quick-links__list > li::before,
+.template-index .featured-collection__grid > li::before { display: none; }
+.template-index .quick-links__media {
+  inline-size: 100%;
+  border-radius: var(--radius-lg);
+  margin-block-end: var(--space-md);
+}
+.template-index .quick-links__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+}
+.template-index .quick-links__body { line-height: 1.6; }
+.template-index .quick-links__item:first-child {
+  background-color: var(--color-bg-alt);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.template-index .quick-links__item:first-child .quick-links__media {
+  margin-block-end: 0;
+  border-radius: 0;
+}
+.template-index .quick-links__item:first-child .quick-links__content {
+  padding: clamp(1.5rem, 4vw, 4rem);
+  justify-content: center;
+}
+.template-index .quick-links__item:first-child .quick-links__title { font-size: var(--text-3xl); }
+.template-index .quick-links__item:first-child .quick-links__link { margin-block-start: var(--space-md); }
+
+.template-index .featured-collection { background-color: var(--color-bg-alt); }
+.template-index .featured-collection__grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: var(--space-xl) var(--space-lg);
+}
+.template-index .featured-collection .product-card__image {
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+.template-index .story-columns { padding-block-start: 0; }
+.template-index .story-columns__grid { gap: var(--space-xl); }
+.template-index .story-column__image { aspect-ratio: 4 / 3; }
+.template-index .story-column__body { line-height: 1.6; }
+.template-index .marquee { border-block-end-width: 1px; border-block-start: 0; }
+.template-index .flavour-finder { border-block: 0; }
+.template-index .flavour-finder__list { border-block-start: 0; gap: var(--space-lg) var(--space-2xl); }
+.template-index .flavour-finder__row { grid-template-columns: minmax(0, 1fr); border-block-end: var(--rule-ink-soft); }
+.template-index .flavour-finder__note { color: var(--color-text-muted); }
+
+@media (min-width: 40em) {
+  .template-index .quick-links__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .template-index .quick-links__item:first-child { grid-column: 1 / -1; }
+  .template-index .flavour-finder__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 56em) {
+  .template-index .hero-overlay__heading { text-wrap: wrap; }
+  .template-index .quick-links__list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .template-index .quick-links__item:first-child {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    align-items: stretch;
+    margin-block-end: var(--space-md);
+  }
+  .template-index .quick-links__item:first-child .quick-links__media { aspect-ratio: 3 / 2; }
+}
+
+/* An even number of services leaves one secondary entry on the tablet row.
+   Give that entry both tracks rather than leaving a vacant half-row. */
+@media (min-width: 40em) and (max-width: 55.99em) {
+  .template-index .quick-links__item:last-child:nth-child(2n) {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    gap: var(--space-lg);
+  }
+  .template-index .quick-links__item:last-child:nth-child(2n) .quick-links__media { margin-block-end: 0; }
+}
+
+/* One row where the shipped navigation fits. Smaller desktops keep the
+   existing two-row layout, and phones keep the native disclosure. */
+.header { border-block-end: var(--rule-ink-soft); }
+@media (min-width: 80em) {
+  .header__inner {
+    grid-template-areas: 'logo nav feature actions';
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    gap: var(--space-lg);
+    padding-block: var(--space-xs);
+  }
+  .header__nav,
+  .header__actions { border-block-start: 0; padding-block: 0; }
+  .header__logo,
+  .header__feature { padding-block: 0; }
+  .header__menu { gap: var(--space-md); }
+  .header__feature-link { border-block-end: 0; }
+  .header__action-label {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .template-index .quick-links__image { transition: transform var(--duration) var(--ease); }
+  .template-index .quick-links__item:has(.quick-links__link:hover) .quick-links__image { transform: scale(1.025); }
 }

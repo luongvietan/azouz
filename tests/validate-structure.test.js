@@ -108,3 +108,13 @@ test('client source artwork sharing the root is not reported', async () => {
   });
   assert.deepEqual(await findDisallowedTopLevelEntries(dir), []);
 });
+
+test('graft tooling is allowed while stray theme directories are still reported', async () => {
+  const dir = await makeTheme({
+    ...VALID,
+    '.ignore': '!graft/\n',
+    'graft/INDEX.md': '# repository index',
+    'styles/main.css': '',
+  });
+  assert.deepEqual(await findDisallowedTopLevelEntries(dir), ['styles']);
+});

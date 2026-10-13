@@ -102,7 +102,7 @@ they are what the buttons across the site link to.
 | Private Label | `private-label` | `page.private-label` |
 | Wholesale | `wholesale` | `page.wholesale` |
 | Our Brands | `our-brands` | `page.our-brands` |
-| Own an Azouz Coffee | `own-an-azouz-coffee` | `page.own-an-azouz-coffee` |
+| Own Your Azouz Coffee Branch | `own-your-azouz-coffee-branch` | `page.own-your-azouz-coffee-branch` |
 | Request a Sample | `request-a-sample` | `page.enquiry` |
 | Get a Quote | `get-a-quote` | `page.get-a-quote` |
 
@@ -115,6 +115,26 @@ body content is not rendered on any of them.
 **If a handle is wrong:** the page still exists and still works, but every
 "Request a Sample" and "Get a Quote" button on the rest of the site 404s. There
 are six links to each of those two pages. Nothing warns you.
+
+**If you already built these pages before this version:** the coffee-shop page
+was renamed. It used to be *Own an Azouz Coffee* at `own-an-azouz-coffee` on
+the `page.own-an-azouz-coffee` template, and it is now *Own Your Azouz Coffee
+Branch* at `own-your-azouz-coffee-branch` on `page.own-your-azouz-coffee-branch`.
+Three things to change on that one page, in this order:
+
+1. **Theme template** — reselect it in the right sidebar. The old template name
+   no longer exists in the theme, so the page falls back to the default one and
+   loses every section until you do.
+2. **Handle** — Search engine listing → Edit, set it to
+   `own-your-azouz-coffee-branch`. Shopify offers a **"Create a URL redirect"**
+   tick box when you change a handle. **Tick it** — anything already pointing
+   at the old address, including the menu, any printed material and search
+   results, keeps working.
+3. **Page title** — *Own Your Azouz Coffee Branch*.
+
+Also update the label in Online Store → Navigation, and read the menu-length
+note in step 5 before you do: the new label is long enough to change how many
+items fit on one row.
 
 ---
 
@@ -137,8 +157,8 @@ theme editor:
 | Wholesale | Hero | Hero image |
 | Our Brands | Hero | Hero image |
 | Our Brands | Brand feature | Feature image |
-| Own an Azouz Coffee | Hero | Hero image |
-| Own an Azouz Coffee | Brand feature | Feature image |
+| Own Your Azouz Coffee Branch | Hero | Hero image |
+| Own Your Azouz Coffee Branch | Brand feature | Feature image |
 | Request a Sample | Hero | Hero image |
 | Get a Quote | Hero | Hero image |
 
@@ -166,20 +186,27 @@ on the page — leaving it empty is the most visible gap on the site.
 Online Store → Navigation.
 
 - **Main menu** (handle `main-menu`) — the header. Suggested: Private Label,
-  Wholesale, Own an Azouz Coffee, Our Brands, Shop, Journal. That is six items,
-  which is the measured ceiling — see below. If the Journal is not launching
-  with the site, leave it out.
+  Wholesale, Own Your Azouz Coffee Branch, Shop. Our Brands was removed on
+  12 October 2026. Add Journal only when it is ready to publish.
 - **Footer menu** (handle `footer`) — the footer service links.
 
 Both are set per-section in the theme editor (Header → Menu, Footer → Menu), so
 a differently-named menu works — you just have to pick it there.
 
-Keep the header menu to **six items or fewer**. The horizontal menu only
+Keep the header menu to **five items or fewer**. The horizontal menu only
 appears from 896 px up; below that — phones and iPad in portrait — the header is
 the logo, the icons and the disclosure toggle, so the menu length costs nothing
-there. Measured at 896, 1024, 1280 and 1440 px, six items of the suggested
-length sit on a single row at every width. A seventh, or a label longer than
-"Own an Azouz Coffee", wraps onto a second line and the header gets taller.
+there. Measured at 896, 1024, 1280 and 1440 px, the five suggested items sit on
+a single row at every width and the header stays 142 px tall.
+
+"Own Your Azouz Coffee Branch" is a long label, and it spends the space a sixth
+item used to have. Six items including it wrap onto a second line at every
+width up to 1080 px — the header goes to 206 px, then 218 px — and only fit
+from 1088 px up. So the trade is yours to make: **five items with the full
+label, or six items with a shorter one** such as "Own a Branch" or
+"Coffee Shops". Either way the menu label is free text in Navigation — it does
+not have to match the page title, and shortening it here changes nothing on the
+page itself.
 
 The footer also has a Tagline, Phone and Address, and a switch to hide the
 contact block entirely. **Fill in Phone and Address.** With both blank the
@@ -363,7 +390,7 @@ concrete. No burlap, no wood grain, no steam, no latte art.
 | **Home → Private Label card** | Three or four silver bags standing together, each carrying a different fictional brand label. It says *we manufacture coffee for your brand* without a word of copy |
 | **Home → Wholesale card** | A café counter: espresso machine, grinder, and a 1 kg coffee bag beside it. B2B, not lifestyle |
 | **Home → Specialty card** | Top-down: green beans, roasted beans, cupping bowls, origin cards. Very clean, plenty of empty space |
-| **Home → Own an Azouz Coffee card** | The counter of an Azouz location — signage, cups and the bag in one frame |
+| **Home → Own Your Azouz Coffee Branch card** | The counter of an Azouz location — signage, cups and the bag in one frame |
 | **Home → Roasted in Jordan** | A wider shot of the actual roaster, sacks and production area, or somebody working at the machine. Real manufacturing is what carries credibility |
 | **Our Brands** | The Espresso Arabica Beans bag, the Turkish Coffee sachet and the Filter Coffee can photographed individually against off-white or light concrete |
 
@@ -391,8 +418,8 @@ the material:
   carries more weight than any of the design work.
 - **An About / Our Roastery page.** There is no template for one yet; the
   default page template will carry it, or a purpose-built one can be added. The
-  homepage *Roasted in Jordan* band currently points at Our Brands.
-- **The terms of a coffee-shop deal.** The Own an Azouz Coffee page describes
+  homepage no longer links to Our Brands; its sourcing link points to Wholesale.
+- **The terms of a coffee-shop deal.** The Own Your Azouz Coffee Branch page describes
   what a location opens with and how to enquire, but states no investment
   range, no fee structure and no territory rules. Whatever of that is decided
   belongs on the page before it is promoted.
@@ -412,7 +439,7 @@ the material:
 | The footer shows no policies | None have been written | Step 11 |
 | A menu item does nothing | The menu link points at a page that does not exist | Step 5 |
 | The homepage services show coloured panels, not photographs | Those cards have no image set | Step 4, and the photography brief |
-| "Explore Opportunities" 404s | The coffee-shop page handle does not match | Step 3, the handle must be `own-an-azouz-coffee` |
+| "Explore Opportunities" 404s | The coffee-shop page handle does not match | Step 3, the handle must be `own-your-azouz-coffee-branch` |
 
 ---
 

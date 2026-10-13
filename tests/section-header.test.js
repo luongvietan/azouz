@@ -32,7 +32,7 @@ test('the logo image has non-empty alt text', async () => {
 
 test('renders every link from the chosen menu', async () => {
   const html = await render();
-  for (const label of ['Private Label', 'Wholesale', 'Our Brands', 'Shop']) {
+  for (const label of ['Private Label', 'Wholesale', 'Own Your Azouz Coffee Branch', 'Shop']) {
     assert.match(html, new RegExp(label));
   }
 });
@@ -93,6 +93,21 @@ test('nesting a link under a parent does not bury the parent destination', async
   assert.match(panel[0], /href="\/collections\/all"[^>]*>\s*Shop/);
 });
 
+test('the repeated parent is marked as the overview, not as another entry', async () => {
+  // The panel's first item carries the parent's own label, which read as the
+  // heading stuttering while it was styled like its children. The modifier is
+  // what lets CSS set it as the head of the index; without it the styling has
+  // to guess by position, which the next markup change would break.
+  const html = await render();
+  const panel = /<ul class="header__panel"[\s\S]*?<\/ul>/.exec(html);
+  assert.ok(panel, 'expected a nested menu panel');
+  assert.match(panel[0], /class="header__panel-link header__panel-link--overview/);
+
+  // Exactly one: the children are entries in the index, not more heads of it.
+  const overviews = panel[0].match(/header__panel-link--overview/g) ?? [];
+  assert.equal(overviews.length, 1);
+});
+
 test('the mobile menu works without javascript', async () => {
   const html = await render();
   assert.match(html, /<details[^>]*class="header__mobile"/);
@@ -131,7 +146,7 @@ test('the active nav link is marked for assistive tech, not only visually', asyn
     },
   });
 
-  assert.equal((html.match(/aria-current="page"/g) ?? []).length, 1, 'exactly one link is current');
+  assert.equal((html.match(/aria-current="page"/g) ?? []).length, 2, 'desktop and mobile both mark the current destination');
   assert.match(html, /href="\/collections\/all"[^>]*aria-current="page"/);
 });
 

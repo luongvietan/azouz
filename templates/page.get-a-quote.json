@@ -14,6 +14,10 @@
 
         "body": "<p>Share your expected volume, business type and target market. We will reply with pricing or next steps for your project.</p>",
 
+        "cta_primary_label": "Share Your Project Details",
+
+        "cta_primary_link": "#contact",
+
         "image_alt": "Turkish Coffee, the 200g sachet, Arabic front",
 
         "background": "default"

@@ -1,26 +1,18 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero": {
       "type": "hero-split",
       "settings": {
         "eyebrow": "Coffee shop opportunity",
-        "heading": "Own an Azouz Coffee.",
+        "heading": "Own Your Azouz Coffee Branch.",
         "body": "<p>Bring Azouz Coffee to your neighbourhood.</p><p>From coffee supply and equipment to branding, menu development and operational support, we help you open and run an Azouz Coffee location.</p>",
         "cta_primary_label": "Get a Quote",
         "cta_primary_link": "/pages/get-a-quote",
         "cta_secondary_label": "Request a Sample",
         "cta_secondary_link": "/pages/request-a-sample",
-        "image_alt": "An Azouz Coffee counter: espresso machine, grinder and a 1 kg coffee bag beside it",
-        "background": "default"
+        "image_alt": "A hand holding an Azouz Coffee takeaway cup",
+        "background": "default",
+        "image": "shopify://shop_images/hero-azouz-coffee-cup.jpg"
       }
     },
     "included": {
@@ -124,9 +116,10 @@
         "body": "<p>The coffee you serve is roasted, blended and packed by us, so supply, price and taste stay in one place rather than across three suppliers.</p>",
         "cta_label": "View Wholesale",
         "cta_link": "/pages/wholesale",
-        "image_alt": "Roasted coffee falling into the cooling tray at the Azouz roastery",
+        "image_alt": "Roasted coffee falling from the roaster into the cooling tray",
         "media_position": "start",
-        "background": "alt"
+        "background": "alt",
+        "image": "shopify://shop_images/hero-roastery.jpg"
       }
     },
     "closing": {

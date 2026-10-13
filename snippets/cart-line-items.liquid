@@ -10,11 +10,14 @@
 {%- if cart.items.size > 0 -%}
   <ul class="cart-lines" role="list">
     {%- for item in cart.items -%}
+      {%- assign product_title = item.product.title | default: item.title -%}
+      {%- assign variant_title = item.variant.title -%}
+      {%- assign line_image = item.image | default: item.variant.image | default: item.product.featured_image -%}
       <li class="cart-line">
-        {%- if item.image -%}
+        {%- if line_image -%}
           {%- render 'responsive-image',
-            image: item.image,
-            alt: item.product_title,
+            image: line_image,
+            alt: product_title,
             class: 'cart-line__image',
             width: 160,
             sizes: '80px'
@@ -22,9 +25,9 @@
         {%- endif -%}
 
         <div class="cart-line__info">
-          <a class="cart-line__title" href="{{ item.url }}">{{ item.product_title }}</a>
-          {%- if item.variant_title != blank -%}
-            <p class="cart-line__variant">{{ item.variant_title }}</p>
+          <a class="cart-line__title" href="{{ item.url }}">{{ product_title | escape }}</a>
+          {%- if variant_title != blank and variant_title != 'Default Title' -%}
+            <p class="cart-line__variant">{{ variant_title | escape }}</p>
           {%- endif -%}
           <p class="cart-line__unit">{{ item.price | money }}</p>
         </div>
@@ -43,7 +46,7 @@
             href="{{ routes.cart_change_url }}?id={{ item.key | url_encode }}&amp;quantity=0">
             {%- render 'icon', name: 'remove' -%}
             <span class="visually-hidden">
-              {{- 'cart.general.remove_item' | t: title: item.product_title -}}
+              {{- 'cart.general.remove_item' | t: title: product_title | escape -}}
             </span>
           </a>
         </div>

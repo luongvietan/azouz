@@ -12,6 +12,11 @@
     assign section_class = 'section section--accent hero'
   endif
 
+  assign has_image = false
+  if section.settings.image != blank or section.settings.image_asset != blank
+    assign has_image = true
+  endif
+
   assign has_primary = false
   if section.settings.cta_primary_label != blank and section.settings.cta_primary_link != blank
     assign has_primary = true
@@ -24,7 +29,7 @@
 -%}
 
 <section class="{{ section_class }}"{{ section.shopify_attributes }}>
-  <div class="container hero__inner{% unless section.settings.image %} hero__inner--full{% endunless %}">
+  <div class="container hero__inner{% unless has_image %} hero__inner--full{% endunless %}">
     <div class="hero__content">
       {%- if section.settings.eyebrow != blank -%}
         <span class="eyebrow">{{ section.settings.eyebrow }}</span>
@@ -48,21 +53,34 @@
       {%- endif -%}
     </div>
 
-    {%- if section.settings.image -%}
+    {%- if has_image -%}
       <div class="hero__media">
         {%- comment -%}
           Almost always the LCP element, so it loads eagerly at high priority —
           and its box is reserved from the image's own ratio, not a constant.
         {%- endcomment -%}
-        {%- render 'responsive-image',
-          image: section.settings.image,
-          alt: section.settings.image_alt,
-          class: 'hero__image',
-          width: 1200,
-          sizes: '(min-width: 56em) 48vw, 92vw',
-          loading: 'eager',
-          fetchpriority: 'high'
-        -%}
+        {%- if section.settings.image -%}
+          {%- render 'responsive-image',
+            image: section.settings.image,
+            alt: section.settings.image_alt,
+            class: 'hero__image',
+            width: 1200,
+            sizes: '(min-width: 56em) 48vw, 92vw',
+            loading: 'eager',
+            fetchpriority: 'high'
+          -%}
+        {%- else -%}
+          {%- comment -%} A photograph shipped inside the theme, used until one is picked at Content → Files. {%- endcomment -%}
+          <img
+            class="hero__image"
+            src="{{ section.settings.image_asset | asset_url }}"
+            width="{{ section.settings.image_asset_width | default: 1122 }}"
+            height="{{ section.settings.image_asset_height | default: 1402 }}"
+            alt="{{ section.settings.image_alt | escape }}"
+            loading="eager"
+            fetchpriority="high"
+          >
+        {%- endif -%}
       </div>
     {%- endif -%}
   </div>
@@ -86,6 +104,12 @@
     { "type": "text", "id": "cta_secondary_label", "label": "Secondary button label" },
     { "type": "url", "id": "cta_secondary_link", "label": "Secondary button link" },
     { "type": "image_picker", "id": "image", "label": "Image" },
+    {
+      "type": "text",
+      "id": "image_asset",
+      "label": "Theme photograph (file name)",
+      "info": "A file in the theme's assets folder, shown only while Image is empty."
+    },
     {
       "type": "text",
       "id": "image_alt",

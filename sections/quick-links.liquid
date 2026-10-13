@@ -1,6 +1,6 @@
 {%- comment -%}
-  The index row: four ways into the range, divided by rules rather than by
-  cards. Each entry is a heading, a line of copy and the link that opens it.
+  Four ways into the range. On the homepage the first entry leads with a
+  larger photograph and copy alongside; the remaining entries share a row.
 
   The whole cell is not a link — the heading and the trailing link point at the
   same place, and duplicating a target across a block-level anchor makes the
@@ -34,6 +34,21 @@
     <ul class="list-lines list-lines--4 quick-links__list" role="list">
       {%- for block in section.blocks -%}
         <li class="quick-links__item"{{ block.shopify_attributes }}>
+          {%- if block.settings.image -%}
+            <div class="quick-links__media">
+              {%- liquid
+                assign image_sizes = '(min-width: 64em) 24vw, (min-width: 40em) 46vw, 92vw'
+                if request.page_type == 'index'
+                  assign image_sizes = '(min-width: 56em) 31vw, (min-width: 40em) 46vw, 92vw'
+                  if forloop.first
+                    assign image_sizes = '(min-width: 56em) 58vw, 92vw'
+                  endif
+                endif
+              -%}
+              {%- render 'responsive-image', image: block.settings.image, alt: block.settings.image_alt, class: 'quick-links__image', width: 1600, sizes: image_sizes -%}
+            </div>
+          {%- endif -%}
+          <div class="quick-links__content">
           <h3 class="quick-links__title">{{ block.settings.title }}</h3>
           {%- if block.settings.body != blank -%}
             <p class="quick-links__body">{{ block.settings.body }}</p>
@@ -44,6 +59,7 @@
               {%- render 'icon', name: 'arrow-right' -%}
             </a>
           {%- endif -%}
+          </div>
         </li>
       {%- endfor -%}
     </ul>
@@ -75,6 +91,8 @@
       "type": "link",
       "name": "Entry",
       "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photograph" },
+        { "type": "text", "id": "image_alt", "label": "Photograph description" },
         { "type": "text", "id": "title", "label": "Title" },
         { "type": "text", "id": "body", "label": "Body" },
         { "type": "text", "id": "link_label", "label": "Link label" },

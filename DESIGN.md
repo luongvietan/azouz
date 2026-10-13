@@ -190,14 +190,32 @@ Flat by default. Depth is tonal (Mist / Mist Alt / Sage Light) and the label-blo
 - **Style:** hairline stroke, Mist fill, 4px radius
 - **Focus:** 2px Sage Deep outline, 3px offset
 - **Error / Disabled:** sold-out controls are disabled, not restyled as error theatre
+- **Select:** the native arrow is replaced by the stroked `chevron-down` from the icon set. Where the browser supports customizable select, the picker is restyled to match the header's nested menu — ink hairline, no shadow, rule-divided 44px rows, Sage Light on hover, selected marked by weight and a 2px ink rule. Everywhere else the platform picker stands, and that is the intended fallback: it stays a real `<select>`, so it submits with no script and behaves as the platform expects on touch. No scripted listbox replaces it.
 
 ### Navigation
 - Text links in the header, Onyx on Mist. Active state is weight, not a new colour. Mobile is a `<details>` disclosure, not a scripted drawer. Cart is a link to `/cart` that upgrades to a drawer when JS runs.
+
+Mobile keeps the full logo lockup at 57px high with its intrinsic ratio. The grid reserves the action columns; the logo must not subtract that space again. Mobile destinations mark the current page with an ink underline and `aria-current`. The menu scrolls within the viewport. Default chrome reserves 137px below 56em and 181px from 56em, matching the actual navigation handover.
+
+Enquiry page heroes include a direct link to the focusable `#contact` section. The same anchor supports the native contact redirect; on desktop its scroll margin leaves the form heading below the sticky header.
 
 ### Label block (signature)
 The bag label. Fill from `custom.label_color` via `--label-bg`. Title ≥24px so white type on orange / brown / silver / sage stays large-text legal. Spec grid is two columns. Roast meter is five dots.
 
 ## 6. Layout grammar
+
+### Homepage refinement, 13 October 2026
+
+The homepage now uses space and image scale instead of repeating the ruled index in every section. This supersedes the ruled-list guidance below for homepage marketing only. The packaging label and its specification rules stay unchanged.
+
+- Homepage section headings use sentence case, the headline scale and display tracking. Full-width rules are omitted from these headings.
+- The hero photograph fills the viewport width. A light primary CTA carries Onyx text over the dark photograph; the outlined secondary CTA remains distinct. The fixed contrast scrim stays in place.
+- Private Label leads the service section with a larger photograph and copy beside it from 56em. Remaining services sit in three columns with clear space between them. Tablet layouts give a leftover final entry the full row; mobile stacks all entries.
+- Featured products use an adaptive grid so three products occupy three equal columns. Product photographs are contained in square media areas, keeping the full bag visible. Mist Alt separates this section without enclosing each product in grid rules.
+- Story photography uses a landscape 4:3 crop. Business audiences form two columns from 40em, with one soft separator per entry.
+- From 80em the header uses one row for logo, navigation, the sample invitation and shop actions. It measures 81px with the default 64px logo. Default chrome reserves 120px including the announcement; narrower desktops retain the 181px reserve and mobile retains 137px.
+
+Brand colors, logo, Baloo typography, routes, navigation labels and existing content remain the source of identity. Motion is limited to a small photograph scale on service-link hover, enabled only when reduced motion is not requested.
 
 The pages are laid out on three moves, shared by the homepage, the collection,
 the search results and the collections list.
