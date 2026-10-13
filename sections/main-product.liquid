@@ -30,8 +30,17 @@
         <li class="breadcrumb__item">
           <a class="breadcrumb__link" href="{{ routes.root_url }}">{{ 'general.meta.home' | t }}</a>
         </li>
-        <li class="breadcrumb__item">
-          <a class="breadcrumb__link" href="{{ collection.url | default: routes.all_products_collection_url }}">{{ 'general.meta.shop' | t }}</a>
+        {%- comment -%}
+          On a phone the trail collapses to this one link with a back arrow:
+          the product's own name is the h1 a few lines down, and "Home" is the
+          logo. The arrow is the shared arrow-right, turned to point back by
+          CSS and turned again under rtl, so it always points to the shop.
+        {%- endcomment -%}
+        <li class="breadcrumb__item breadcrumb__item--parent">
+          <a class="breadcrumb__link" href="{{ collection.url | default: routes.all_products_collection_url }}">
+            <span class="breadcrumb__back" aria-hidden="true">{%- render 'icon', name: 'arrow-right' -%}</span>
+            {{- 'general.meta.shop' | t -}}
+          </a>
         </li>
         <li class="breadcrumb__item">
           <span class="breadcrumb__current" aria-current="page">{{ product.title }}</span>

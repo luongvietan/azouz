@@ -434,6 +434,10 @@ class ProductForm extends HTMLElement {
 
       const detail = await response.json();
       detail.openDrawer = true;
+      // Shopify answers a single add with the line item and its key; the
+      // variant id that was submitted is carried too, so the drawer can still
+      // find the line when the answer is the whole cart.
+      detail.variantId = new FormData(this.form).get('id');
       document.dispatchEvent(new CustomEvent('cart:updated', { detail }));
     } catch {
       // Anything unexpected: hand the browser back the plain form post.
@@ -494,13 +498,28 @@ class CartDrawer extends HTMLElement {
       });
     }
 
-    document.addEventListener('cart:updated', (event) => {
-      this.refresh();
-      if (event.detail?.openDrawer) this.open();
+    // An add opens the drawer straight away, as a confirmation; the refreshed
+    // lines arrive a moment later, and the one just added is then marked.
+    document.addEventListener('cart:updated', async (event) => {
+      const added = Boolean(event.detail?.openDrawer);
+      if (added) this.open(true);
+      await this.refresh();
+      if (added) this.markJustAdded(event.detail?.key, event.detail?.variantId);
     });
   }
 
-  open() {
+  /** `added` is true when an add-to-cart opened the drawer, not the header. */
+  open(added = false) {
+    const heading = this.querySelector('[data-drawer-heading]');
+    if (heading) {
+      const title = added ? heading.dataset.titleAdded : heading.dataset.titleCart;
+      if (title) {
+        heading.textContent = title;
+        this.dialog.setAttribute('aria-label', title);
+      }
+    }
+    if (!added) this.markJustAdded(null);
+
     this.removeAttribute('hidden');
     this.removeAttribute('aria-hidden');
     this.removeAttribute('inert');
@@ -510,6 +529,28 @@ class CartDrawer extends HTMLElement {
     if (typeof this.dialog.showModal === 'function') {
       if (!this.dialog.open) this.dialog.showModal();
     } else window.location.href = '/cart';
+  }
+
+  /**
+   * Marks the line just added, and clears any earlier mark. The line key is
+   * exact; the variant id is the fallback, and finds the line when the add
+   * response did not carry a key.
+   */
+  markJustAdded(key, variantId) {
+    if (!this.content) return;
+    this.content.querySelectorAll('.cart-line.is-just-added').forEach((line) => {
+      line.classList.remove('is-just-added');
+    });
+    if (!key && !variantId) return;
+    const lines = Array.from(this.content.querySelectorAll('[data-line-key]'));
+    const line =
+      (key && lines.find((candidate) => candidate.dataset.lineKey === String(key))) ||
+      (variantId && lines.find((candidate) => candidate.dataset.variantId === String(variantId)));
+    if (line) {
+      line.classList.add('is-just-added');
+      // A cart of several lines puts the newest at the bottom, out of view.
+      line.scrollIntoView({ block: 'nearest' });
+    }
   }
 
   async onLineQuantityChange(event) {

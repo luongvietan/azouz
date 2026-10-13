@@ -1220,3 +1220,136 @@ cart-drawer[inert] {
 }
 
 .cart__note--delivery { color: var(--color-text); }
+
+/* ---------- Shop UI refinement, 13 October 2026 ----------
+   From docs/research-shop-ui-2026-10-13.md, measured before and after with
+   the same script. Phone product page, phone shop list, desktop shop density,
+   and the added-to-cart drawer. */
+
+/* Breadcrumb: the back arrow only exists on a phone. */
+.breadcrumb__back { display: none; }
+
+/* UI-1. Phone product page. At 390x844 the title started at y=730 and Add to
+   cart at 1081. The trail collapses to one "Shop" link, the section top and
+   the gaps tighten, and the angles move from a row under the photograph to a
+   column beside it: a portrait bag capped by height leaves the side of the
+   column empty anyway. Thumbnails stay; dots alone make people miss images. */
+@media (max-width: 55.99em) {
+  .main-product { padding-block-start: var(--space-2xs); }
+  .breadcrumb { margin-block-end: var(--space-2xs); }
+
+  .breadcrumb__item:not(.breadcrumb__item--parent) { display: none; }
+  .breadcrumb__item.breadcrumb__item--parent::after { display: none; }
+
+  .breadcrumb__item--parent .breadcrumb__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    min-block-size: 2.75rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+  }
+
+  .breadcrumb__back { display: inline-flex; }
+  .breadcrumb__back .icon { inline-size: 1rem; block-size: 1rem; transform: scaleX(-1); }
+  [dir='rtl'] .breadcrumb__back .icon { transform: none; }
+
+  .main-product__inner { gap: var(--space-md); }
+
+  .main-product__media:has(.main-product__image--thumb) {
+    grid-template-columns: minmax(0, 1fr) 3.5rem;
+    align-items: start;
+  }
+
+  .main-product__media:has(.main-product__image--thumb) .main-product__image--lead {
+    grid-column: 1;
+    grid-row: 1 / span 4;
+  }
+
+  .main-product__media:has(.main-product__image--thumb) .main-product__image--thumb {
+    grid-column: 2;
+    max-block-size: none;
+  }
+
+  .main-product__image--lead {
+    max-block-size: 30vh;
+    max-block-size: 30dvh;
+  }
+
+  .main-product__details { gap: var(--space-sm); }
+  .main-product__label { padding: var(--space-md); }
+  .main-product__label .label-block__rule { margin-block: var(--space-sm); }
+}
+
+/* UI-2. Phone shop list. Each coffee was a 707px card, three screens for
+   three bags. Below 40em a card is a row: the bag on the inline start, its
+   label, pack, use and price beside it. */
+@media (max-width: 39.99em) {
+  .product-grid { gap: var(--space-lg); }
+
+  .product-grid .product-card {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    column-gap: var(--space-md);
+    row-gap: var(--space-xs);
+    align-content: start;
+    block-size: auto;
+  }
+
+  .product-grid .product-card > * { grid-column: 2; min-inline-size: 0; }
+
+  .product-grid .product-card__image {
+    grid-column: 1;
+    grid-row: 1 / span 6;
+    align-self: start;
+  }
+
+  .product-grid .product-card__label {
+    flex-grow: 0;
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .product-grid .product-card__meta { justify-content: flex-start; }
+}
+
+/* UI-3. Desktop shop density. A 4:5 photograph 437px wide stood 546px tall
+   and pushed every label below a 900px fold. The photograph keeps its own
+   4:5 shape, so its white ground is the card's edge and nothing is cropped,
+   but its height is capped against the screen and it sits centred over the
+   label. A square panel was tried first: the filter can was shot on a warmer
+   white than the bags, and on a square of either white one of them showed a
+   visible box. The collection title steps down to a section-head size. */
+@media (min-width: 40em) {
+  .product-grid .product-card__image {
+    align-self: center;
+    inline-size: auto;
+    max-inline-size: 100%;
+    block-size: auto;
+    max-block-size: 34vh;
+    max-block-size: 34dvh;
+  }
+}
+
+.collection__heading.section-head__heading--large { font-size: var(--text-3xl); }
+.collection__head { margin-block-end: var(--space-md); }
+
+.product-card__pack {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* UI-4. The drawer marks the line just added with the same 2px ink rule the
+   menu uses for the current item: state, not decoration. */
+.cart-line.is-just-added {
+  padding-inline-start: var(--space-sm);
+  border-inline-start: 2px solid var(--color-text);
+}
+
+.cart-drawer__foot {
+  display: grid;
+  gap: var(--space-xs);
+  justify-items: center;
+}
+
+.cart-drawer__continue { cursor: pointer; }

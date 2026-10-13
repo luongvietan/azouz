@@ -229,6 +229,14 @@ The homepage grammar now runs across the service, brand and shop pages.
 - The footer opens with a brand column (mark and tagline) beside the index; it no longer closes on a row of its own.
 - `<reveal-on-scroll>` is `display: block`. As an undefined inline element inside a centred grid it shrank to its content and collapsed auto-fit lists to one column.
 
+### Shop UI, 13 October 2026
+
+- Product page below 56em: the trail collapses to a "Shop" back link, the angles sit in a column beside the lead photograph, and the lead is capped at 30dvh. At 390x844 the title, price, pack and Add to cart are on the first screen.
+- Product cards state the pack ("500g, Whole Bean") and what the coffee is for. Below 40em the shop grid becomes rows: photograph on the inline start, label and price beside it.
+- Shop photographs keep their 4:5 shape, capped at 34dvh and centred over the label. They are not set in a square panel: the packshots were not all shot on the same white, and a panel shows the seam.
+- Sorting appears only above six products.
+- The cart drawer titles itself "Added to your cart" after an add, marks the new line with the 2px ink rule used for current menu items, and names "Continue shopping" as a way out.
+
 The pages are laid out on three moves, shared by the homepage, the collection,
 the search results and the collections list.
 

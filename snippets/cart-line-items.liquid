@@ -13,7 +13,7 @@
       {%- assign product_title = item.product.title | default: item.title -%}
       {%- assign variant_title = item.variant.title -%}
       {%- assign line_image = item.image | default: item.variant.image | default: item.product.featured_image -%}
-      <li class="cart-line">
+      <li class="cart-line" data-line-key="{{ item.key | escape }}" data-variant-id="{{ item.variant_id | default: item.variant.id | escape }}">
         {%- if line_image -%}
           {%- render 'responsive-image',
             image: line_image,
