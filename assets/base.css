@@ -487,6 +487,17 @@ reveal-on-scroll { display: block; }
 /* An eyebrow above the heading, not beside it. */
 .section-head .eyebrow { flex-basis: 100%; margin-block-end: 0; }
 
+/* An intro under the heading, on a line of its own and at reading measure.
+   The measure is padding, not max-inline-size: a capped flex item is sized at
+   its cap when the line is laid out, and a 60ch intro then fits beside the
+   heading instead of under it. */
+.section-head__intro {
+  flex-basis: 100%;
+  max-inline-size: none;
+  margin: 0;
+  padding-inline-end: max(0px, 100% - 60ch);
+}
+
 /* ---------- Arrow link ---------- */
 
 /* Sentence case at body size, not an uppercase eyebrow: the source sets these

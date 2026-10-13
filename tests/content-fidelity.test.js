@@ -171,6 +171,19 @@ test('the coffee shop page asks for the four details the client needs, under eve
   ]);
 });
 
+/*
+  The client asked on 21 September for Our Brands to go, since the shop now
+  does its job. The roastery line they wrote on 6 September lived only there,
+  so it moves to the homepage, under Our Story, where sourcing, roasting and
+  packing follow it.
+*/
+test('the homepage carries the roastery line the client wrote', async () => {
+  await expectAll('index.json', [
+    'Small-batch roasting, and a big, bold flavour.',
+    'Fresh, ethically sourced coffee from bean to brew, delivered straight to your door.',
+  ]);
+});
+
 test('our brands carries the roastery line the client wrote', async () => {
   await expectAll('page.our-brands.json', [
     'Small-batch roasting, and a big, bold flavour.',
