@@ -95,7 +95,7 @@ test('the delivery note comes from the theme setting, so the merchant can change
 });
 
 test('no WhatsApp link is drawn while no number is set', async () => {
-  assert.equal(/wa\.me/.test(await product()), false);
+  assert.equal(/wa\.me/.test(await product(espresso, withSettings({ social_whatsapp: '' }))), false);
 });
 
 test('with a number set, WhatsApp asks about this coffee, digits only', async () => {
@@ -108,7 +108,7 @@ test('with a number set, WhatsApp asks about this coffee, digits only', async ()
 
 test('a store with no note, no refund policy and no WhatsApp renders no empty list', async () => {
   const html = await product(espresso, {
-    ...withSettings({ shipping_note: '' }),
+    ...withSettings({ shipping_note: '', social_whatsapp: '' }),
     shop: { ...fixtures.shop, refund_policy: null },
   });
   assert.equal(/main-product__assurance/.test(html), false);
@@ -129,7 +129,8 @@ test('the cart page states the delivery cost under the subtotal', async () => {
 // ---------- Enquiry ----------
 
 test('the enquiry form offers WhatsApp only when a number is set', async () => {
-  assert.equal(/wa\.me/.test(await renderSection('enquiry-form')), false);
+  const none = await renderSection('enquiry-form', { scope: withSettings({ social_whatsapp: '' }) });
+  assert.equal(/wa\.me/.test(none), false);
   const html = await renderSection('enquiry-form', { scope: withSettings({ social_whatsapp: WHATSAPP }) });
   assert.equal(countMatches(html, /href="https:\/\/wa\.me\/962790000000\?text=/g), 1);
 });
