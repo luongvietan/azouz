@@ -217,6 +217,18 @@ The homepage now uses space and image scale instead of repeating the ruled index
 
 Brand colors, logo, Baloo typography, routes, navigation labels and existing content remain the source of identity. Motion is limited to a small photograph scale on service-link hover, enabled only when reduced motion is not requested.
 
+### Site-wide refinement, 13 October 2026
+
+The homepage grammar now runs across the service, brand and shop pages.
+
+- Section heads are sentence case at display tracking on every template, with no full-measure rule underneath. Caps stay on the packaging label and the short eyebrow.
+- A grid of entries takes the column count its number calls for (`snippets/grid-columns.liquid`): five or fewer on one row, otherwise four, three or five so the last row never holds one entry alone. Process steps and feature grids use it.
+- Process steps are an ink-ruled sequence, not bordered tiles. Two-column choices and packaging-size tiles are tonal panels (Mist Alt on the ground, Mist on the alt band) with no stroke.
+- Interior heroes use their own padding (`--hero-pad`), give the copy column slightly more room, cap the display heading so it stays within two lines, and set the photograph on the inline end.
+- Collection and search grids use `.product-grid`: as many equal columns as there are products, up to the measure. Product labels stretch to equal height so prices and roast meters align across a row. The product page's buy column is sticky from 56em.
+- The footer opens with a brand column (mark and tagline) beside the index; it no longer closes on a row of its own.
+- `<reveal-on-scroll>` is `display: block`. As an undefined inline element inside a centred grid it shrank to its content and collapsed auto-fit lists to one column.
+
 The pages are laid out on three moves, shared by the homepage, the collection,
 the search results and the collections list.
 

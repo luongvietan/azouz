@@ -368,6 +368,11 @@ a {
 
 /* ---------- Motion ---------- */
 
+/* An undefined custom element is inline. As a grid item that blockifies, but
+   a centred grid shrinks it to its content, and any auto-fit list inside then
+   finds room for a single track. Block, so the wrapper is layout-neutral. */
+reveal-on-scroll { display: block; }
+
 @media (prefers-reduced-motion: no-preference) {
   /*
     The hidden state is gated on :defined, so it applies only after
@@ -438,29 +443,29 @@ a {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
+  justify-content: space-between;
   gap: var(--space-sm) var(--space-lg);
   margin-block-end: var(--space-xl);
 }
 
-/* Measured on the source: 38px at 2.4px tracking, and 40px at 2.4px for the
-   large variant — roughly 0.06em, tracked OUT. --tracking-display is -0.02em,
-   which is right for a mixed-case display line and wrong for a short uppercase
-   label, where the caps need air between them to stay countable. */
+/* Sentence case at display tracking, site-wide. The heads were tracked-out
+   uppercase with a full-measure ink rule under each, and repeated on every
+   section that read as a ruled ledger rather than a page. The homepage dropped
+   that on 13 October 2026; the shop pages now follow, so a buyer moving from
+   the homepage to the collection does not change typographic register. Caps
+   stay where they belong: the packaging label and the short eyebrow. */
 .section-head__heading {
-  font-size: var(--text-2xl);
-  line-height: 1.2;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-size: var(--text-3xl);
+  line-height: 1.12;
+  letter-spacing: var(--tracking-display);
+  max-inline-size: 22ch;
   margin: 0;
 }
 
-/* Reserved for a page title — the collection h1 — not for section heads. On
-   the source every section head is the same size, 38px against 40px, and the
-   two read as one level. A homepage that jumps 44px to 56px between two heads
-   invents a hierarchy the content does not have. */
+/* Reserved for a page title — the collection h1 — not for section heads. */
 .section-head__heading--large {
-  font-size: var(--text-3xl);
-  line-height: 1.15;
+  font-size: var(--text-display);
+  line-height: 1.05;
 }
 
 /* The link sits on the far side of the heading on a wide screen and drops
@@ -468,11 +473,10 @@ a {
    only pushes it over when both fit on one line. */
 .section-head__link { margin-inline-start: auto; }
 
+/* Kept in the markup for older section files, drawn nowhere: space now does
+   the separating a rule used to do under every head. */
 .section-head__rule {
-  border: 0;
-  border-block-start: var(--rule-ink);
-  margin-block: var(--space-md) 0;
-  flex-basis: 100%;
+  display: none;
 }
 
 /* An eyebrow above the heading, not beside it. */

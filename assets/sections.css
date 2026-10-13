@@ -2397,17 +2397,8 @@ a.flavour-finder__name:hover { color: var(--color-accent-deep); }
    Packaging supplies the identity. Space separates the marketing content;
    rules remain for navigation states and actual product specifications. */
 
-.template-index .section-head__heading {
-  font-size: var(--text-3xl);
-  text-transform: none;
-  letter-spacing: var(--tracking-display);
-  max-inline-size: 22ch;
-}
-
-.template-index .section-head__rule { display: none; }
-.template-index .section-head { margin-block-end: var(--space-xl); }
+/* Section heads are sentence case site-wide now; see .section-head in base.css. */
 .template-index .section-head__link { margin-inline-start: 0; }
-.template-index .section-head { justify-content: space-between; }
 
 .template-index .hero-overlay-section { padding-block-start: 0; }
 .template-index .hero-overlay-section > .container { max-inline-size: none; padding-inline: 0; }
@@ -2555,4 +2546,165 @@ a.flavour-finder__name:hover { color: var(--color-accent-deep); }
 @media (prefers-reduced-motion: no-preference) {
   .template-index .quick-links__image { transition: transform var(--duration) var(--ease); }
   .template-index .quick-links__item:has(.quick-links__link:hover) .quick-links__image { transform: scale(1.025); }
+}
+
+/* ---------- Site-wide refinement, 13 October 2026 ----------
+   The homepage pass carried over to the service and brand pages. Same three
+   moves: the photograph gets the space the copy does not need, a list is laid
+   out for the number of entries it actually has, and space separates what a
+   box and a hairline used to. No colour, face or radius is added. */
+
+/* A standalone section head had no padding of its own, and the section after
+   it drops its top padding to sit under it, so the head was flush against
+   whatever came before: on the homepage, "Our Story" touched the marquee. The
+   head now opens its block with the section's own top space. */
+.standalone-heading { padding-block-start: var(--space-section); }
+.standalone-heading .section-head { margin-block-end: var(--space-xl); }
+
+/* Interior hero. The section padding was the full --space-section on both
+   sides, and the image cap subtracted it twice, so on a 900px laptop a bag
+   photograph came out under 470px tall and floated in the middle of its
+   column. The hero takes its own, smaller padding and the cap pays for that
+   instead; the media sits on the inline end of the grid, not in mid-column. */
+.section.hero {
+  --hero-pad: clamp(2.5rem, 5vw, 5rem);
+  padding-block: var(--hero-pad) calc(var(--hero-pad) * 1.25);
+}
+
+.section.hero .hero__image {
+  max-block-size: calc(100vh - var(--chrome-block-size) - (2.25 * var(--hero-pad)));
+  max-block-size: calc(100dvh - var(--chrome-block-size) - (2.25 * var(--hero-pad)));
+}
+
+@media (min-width: 56em) {
+  .section.hero .hero__inner {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  /* Two lines at most: the display size is planned against a half-width
+     column, not the full measure the token was drawn for. */
+  .section.hero .hero__heading { font-size: clamp(2.75rem, 4.6vw, 4.25rem); }
+
+  .section.hero .hero__inner--full { grid-template-columns: minmax(0, 52rem); }
+
+  .section.hero .hero__media {
+    justify-self: end;
+    max-inline-size: 38rem;
+  }
+
+  .section.hero .hero__image { margin-inline: auto 0; }
+}
+
+/* Process steps, card layout. Five steps in an auto-fit grid of 16rem tracks
+   came out as four boxes and a fifth alone on its own row. The steps now take
+   the column count their number calls for (see snippets/grid-columns.liquid),
+   and the boxes are gone: an ink rule over each step reads as a sequence, a
+   bordered tile on a tinted band read as a tray of SaaS feature cards. */
+.process-steps__list--cards {
+  column-gap: var(--space-lg);
+  row-gap: var(--space-xl);
+}
+
+.process-steps__list--cards .process-step,
+.section--alt .process-steps__list--cards .process-step {
+  gap: var(--space-sm);
+  padding: var(--space-md) 0 0;
+  background-color: transparent;
+  border: 0;
+  border-block-start: var(--rule-ink);
+  border-radius: 0;
+}
+
+.process-steps__list--cards .process-step__marker { justify-content: flex-start; }
+.process-steps__list--cards .process-step__body { line-height: 1.55; }
+
+@media (min-width: 64em) {
+  .process-steps__list--cards {
+    grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
+  }
+}
+
+/* Feature grid. Same orphan problem: eight formats came out five and three,
+   six services five and one. Columns now follow the count, and a list of
+   bare names (no description under any entry) pairs up on a phone rather
+   than running as eight full-width rows. */
+.feature-grid__list { column-gap: var(--space-lg); }
+
+.feature-grid__list:not(:has(.feature-grid__body)) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.feature-grid__body { line-height: 1.55; }
+
+@media (min-width: 40em) {
+  .feature-grid__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 64em) {
+  .feature-grid__list,
+  .feature-grid__list:not(:has(.feature-grid__body)) {
+    grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
+  }
+}
+
+/* Packaging sizes. <reveal-on-scroll> is a centred grid item here, so it
+   shrank to its content and the auto-fit list inside it found room for one
+   9rem track: four sizes stacked in a narrow column down the middle of the
+   page. The wrapper now spans the row; the list keeps its own 52rem measure. */
+.packaging-sizes__inner > reveal-on-scroll {
+  justify-self: stretch;
+}
+
+.packaging-sizes__inner .packaging-sizes__list {
+  margin-inline: auto;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+}
+
+.format-tile {
+  padding: var(--space-xl) var(--space-sm);
+  font-size: var(--text-lg);
+  text-align: center;
+  border-color: transparent;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-alt);
+}
+
+.section--alt .format-tile { background-color: var(--color-bg); }
+
+/* Two-column choice. A hairline box on the ground is the ghost card the
+   Flat-By-Default Rule names. The two options are now tonal panels, a step
+   off whatever band they sit on, with no stroke. */
+.choice-column {
+  padding: clamp(1.5rem, 3.5vw, 3rem);
+  background-color: var(--color-bg-alt);
+  border: 0;
+  border-radius: var(--radius-lg);
+}
+
+.section--alt .choice-column { background-color: var(--color-bg); }
+
+/* Footer. The mark used to close the footer on a row of its own, leaving a
+   screen-wide dark field around one small lockup. It now heads a brand column
+   beside the index, and the block is shorter by that whole row. */
+.footer__inner {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.footer__brand {
+  display: grid;
+  gap: var(--space-md);
+  align-content: start;
+  justify-items: start;
+}
+
+.footer__close { padding-block-end: var(--space-lg); }
+.footer__rule { margin-block-start: 0; }
+
+@media (min-width: 56em) {
+  .footer__inner {
+    grid-template-columns: minmax(14rem, 1fr) minmax(0, 2.6fr);
+    gap: var(--space-2xl);
+  }
 }

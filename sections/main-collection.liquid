@@ -58,7 +58,7 @@
     {%- else -%}
       {%- paginate collection.products by 12 -%}
         <reveal-on-scroll>
-          <ul class="list-lines list-lines--4 collection__grid" role="list">
+          <ul class="product-grid collection__grid" role="list">
             {%- for product in collection.products -%}
               <li class="reveal">
                 {%- render 'product-card', product: product, heading_level: 2 -%}

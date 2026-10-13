@@ -1022,3 +1022,44 @@ cart-drawer[inert] {
   font-weight: var(--font-weight-semibold);
   font-variant-numeric: tabular-nums;
 }
+
+/* ---------- Shop refinement, 13 October 2026 ----------
+   The collection and search grids follow the homepage's product row: as many
+   equal columns as there are coffees, up to the measure. A three-coffee shop
+   in a four-track index left a quarter of the row empty, with a column rule
+   running down the gap. */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: var(--space-xl) var(--space-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.product-grid > * { min-inline-size: 0; }
+
+/* A collection or search page opens straight onto its head, so the section's
+   full top padding put the first coffee at the fold. */
+.main-collection { padding-block-start: var(--space-xl); }
+
+/* The label is the bag's own colour block. Two coffees in a row had labels of
+   different heights, so their prices and roast meters sat on different lines.
+   The card fills its grid cell and the label takes up the difference, which
+   lines up everything under it and keeps every label the same printed size. */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+}
+
+.product-card__label { flex-grow: 1; }
+
+/* The buy column stays in view while the gallery scrolls past it. */
+@media (min-width: 56em) {
+  .main-product__details {
+    position: sticky;
+    inset-block-start: calc(var(--chrome-block-size) + var(--space-md));
+  }
+}

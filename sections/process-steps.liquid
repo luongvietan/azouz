@@ -20,7 +20,7 @@
     <reveal-on-scroll>
       <ol
         class="process-steps__list process-steps__list--{{ section.settings.layout }}"
-        style="--step-count: {{ section.blocks.size }}"
+        style="--step-count: {{ section.blocks.size }}; --cols: {% render 'grid-columns', count: section.blocks.size %}"
         role="list">
         {%- for block in section.blocks -%}
           <li class="process-step reveal"{{ block.shopify_attributes }}>

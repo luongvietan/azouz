@@ -61,7 +61,7 @@
   {%- if search.results_count > 0 -%}
     <div class="container container--ultra">
       {%- paginate search.results by 12 -%}
-        <ul class="list-lines list-lines--4 search__grid" role="list">
+        <ul class="product-grid search__grid" role="list">
           {%- comment -%}
             The hidden type field above keeps this to products, but a hand-typed
             ?type=article would still reach here — so only products become cards.
