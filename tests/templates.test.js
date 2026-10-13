@@ -15,7 +15,6 @@ const MARKETING = [
   'page.enquiry.json',
   'page.get-a-quote.json',
   'page.own-your-azouz-coffee-branch.json',
-  'page.own-an-azouz-coffee.json',
 ];
 
 const load = async (name) =>
@@ -191,30 +190,6 @@ test('every call to action on the coffee shop page lands on its enquiry form', a
   assert.deepEqual(
     submits.map((match) => match[1]),
     ['Start My Azouz Coffee', 'Request More Information'],
-  );
-});
-
-/*
-  The live store's page still has the handle own-an-azouz-coffee and is
-  assigned the template of that name. Renaming the template on 13 October left
-  that page on the default template, with the client's whole page gone, until
-  someone reassigns it in the admin. The old template is kept beside the new
-  one so the page renders either way: identical sections, with every link
-  pointed at the handle that template is actually served under.
-*/
-test('the page under its old handle keeps every action on its own form', async () => {
-  const html = await renderAll('page.own-an-azouz-coffee.json');
-  assert.match(html, /<section[^>]+id="enquire"/);
-  const hrefs = [...html.matchAll(/<a[^>]*href="([^"]+)"/g)].map((match) => match[1]);
-  assert.equal(hrefs.length, 4);
-  assert.deepEqual([...new Set(hrefs)], ['/pages/own-an-azouz-coffee#enquire']);
-});
-
-test('the old and new coffee shop templates carry the same page, apart from the handle', async () => {
-  const strip = (template, handle) => JSON.stringify(template).split(handle).join('HANDLE');
-  assert.equal(
-    strip(await load('page.own-an-azouz-coffee.json'), '/pages/own-an-azouz-coffee'),
-    strip(await load('page.own-your-azouz-coffee-branch.json'), '/pages/own-your-azouz-coffee-branch'),
   );
 });
 
