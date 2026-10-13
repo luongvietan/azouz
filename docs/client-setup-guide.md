@@ -122,9 +122,11 @@ the `page.own-an-azouz-coffee` template, and it is now *Own Your Azouz Coffee
 Branch* at `own-your-azouz-coffee-branch` on `page.own-your-azouz-coffee-branch`.
 Three things to change on that one page, in this order:
 
-1. **Theme template** — reselect it in the right sidebar. The old template name
-   no longer exists in the theme, so the page falls back to the default one and
-   loses every section until you do.
+1. **Theme template** — reselect it in the right sidebar. The theme still
+   carries the old `page.own-an-azouz-coffee` template, with the same sections
+   and its buttons pointing at the old address, so the page keeps working until
+   you get to this. Switch to `page.own-your-azouz-coffee-branch` at the same
+   time as the handle below; the old template is removed once no page uses it.
 2. **Handle** — Search engine listing → Edit, set it to
    `own-your-azouz-coffee-branch`. Shopify offers a **"Create a URL redirect"**
    tick box when you change a handle. **Tick it** — anything already pointing
