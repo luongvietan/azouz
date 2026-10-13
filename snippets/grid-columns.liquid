@@ -1,0 +1,36 @@
+{%- comment -%}
+  Outputs the column count for a wide row of `count` entries, chosen so the
+  last row is never a lone orphan: five or fewer sit on one row, multiples of
+  four take four, multiples of three take three; otherwise the first of four,
+  three or five that does not leave one entry alone on the last row.
+  8 entries are 4 + 4 rather than 5 + 3; 6 are 3 + 3 rather than 5 + 1;
+  13 are 5 + 5 + 3. Holds for every count up to Shopify's 50-block limit.
+
+  Accepts:
+    count - required, number of entries
+  Usage:
+    style="--cols: {% render 'grid-columns', count: section.blocks.size %}"
+{%- endcomment -%}
+{%- liquid
+  assign cols = 4
+  if count < 1
+    assign cols = 1
+  elsif count <= 5
+    assign cols = count
+  else
+    assign by_four = count | modulo: 4
+    assign by_three = count | modulo: 3
+    if by_four == 0
+      assign cols = 4
+    elsif by_three == 0
+      assign cols = 3
+    elsif by_four != 1
+      assign cols = 4
+    elsif by_three != 1
+      assign cols = 3
+    else
+      assign cols = 5
+    endif
+  endif
+-%}
+{{- cols -}}

@@ -84,6 +84,18 @@
     ]
   },
   {
+    "name": "Shop",
+    "settings": [
+      {
+        "type": "text",
+        "id": "shipping_note",
+        "label": "Delivery note",
+        "default": "Delivery in Amman 3 JD, elsewhere in Jordan 5 JD.",
+        "info": "Shown under the Add to cart button and in the cart, so the full cost is known before checkout. Keep it in step with Settings > Shipping and delivery. Leave blank to hide."
+      }
+    ]
+  },
+  {
     "name": "Social",
     "settings": [
       {

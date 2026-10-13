@@ -18,7 +18,10 @@
     </div>
 
     <reveal-on-scroll>
-      <ul class="feature-grid__list" role="list">
+      <ul
+        class="feature-grid__list"
+        style="--cols: {% render 'grid-columns', count: section.blocks.size %}"
+        role="list">
         {%- for block in section.blocks -%}
           <li class="feature-grid__item reveal"{{ block.shopify_attributes }}>
             <span class="feature-grid__title">{{ block.settings.title }}</span>

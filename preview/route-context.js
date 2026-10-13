@@ -73,10 +73,10 @@ export const ROUTES = {
     template: 'templates/page.our-brands.json',
     page: { title: 'Our Brands', handle: 'our-brands', content: '' },
   },
-  '/pages/own-an-azouz-coffee': {
+  '/pages/own-your-azouz-coffee-branch': {
     page_type: 'page',
-    template: 'templates/page.own-an-azouz-coffee.json',
-    page: { title: 'Own an Azouz Coffee', handle: 'own-an-azouz-coffee', content: '' },
+    template: 'templates/page.own-your-azouz-coffee-branch.json',
+    page: { title: 'Own Your Azouz Coffee Branch', handle: 'own-your-azouz-coffee-branch', content: '' },
   },
   '/pages/request-a-sample': {
     page_type: 'page',

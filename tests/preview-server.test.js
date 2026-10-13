@@ -100,7 +100,7 @@ test('the header navigation renders the main menu — link_list settings must re
   const html = await (await fetch(`${origin}/`)).text();
   assert.match(html, /class="header__link"[^>]*href="\/pages\/private-label"/);
   assert.match(html, /class="header__link"[^>]*href="\/pages\/wholesale"/);
-  assert.match(html, /class="header__link"[^>]*href="\/pages\/our-brands"/);
+  assert.doesNotMatch(html, /class="header__link"[^>]*href="\/pages\/our-brands"/);
 });
 
 test('posting the contact form redirects back instead of 404', async () => {

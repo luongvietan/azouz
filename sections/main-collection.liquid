@@ -33,7 +33,19 @@
         it works with scripting off — the Apply button submits it. With JS on the
         button is hidden and the select submits on change.
       {%- endcomment -%}
+      {%- comment -%}
+        Sorting is only offered once there is something to sort. Three coffees
+        are read at a glance; a "Sort by" control above them is a field the
+        customer has to read past before the first bag, and on a phone it was
+        a row of its own. Above six products it comes back.
+      {%- endcomment -%}
+      {%- assign show_sort = false -%}
       {%- if collection.sort_options.size > 1 -%}
+        {%- if collection.products_count > 6 -%}
+          {%- assign show_sort = true -%}
+        {%- endif -%}
+      {%- endif -%}
+      {%- if show_sort -%}
         {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
         <form class="collection__sort" method="get">
           <div class="field field--inline">
@@ -58,7 +70,7 @@
     {%- else -%}
       {%- paginate collection.products by 12 -%}
         <reveal-on-scroll>
-          <ul class="list-lines list-lines--4 collection__grid" role="list">
+          <ul class="product-grid collection__grid" role="list">
             {%- for product in collection.products -%}
               <li class="reveal">
                 {%- render 'product-card', product: product, heading_level: 2 -%}

@@ -19,6 +19,7 @@
   assign label_color = custom.label_color.value
   assign origin = custom.origin.value
   assign process = custom.process.value
+  assign brews = custom.brew_methods.value
 
   assign ranged = false
   if product.price_min != product.price_max
@@ -52,12 +53,42 @@
     {%- endif -%}
   </div>
 
+  {%- comment -%}
+    What the coffee is for, in the buyer's words: the first question at a shelf
+    of three bags is which one goes in my machine. The brewing metafield
+    already answers it on the product page; here it answers it before the
+    click. Two methods at most, so the line never wraps into a list.
+  {%- endcomment -%}
+  {%- comment -%}
+    The pack, in the same words as the product page: "500g, Whole Bean". Only
+    for a single-variant bag, where there is exactly one answer; a bag sold in
+    several weights says so on its own page.
+  {%- endcomment -%}
+  {%- if product.variants.size == 1 -%}
+    {%- unless product.has_only_default_variant -%}
+      {%- assign pack = product.selected_or_first_available_variant.options | join: ', ' -%}
+      {%- if pack != blank -%}
+        <p class="product-card__pack">{{ pack }}</p>
+      {%- endif -%}
+    {%- endunless -%}
+  {%- endif -%}
+  {%- if brews != blank -%}
+    {%- assign brew_list = brews | slice: 0, 2 | join: ', ' -%}
+    <p class="product-card__brews">{{ 'products.product.best_for' | t: methods: brew_list }}</p>
+  {%- endif -%}
   <div class="product-card__meta">
     {%- render 'price',
       price: product.price,
       compare_at: product.compare_at_price,
       show_from: ranged
     -%}
+    {%- unless ranged -%}
+      {%- capture card_unit_price -%}{%- render 'unit-price', variant: product.selected_or_first_available_variant -%}{%- endcapture -%}
+      {%- assign card_unit_price = card_unit_price | strip -%}
+      {%- if card_unit_price != blank -%}
+        <span class="product-card__unit-price">{{ card_unit_price }}</span>
+      {%- endif -%}
+    {%- endunless -%}
   </div>
 
   {%- comment -%}

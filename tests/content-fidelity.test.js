@@ -105,7 +105,7 @@ test('private label carries the white label espresso blend the client described'
   the four fields of the form directly below it.
 */
 test('the coffee shop page carries every section the client wrote', async () => {
-  await expectAll('page.own-an-azouz-coffee.json', [
+  await expectAll('page.own-your-azouz-coffee-branch.json', [
     'Bring Azouz Coffee to Your Area.',
     'Open your own Azouz Coffee location with the coffee, equipment, branding, menu and support already built around you.',
     'Whether you want a complete coffee shop or a smaller Azouz Coffee corner inside an existing business, we help you get from location to opening.',
@@ -123,7 +123,7 @@ test('the coffee shop page carries every section the client wrote', async () => 
 });
 
 test('the coffee shop page describes both formats the client named', async () => {
-  await expectAll('page.own-an-azouz-coffee.json', [
+  await expectAll('page.own-your-azouz-coffee-branch.json', [
     'Full Azouz Coffee Location',
     'Open a complete Azouz Coffee shop using our brand, coffee, menu and operating model.',
     'Ideal for entrepreneurs looking to operate their own branded coffee business.',
@@ -136,7 +136,7 @@ test('the coffee shop page describes both formats the client named', async () =>
 });
 
 test('the coffee shop page lists all six things a location gets', async () => {
-  await expectAll('page.own-an-azouz-coffee.json', [
+  await expectAll('page.own-your-azouz-coffee-branch.json', [
     'Coffee Supply', 'Espresso, Turkish, filter and specialty coffee roasted by our own roastery.',
     'Equipment', 'Coffee machine, grinder and brewing equipment selected around your expected volume.',
     'Azouz Branding', 'Brand identity, packaging and signage for your location.',
@@ -147,7 +147,7 @@ test('the coffee shop page lists all six things a location gets', async () => {
 });
 
 test('the coffee shop page keeps the roastery argument and all four things an owner is spared', async () => {
-  await expectAll('page.own-an-azouz-coffee.json', [
+  await expectAll('page.own-your-azouz-coffee-branch.json', [
     "Your coffee isn't coming from an outside supplier.",
     'We roast it ourselves.',
     'That gives your location direct access to coffee sourcing, custom roasting, blending and ongoing supply from the same team supporting the brand.',
@@ -161,7 +161,7 @@ test('the coffee shop page keeps the roastery argument and all four things an ow
 });
 
 test('the coffee shop page asks for the four details the client needs, under every action they wrote', async () => {
-  await expectAll('page.own-an-azouz-coffee.json', [
+  await expectAll('page.own-your-azouz-coffee-branch.json', [
     'Imagine your own Azouz Coffee shop, or an Azouz counter operating inside a business you already own.',
     "we'll explain which Azouz Coffee format could work for you.",
     'City', 'Location', 'Space size', 'Business type',

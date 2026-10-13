@@ -36,7 +36,7 @@ export const DEMO_MEDIA = {
     'story.packing': '/preview-media/filter-coffee-can.jpg',
     sample: '/preview-media/espresso-arabica-beans-alt.jpg',
   },
-  'templates/page.own-an-azouz-coffee.json': {
+  'templates/page.own-your-azouz-coffee-branch.json': {
     hero: '/preview-media/filter-coffee-can.jpg',
     roastery: '/preview-media/espresso-arabica-beans.jpg',
   },

@@ -1,7 +1,7 @@
 {%- comment -%}
-  The footer as a printed colophon on a dark ground: where the coffee is made,
-  what the site holds, where to find us, and the one thing worth asking for —
-  then the mark, the rule, and the legal line.
+  The footer as a printed colophon on a dark ground: the mark, where the
+  coffee is made, what the site holds, where to find us, and the one thing
+  worth asking for, then the rule and the legal line.
 
   The address leads. For a roastery selling to businesses, "there is a real
   building and here it is" is the most load-bearing thing on the page, and it
@@ -35,6 +35,29 @@
 
 <footer class="footer">
   <div class="container container--ultra footer__inner">
+    <div class="footer__brand">
+      {%- comment -%}
+        The mark leads the footer's row as a signature column: logo and tagline
+        on the inline start, the index beside it. It used to close the footer
+        on a row of its own, which left a screen-wide dark field holding one
+        small lockup and two lines of copy.
+
+        The white lockup is the black one recoloured, so it carries the same
+        59.014 x 47.775 viewBox and the width/height below reserve the true shape.
+      {%- endcomment -%}
+      <img
+        class="footer__logo"
+        src="{{ 'logo-white.svg' | asset_url }}"
+        alt="{{ shop.name | escape }}"
+        width="79"
+        height="64"
+        loading="lazy">
+
+      {%- if section.settings.tagline != blank -%}
+        <p class="footer__tagline">{{ section.settings.tagline }}</p>
+      {%- endif -%}
+    </div>
+
     <div class="footer__index">
       {%- if has_contact -%}
         <div class="footer__column">
@@ -121,26 +144,6 @@
   </div>
 
   <div class="container container--ultra footer__close">
-    {%- comment -%}
-      The mark closes the footer rather than heading it — by this point the
-      reader knows whose site this is, and the lockup reads as a signature
-      instead of a second logo competing with the header's.
-
-      The white lockup is the black one recoloured, so it carries the same
-      59.014 x 47.775 viewBox and the width/height below reserve the true shape.
-    {%- endcomment -%}
-    <img
-      class="footer__logo"
-      src="{{ 'logo-white.svg' | asset_url }}"
-      alt="{{ shop.name | escape }}"
-      width="79"
-      height="64"
-      loading="lazy">
-
-    {%- if section.settings.tagline != blank -%}
-      <p class="footer__tagline">{{ section.settings.tagline }}</p>
-    {%- endif -%}
-
     <hr class="footer__rule">
 
     <div class="footer__legal">

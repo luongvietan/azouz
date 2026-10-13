@@ -13,7 +13,18 @@
   <dialog class="cart-drawer__dialog" aria-label="{{ 'cart.general.title' | t }}" inert aria-hidden="true" hidden>
     <div class="cart-drawer__panel">
       <div class="cart-drawer__head">
-        <h2 class="cart-drawer__heading">{{ 'cart.general.title' | t }}</h2>
+        {%- comment -%}
+          Two titles for one heading. Opened from the header it is the cart;
+          opened by an add-to-cart it confirms the add, which is the question
+          the customer has at that moment. theme.js picks one on open.
+        {%- endcomment -%}
+        <h2
+          class="cart-drawer__heading"
+          data-drawer-heading
+          data-title-cart="{{ 'cart.general.title' | t | escape }}"
+          data-title-added="{{ 'cart.general.drawer_title' | t | escape }}">
+          {{- 'cart.general.title' | t -}}
+        </h2>
         <button class="cart-drawer__close" type="button" data-drawer-close>
           {%- render 'icon', name: 'close' -%}
           <span class="visually-hidden">{{ 'general.accessibility.close_cart' | t }}</span>
@@ -30,6 +41,16 @@
             <span>{{ 'cart.general.subtotal' | t }}</span>
             <span>{{ cart.total_price | money }}</span>
           </p>
+
+          {%- comment -%}
+            The drawer is where most adds land, so the delivery cost has to be
+            stated here too, not only on the cart page. Inside the re-rendered
+            region, so it is there on the very first add.
+          {%- endcomment -%}
+          {%- if settings.shipping_note != blank -%}
+            <p class="cart-drawer__note">{{ settings.shipping_note }}</p>
+          {%- endif -%}
+          <p class="cart-drawer__note">{{ 'cart.general.taxes_note' | t }}</p>
 
           {%- comment -%}
             Checkout lives here rather than in the footer because only this
@@ -49,6 +70,13 @@
         <a class="button button--secondary" href="{{ routes.cart_url }}">
           {{ 'cart.general.view_cart' | t }}
         </a>
+        {%- comment -%}
+          The third way out, named. The close button in the corner is an icon,
+          and "keep shopping" is the choice most people make after an add.
+        {%- endcomment -%}
+        <button class="button--quiet cart-drawer__continue" type="button" data-drawer-close>
+          {{ 'cart.general.continue_shopping' | t }}
+        </button>
       </div>
     </div>
   </dialog>

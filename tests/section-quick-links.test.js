@@ -71,8 +71,24 @@ test('only an entry that has a photograph takes the photograph layout', async ()
 test('the phone rendition is asked for at the size it is drawn', async () => {
   // Beside the copy on a phone the picture is 8rem wide. Asking for 92vw
   // there would send a phone a rendition five times the size it can show.
-  const html = await render([entry('a', photographed(PRIVATE_LABEL, 'espresso-arabica-beans.jpg', 'x'))]);
+  const blocks = [entry('a', photographed(PRIVATE_LABEL, 'espresso-arabica-beans.jpg', 'x'))];
+  const html = await renderSection('quick-links', {
+    settings: { heading: 'Private label is where we start.' },
+    blocks,
+    scope: { request: { page_type: 'page', locale: { iso_code: 'en' } } },
+  });
   assert.match(html, /sizes="\(min-width: 64em\) 23vw, \(min-width: 40em\) 46vw, 8rem"/);
+});
+
+test('on the homepage the leading entry stays full width on a phone, the rest sit beside their copy', async () => {
+  // The homepage leads with Private Label at full width; the entries after it
+  // take the 8rem picture beside the copy that the client asked for.
+  const html = await render([
+    entry('a', photographed(PRIVATE_LABEL, 'espresso-arabica-beans.jpg', 'x')),
+    entry('b', photographed(WHOLESALE, 'turkish-coffee.jpg', 'y')),
+  ]);
+  const sizes = [...html.matchAll(/sizes="([^"]+)"/g)].map((match) => match[1]);
+  assert.deepEqual(sizes, ['(min-width: 56em) 58vw, 92vw', '(min-width: 56em) 31vw, (min-width: 40em) 46vw, 8rem']);
 });
 
 test('the photograph reserves its own box, so the page does not jump as it loads', async () => {

@@ -43,21 +43,48 @@ const ranged = {
 const render = (product = ranged) =>
   renderSnippet('variant-picker', { product, form_id: 'AddToCart' });
 
-test('renders one select per product option', async () => {
+test('renders one option group per product option', async () => {
   const html = await render();
   assert.equal(countMatches(html, /data-option-index=/g), 2);
 });
 
-test('each option select has a visible label', async () => {
+test('each option group is a fieldset named by a visible legend', async () => {
   const html = await render();
-  assert.match(html, /<label[^>]+for="Option-[^"]+-1"[^>]*>\s*Weight/);
-  assert.match(html, /<label[^>]+for="Option-[^"]+-2"[^>]*>\s*Grind/);
+  assert.equal(countMatches(html, /<fieldset[^>]+data-option-index=/g), 2);
+  assert.match(html, /<legend[^>]*>\s*Weight/);
+  assert.match(html, /<legend[^>]*>\s*Grind/);
+});
+
+test('every value is a button on show, not folded into a drop-down', async () => {
+  // Baymard: size options hidden in a drop-down are a product page pitfall.
+  const html = await render();
+  const withoutNoscript = html.replace(/<noscript>[\s\S]*?<\/noscript>/, '');
+  assert.equal(/<select/.test(withoutNoscript), false);
+  assert.equal(countMatches(withoutNoscript, /type="radio"/g), 4);
+});
+
+test('each radio is wrapped by its own visible label', async () => {
+  const html = await render();
+  assert.match(html, /<label class="variant-picker__value">\s*<input[^>]+value="1kg"[\s\S]*?>\s*<span[^>]*>1kg<\/span>/);
 });
 
 test('the currently selected variant is preselected in each option', async () => {
   const html = await render();
-  assert.match(html, /<option value="250g" selected/);
-  assert.match(html, /<option value="Whole Bean" selected/);
+  assert.match(html, /value="250g"\s*checked/);
+  assert.match(html, /value="Whole Bean"\s*checked/);
+  assert.equal(/value="1kg"\s*checked/.test(html), false);
+});
+
+test('the json carries each variant unit price for the picker to swap', async () => {
+  const withUnit = variants.map((v) => ({
+    ...v,
+    unit_price: Math.round(v.price / 2.5),
+    unit_price_measurement: { reference_value: 100, reference_unit: 'g' },
+  }));
+  const html = await render({ ...ranged, variants: withUnit, selected_or_first_available_variant: withUnit[0] });
+  const json = /<script type="application\/json" data-variant-data>([\s\S]*?)<\/script>/.exec(html);
+  const parsed = JSON.parse(json[1]);
+  assert.match(parsed[0].unit_price, /per 100g/);
 });
 
 test('the variant data is emitted as parseable json', async () => {
@@ -105,15 +132,18 @@ test('no user-visible english is hard-coded', async () => {
   assert.equal(/translation missing/.test(await render()), false);
 });
 
-test('option field ids are namespaced so two pickers can coexist', async () => {
-  // A bare "Option-1" collides the moment the product section renders twice —
-  // a quick view beside the main product — and the label points at the wrong
-  // select.
+test('option field ids and radio names are namespaced so two pickers can coexist', async () => {
+  // A bare "Option-1" collides the moment the product section renders twice,
+  // a quick view beside the main product, and two radio groups sharing a name
+  // would become one group across both products.
   const html = await renderSnippet('variant-picker', { product: ranged, form_id: 'AddToCart' });
-  const ids = [...html.matchAll(/<select[^>]*\sid="([^"]+)"/g)].map((m) => m[1]);
-  assert.ok(ids.length >= 2, `expected the option selects, got ${ids}`);
-  for (const id of ids) {
-    assert.equal(/^Option-\d+$/.test(id), false, `${id} is not namespaced`);
-    assert.match(html, new RegExp(`<label[^>]+for="${id}"`), `no label for #${id}`);
+  const radios = [...html.matchAll(/<input[^>]+type="radio"[^>]*>/g)].map((m) => m[0]);
+  assert.ok(radios.length >= 2, `expected the option radios, got ${radios.length}`);
+  for (const radio of radios) {
+    const id = /\sid="([^"]+)"/.exec(radio)[1];
+    const name = /\sname="([^"]+)"/.exec(radio)[1];
+    assert.match(id, /^Option-.+-\d+-\d+$/, `${id} does not carry option and value positions`);
+    assert.equal(/^Option-\d+-\d+$/.test(id), false, `${id} is not namespaced to the product`);
+    assert.equal(/^Option-\d+$/.test(name), false, `${name} is not namespaced to the product`);
   }
 });

@@ -95,13 +95,13 @@ test('support cards demote visually when one card is featured', async () => {
 });
 
 const PHOTO = card('s1', {
-  title: 'Own an Azouz Coffee',
+  title: 'Own Your Azouz Coffee Branch',
   body: 'Bring Azouz Coffee to your neighbourhood.',
   detail: 'Coffee · Equipment · Branding',
   image: 'placeholder.svg',
   image_alt: 'An Azouz Coffee counter with the espresso machine and grinder',
   link_label: 'Explore Opportunities',
-  link: '/pages/own-an-azouz-coffee',
+  link: '/pages/own-your-azouz-coffee-branch',
 });
 
 test('a card with a photograph leads with it instead of a coloured panel', async () => {
@@ -114,7 +114,7 @@ test('a card with a photograph leads with it instead of a coloured panel', async
 test('a photo-led card keeps the title an h3 and the detail line above it', async () => {
   const html = await renderSection('service-cards', { blocks: [PHOTO] });
   assert.match(html, /service-card__detail">Coffee · Equipment · Branding<\/span>/);
-  assert.match(html, /<h3 class="service-card__title">Own an Azouz Coffee<\/h3>/);
+  assert.match(html, /<h3 class="service-card__title">Own Your Azouz Coffee Branch<\/h3>/);
 });
 
 test('a photo-led card ends in a button — the client asked for photo, heading, sentence, button', async () => {
@@ -133,7 +133,7 @@ test('photographs widen the grid so they are shown large', async () => {
 
 test('a fourth label block gets a fourth column rather than a row of its own', async () => {
   const html = await renderSection('service-cards', {
-    blocks: [...THREE, card('s4', { title: 'Own an Azouz Coffee' })],
+    blocks: [...THREE, card('s4', { title: 'Own Your Azouz Coffee Branch' })],
   });
   assert.match(html, /service-cards__grid grid grid--4/);
 });

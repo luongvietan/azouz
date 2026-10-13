@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero": {
@@ -16,9 +7,9 @@
         "heading": "Bring Azouz Coffee to Your Area.",
         "body": "<p>Open your own Azouz Coffee location with the coffee, equipment, branding, menu and support already built around you.</p><p>Whether you want a complete coffee shop or a smaller Azouz Coffee corner inside an existing business, we help you get from location to opening.</p>",
         "cta_primary_label": "Start Your Azouz Coffee",
-        "cta_primary_link": "/pages/own-an-azouz-coffee#enquire",
+        "cta_primary_link": "/pages/own-your-azouz-coffee-branch#enquire",
         "cta_secondary_label": "Request Information",
-        "cta_secondary_link": "/pages/own-an-azouz-coffee#enquire",
+        "cta_secondary_link": "/pages/own-your-azouz-coffee-branch#enquire",
         "image_alt": "A hand holding an Azouz Coffee takeaway cup",
         "background": "default",
         "image": "shopify://shop_images/hero-azouz-coffee-cup.jpg"
@@ -48,7 +39,7 @@
             "body": "Open a complete Azouz Coffee shop using our brand, coffee, menu and operating model.",
             "note": "Ideal for entrepreneurs looking to operate their own branded coffee business.",
             "link_label": "Enquire About a Location",
-            "link": "/pages/own-an-azouz-coffee#enquire"
+            "link": "/pages/own-your-azouz-coffee-branch#enquire"
           }
         },
         "corner": {
@@ -60,7 +51,7 @@
             "list": "Hotels, Restaurants, Offices, Retail Spaces, Universities, Commercial Buildings",
             "note": "A simpler way to introduce a premium coffee offer without opening a full standalone café.",
             "link_label": "Enquire About a Coffee Corner",
-            "link": "/pages/own-an-azouz-coffee#enquire"
+            "link": "/pages/own-your-azouz-coffee-branch#enquire"
           }
         }
       },

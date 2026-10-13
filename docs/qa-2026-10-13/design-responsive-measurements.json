@@ -1,0 +1,53 @@
+[
+  {
+    "brokenImages": [],
+    "document": 305,
+    "header": 98,
+    "heroCtaBottom": 716.09375,
+    "heroHeight": 603,
+    "navRows": [],
+    "viewport": 320
+  },
+  {
+    "brokenImages": [],
+    "document": 753,
+    "header": 98,
+    "heroCtaBottom": 818.703125,
+    "heroHeight": 720,
+    "navRows": [],
+    "viewport": 768
+  },
+  {
+    "brokenImages": [],
+    "document": 1009,
+    "header": 142,
+    "heroCtaBottom": 748.90625,
+    "heroHeight": 619,
+    "navRows": [
+      128.09375
+    ],
+    "viewport": 1024
+  },
+  {
+    "brokenImages": [],
+    "document": 1265,
+    "header": 81,
+    "heroCtaBottom": 736.09375,
+    "heroHeight": 680,
+    "navRows": [
+      57.09375
+    ],
+    "viewport": 1280
+  },
+  {
+    "brokenImages": [],
+    "document": 1425,
+    "header": 81,
+    "heroCtaBottom": 768.09375,
+    "heroHeight": 720,
+    "navRows": [
+      57.09375
+    ],
+    "viewport": 1440
+  }
+]

@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero": {
@@ -30,45 +21,45 @@
         "private_label": {
           "type": "link",
           "settings": {
-            "image": "shopify://shop_images/photo-private-label-silver.png",
-            "image_alt": "Four silver coffee pouches with different sample brand labels",
             "title": "Private Label Coffee",
             "body": "Create coffee under your own brand: custom blends, roasting, grinding and packaging.",
             "link_label": "Start Your Private Label",
-            "link": "/pages/private-label"
+            "link": "/pages/private-label",
+            "image": "shopify://shop_images/photo-private-label-silver.png",
+            "image_alt": "Four silver coffee pouches with different sample brand labels"
           }
         },
         "wholesale": {
           "type": "link",
           "settings": {
-            "image": "shopify://shop_images/photo-wholesale-espresso.png",
-            "image_alt": "Espresso machine, grinder and a one kilogram silver coffee bag on a café counter",
             "title": "Wholesale Coffee",
             "body": "Reliable coffee for cafés, restaurants, hotels and businesses. Espresso, Turkish, filter and specialty.",
             "link_label": "View Wholesale",
-            "link": "/pages/wholesale"
+            "link": "/pages/wholesale",
+            "image": "shopify://shop_images/photo-wholesale-espresso.png",
+            "image_alt": "Espresso machine, grinder and a one kilogram silver coffee bag on a café counter"
           }
         },
         "specialty": {
           "type": "link",
           "settings": {
-            "image": "shopify://shop_images/photo-specialty-cupping.png",
-            "image_alt": "Green and roasted coffee beans, cupping bowls and origin cards viewed from above",
             "title": "Specialty Coffee",
             "body": "Single origins and specialty coffees selected for quality and flavour.",
             "link_label": "Discover Our Coffee",
-            "link": "/collections/all"
+            "link": "/collections/all",
+            "image": "shopify://shop_images/photo-specialty-cupping.png",
+            "image_alt": "Green and roasted coffee beans, cupping bowls and origin cards viewed from above"
           }
         },
         "coffee_shop": {
           "type": "link",
           "settings": {
-            "image": "shopify://shop_images/hero-azouz-coffee-cup.jpg",
-            "image_alt": "A hand holding an Azouz Coffee takeaway cup",
-            "title": "Own an Azouz Coffee",
+            "title": "Own Your Azouz Coffee Branch",
             "body": "Bring Azouz Coffee to your neighbourhood: coffee, equipment, branding, menu and operations.",
             "link_label": "Explore Opportunities",
-            "link": "/pages/own-an-azouz-coffee"
+            "link": "/pages/own-your-azouz-coffee-branch",
+            "image": "shopify://shop_images/hero-azouz-coffee-cup.jpg",
+            "image_alt": "A hand holding an Azouz Coffee takeaway cup"
           }
         }
       },

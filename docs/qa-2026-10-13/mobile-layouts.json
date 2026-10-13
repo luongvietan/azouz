@@ -1,0 +1,3849 @@
+{
+  "at375": [
+    {
+      "controls": [
+        {
+          "h": 44,
+          "label": "Resume the moving text\n      ▶",
+          "w": 44
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Your Coffee. Your Brand. Our Roastery.",
+      "images": [
+        {
+          "alt": "Roasted coffee falling from the roaster drum into the cooling tray",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/hero-roastery.jpg?v=1789964955&width=2000",
+          "width": 375
+        },
+        {
+          "alt": "Four silver coffee pouches with different sample brand labels",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-private-label-silver.png?v=1791820370&width=900",
+          "width": 128
+        },
+        {
+          "alt": "Espresso machine, grinder and a one kilogram silver coffee bag on a café counter",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-wholesale-espresso.png?v=1791820369&width=900",
+          "width": 128
+        },
+        {
+          "alt": "Green and roasted coffee beans, cupping bowls and origin cards viewed from above",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-specialty-cupping.png?v=1791820369&width=900",
+          "width": 128
+        },
+        {
+          "alt": "A hand holding an Azouz Coffee takeaway cup",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/hero-azouz-coffee-cup.jpg?v=1786917692&width=900",
+          "width": 128
+        },
+        {
+          "alt": "Espresso Arabica Beans",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/espresso-arabica-beans_57e53a27-67be-48e2-a8c4-f991e56dd3f2.jpg?v=1788772507&width=600",
+          "width": 337
+        },
+        {
+          "alt": "Filter Coffee Can",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/filter-coffee-can_43e5e518-ad3b-4dac-9d78-2556926640c0.jpg?v=1788772508&width=600",
+          "width": 337
+        },
+        {
+          "alt": "Turkish Coffee",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/turkish-coffee_da680211-3a00-4bbd-9f7f-d14951620650.jpg?v=1788772507&width=600",
+          "width": 337
+        },
+        {
+          "alt": "Coffee beans and cupping bowls prepared for tasting",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-specialty-cupping.png?v=1791820369&width=900",
+          "width": 345
+        },
+        {
+          "alt": "Roasted coffee falling from the roaster into the cooling tray",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/hero-roastery.jpg?v=1789964955&width=900",
+          "width": 345
+        },
+        {
+          "alt": "Silver pouches showing different example private label coffee brands",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-private-label-silver.png?v=1791820370&width=900",
+          "width": 345
+        },
+        {
+          "alt": "The Espresso Arabica Beans bag, 500g, whole bean",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/espresso-arabica-beans.jpg?v=1788770814&width=1122",
+          "width": 0
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [
+        {
+          "cls": "marquee__track",
+          "left": 0,
+          "right": 6225,
+          "tag": "DIV",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 0,
+          "right": 998,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__mark",
+          "left": 970,
+          "right": 998,
+          "tag": "SPAN",
+          "text": "→"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 1046,
+          "right": 2043,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__mark",
+          "left": 2015,
+          "right": 2043,
+          "tag": "SPAN",
+          "text": "→"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 2091,
+          "right": 3089,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__mark",
+          "left": 3061,
+          "right": 3089,
+          "tag": "SPAN",
+          "text": "→"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 3137,
+          "right": 4134,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__mark",
+          "left": 4107,
+          "right": 4134,
+          "tag": "SPAN",
+          "text": "→"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 4182,
+          "right": 5180,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__mark",
+          "left": 5152,
+          "right": 5180,
+          "tag": "SPAN",
+          "text": "→"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 5228,
+          "right": 6225,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        }
+      ],
+      "scrollWidth": 360,
+      "url": "/",
+      "width": 375
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Build Your Own Coffee Brand.",
+      "images": [
+        {
+          "alt": "Four silver coffee pouches with different sample brand labels",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-private-label-silver.png?v=1791820370&width=1200",
+          "width": 345
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/pages/private-label",
+      "width": 375
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Wholesale Coffee for Your Business.",
+      "images": [
+        {
+          "alt": "Espresso machine, grinder and a one kilogram silver coffee bag on a café counter",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-wholesale-espresso.png?v=1791820369&width=1200",
+          "width": 345
+        },
+        {
+          "alt": "A hand lifting a V60 dripper over a glass server of fresh filter coffee",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-filter-v60.jpg?v=1791820367&width=1000",
+          "width": 0
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/pages/wholesale",
+      "width": 375
+    },
+    {
+      "controls": [
+        {
+          "h": 48,
+          "label": "contact[name]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[Company]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[email]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[phone]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[City]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[Location]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[Space size]",
+          "w": 320
+        },
+        {
+          "h": 49,
+          "label": "Select a business typeNew coffee shopHotelRestaura",
+          "w": 320
+        },
+        {
+          "h": 130,
+          "label": "contact[body]",
+          "w": 320
+        },
+        {
+          "h": 34,
+          "label": "contact[Website]",
+          "w": 192
+        },
+        {
+          "h": 48,
+          "label": "Start My Azouz Coffee",
+          "w": 246
+        },
+        {
+          "h": 48,
+          "label": "Request More Information",
+          "w": 280
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/contact#contact_form",
+          "fields": [
+            {
+              "name": "form_type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "utf8",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "contact[name]",
+              "required": true,
+              "type": "text"
+            },
+            {
+              "name": "contact[Company]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[email]",
+              "required": true,
+              "type": "email"
+            },
+            {
+              "name": "contact[phone]",
+              "required": false,
+              "type": "tel"
+            },
+            {
+              "name": "contact[City]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[Location]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[Space size]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[Business type]",
+              "required": false,
+              "type": "select-one"
+            },
+            {
+              "name": "contact[body]",
+              "required": false,
+              "type": "textarea"
+            },
+            {
+              "name": "contact[Website]",
+              "required": false,
+              "type": "text"
+            }
+          ],
+          "method": "post"
+        }
+      ],
+      "h1": "Bring Azouz Coffee to Your Area.",
+      "images": [
+        {
+          "alt": "A hand holding an Azouz Coffee takeaway cup",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/hero-azouz-coffee-cup.jpg?v=1786917692&width=1024",
+          "width": 345
+        },
+        {
+          "alt": "Roasted coffee falling from the roaster into the cooling tray",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/hero-roastery.jpg?v=1789964955&width=1000",
+          "width": 0
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/pages/own-an-azouz-coffee",
+      "width": 375
+    },
+    {
+      "controls": [
+        {
+          "h": 49,
+          "label": "FeaturedMost relevantBest sellingAlphabetically, A",
+          "w": 182
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": null,
+          "fields": [
+            {
+              "name": "sort_by",
+              "required": false,
+              "type": "select-one"
+            }
+          ],
+          "method": "get"
+        }
+      ],
+      "h1": "Products",
+      "images": [
+        {
+          "alt": "Espresso Arabica Beans",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/espresso-arabica-beans_57e53a27-67be-48e2-a8c4-f991e56dd3f2.jpg?v=1788772507&width=600",
+          "width": 337
+        },
+        {
+          "alt": "Filter Coffee Can",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/filter-coffee-can_43e5e518-ad3b-4dac-9d78-2556926640c0.jpg?v=1788772508&width=600",
+          "width": 337
+        },
+        {
+          "alt": "Turkish Coffee",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/turkish-coffee_da680211-3a00-4bbd-9f7f-d14951620650.jpg?v=1788772507&width=600",
+          "width": 0
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/collections/all",
+      "width": 375
+    },
+    {
+      "controls": [
+        {
+          "h": 48,
+          "label": "q",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "Search",
+          "w": 122
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/search",
+          "fields": [
+            {
+              "name": "type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "q",
+              "required": false,
+              "type": "search"
+            }
+          ],
+          "method": "get"
+        }
+      ],
+      "h1": "Search",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/search",
+      "width": 375
+    },
+    {
+      "controls": [
+        {
+          "h": 48,
+          "label": "contact[name]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[Company]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[email]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[phone]",
+          "w": 320
+        },
+        {
+          "h": 49,
+          "label": "Select a business typeCoffee ShopRestaurantHotelOf",
+          "w": 320
+        },
+        {
+          "h": 49,
+          "label": "Select a coffee typeEspressoTurkishArabicSpecialty",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[Expected monthly volume]",
+          "w": 320
+        },
+        {
+          "h": 158,
+          "label": "contact[body]",
+          "w": 320
+        },
+        {
+          "h": 34,
+          "label": "contact[Website]",
+          "w": 192
+        },
+        {
+          "h": 48,
+          "label": "Send enquiry",
+          "w": 173
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/contact#contact_form",
+          "fields": [
+            {
+              "name": "form_type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "utf8",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "contact[name]",
+              "required": true,
+              "type": "text"
+            },
+            {
+              "name": "contact[Company]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[email]",
+              "required": true,
+              "type": "email"
+            },
+            {
+              "name": "contact[phone]",
+              "required": false,
+              "type": "tel"
+            },
+            {
+              "name": "contact[Business type]",
+              "required": false,
+              "type": "select-one"
+            },
+            {
+              "name": "contact[Coffee type]",
+              "required": false,
+              "type": "select-one"
+            },
+            {
+              "name": "contact[Expected monthly volume]",
+              "required": true,
+              "type": "text"
+            },
+            {
+              "name": "contact[body]",
+              "required": false,
+              "type": "textarea"
+            },
+            {
+              "name": "contact[Website]",
+              "required": false,
+              "type": "text"
+            }
+          ],
+          "method": "post"
+        }
+      ],
+      "h1": "Get a Quote for Your Project.",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/pages/get-a-quote",
+      "width": 375
+    },
+    {
+      "controls": [
+        {
+          "h": 48,
+          "label": "contact[name]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[Company]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[email]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[phone]",
+          "w": 320
+        },
+        {
+          "h": 49,
+          "label": "Select a business typeCoffee ShopRestaurantHotelOf",
+          "w": 320
+        },
+        {
+          "h": 49,
+          "label": "Select a coffee typeEspressoTurkishArabicSpecialty",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[Expected monthly volume]",
+          "w": 320
+        },
+        {
+          "h": 158,
+          "label": "contact[body]",
+          "w": 320
+        },
+        {
+          "h": 34,
+          "label": "contact[Website]",
+          "w": 192
+        },
+        {
+          "h": 48,
+          "label": "Send enquiry",
+          "w": 173
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/contact#contact_form",
+          "fields": [
+            {
+              "name": "form_type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "utf8",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "contact[name]",
+              "required": true,
+              "type": "text"
+            },
+            {
+              "name": "contact[Company]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[email]",
+              "required": true,
+              "type": "email"
+            },
+            {
+              "name": "contact[phone]",
+              "required": false,
+              "type": "tel"
+            },
+            {
+              "name": "contact[Business type]",
+              "required": false,
+              "type": "select-one"
+            },
+            {
+              "name": "contact[Coffee type]",
+              "required": false,
+              "type": "select-one"
+            },
+            {
+              "name": "contact[Expected monthly volume]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[body]",
+              "required": false,
+              "type": "textarea"
+            },
+            {
+              "name": "contact[Website]",
+              "required": false,
+              "type": "text"
+            }
+          ],
+          "method": "post"
+        }
+      ],
+      "h1": "Request a Sample.",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/pages/request-a-sample",
+      "width": 375
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Privacy policy",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/policies/privacy-policy",
+      "width": 375
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Refund policy",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/policies/refund-policy",
+      "width": 375
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Shipping policy",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/policies/shipping-policy",
+      "width": 375
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Contact information",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/policies/contact-information",
+      "width": 375
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Terms of service",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/policies/terms-of-service",
+      "width": 375
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Your cart",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/cart",
+      "width": 375
+    },
+    {
+      "controls": [
+        {
+          "h": 44,
+          "label": "Decrease quantity",
+          "w": 44
+        },
+        {
+          "h": 44,
+          "label": "Quantity",
+          "w": 56
+        },
+        {
+          "h": 44,
+          "label": "Increase quantity",
+          "w": 44
+        },
+        {
+          "h": 48,
+          "label": "Add to cart",
+          "w": 156
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/cart/add",
+          "fields": [
+            {
+              "name": "form_type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "utf8",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "id",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "quantity",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "product-id",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "section-id",
+              "required": false,
+              "type": "hidden"
+            }
+          ],
+          "method": "post"
+        }
+      ],
+      "h1": "Espresso Arabica Beans",
+      "images": [
+        {
+          "alt": "Espresso Arabica Beans",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/espresso-arabica-beans_57e53a27-67be-48e2-a8c4-f991e56dd3f2.jpg?v=1788772507&width=1122",
+          "width": 345
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/products/espresso-arabica-beans",
+      "width": 375
+    },
+    {
+      "controls": [
+        {
+          "h": 44,
+          "label": "Decrease quantity",
+          "w": 44
+        },
+        {
+          "h": 44,
+          "label": "Quantity",
+          "w": 56
+        },
+        {
+          "h": 44,
+          "label": "Increase quantity",
+          "w": 44
+        },
+        {
+          "h": 48,
+          "label": "Add to cart",
+          "w": 156
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/cart/add",
+          "fields": [
+            {
+              "name": "form_type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "utf8",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "id",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "quantity",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "product-id",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "section-id",
+              "required": false,
+              "type": "hidden"
+            }
+          ],
+          "method": "post"
+        }
+      ],
+      "h1": "Filter Coffee Can",
+      "images": [
+        {
+          "alt": "Filter Coffee Can",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/filter-coffee-can_43e5e518-ad3b-4dac-9d78-2556926640c0.jpg?v=1788772508&width=1122",
+          "width": 345
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/products/filter-coffee-can",
+      "width": 375
+    },
+    {
+      "controls": [
+        {
+          "h": 44,
+          "label": "Decrease quantity",
+          "w": 44
+        },
+        {
+          "h": 44,
+          "label": "Quantity",
+          "w": 56
+        },
+        {
+          "h": 44,
+          "label": "Increase quantity",
+          "w": 44
+        },
+        {
+          "h": 48,
+          "label": "Add to cart",
+          "w": 156
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/cart/add",
+          "fields": [
+            {
+              "name": "form_type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "utf8",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "id",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "quantity",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "product-id",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "section-id",
+              "required": false,
+              "type": "hidden"
+            }
+          ],
+          "method": "post"
+        }
+      ],
+      "h1": "Turkish Coffee",
+      "images": [
+        {
+          "alt": "Turkish Coffee",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/turkish-coffee_da680211-3a00-4bbd-9f7f-d14951620650.jpg?v=1788772507&width=1122",
+          "width": 345
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/products/turkish-coffee",
+      "width": 375
+    },
+    {
+      "controls": [
+        {
+          "h": 44,
+          "label": "Decrease quantity",
+          "w": 44
+        },
+        {
+          "h": 44,
+          "label": "Quantity",
+          "w": 56
+        },
+        {
+          "h": 44,
+          "label": "Increase quantity",
+          "w": 44
+        },
+        {
+          "h": 48,
+          "label": "Update cart",
+          "w": 162
+        },
+        {
+          "h": 48,
+          "label": "Check out",
+          "w": 147
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/cart",
+          "fields": [
+            {
+              "name": "form_type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "utf8",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "updates[52176889282881:db81d0f810e61692f15bd949efac8ffd]",
+              "required": false,
+              "type": "number"
+            }
+          ],
+          "method": "post"
+        }
+      ],
+      "h1": "Your cart",
+      "images": [
+        {
+          "alt": "",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/turkish-coffee_da680211-3a00-4bbd-9f7f-d14951620650.jpg?v=1788772507&width=160",
+          "width": 80
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/cart",
+      "width": 375
+    },
+    {
+      "controls": [
+        {
+          "h": 44,
+          "label": "Resume the moving text\n      ▶",
+          "w": 44
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Your Coffee. Your Brand. Our Roastery.",
+      "images": [
+        {
+          "alt": "Roasted coffee falling from the roaster drum into the cooling tray",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/hero-roastery.jpg?v=1789964955&width=2000",
+          "width": 374
+        },
+        {
+          "alt": "Four silver coffee pouches with different sample brand labels",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-private-label-silver.png?v=1791820370&width=900",
+          "width": 128
+        },
+        {
+          "alt": "Espresso machine, grinder and a one kilogram silver coffee bag on a café counter",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-wholesale-espresso.png?v=1791820369&width=900",
+          "width": 128
+        },
+        {
+          "alt": "Green and roasted coffee beans, cupping bowls and origin cards viewed from above",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-specialty-cupping.png?v=1791820369&width=900",
+          "width": 128
+        },
+        {
+          "alt": "A hand holding an Azouz Coffee takeaway cup",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/hero-azouz-coffee-cup.jpg?v=1786917692&width=900",
+          "width": 128
+        },
+        {
+          "alt": "Espresso Arabica Beans",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/espresso-arabica-beans_57e53a27-67be-48e2-a8c4-f991e56dd3f2.jpg?v=1788772507&width=600",
+          "width": 0
+        },
+        {
+          "alt": "Filter Coffee Can",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/filter-coffee-can_43e5e518-ad3b-4dac-9d78-2556926640c0.jpg?v=1788772508&width=600",
+          "width": 0
+        },
+        {
+          "alt": "Turkish Coffee",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/turkish-coffee_da680211-3a00-4bbd-9f7f-d14951620650.jpg?v=1788772507&width=600",
+          "width": 337
+        },
+        {
+          "alt": "Coffee beans and cupping bowls prepared for tasting",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-specialty-cupping.png?v=1791820369&width=900",
+          "width": 345
+        },
+        {
+          "alt": "Roasted coffee falling from the roaster into the cooling tray",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/hero-roastery.jpg?v=1789964955&width=900",
+          "width": 345
+        },
+        {
+          "alt": "Silver pouches showing different example private label coffee brands",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-private-label-silver.png?v=1791820370&width=900",
+          "width": 345
+        },
+        {
+          "alt": "The Espresso Arabica Beans bag, 500g, whole bean",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/espresso-arabica-beans.jpg?v=1788770814&width=1122",
+          "width": 0
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [
+        {
+          "cls": "marquee__track",
+          "left": -4,
+          "right": 6222,
+          "tag": "DIV",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__item",
+          "left": -4,
+          "right": 994,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__mark",
+          "left": 966,
+          "right": 994,
+          "tag": "SPAN",
+          "text": "→"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 1042,
+          "right": 2039,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__mark",
+          "left": 2012,
+          "right": 2039,
+          "tag": "SPAN",
+          "text": "→"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 2087,
+          "right": 3085,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__mark",
+          "left": 3057,
+          "right": 3085,
+          "tag": "SPAN",
+          "text": "→"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 3133,
+          "right": 4131,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__mark",
+          "left": 4103,
+          "right": 4131,
+          "tag": "SPAN",
+          "text": "→"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 4179,
+          "right": 5176,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__mark",
+          "left": 5148,
+          "right": 5176,
+          "tag": "SPAN",
+          "text": "→"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 5224,
+          "right": 6222,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        }
+      ],
+      "scrollWidth": 360,
+      "url": "/",
+      "width": 375
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Build Your Own Coffee Brand.",
+      "images": [
+        {
+          "alt": "Four silver coffee pouches with different sample brand labels",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-private-label-silver.png?v=1791820370&width=1200",
+          "width": 345
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/pages/private-label",
+      "width": 375
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Wholesale Coffee for Your Business.",
+      "images": [
+        {
+          "alt": "Espresso machine, grinder and a one kilogram silver coffee bag on a café counter",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-wholesale-espresso.png?v=1791820369&width=1200",
+          "width": 345
+        },
+        {
+          "alt": "A hand lifting a V60 dripper over a glass server of fresh filter coffee",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-filter-v60.jpg?v=1791820367&width=1000",
+          "width": 0
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/pages/wholesale",
+      "width": 375
+    },
+    {
+      "controls": [
+        {
+          "h": 48,
+          "label": "contact[name]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[Company]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[email]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[phone]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[City]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[Location]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[Space size]",
+          "w": 320
+        },
+        {
+          "h": 49,
+          "label": "Select a business typeNew coffee shopHotelRestaura",
+          "w": 320
+        },
+        {
+          "h": 130,
+          "label": "contact[body]",
+          "w": 320
+        },
+        {
+          "h": 34,
+          "label": "contact[Website]",
+          "w": 192
+        },
+        {
+          "h": 48,
+          "label": "Start My Azouz Coffee",
+          "w": 246
+        },
+        {
+          "h": 48,
+          "label": "Request More Information",
+          "w": 280
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/contact#contact_form",
+          "fields": [
+            {
+              "name": "form_type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "utf8",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "contact[name]",
+              "required": true,
+              "type": "text"
+            },
+            {
+              "name": "contact[Company]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[email]",
+              "required": true,
+              "type": "email"
+            },
+            {
+              "name": "contact[phone]",
+              "required": false,
+              "type": "tel"
+            },
+            {
+              "name": "contact[City]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[Location]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[Space size]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[Business type]",
+              "required": false,
+              "type": "select-one"
+            },
+            {
+              "name": "contact[body]",
+              "required": false,
+              "type": "textarea"
+            },
+            {
+              "name": "contact[Website]",
+              "required": false,
+              "type": "text"
+            }
+          ],
+          "method": "post"
+        }
+      ],
+      "h1": "Bring Azouz Coffee to Your Area.",
+      "images": [
+        {
+          "alt": "A hand holding an Azouz Coffee takeaway cup",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/hero-azouz-coffee-cup.jpg?v=1786917692&width=1024",
+          "width": 345
+        },
+        {
+          "alt": "Roasted coffee falling from the roaster into the cooling tray",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/hero-roastery.jpg?v=1789964955&width=1000",
+          "width": 345
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/pages/own-an-azouz-coffee",
+      "width": 375
+    },
+    {
+      "controls": [
+        {
+          "h": 49,
+          "label": "FeaturedMost relevantBest sellingAlphabetically, A",
+          "w": 182
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": null,
+          "fields": [
+            {
+              "name": "sort_by",
+              "required": false,
+              "type": "select-one"
+            }
+          ],
+          "method": "get"
+        }
+      ],
+      "h1": "Products",
+      "images": [
+        {
+          "alt": "Espresso Arabica Beans",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/espresso-arabica-beans_57e53a27-67be-48e2-a8c4-f991e56dd3f2.jpg?v=1788772507&width=600",
+          "width": 337
+        },
+        {
+          "alt": "Filter Coffee Can",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/filter-coffee-can_43e5e518-ad3b-4dac-9d78-2556926640c0.jpg?v=1788772508&width=600",
+          "width": 337
+        },
+        {
+          "alt": "Turkish Coffee",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/turkish-coffee_da680211-3a00-4bbd-9f7f-d14951620650.jpg?v=1788772507&width=600",
+          "width": 337
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/collections/all",
+      "width": 375
+    },
+    {
+      "controls": [
+        {
+          "h": 48,
+          "label": "q",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "Search",
+          "w": 122
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/search",
+          "fields": [
+            {
+              "name": "type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "q",
+              "required": false,
+              "type": "search"
+            }
+          ],
+          "method": "get"
+        }
+      ],
+      "h1": "Search",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/search",
+      "width": 375
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Your cart",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/cart",
+      "width": 375
+    },
+    {
+      "controls": [
+        {
+          "h": 48,
+          "label": "contact[name]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[Company]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[email]",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[phone]",
+          "w": 320
+        },
+        {
+          "h": 49,
+          "label": "Select a business typeCoffee ShopRestaurantHotelOf",
+          "w": 320
+        },
+        {
+          "h": 49,
+          "label": "Select a coffee typeEspressoTurkishArabicSpecialty",
+          "w": 320
+        },
+        {
+          "h": 48,
+          "label": "contact[Expected monthly volume]",
+          "w": 320
+        },
+        {
+          "h": 158,
+          "label": "contact[body]",
+          "w": 320
+        },
+        {
+          "h": 34,
+          "label": "contact[Website]",
+          "w": 192
+        },
+        {
+          "h": 48,
+          "label": "Send enquiry",
+          "w": 173
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/contact#contact_form",
+          "fields": [
+            {
+              "name": "form_type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "utf8",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "contact[name]",
+              "required": true,
+              "type": "text"
+            },
+            {
+              "name": "contact[Company]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[email]",
+              "required": true,
+              "type": "email"
+            },
+            {
+              "name": "contact[phone]",
+              "required": false,
+              "type": "tel"
+            },
+            {
+              "name": "contact[Business type]",
+              "required": false,
+              "type": "select-one"
+            },
+            {
+              "name": "contact[Coffee type]",
+              "required": false,
+              "type": "select-one"
+            },
+            {
+              "name": "contact[Expected monthly volume]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[body]",
+              "required": false,
+              "type": "textarea"
+            },
+            {
+              "name": "contact[Website]",
+              "required": false,
+              "type": "text"
+            }
+          ],
+          "method": "post"
+        }
+      ],
+      "h1": "Request a Sample.",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 360,
+      "url": "/pages/request-a-sample",
+      "width": 375
+    }
+  ],
+  "at320": [
+    {
+      "controls": [
+        {
+          "h": 44,
+          "label": "Resume the moving text\n      ▶",
+          "w": 44
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Your Coffee. Your Brand. Our Roastery.",
+      "images": [
+        {
+          "alt": "Roasted coffee falling from the roaster drum into the cooling tray",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/hero-roastery.jpg?v=1789964955&width=2000",
+          "width": 320
+        },
+        {
+          "alt": "Four silver coffee pouches with different sample brand labels",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-private-label-silver.png?v=1791820370&width=900",
+          "width": 128
+        },
+        {
+          "alt": "Espresso machine, grinder and a one kilogram silver coffee bag on a café counter",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-wholesale-espresso.png?v=1791820369&width=900",
+          "width": 128
+        },
+        {
+          "alt": "Green and roasted coffee beans, cupping bowls and origin cards viewed from above",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-specialty-cupping.png?v=1791820369&width=900",
+          "width": 128
+        },
+        {
+          "alt": "A hand holding an Azouz Coffee takeaway cup",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/hero-azouz-coffee-cup.jpg?v=1786917692&width=900",
+          "width": 128
+        },
+        {
+          "alt": "Espresso Arabica Beans",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/espresso-arabica-beans_57e53a27-67be-48e2-a8c4-f991e56dd3f2.jpg?v=1788772507&width=600",
+          "width": 288
+        },
+        {
+          "alt": "Filter Coffee Can",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/filter-coffee-can_43e5e518-ad3b-4dac-9d78-2556926640c0.jpg?v=1788772508&width=600",
+          "width": 288
+        },
+        {
+          "alt": "Turkish Coffee",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/turkish-coffee_da680211-3a00-4bbd-9f7f-d14951620650.jpg?v=1788772507&width=600",
+          "width": 288
+        },
+        {
+          "alt": "Coffee beans and cupping bowls prepared for tasting",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-specialty-cupping.png?v=1791820369&width=900",
+          "width": 294
+        },
+        {
+          "alt": "Roasted coffee falling from the roaster into the cooling tray",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/hero-roastery.jpg?v=1789964955&width=900",
+          "width": 294
+        },
+        {
+          "alt": "Silver pouches showing different example private label coffee brands",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-private-label-silver.png?v=1791820370&width=900",
+          "width": 294
+        },
+        {
+          "alt": "The Espresso Arabica Beans bag, 500g, whole bean",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/espresso-arabica-beans.jpg?v=1788770814&width=1122",
+          "width": 0
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [
+        {
+          "cls": "marquee__track",
+          "left": -6,
+          "right": 6219,
+          "tag": "DIV",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__item",
+          "left": -6,
+          "right": 991,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__mark",
+          "left": 964,
+          "right": 991,
+          "tag": "SPAN",
+          "text": "→"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 1039,
+          "right": 2037,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__mark",
+          "left": 2009,
+          "right": 2037,
+          "tag": "SPAN",
+          "text": "→"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 2085,
+          "right": 3083,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__mark",
+          "left": 3055,
+          "right": 3083,
+          "tag": "SPAN",
+          "text": "→"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 3131,
+          "right": 4128,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__mark",
+          "left": 4100,
+          "right": 4128,
+          "tag": "SPAN",
+          "text": "→"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 4176,
+          "right": 5174,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        },
+        {
+          "cls": "marquee__mark",
+          "left": 5146,
+          "right": 5174,
+          "tag": "SPAN",
+          "text": "→"
+        },
+        {
+          "cls": "marquee__item",
+          "left": 5222,
+          "right": 6219,
+          "tag": "SPAN",
+          "text": "Sourced, blended, roasted, ground and packed in Jo"
+        }
+      ],
+      "scrollWidth": 305,
+      "url": "/",
+      "width": 320
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Build Your Own Coffee Brand.",
+      "images": [
+        {
+          "alt": "Four silver coffee pouches with different sample brand labels",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-private-label-silver.png?v=1791820370&width=1200",
+          "width": 294
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 305,
+      "url": "/pages/private-label",
+      "width": 320
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Wholesale Coffee for Your Business.",
+      "images": [
+        {
+          "alt": "Espresso machine, grinder and a one kilogram silver coffee bag on a café counter",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-wholesale-espresso.png?v=1791820369&width=1200",
+          "width": 294
+        },
+        {
+          "alt": "A hand lifting a V60 dripper over a glass server of fresh filter coffee",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/photo-filter-v60.jpg?v=1791820367&width=1000",
+          "width": 0
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [
+        {
+          "cls": "packaging-sizes__heading",
+          "left": 20,
+          "right": 357,
+          "tag": "H2",
+          "text": "Consistent Coffee, Batch After Batch."
+        },
+        {
+          "cls": "packaging-sizes__intro lead",
+          "left": 20,
+          "right": 357,
+          "tag": "P",
+          "text": "Once your coffee is approved, we roast it to a con"
+        },
+        {
+          "cls": "",
+          "left": 20,
+          "right": 357,
+          "tag": "REVEAL-ON-SCROLL",
+          "text": "\n      Whole BeanGround CoffeeRetail BagsWholesale"
+        },
+        {
+          "cls": "packaging-sizes__list",
+          "left": 20,
+          "right": 357,
+          "tag": "UL",
+          "text": "Whole BeanGround CoffeeRetail BagsWholesale Bags"
+        },
+        {
+          "cls": "format-tile reveal",
+          "left": 199,
+          "right": 357,
+          "tag": "LI",
+          "text": "Ground Coffee"
+        },
+        {
+          "cls": "format-tile reveal",
+          "left": 199,
+          "right": 357,
+          "tag": "LI",
+          "text": "Wholesale Bags"
+        }
+      ],
+      "scrollWidth": 357,
+      "url": "/pages/wholesale",
+      "width": 320
+    },
+    {
+      "controls": [
+        {
+          "h": 48,
+          "label": "contact[name]",
+          "w": 265
+        },
+        {
+          "h": 48,
+          "label": "contact[Company]",
+          "w": 265
+        },
+        {
+          "h": 48,
+          "label": "contact[email]",
+          "w": 265
+        },
+        {
+          "h": 48,
+          "label": "contact[phone]",
+          "w": 265
+        },
+        {
+          "h": 48,
+          "label": "contact[City]",
+          "w": 265
+        },
+        {
+          "h": 48,
+          "label": "contact[Location]",
+          "w": 265
+        },
+        {
+          "h": 48,
+          "label": "contact[Space size]",
+          "w": 265
+        },
+        {
+          "h": 49,
+          "label": "Select a business typeNew coffee shopHotelRestaura",
+          "w": 265
+        },
+        {
+          "h": 130,
+          "label": "contact[body]",
+          "w": 265
+        },
+        {
+          "h": 34,
+          "label": "contact[Website]",
+          "w": 192
+        },
+        {
+          "h": 48,
+          "label": "Start My Azouz Coffee",
+          "w": 246
+        },
+        {
+          "h": 69,
+          "label": "Request More Information",
+          "w": 265
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/contact#contact_form",
+          "fields": [
+            {
+              "name": "form_type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "utf8",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "contact[name]",
+              "required": true,
+              "type": "text"
+            },
+            {
+              "name": "contact[Company]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[email]",
+              "required": true,
+              "type": "email"
+            },
+            {
+              "name": "contact[phone]",
+              "required": false,
+              "type": "tel"
+            },
+            {
+              "name": "contact[City]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[Location]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[Space size]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[Business type]",
+              "required": false,
+              "type": "select-one"
+            },
+            {
+              "name": "contact[body]",
+              "required": false,
+              "type": "textarea"
+            },
+            {
+              "name": "contact[Website]",
+              "required": false,
+              "type": "text"
+            }
+          ],
+          "method": "post"
+        }
+      ],
+      "h1": "Bring Azouz Coffee to Your Area.",
+      "images": [
+        {
+          "alt": "A hand holding an Azouz Coffee takeaway cup",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/hero-azouz-coffee-cup.jpg?v=1786917692&width=1024",
+          "width": 294
+        },
+        {
+          "alt": "Roasted coffee falling from the roaster into the cooling tray",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/hero-roastery.jpg?v=1789964955&width=1000",
+          "width": 294
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [
+        {
+          "cls": "",
+          "left": 184,
+          "right": 376,
+          "tag": "INPUT",
+          "text": ""
+        }
+      ],
+      "scrollWidth": 305,
+      "url": "/pages/own-an-azouz-coffee",
+      "width": 320
+    },
+    {
+      "controls": [
+        {
+          "h": 49,
+          "label": "FeaturedMost relevantBest sellingAlphabetically, A",
+          "w": 182
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": null,
+          "fields": [
+            {
+              "name": "sort_by",
+              "required": false,
+              "type": "select-one"
+            }
+          ],
+          "method": "get"
+        }
+      ],
+      "h1": "Products",
+      "images": [
+        {
+          "alt": "Espresso Arabica Beans",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/espresso-arabica-beans_57e53a27-67be-48e2-a8c4-f991e56dd3f2.jpg?v=1788772507&width=600",
+          "width": 288
+        },
+        {
+          "alt": "Filter Coffee Can",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/filter-coffee-can_43e5e518-ad3b-4dac-9d78-2556926640c0.jpg?v=1788772508&width=600",
+          "width": 288
+        },
+        {
+          "alt": "Turkish Coffee",
+          "loading": "lazy",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/turkish-coffee_da680211-3a00-4bbd-9f7f-d14951620650.jpg?v=1788772507&width=600",
+          "width": 288
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 305,
+      "url": "/collections/all",
+      "width": 320
+    },
+    {
+      "controls": [
+        {
+          "h": 48,
+          "label": "q",
+          "w": 265
+        },
+        {
+          "h": 48,
+          "label": "Search",
+          "w": 122
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/search",
+          "fields": [
+            {
+              "name": "type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "q",
+              "required": false,
+              "type": "search"
+            }
+          ],
+          "method": "get"
+        }
+      ],
+      "h1": "Search",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 305,
+      "url": "/search",
+      "width": 320
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Your cart",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 305,
+      "url": "/cart",
+      "width": 320
+    },
+    {
+      "controls": [
+        {
+          "h": 48,
+          "label": "contact[name]",
+          "w": 265
+        },
+        {
+          "h": 48,
+          "label": "contact[Company]",
+          "w": 265
+        },
+        {
+          "h": 48,
+          "label": "contact[email]",
+          "w": 265
+        },
+        {
+          "h": 48,
+          "label": "contact[phone]",
+          "w": 265
+        },
+        {
+          "h": 49,
+          "label": "Select a business typeCoffee ShopRestaurantHotelOf",
+          "w": 265
+        },
+        {
+          "h": 49,
+          "label": "Select a coffee typeEspressoTurkishArabicSpecialty",
+          "w": 265
+        },
+        {
+          "h": 48,
+          "label": "contact[Expected monthly volume]",
+          "w": 265
+        },
+        {
+          "h": 158,
+          "label": "contact[body]",
+          "w": 265
+        },
+        {
+          "h": 34,
+          "label": "contact[Website]",
+          "w": 192
+        },
+        {
+          "h": 48,
+          "label": "Send enquiry",
+          "w": 173
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/contact#contact_form",
+          "fields": [
+            {
+              "name": "form_type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "utf8",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "contact[name]",
+              "required": true,
+              "type": "text"
+            },
+            {
+              "name": "contact[Company]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[email]",
+              "required": true,
+              "type": "email"
+            },
+            {
+              "name": "contact[phone]",
+              "required": false,
+              "type": "tel"
+            },
+            {
+              "name": "contact[Business type]",
+              "required": false,
+              "type": "select-one"
+            },
+            {
+              "name": "contact[Coffee type]",
+              "required": false,
+              "type": "select-one"
+            },
+            {
+              "name": "contact[Expected monthly volume]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[body]",
+              "required": false,
+              "type": "textarea"
+            },
+            {
+              "name": "contact[Website]",
+              "required": false,
+              "type": "text"
+            }
+          ],
+          "method": "post"
+        }
+      ],
+      "h1": "Request a Sample.",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [
+        {
+          "cls": "",
+          "left": 184,
+          "right": 376,
+          "tag": "INPUT",
+          "text": ""
+        }
+      ],
+      "scrollWidth": 305,
+      "url": "/pages/request-a-sample",
+      "width": 320
+    },
+    {
+      "controls": [
+        {
+          "h": 44,
+          "label": "Decrease quantity",
+          "w": 44
+        },
+        {
+          "h": 44,
+          "label": "Quantity",
+          "w": 56
+        },
+        {
+          "h": 44,
+          "label": "Increase quantity",
+          "w": 44
+        },
+        {
+          "h": 48,
+          "label": "Add to cart",
+          "w": 156
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/cart/add",
+          "fields": [
+            {
+              "name": "form_type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "utf8",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "id",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "quantity",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "product-id",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "section-id",
+              "required": false,
+              "type": "hidden"
+            }
+          ],
+          "method": "post"
+        }
+      ],
+      "h1": "Espresso Arabica Beans",
+      "images": [
+        {
+          "alt": "Espresso Arabica Beans",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/espresso-arabica-beans_57e53a27-67be-48e2-a8c4-f991e56dd3f2.jpg?v=1788772507&width=1122",
+          "width": 294
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 305,
+      "url": "/products/espresso-arabica-beans",
+      "width": 320
+    },
+    {
+      "controls": [
+        {
+          "h": 44,
+          "label": "Decrease quantity",
+          "w": 44
+        },
+        {
+          "h": 44,
+          "label": "Quantity",
+          "w": 56
+        },
+        {
+          "h": 44,
+          "label": "Increase quantity",
+          "w": 44
+        },
+        {
+          "h": 48,
+          "label": "Add to cart",
+          "w": 156
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/cart/add",
+          "fields": [
+            {
+              "name": "form_type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "utf8",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "id",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "quantity",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "product-id",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "section-id",
+              "required": false,
+              "type": "hidden"
+            }
+          ],
+          "method": "post"
+        }
+      ],
+      "h1": "Filter Coffee Can",
+      "images": [
+        {
+          "alt": "Filter Coffee Can",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/filter-coffee-can_43e5e518-ad3b-4dac-9d78-2556926640c0.jpg?v=1788772508&width=1122",
+          "width": 294
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 305,
+      "url": "/products/filter-coffee-can",
+      "width": 320
+    },
+    {
+      "controls": [
+        {
+          "h": 44,
+          "label": "Decrease quantity",
+          "w": 44
+        },
+        {
+          "h": 44,
+          "label": "Quantity",
+          "w": 56
+        },
+        {
+          "h": 44,
+          "label": "Increase quantity",
+          "w": 44
+        },
+        {
+          "h": 48,
+          "label": "Add to cart",
+          "w": 156
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/cart/add",
+          "fields": [
+            {
+              "name": "form_type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "utf8",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "id",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "quantity",
+              "required": false,
+              "type": "number"
+            },
+            {
+              "name": "product-id",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "section-id",
+              "required": false,
+              "type": "hidden"
+            }
+          ],
+          "method": "post"
+        }
+      ],
+      "h1": "Turkish Coffee",
+      "images": [
+        {
+          "alt": "Turkish Coffee",
+          "loading": "eager",
+          "src": "//u8eibx-nk.myshopify.com/cdn/shop/files/turkish-coffee_da680211-3a00-4bbd-9f7f-d14951620650.jpg?v=1788772507&width=1122",
+          "width": 294
+        }
+      ],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 305,
+      "url": "/products/turkish-coffee",
+      "width": 320
+    },
+    {
+      "controls": [
+        {
+          "h": 48,
+          "label": "contact[name]",
+          "w": 265
+        },
+        {
+          "h": 48,
+          "label": "contact[Company]",
+          "w": 265
+        },
+        {
+          "h": 48,
+          "label": "contact[email]",
+          "w": 265
+        },
+        {
+          "h": 48,
+          "label": "contact[phone]",
+          "w": 265
+        },
+        {
+          "h": 49,
+          "label": "Select a business typeCoffee ShopRestaurantHotelOf",
+          "w": 265
+        },
+        {
+          "h": 49,
+          "label": "Select a coffee typeEspressoTurkishArabicSpecialty",
+          "w": 265
+        },
+        {
+          "h": 48,
+          "label": "contact[Expected monthly volume]",
+          "w": 265
+        },
+        {
+          "h": 158,
+          "label": "contact[body]",
+          "w": 265
+        },
+        {
+          "h": 34,
+          "label": "contact[Website]",
+          "w": 192
+        },
+        {
+          "h": 48,
+          "label": "Send enquiry",
+          "w": 173
+        }
+      ],
+      "emptyLinks": 0,
+      "form": [
+        {
+          "action": "/contact#contact_form",
+          "fields": [
+            {
+              "name": "form_type",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "utf8",
+              "required": false,
+              "type": "hidden"
+            },
+            {
+              "name": "contact[name]",
+              "required": true,
+              "type": "text"
+            },
+            {
+              "name": "contact[Company]",
+              "required": false,
+              "type": "text"
+            },
+            {
+              "name": "contact[email]",
+              "required": true,
+              "type": "email"
+            },
+            {
+              "name": "contact[phone]",
+              "required": false,
+              "type": "tel"
+            },
+            {
+              "name": "contact[Business type]",
+              "required": false,
+              "type": "select-one"
+            },
+            {
+              "name": "contact[Coffee type]",
+              "required": false,
+              "type": "select-one"
+            },
+            {
+              "name": "contact[Expected monthly volume]",
+              "required": true,
+              "type": "text"
+            },
+            {
+              "name": "contact[body]",
+              "required": false,
+              "type": "textarea"
+            },
+            {
+              "name": "contact[Website]",
+              "required": false,
+              "type": "text"
+            }
+          ],
+          "method": "post"
+        }
+      ],
+      "h1": "Get a Quote for Your Project.",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [
+        {
+          "cls": "",
+          "left": 184,
+          "right": 376,
+          "tag": "INPUT",
+          "text": ""
+        }
+      ],
+      "scrollWidth": 305,
+      "url": "/pages/get-a-quote",
+      "width": 320
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Privacy policy",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 305,
+      "url": "/policies/privacy-policy",
+      "width": 320
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Refund policy",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 305,
+      "url": "/policies/refund-policy",
+      "width": 320
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Shipping policy",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 305,
+      "url": "/policies/shipping-policy",
+      "width": 320
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Contact information",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 305,
+      "url": "/policies/contact-information",
+      "width": 320
+    },
+    {
+      "controls": [],
+      "emptyLinks": 0,
+      "form": [],
+      "h1": "Terms of service",
+      "images": [],
+      "missingAlt": 0,
+      "overflow": [],
+      "scrollWidth": 305,
+      "url": "/policies/terms-of-service",
+      "width": 320
+    }
+  ],
+  "contrast": [
+    {
+      "fails": [],
+      "min": 1.07,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 3,
+          "text": "Our Story"
+        },
+        {
+          "bg": "[Circular]",
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 1.07,
+          "required": 4.5,
+          "text": "Tell us the coffee your business needs and we will roast a sample"
+        },
+        {
+          "bg": [
+            62,
+            66,
+            60
+          ],
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 10.25,
+          "required": 4.5,
+          "text": "Request a Sample"
+        },
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 5.45,
+          "required": 4.5,
+          "text": "Bring Azouz Coffee to your neighbourhood: coffee, equipment, bran"
+        },
+        {
+          "bg": [
+            30,
+            43,
+            85
+          ],
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 13.71,
+          "required": 4.5,
+          "text": "100% Arabica | Medium Roast"
+        },
+        {
+          "bg": [
+            245,
+            175,
+            19
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 9.41,
+          "required": 4.5,
+          "text": "Medium Roast | Filter Grind"
+        },
+        {
+          "bg": [
+            169,
+            200,
+            229
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 10.31,
+          "required": 4.5,
+          "text": "100% Arabica | Cardamom"
+        },
+        {
+          "bg": [
+            236,
+            236,
+            234
+          ],
+          "fg": "rgb(179, 82, 45)",
+          "ratio": 4.27,
+          "required": 3,
+          "text": "→"
+        },
+        {
+          "bg": [
+            236,
+            236,
+            234
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 15.16,
+          "required": 3,
+          "text": "Whether you need one house blend or a complete private-label rang"
+        },
+        {
+          "bg": [
+            223,
+            229,
+            217
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 13.96,
+          "required": 4.5,
+          "text": "Get a Quote"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/",
+      "photoTextExcluded": true
+    },
+    {
+      "fails": [],
+      "min": 4.94,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 3,
+          "text": "Who We Work With"
+        },
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 5.45,
+          "required": 4.5,
+          "text": "Whether you are creating your first coffee product or expanding a"
+        },
+        {
+          "bg": [
+            62,
+            66,
+            60
+          ],
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 10.25,
+          "required": 4.5,
+          "text": "Get a Quote"
+        },
+        {
+          "bg": [
+            236,
+            236,
+            234
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 15.16,
+          "required": 3,
+          "text": "Tune every variable."
+        },
+        {
+          "bg": [
+            236,
+            236,
+            234
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 4.94,
+          "required": 4.5,
+          "text": "We tune these variables together during blend development. This i"
+        },
+        {
+          "bg": [
+            223,
+            229,
+            217
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 13.96,
+          "required": 4.5,
+          "text": "Request a Sample"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/pages/private-label"
+    },
+    {
+      "fails": [],
+      "min": 4.94,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 3,
+          "text": "Consistent Coffee, Batch After Batch."
+        },
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 5.45,
+          "required": 4.5,
+          "text": "Once your coffee is approved, we roast it to a consistent profile"
+        },
+        {
+          "bg": [
+            62,
+            66,
+            60
+          ],
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 10.25,
+          "required": 4.5,
+          "text": "Get a Quote"
+        },
+        {
+          "bg": [
+            236,
+            236,
+            234
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 15.16,
+          "required": 3,
+          "text": "Coffee for Different Businesses"
+        },
+        {
+          "bg": [
+            30,
+            43,
+            85
+          ],
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 13.71,
+          "required": 3,
+          "text": "Espresso Blends"
+        },
+        {
+          "bg": [
+            169,
+            200,
+            229
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 10.31,
+          "required": 3,
+          "text": "Turkish Coffee"
+        },
+        {
+          "bg": [
+            183,
+            183,
+            179
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 8.91,
+          "required": 3,
+          "text": "Specialty Coffee"
+        },
+        {
+          "bg": [
+            245,
+            175,
+            19
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 9.41,
+          "required": 3,
+          "text": "Filter Coffee"
+        },
+        {
+          "bg": [
+            236,
+            236,
+            234
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 4.94,
+          "required": 4.5,
+          "text": "Whether you need a few kilograms or regular commercial supply, we"
+        },
+        {
+          "bg": [
+            223,
+            229,
+            217
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 13.96,
+          "required": 4.5,
+          "text": "Request a Sample"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/pages/wholesale"
+    },
+    {
+      "fails": [],
+      "min": 4.94,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 3,
+          "text": "We have already done the coffee work. You build the business arou"
+        },
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 5.45,
+          "required": 4.5,
+          "text": "Whether you want a complete coffee shop or a smaller Azouz Coffee"
+        },
+        {
+          "bg": [
+            62,
+            66,
+            60
+          ],
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 10.25,
+          "required": 4.5,
+          "text": "Start My Azouz Coffee"
+        },
+        {
+          "bg": [
+            236,
+            236,
+            234
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 15.16,
+          "required": 4.5,
+          "text": "Request More Information"
+        },
+        {
+          "bg": [
+            223,
+            229,
+            217
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 13.96,
+          "required": 4.5,
+          "text": "Commercial Buildings"
+        },
+        {
+          "bg": [
+            236,
+            236,
+            234
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 4.94,
+          "required": 4.5,
+          "text": "Optional. Anything else about the space, your timing or your busi"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/pages/own-an-azouz-coffee"
+    },
+    {
+      "fails": [],
+      "min": 5.45,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "Sort by"
+        },
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 5.45,
+          "required": 4.5,
+          "text": "3 products"
+        },
+        {
+          "bg": [
+            30,
+            43,
+            85
+          ],
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 13.71,
+          "required": 4.5,
+          "text": "100% Arabica | Medium Roast"
+        },
+        {
+          "bg": [
+            245,
+            175,
+            19
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 9.41,
+          "required": 4.5,
+          "text": "Medium Roast | Filter Grind"
+        },
+        {
+          "bg": [
+            169,
+            200,
+            229
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 10.31,
+          "required": 4.5,
+          "text": "100% Arabica | Cardamom"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/collections/all"
+    },
+    {
+      "fails": [],
+      "min": 10.25,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "Search"
+        },
+        {
+          "bg": [
+            62,
+            66,
+            60
+          ],
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 10.25,
+          "required": 4.5,
+          "text": "Search"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/search"
+    },
+    {
+      "fails": [],
+      "min": 5.45,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "Buying for a business?"
+        },
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 5.45,
+          "required": 4.5,
+          "text": "Your cart is empty."
+        },
+        {
+          "bg": [
+            62,
+            66,
+            60
+          ],
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 10.25,
+          "required": 4.5,
+          "text": "Continue shopping"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/cart"
+    },
+    {
+      "fails": [],
+      "min": 4.94,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 3,
+          "text": "Request a Sample."
+        },
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 5.45,
+          "required": 4.5,
+          "text": "Tell us what type of coffee you are looking for and we will prepa"
+        },
+        {
+          "bg": [
+            236,
+            236,
+            234
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 15.16,
+          "required": 4.5,
+          "text": "Message"
+        },
+        {
+          "bg": [
+            236,
+            236,
+            234
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 4.94,
+          "required": 4.5,
+          "text": "Optional. Add anything that helps us quote accurately."
+        },
+        {
+          "bg": [
+            62,
+            66,
+            60
+          ],
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 10.25,
+          "required": 4.5,
+          "text": "Send enquiry"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/pages/request-a-sample"
+    },
+    {
+      "fails": [],
+      "min": 5.45,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "Espresso"
+        },
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 5.45,
+          "required": 4.5,
+          "text": "Espresso Arabica Beans"
+        },
+        {
+          "bg": [
+            30,
+            43,
+            85
+          ],
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 13.71,
+          "required": 4.5,
+          "text": "Roast level"
+        },
+        {
+          "bg": [
+            62,
+            66,
+            60
+          ],
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 10.25,
+          "required": 4.5,
+          "text": "Add to cart"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/products/espresso-arabica-beans"
+    },
+    {
+      "fails": [],
+      "min": 5.45,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "French Press"
+        },
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 5.45,
+          "required": 4.5,
+          "text": "Filter Coffee Can"
+        },
+        {
+          "bg": [
+            245,
+            175,
+            19
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 9.41,
+          "required": 4.5,
+          "text": "Roast level"
+        },
+        {
+          "bg": [
+            62,
+            66,
+            60
+          ],
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 10.25,
+          "required": 4.5,
+          "text": "Add to cart"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/products/filter-coffee-can"
+    },
+    {
+      "fails": [],
+      "min": 5.45,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "Turkish Pot"
+        },
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 5.45,
+          "required": 4.5,
+          "text": "Turkish Coffee"
+        },
+        {
+          "bg": [
+            169,
+            200,
+            229
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 10.31,
+          "required": 4.5,
+          "text": "Roast level"
+        },
+        {
+          "bg": [
+            62,
+            66,
+            60
+          ],
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 10.25,
+          "required": 4.5,
+          "text": "Add to cart"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/products/turkish-coffee"
+    },
+    {
+      "fails": [],
+      "min": 4.94,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 3,
+          "text": "Get a Quote for Your Project."
+        },
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 5.45,
+          "required": 4.5,
+          "text": "Share your expected volume, business type and target market. We w"
+        },
+        {
+          "bg": [
+            236,
+            236,
+            234
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 15.16,
+          "required": 4.5,
+          "text": "Message"
+        },
+        {
+          "bg": [
+            236,
+            236,
+            234
+          ],
+          "fg": "rgb(101, 101, 99)",
+          "ratio": 4.94,
+          "required": 4.5,
+          "text": "Optional. Add anything that helps us quote accurately."
+        },
+        {
+          "bg": [
+            62,
+            66,
+            60
+          ],
+          "fg": "rgb(255, 255, 255)",
+          "ratio": 10.25,
+          "required": 4.5,
+          "text": "Send enquiry"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/pages/get-a-quote"
+    },
+    {
+      "fails": [],
+      "min": 9.56,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "Should you have any questions about our privacy practices or this"
+        },
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(62, 66, 60)",
+          "ratio": 9.56,
+          "required": 4.5,
+          "text": "Shopify Privacy Portal Link"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/policies/privacy-policy"
+    },
+    {
+      "fails": [],
+      "min": 16.72,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "Delivery charges are refundable only where the return is the resu"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/policies/refund-policy"
+    },
+    {
+      "fails": [],
+      "min": 16.72,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "Please check your address and phone number carefully at checkout."
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/policies/shipping-policy"
+    },
+    {
+      "fails": [],
+      "min": 16.72,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "We reply to all enquiries within 2 business days. For questions a"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/policies/contact-information"
+    },
+    {
+      "fails": [],
+      "min": 16.72,
+      "pairs": [
+        {
+          "bg": [
+            247,
+            247,
+            246
+          ],
+          "fg": "rgb(23, 23, 23)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "Changes. We may update these terms from time to time. The version"
+        },
+        {
+          "bg": [
+            23,
+            23,
+            23
+          ],
+          "fg": "rgb(247, 247, 246)",
+          "ratio": 16.72,
+          "required": 4.5,
+          "text": "© 2026 Azouz Coffee. All rights reserved."
+        }
+      ],
+      "url": "/policies/terms-of-service"
+    }
+  ],
+  "notes": [
+    "Photo-backed text is evaluated separately from opaque backgrounds.",
+    "Marquee overflow is intentionally clipped.",
+    "Form honeypot overflow is clipped to 1px and aria-hidden."
+  ]
+}

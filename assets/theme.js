@@ -322,7 +322,7 @@ window.AzouzTheme.renderPrice = function renderPrice(root, variant) {
 };
 
 /**
- * <variant-picker> drives the option selects.
+ * <variant-picker> drives the option buttons.
  *
  * It creates the hidden name="id" input itself, so with scripting off the only
  * field named "id" is the one inside <noscript>. It updates the price, the
@@ -339,8 +339,10 @@ class VariantPicker extends HTMLElement {
       return; // malformed data must not take the page down
     }
 
-    this.selects = Array.from(this.querySelectorAll('[data-option-index]'));
-    if (this.selects.length === 0) return;
+    // One group per option: a fieldset of radios, or a plain <select> in
+    // markup written before the buttons. Either way it carries the index.
+    this.groups = Array.from(this.querySelectorAll('[data-option-index]'));
+    if (this.groups.length === 0) return;
 
     this.root = this.closest('[data-product-root]') ?? document;
     this.message = this.querySelector('[data-variant-unavailable]');
@@ -356,8 +358,13 @@ class VariantPicker extends HTMLElement {
     this.update();
   }
 
+  static valueOf(group) {
+    if (group.tagName === 'SELECT') return group.value;
+    return group.querySelector('input:checked')?.value ?? '';
+  }
+
   update() {
-    const selected = this.selects.map((select) => select.value);
+    const selected = this.groups.map((group) => VariantPicker.valueOf(group));
     const variant = window.AzouzTheme.findMatchingVariant(this.variants, selected);
 
     const button = this.root.querySelector('[data-add-to-cart]');
@@ -373,6 +380,12 @@ class VariantPicker extends HTMLElement {
     this.input.value = variant.id;
     if (this.message) this.message.hidden = true;
     if (price) window.AzouzTheme.renderPrice(price, variant);
+
+    const unitPrice = this.root.querySelector('[data-unit-price]');
+    if (unitPrice) {
+      unitPrice.textContent = variant.unit_price ?? '';
+      unitPrice.hidden = !variant.unit_price;
+    }
 
     if (button) {
       button.disabled = !variant.available;
@@ -421,6 +434,10 @@ class ProductForm extends HTMLElement {
 
       const detail = await response.json();
       detail.openDrawer = true;
+      // Shopify answers a single add with the line item and its key; the
+      // variant id that was submitted is carried too, so the drawer can still
+      // find the line when the answer is the whole cart.
+      detail.variantId = new FormData(this.form).get('id');
       document.dispatchEvent(new CustomEvent('cart:updated', { detail }));
     } catch {
       // Anything unexpected: hand the browser back the plain form post.
@@ -481,13 +498,28 @@ class CartDrawer extends HTMLElement {
       });
     }
 
-    document.addEventListener('cart:updated', (event) => {
-      this.refresh();
-      if (event.detail?.openDrawer) this.open();
+    // An add opens the drawer straight away, as a confirmation; the refreshed
+    // lines arrive a moment later, and the one just added is then marked.
+    document.addEventListener('cart:updated', async (event) => {
+      const added = Boolean(event.detail?.openDrawer);
+      if (added) this.open(true);
+      await this.refresh();
+      if (added) this.markJustAdded(event.detail?.key, event.detail?.variantId);
     });
   }
 
-  open() {
+  /** `added` is true when an add-to-cart opened the drawer, not the header. */
+  open(added = false) {
+    const heading = this.querySelector('[data-drawer-heading]');
+    if (heading) {
+      const title = added ? heading.dataset.titleAdded : heading.dataset.titleCart;
+      if (title) {
+        heading.textContent = title;
+        this.dialog.setAttribute('aria-label', title);
+      }
+    }
+    if (!added) this.markJustAdded(null);
+
     this.removeAttribute('hidden');
     this.removeAttribute('aria-hidden');
     this.removeAttribute('inert');
@@ -497,6 +529,28 @@ class CartDrawer extends HTMLElement {
     if (typeof this.dialog.showModal === 'function') {
       if (!this.dialog.open) this.dialog.showModal();
     } else window.location.href = '/cart';
+  }
+
+  /**
+   * Marks the line just added, and clears any earlier mark. The line key is
+   * exact; the variant id is the fallback, and finds the line when the add
+   * response did not carry a key.
+   */
+  markJustAdded(key, variantId) {
+    if (!this.content) return;
+    this.content.querySelectorAll('.cart-line.is-just-added').forEach((line) => {
+      line.classList.remove('is-just-added');
+    });
+    if (!key && !variantId) return;
+    const lines = Array.from(this.content.querySelectorAll('[data-line-key]'));
+    const line =
+      (key && lines.find((candidate) => candidate.dataset.lineKey === String(key))) ||
+      (variantId && lines.find((candidate) => candidate.dataset.variantId === String(variantId)));
+    if (line) {
+      line.classList.add('is-just-added');
+      // A cart of several lines puts the newest at the bottom, out of view.
+      line.scrollIntoView({ block: 'nearest' });
+    }
   }
 
   async onLineQuantityChange(event) {

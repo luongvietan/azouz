@@ -14,7 +14,7 @@ const MARKETING = [
   'page.our-brands.json',
   'page.enquiry.json',
   'page.get-a-quote.json',
-  'page.own-an-azouz-coffee.json',
+  'page.own-your-azouz-coffee-branch.json',
 ];
 
 const load = async (name) =>
@@ -119,7 +119,7 @@ test('the homepage audience strip lists every business type the client named', a
 test('the private label page carries its headline and coffee types', async () => {
   const html = await renderAll('page.private-label.json');
   assert.match(html, /Build Your Own Coffee Brand\./);
-  assert.match(html, /preview-media\/espresso-arabica-beans-alt\.jpg/);
+  assert.match(html, /preview-media\/photo-private-label-silver\.png/);
   for (const type of ['Espresso blends', 'Turkish coffee', 'Filter coffee']) {
     assert.match(html, new RegExp(type));
   }
@@ -129,7 +129,7 @@ test('the homepage leads with private label across four business areas', async (
   const html = await renderAll('index.json');
   assert.match(html, /Private label is where we start\./);
   assert.match(html, /Start Your Private Label/);
-  for (const area of ['Private Label Coffee', 'Wholesale Coffee', 'Specialty Coffee', 'Own an Azouz Coffee']) {
+  for (const area of ['Private Label Coffee', 'Wholesale Coffee', 'Specialty Coffee', 'Own Your Azouz Coffee Branch']) {
     assert.match(html, new RegExp(area));
   }
 });
@@ -165,7 +165,7 @@ test('the homepage shows the roastery itself, for manufacturing credibility', as
 });
 
 test('the coffee shop opportunity page carries its offer and both formats', async () => {
-  const html = await renderAll('page.own-an-azouz-coffee.json');
+  const html = await renderAll('page.own-your-azouz-coffee-branch.json');
   assert.match(html, /<h1 class="hero__heading">Bring Azouz Coffee to Your Area\.<\/h1>/);
   assert.match(html, /Full Azouz Coffee Location/);
   assert.match(html, /Azouz Coffee Corner/);
@@ -179,12 +179,12 @@ test('the coffee shop opportunity page carries its offer and both formats', asyn
   form's own two buttons rather than links away from it.
 */
 test('every call to action on the coffee shop page lands on its enquiry form', async () => {
-  const html = await renderAll('page.own-an-azouz-coffee.json');
+  const html = await renderAll('page.own-your-azouz-coffee-branch.json');
   assert.match(html, /<section[^>]+id="enquire"/);
 
   const hrefs = [...html.matchAll(/<a[^>]*href="([^"]+)"/g)].map((match) => match[1]);
   assert.equal(hrefs.length, 4);
-  assert.deepEqual([...new Set(hrefs)], ['/pages/own-an-azouz-coffee#enquire']);
+  assert.deepEqual([...new Set(hrefs)], ['/pages/own-your-azouz-coffee-branch#enquire']);
 
   const submits = [...html.matchAll(/<button[^>]*type="submit"[^>]*name="contact\[Enquiry\]"[^>]*value="([^"]+)"/g)];
   assert.deepEqual(
@@ -196,7 +196,7 @@ test('every call to action on the coffee shop page lands on its enquiry form', a
 test('no two alt bands meet on the coffee shop page', async () => {
   // Seven sections, alternating from the formats down. Two alt bands in a row
   // would merge into one block of grey with a soft rule through the middle.
-  const template = await load('page.own-an-azouz-coffee.json');
+  const template = await load('page.own-your-azouz-coffee-branch.json');
   const backgrounds = template.order.map((id) => template.sections[id].settings.background);
   for (let index = 1; index < backgrounds.length; index += 1) {
     assert.ok(
@@ -209,7 +209,8 @@ test('no two alt bands meet on the coffee shop page', async () => {
 test('the wholesale page carries its headline and all four ranges', async () => {
   const html = await renderAll('page.wholesale.json');
   assert.match(html, /Wholesale Coffee for Your Business\./);
-  assert.match(html, /preview-media\/filter-coffee-can\.jpg/);
+  assert.match(html, /preview-media\/photo-wholesale-espresso\.png/);
+  assert.match(html, /preview-media\/photo-filter-v60\.jpg/);
   for (const range of ['Espresso Blends', 'Turkish Coffee', 'Specialty Coffee', 'Filter Coffee']) {
     assert.match(html, new RegExp(range));
   }
@@ -266,7 +267,7 @@ test('every route to the enquiry forms is called the same thing', async () => {
     'page.private-label.json',
     'page.wholesale.json',
     'page.our-brands.json',
-    'page.own-an-azouz-coffee.json',
+    'page.own-your-azouz-coffee-branch.json',
   ]) {
     const html = await renderAll(template);
     for (const [href, expected] of Object.entries(destinations)) {

@@ -1,12 +1,13 @@
 {%- comment -%}
-  The index row: four ways into the range, divided by rules rather than by
-  cards. Each entry is a photograph, a heading, a line of copy and the link
-  that opens it.
+  The index row: four ways into the range. Each entry is a photograph, a
+  heading, a line of copy and the link that opens it. On the homepage the first
+  entry leads with a larger photograph and copy alongside; the rest share a row.
 
   The photograph is optional per entry and the entry still reads without one,
   starting at its heading rather than reserving an empty box. The client asked
   for pictures beside the services because a column of four headings gives a
-  reader nothing to tell them apart at a glance.
+  reader nothing to tell them apart at a glance; on a phone they sit beside the
+  copy rather than stacked over it.
 
   The whole cell is not a link — the heading and the trailing link point at the
   same place, and duplicating a target across a block-level anchor makes the
@@ -43,15 +44,22 @@
         <li class="quick-links__item{% if block.settings.image %} quick-links__item--media{% endif %}"{{ block.shopify_attributes }}>
           {%- if block.settings.image -%}
             <div class="quick-links__media">
-              {%- render 'responsive-image',
-                image: block.settings.image,
-                alt: block.settings.image_alt,
-                class: 'quick-links__image',
-                width: 900,
-                sizes: '(min-width: 64em) 23vw, (min-width: 40em) 46vw, 8rem'
+              {%- liquid
+                # Asked for at the size each entry is drawn: 8rem beside the
+                # copy on a phone, except the homepage's leading entry, which
+                # stays full width there.
+                assign image_sizes = '(min-width: 64em) 23vw, (min-width: 40em) 46vw, 8rem'
+                if request.page_type == 'index'
+                  assign image_sizes = '(min-width: 56em) 31vw, (min-width: 40em) 46vw, 8rem'
+                  if forloop.first
+                    assign image_sizes = '(min-width: 56em) 58vw, 92vw'
+                  endif
+                endif
               -%}
+              {%- render 'responsive-image', image: block.settings.image, alt: block.settings.image_alt, class: 'quick-links__image', width: 1600, sizes: image_sizes -%}
             </div>
           {%- endif -%}
+          <div class="quick-links__content">
           <h3 class="quick-links__title">{{ block.settings.title }}</h3>
           {%- if block.settings.body != blank -%}
             <p class="quick-links__body">{{ block.settings.body }}</p>
@@ -62,6 +70,7 @@
               {%- render 'icon', name: 'arrow-right' -%}
             </a>
           {%- endif -%}
+          </div>
         </li>
       {%- endfor -%}
     </ul>
