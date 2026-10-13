@@ -65,6 +65,9 @@
                 <span>{{ cart.total_price | money }}</span>
               </p>
 
+              {%- if settings.shipping_note != blank -%}
+                <p class="cart__note cart__note--delivery">{{ settings.shipping_note }}</p>
+              {%- endif -%}
               <p class="cart__note">{{ 'cart.general.taxes_note' | t }}</p>
 
               <div class="button-group cart__actions">

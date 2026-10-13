@@ -9,13 +9,35 @@ import { THEME_DIR } from '../scripts/theme-paths.js';
 import { parseThemeJson } from '../scripts/theme-json.js';
 import { imageDrop } from './media-drops.js';
 
+/**
+ * Global theme settings as Shopify resolves them: every default declared in
+ * settings_schema.json, overlaid with what settings_data.json stores. A setting
+ * the merchant has never touched is absent from settings_data, and Shopify
+ * still hands the theme its schema default, so the preview has to as well.
+ */
+function schemaDefaults() {
+  try {
+    const source = readFileSync(join(THEME_DIR, 'config/settings_schema.json'), 'utf8');
+    const groups = parseThemeJson(source, 'config/settings_schema.json');
+    const defaults = {};
+    for (const group of groups) {
+      for (const setting of group.settings ?? []) {
+        if (setting.id && setting.default !== undefined) defaults[setting.id] = setting.default;
+      }
+    }
+    return defaults;
+  } catch {
+    return {};
+  }
+}
+
 function themeSettings() {
   try {
     const source = readFileSync(join(THEME_DIR, 'config/settings_data.json'), 'utf8');
     const data = parseThemeJson(source, 'config/settings_data.json');
-    return data.current ?? {};
+    return { ...schemaDefaults(), ...(data.current ?? {}) };
   } catch {
-    return {};
+    return schemaDefaults();
   }
 }
 
@@ -47,6 +69,11 @@ function makeBag({
   const image = imageDrop(`/preview-media/${handle}.jpg`, title);
   const variantId = `${handle}-${weight}`;
 
+  // Price per 100g, the way Shopify computes it once "Show unit price" is set
+  // on the variant: the total measure is the pack weight, the base is 100g.
+  const grams = Number.parseInt(weight, 10);
+  const unitPrice = Number.isFinite(grams) && grams > 0 ? Math.round((price * 100) / grams) : null;
+
   const variant = {
     id: variantId,
     title: `${weight} / ${grind}`,
@@ -59,6 +86,14 @@ function makeBag({
     url: `${url}?variant=${variantId}`,
     featured_image: image,
     inventory_quantity: 25,
+    unit_price: unitPrice,
+    unit_price_measurement: unitPrice === null ? null : {
+      measured_type: 'weight',
+      quantity_value: grams,
+      quantity_unit: 'g',
+      reference_value: 100,
+      reference_unit: 'g',
+    },
   };
 
   return {
@@ -200,6 +235,7 @@ export function buildFixtures() {
         { title: 'Terms of service', url: '/policies/terms-of-service' },
         { title: 'Refund policy', url: '/policies/refund-policy' },
       ],
+      refund_policy: { title: 'Refund policy', url: '/policies/refund-policy' },
     },
     cart: { item_count: 0, items: [], total_price: 0, currency: 'JOD', note: null },
     collections: { all: allCollection },

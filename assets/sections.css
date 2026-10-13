@@ -2708,3 +2708,17 @@ a.flavour-finder__name:hover { color: var(--color-accent-deep); }
     gap: var(--space-2xl);
   }
 }
+
+/* WhatsApp as the second way into an enquiry, under the form's heading. */
+.enquiry__alt {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.enquiry__alt-link {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}

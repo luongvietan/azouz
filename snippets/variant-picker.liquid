@@ -4,8 +4,8 @@
   Accepts: product (required), form_id (the id of the add-to-cart form)
 
   Two mechanisms, never both live at once:
-    - option selects, read by <variant-picker>, which creates the hidden
-      name="id" input itself once it has connected
+    - option buttons (a radio group per option), read by <variant-picker>,
+      which creates the hidden name="id" input itself once it has connected
     - a <noscript> select named "id", which the browser only parses when
       scripting is off
 
@@ -31,6 +31,8 @@
           "options": {{ variant.options | json }},
           "available": {{ variant.available | json }},
           "price": {{ variant.price | money | json }},
+          {%- capture variant_unit_price -%}{%- render 'unit-price', variant: variant -%}{%- endcapture -%}
+          "unit_price": {{ variant_unit_price | strip | json }},
           {%- if variant.compare_at_price > variant.price -%}
             "compare_at": {{ variant.compare_at_price | money | json }},
           {%- endif -%}
@@ -40,19 +42,35 @@
     ]
   </script>
 
+  {%- comment -%}
+    Every value on show as a button rather than folded into a drop-down: a
+    customer choosing between 250g and 1kg should see both without opening
+    anything. Each option is a fieldset of radios, so it is one tab stop with
+    arrow keys between values, and its legend names it. The radios are named
+    per option and product, never "id"; Shopify ignores them on /cart/add.
+  {%- endcomment -%}
   <div class="variant-picker__options">
     {%- for option in product.options_with_values -%}
       {%- assign option_index = forloop.index0 -%}
-      <div class="field">
-        <label class="field__label" for="Option-{{ uid }}-{{ forloop.index }}">{{ option.name }}</label>
-        <select class="field__input" id="Option-{{ uid }}-{{ forloop.index }}" data-option-index="{{ option_index }}">
+      {%- assign option_position = forloop.index -%}
+      <fieldset class="variant-picker__group" data-option-index="{{ option_index }}">
+        <legend class="field__label">{{ option.name }}</legend>
+        <div class="variant-picker__values">
           {%- for value in option.values -%}
-            <option value="{{ value | escape }}"
-              {%- if current.options[option_index] == value %} selected{% endif -%}
-            >{{ value }}</option>
+            <label class="variant-picker__value">
+              <input
+                class="variant-picker__input"
+                type="radio"
+                id="Option-{{ uid }}-{{ option_position }}-{{ forloop.index }}"
+                name="Option-{{ uid }}-{{ option_position }}"
+                value="{{ value | escape }}"
+                {%- if current.options[option_index] == value %} checked{% endif -%}
+              >
+              <span class="variant-picker__value-label">{{ value }}</span>
+            </label>
           {%- endfor -%}
-        </select>
-      </div>
+        </div>
+      </fieldset>
     {%- endfor -%}
   </div>
 
@@ -69,7 +87,7 @@
             value="{{ variant.id }}"
             {%- unless variant.available %} disabled{% endunless -%}
             {%- if variant.id == current.id %} selected{% endif -%}
-          >{{ variant.title }} — {{ variant.price | money }}</option>
+          >{{ variant.title }}, {{ variant.price | money }}</option>
         {%- endfor -%}
       </select>
     </div>

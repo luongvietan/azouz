@@ -32,6 +32,16 @@
           </p>
 
           {%- comment -%}
+            The drawer is where most adds land, so the delivery cost has to be
+            stated here too, not only on the cart page. Inside the re-rendered
+            region, so it is there on the very first add.
+          {%- endcomment -%}
+          {%- if settings.shipping_note != blank -%}
+            <p class="cart-drawer__note">{{ settings.shipping_note }}</p>
+          {%- endif -%}
+          <p class="cart-drawer__note">{{ 'cart.general.taxes_note' | t }}</p>
+
+          {%- comment -%}
             Checkout lives here rather than in the footer because only this
             region is re-rendered after an ajax change. Parked in the footer it
             would still be missing the first time a customer adds to an empty

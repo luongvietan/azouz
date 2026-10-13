@@ -297,6 +297,34 @@ node scripts/generate-products-csv.js --image-base https://your-store.myshopify.
 Or leave the column empty and add the images by hand in the product editor after
 importing.
 
+### 6d. Price per 100g, delivery note and WhatsApp
+
+The product page and the product cards can show what each coffee costs per
+100g, so a customer can compare the 500g bag, the 200g sachet and the 400g can.
+The theme prints it as soon as Shopify has a unit price for the variant:
+
+1. Products → open a product → the variant → **Show unit price** (under Pricing).
+2. **Total product measurement**: the pack weight, for example `500 g`.
+3. **Base measurement**: `100 g`.
+4. Save. Repeat for each bag.
+
+Three things sit under the **Add to cart** button and in the cart, so the full
+cost is clear before checkout:
+
+- **Delivery note**: Online Store → Themes → Customize → Theme settings →
+  **Shop**. It ships as "Delivery in Amman 3 JD, elsewhere in Jordan 5 JD."
+  Change it whenever you change the rates in Settings → Shipping and delivery;
+  the theme cannot read those rates by itself. Leave it blank to hide it.
+- **Refund policy link**: appears once Settings → Policies → Refund policy has
+  text.
+- **Ask on WhatsApp**: appears on product pages and above the enquiry forms once
+  Theme settings → **Social** → WhatsApp number is filled in (international
+  format, for example `962790000000`).
+
+If a product ever gets a second weight or grind as a separate variant, the
+product page shows each value as a button to choose from. With one variant, it
+simply states the weight and grind.
+
 ---
 
 ## 7. Collections
@@ -364,6 +392,8 @@ Each form's dropdowns are editable in the theme editor as comma-separated lists:
 - [ ] Submit both enquiry forms and confirm the emails arrive
 - [ ] Check a product page shows the roast meter and the tasting notes — that is
       the fastest way to confirm step 6a worked
+- [ ] Check a product page shows the price per 100g and the delivery note, and
+      that the delivery note matches your shipping rates (step 6d)
 
 Then Online Store → Themes → **Publish**.
 

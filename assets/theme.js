@@ -322,7 +322,7 @@ window.AzouzTheme.renderPrice = function renderPrice(root, variant) {
 };
 
 /**
- * <variant-picker> drives the option selects.
+ * <variant-picker> drives the option buttons.
  *
  * It creates the hidden name="id" input itself, so with scripting off the only
  * field named "id" is the one inside <noscript>. It updates the price, the
@@ -339,8 +339,10 @@ class VariantPicker extends HTMLElement {
       return; // malformed data must not take the page down
     }
 
-    this.selects = Array.from(this.querySelectorAll('[data-option-index]'));
-    if (this.selects.length === 0) return;
+    // One group per option: a fieldset of radios, or a plain <select> in
+    // markup written before the buttons. Either way it carries the index.
+    this.groups = Array.from(this.querySelectorAll('[data-option-index]'));
+    if (this.groups.length === 0) return;
 
     this.root = this.closest('[data-product-root]') ?? document;
     this.message = this.querySelector('[data-variant-unavailable]');
@@ -356,8 +358,13 @@ class VariantPicker extends HTMLElement {
     this.update();
   }
 
+  static valueOf(group) {
+    if (group.tagName === 'SELECT') return group.value;
+    return group.querySelector('input:checked')?.value ?? '';
+  }
+
   update() {
-    const selected = this.selects.map((select) => select.value);
+    const selected = this.groups.map((group) => VariantPicker.valueOf(group));
     const variant = window.AzouzTheme.findMatchingVariant(this.variants, selected);
 
     const button = this.root.querySelector('[data-add-to-cart]');
@@ -373,6 +380,12 @@ class VariantPicker extends HTMLElement {
     this.input.value = variant.id;
     if (this.message) this.message.hidden = true;
     if (price) window.AzouzTheme.renderPrice(price, variant);
+
+    const unitPrice = this.root.querySelector('[data-unit-price]');
+    if (unitPrice) {
+      unitPrice.textContent = variant.unit_price ?? '';
+      unitPrice.hidden = !variant.unit_price;
+    }
 
     if (button) {
       button.disabled = !variant.available;

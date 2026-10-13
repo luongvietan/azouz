@@ -1,0 +1,12 @@
+{%- comment -%}
+  A wa.me click-to-chat link with a message already typed, or nothing when no
+  WhatsApp number is set under Theme settings > Social. wa.me wants the number
+  as digits only, so the "+", spaces and dashes a merchant types are removed.
+
+  Accepts:
+    message - required, plain text; it is URL-encoded here
+{%- endcomment -%}
+{%- if settings.social_whatsapp != blank -%}
+  {%- assign digits = settings.social_whatsapp | remove: '+' | remove: ' ' | remove: '-' -%}
+  https://wa.me/{{ digits }}?text={{ message | url_encode }}
+{%- endif -%}

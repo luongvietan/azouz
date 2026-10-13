@@ -89,7 +89,12 @@
       "variant_unavailable": "That combination is not available",
       "specifications": "Specifications",
       "description": "Description",
-      "brewing": "Brewing"
+      "brewing": "Brewing",
+      "unit_price": "{{ price }} per {{ unit }}",
+      "best_for": "Best for {{ methods }}",
+      "assurance": "Delivery, returns and help",
+      "ask_whatsapp": "Ask about this coffee on WhatsApp",
+      "whatsapp_message": "Hello Azouz, I have a question about {{ title }}."
     }
   },
   "collections": {
@@ -183,7 +188,10 @@
       "send": "Send enquiry",
       "success": "Thanks. We have your enquiry and will be in touch shortly.",
       "error": "Please check the highlighted fields and try again.",
-      "honeypot": "Leave this field empty"
+      "honeypot": "Leave this field empty",
+      "whatsapp_prompt": "Prefer to talk it through?",
+      "whatsapp_link": "Message us on WhatsApp",
+      "whatsapp_message": "Hello Azouz, I would like to talk about coffee for my business."
     }
   },
   "customer": {

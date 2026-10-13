@@ -4,7 +4,10 @@
     assign section_class = 'section section--alt enquiry'
   endif
   assign uid = section.id
+  assign whatsapp_message = 'contact.form.whatsapp_message' | t
 -%}
+{%- capture whatsapp_url -%}{%- render 'whatsapp-url', message: whatsapp_message -%}{%- endcapture -%}
+{%- assign whatsapp_url = whatsapp_url | strip -%}
 
 <section id="contact" tabindex="-1" class="{{ section_class }}"{{ section.shopify_attributes }}>
   <div class="container container--narrow enquiry__inner">
@@ -15,6 +18,17 @@
       <h2 class="enquiry__heading">{{ section.settings.heading }}</h2>
       {%- if section.settings.body != blank -%}
         <div class="enquiry__intro lead">{{ section.settings.body }}</div>
+      {%- endif -%}
+      {%- comment -%}
+        A second way in for the buyer who would rather message than fill in
+        nine fields. It sits under the heading, not as a floating chat widget,
+        and only when the store has a WhatsApp number.
+      {%- endcomment -%}
+      {%- if whatsapp_url != blank -%}
+        <p class="enquiry__alt">
+          {{ 'contact.form.whatsapp_prompt' | t }}
+          <a class="enquiry__alt-link" href="{{ whatsapp_url }}">{{ 'contact.form.whatsapp_link' | t }}</a>
+        </p>
       {%- endif -%}
     </div>
 

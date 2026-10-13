@@ -16,7 +16,12 @@
 
   assign add_label = 'products.product.add_to_cart' | t
   assign sold_out_label = 'products.product.sold_out' | t
+  assign whatsapp_message = 'products.product.whatsapp_message' | t: title: product.title
 -%}
+{%- capture unit_price -%}{%- render 'unit-price', variant: current -%}{%- endcapture -%}
+{%- capture whatsapp_url -%}{%- render 'whatsapp-url', message: whatsapp_message -%}{%- endcapture -%}
+{%- assign unit_price = unit_price | strip -%}
+{%- assign whatsapp_url = whatsapp_url | strip -%}
 
 <section class="section main-product" data-product-root{{ section.shopify_attributes }}>
   <div class="container container--ultra">
@@ -117,6 +122,16 @@
         {%- render 'price', price: current.price, compare_at: current.compare_at_price -%}
       </p>
 
+      {%- comment -%}
+        Price per 100g, beside the price it qualifies. The three bags are 500g,
+        200g and a 400g can; the shelf price alone does not say which is the
+        better buy, and the unit price does. Always in the markup so a variant
+        change can fill it; hidden while there is nothing to say.
+      {%- endcomment -%}
+      <p class="main-product__unit-price" data-unit-price{% if unit_price == blank %} hidden{% endif %}>
+        {{- unit_price -}}
+      </p>
+
       {%- form 'product', product, id: 'AddToCart', class: 'main-product__form' -%}
         {%- comment -%}
           Every bag in the range ships in one size and one grind, so most
@@ -129,6 +144,23 @@
           {%- render 'variant-picker', product: product, form_id: 'AddToCart' -%}
         {%- else -%}
           <input type="hidden" name="id" value="{{ current.id }}">
+
+          {%- comment -%}
+            One variant, so there is nothing to choose, but the customer still
+            needs to know what they are buying: the pack size, and whether it
+            is beans or ground and for what. A store whose product has no
+            options at all (Shopify's "Default Title") shows nothing here.
+          {%- endcomment -%}
+          {%- unless product.has_only_default_variant -%}
+            <dl class="main-product__options">
+              {%- for option in product.options_with_values -%}
+                <div class="main-product__option">
+                  <dt>{{ option.name }}</dt>
+                  <dd>{{ current.options[forloop.index0] }}</dd>
+                </div>
+              {%- endfor -%}
+            </dl>
+          {%- endunless -%}
         {%- endif -%}
 
         <div class="main-product__purchase">
@@ -147,6 +179,30 @@
           </product-form>
         </div>
       {%- endform -%}
+
+      {%- comment -%}
+        What a buyer checks before committing, kept next to the button rather
+        than discovered at checkout: what delivery costs, what happens if the
+        order arrives wrong, and a person to ask. Each row is guarded; a store
+        with none of the three renders nothing.
+      {%- endcomment -%}
+      {%- if settings.shipping_note != blank or shop.refund_policy or whatsapp_url != blank -%}
+        <ul class="main-product__assurance" role="list" aria-label="{{ 'products.product.assurance' | t }}">
+          {%- if settings.shipping_note != blank -%}
+            <li class="main-product__assurance-item">{{ settings.shipping_note }}</li>
+          {%- endif -%}
+          {%- if shop.refund_policy -%}
+            <li class="main-product__assurance-item">
+              <a href="{{ shop.refund_policy.url }}">{{ shop.refund_policy.title }}</a>
+            </li>
+          {%- endif -%}
+          {%- if whatsapp_url != blank -%}
+            <li class="main-product__assurance-item">
+              <a href="{{ whatsapp_url }}">{{ 'products.product.ask_whatsapp' | t }}</a>
+            </li>
+          {%- endif -%}
+        </ul>
+      {%- endif -%}
 
       {%- if product.description != blank -%}
         <details class="accordion" open>

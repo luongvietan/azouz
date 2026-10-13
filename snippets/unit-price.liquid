@@ -1,0 +1,20 @@
+{%- comment -%}
+  The price per unit, as text: "1.500 JOD per 100g". Renders nothing when the
+  variant has no unit price, which is every variant until "Show unit price" is
+  set on it in the admin. Text only, so the caller owns the element and a
+  variant change can rewrite it.
+
+  Accepts:
+    variant - required
+{%- endcomment -%}
+{%- if variant.unit_price_measurement and variant.unit_price != blank -%}
+  {%- liquid
+    assign measurement = variant.unit_price_measurement
+    assign unit = measurement.reference_unit
+    if measurement.reference_value != 1
+      assign unit = measurement.reference_value | append: measurement.reference_unit
+    endif
+    assign formatted = variant.unit_price | money
+  -%}
+  {{- 'products.product.unit_price' | t: price: formatted, unit: unit -}}
+{%- endif -%}
