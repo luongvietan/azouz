@@ -129,4 +129,21 @@
   {%- if specs != blank -%}
     <dl class="product-card__specs">{{ specs }}</dl>
   {%- endif -%}
+
+  <div class="product-card__purchase">
+    {%- if product.available and product.variants.size == 1 -%}
+      {%- assign quick_id = 'QuickAdd-' | append: section.id | append: '-' | append: product.id -%}
+      {%- form 'product', product, id: quick_id -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <input type="hidden" name="quantity" value="1">
+        <product-form>
+          <button class="button product-card__add" type="submit" aria-label="{{ 'products.product.add_to_cart' | t }}: {{ product.title | escape }}">{{ 'products.product.add_to_cart' | t }}</button>
+        </product-form>
+      {%- endform -%}
+    {%- elsif product.available -%}
+      <a class="button product-card__add" href="{{ product.url }}">{{ 'products.product.choose_options' | t }}</a>
+    {%- else -%}
+      <button class="button product-card__add" type="button" disabled>{{ 'products.product.sold_out' | t }}</button>
+    {%- endif -%}
+  </div>
 </article>

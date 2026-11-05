@@ -1,0 +1,57 @@
+/* Retail additions inherit Azouz's packaging, type and neutral palette. */
+.product-card__purchase { position: relative; z-index: 1; margin-block-start: auto; padding-block-start: var(--space-sm); }
+.product-card__purchase form, .product-card__purchase product-form { display: block; }
+.product-card__add { inline-size: 100%; }
+.product-card__add[aria-busy="true"] { opacity: .65; pointer-events: none; }
+.coffee-guide__layout, .affiliate__layout { display: grid; gap: clamp(2rem, 5vw, 5rem); }
+.coffee-guide h2 { margin-block-end: var(--space-md); }
+.coffee-guide__actions { display: flex; flex-wrap: wrap; gap: var(--space-md); }
+.coffee-guide__finder { display: block; min-inline-size: 0; }
+.coffee-guide__controls { margin-block-end: var(--space-lg); }
+.coffee-guide__controls .field__label { display: block; margin-block-end: var(--space-xs); }
+.coffee-guide__hint { margin-block-start: var(--space-xs); color: var(--color-text-muted); font-size: var(--text-sm); }
+.coffee-guide__results { list-style: none; margin: 0; padding: 0; }
+.coffee-guide__result { display: grid; grid-template-columns: 4rem minmax(0, 1fr) auto 1rem; align-items: center; gap: var(--space-md); padding-block: var(--space-md); border-block-start: var(--hairline); color: var(--color-text); text-decoration: none; }
+.coffee-guide__image { inline-size: 4rem; block-size: 5rem; object-fit: contain; }
+.coffee-guide__method { display: block; font-size: var(--text-sm); color: var(--color-text-muted); }
+.coffee-guide__business { display: flex; justify-content: space-between; gap: var(--space-md); padding-block: var(--space-md); margin-block-start: var(--space-md); border-block-start: var(--rule-ink); color: var(--color-text); }
+.coffee-guide [hidden] { display: none; }
+.affiliate__steps { padding-inline-start: var(--space-lg); margin-block: var(--space-xl); }
+.affiliate__steps li { padding-inline-start: var(--space-xs); margin-block-end: var(--space-lg); }
+.affiliate__steps strong { font-size: var(--text-lg); }
+.affiliate__steps p { margin-block: var(--space-xs) 0; }
+.affiliate__application { padding: clamp(1.25rem, 3vw, 3rem); background: var(--color-bg-alt); align-self: start; }
+.retail-form { display: grid; gap: var(--space-md); margin-block-start: var(--space-lg); }
+.retail-consent { display: flex; align-items: baseline; gap: var(--space-sm); font-size: var(--text-sm); cursor: pointer; min-block-size: 2.75rem; }
+.retail-consent input { flex: none; inline-size: 1.125rem; block-size: 1.125rem; accent-color: var(--color-text); }
+.footer .retail-consent { margin-block-end: var(--space-md); }
+.footer__partnerships { display: flex; flex-wrap: wrap; gap: var(--space-md); padding-block: var(--space-md); }
+.collection__filters { margin-block-end: var(--space-lg); }
+.collection__filter-fields { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-md); }
+.collection__filter-fields .field { flex: 1 1 12rem; }
+.template-index .hero { padding-block: clamp(2rem, 5vw, 5rem); }
+.template-index .hero__heading { max-inline-size: 12ch; text-wrap: balance; }
+.template-index .hero__image { max-block-size: 27rem; object-fit: contain; }
+.template-index .featured-collection { padding-block: clamp(2rem, 4vw, 4rem); }
+.template-index .quick-links__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.template-index .quick-links__list > li:first-child { grid-column: auto; }
+.template-index .quick-links__item:first-child { display: block; }
+.template-index .quick-links__item:first-child .quick-links__content { padding: 0; }
+.template-index .quick-links__item:first-child .quick-links__title { font-size: var(--text-2xl); }
+.template-index .quick-links__item:first-child .quick-links__media { aspect-ratio: 3 / 2; }
+@media (min-width: 56em) {
+  .coffee-guide__layout { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); }
+  .affiliate__layout { grid-template-columns: minmax(0, 1fr) minmax(0, .85fr); }
+}
+@media (max-width: 39.99em) {
+  .template-index .hero { padding-block: var(--space-lg); }
+  .template-index .hero__content { gap: var(--space-md); }
+  .template-index .hero .button-group { gap: var(--space-sm); }
+  .template-index .hero__heading { max-inline-size: 14ch; font-size: clamp(2.5rem, 10vw, 3.5rem); }
+  .template-index .hero__image { max-block-size: 12rem; }
+  .template-index .hero__inner { gap: var(--space-lg); }
+  .template-index .quick-links__list { grid-template-columns: 1fr; }
+  .coffee-guide__result { grid-template-columns: 3rem minmax(0, 1fr) auto; gap: var(--space-sm); }
+  .coffee-guide__result > .icon { display: none; }
+  .coffee-guide__image { inline-size: 3rem; block-size: 4rem; }
+}

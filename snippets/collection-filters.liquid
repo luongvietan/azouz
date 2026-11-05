@@ -1,0 +1,28 @@
+{%- capture filter_fields -%}
+  {%- for filter in collection.filters -%}
+    {%- if filter.type == 'list' or filter.type == 'boolean' -%}
+      <fieldset class="collection__filter-group">
+        <legend>{{ filter.label | escape }}</legend>
+        {%- for value in filter.values -%}
+          <label class="retail-consent" for="Filter-{{ section.id }}-{{ forloop.parentloop.index }}-{{ forloop.index }}">
+            <input type="checkbox" id="Filter-{{ section.id }}-{{ forloop.parentloop.index }}-{{ forloop.index }}" name="{{ value.param_name | escape }}" value="{{ value.value | escape }}"{% if value.active %} checked{% elsif value.count == 0 %} disabled{% endif %}>
+            <span>{{ value.label | escape }} ({{ value.count }})</span>
+          </label>
+        {%- endfor -%}
+      </fieldset>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- if filter_fields != blank -%}
+  <details class="accordion collection__filters">
+    <summary class="accordion__summary">{{ 'retail.filters.heading' | t }}</summary>
+    <form method="get" action="{{ collection.url }}" class="accordion__body">
+      <input type="hidden" name="sort_by" value="{{ collection.sort_by | default: collection.default_sort_by | escape }}">
+      <div class="collection__filter-fields">{{ filter_fields }}</div>
+      <div class="button-group">
+        <button class="button" type="submit">{{ 'retail.filters.apply' | t }}</button>
+        <a class="button button--secondary" href="{{ collection.url }}">{{ 'retail.filters.clear' | t }}</a>
+      </div>
+    </form>
+  </details>
+{%- endif -%}

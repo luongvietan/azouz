@@ -1,0 +1,8 @@
+{%- liquid
+  assign destinations = '/collections/all,/pages/private-label,/pages/wholesale,/#our-story,/pages/contact' | split: ','
+  assign labels = 'shop,private_label,wholesale,story,contact' | split: ','
+-%}
+{%- for destination in destinations -%}
+  {%- assign key = 'retail.navigation.' | append: labels[forloop.index0] -%}
+  <li><a class="{% if mobile %}header__mobile-link{% else %}header__link{% endif %}" href="{{ destination }}"{% if request.path == destination %} aria-current="page"{% endif %}>{{ key | t }}</a></li>
+{%- endfor -%}

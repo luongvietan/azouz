@@ -58,7 +58,8 @@
     "newsletter": {
       "label": "Email",
       "submit": "Subscribe",
-      "success": "Thanks for subscribing."
+      "success": "Thanks for subscribing.",
+      "consent": "I agree to receive coffee news and offers by email. I can unsubscribe at any time."
     },
     "password": {
       "heading": "Opening soon",
@@ -278,6 +279,83 @@
       "legal": "Legal",
       "roastery": "Our roastery",
       "newsletter": "Newsletter"
+    }
+  },
+  "retail": {
+    "navigation": {
+      "shop": "Shop Coffee",
+      "private_label": "Private Label",
+      "wholesale": "Wholesale",
+      "story": "Our Story",
+      "contact": "Contact"
+    },
+    "footer": {
+      "partnerships": "Work with Azouz",
+      "affiliate": "Affiliate Program",
+      "franchise": "Franchise opportunities"
+    },
+    "product": {
+      "in_stock": "Available to order"
+    },
+    "filters": {
+      "heading": "Filter by coffee, roast & brewing method",
+      "apply": "Apply filters",
+      "clear": "Clear filters"
+    },
+    "form": {
+      "name": "Your name",
+      "email": "Email address",
+      "phone": "Phone number (optional)",
+      "country": "Country"
+    },
+    "contact": {
+      "heading": "How can we help?",
+      "body": "A question about your coffee, an order or delivery? Send us a message, or speak to our team on WhatsApp.",
+      "message": "Your message",
+      "submit": "Send message",
+      "whatsapp": "Chat with us on WhatsApp"
+    },
+    "guide": {
+      "heading": "Find your coffee",
+      "body": "A quick coffee assistant for choosing what to brew at home.",
+      "verified": "Recommendations use the brewing methods listed for our available coffees. For acidity, delivery or other questions, ask our team.",
+      "ask": "Talk to our team",
+      "whatsapp": "Ask on WhatsApp",
+      "assistant_hint": "Choose how you brew and we’ll show the available coffees that match.",
+      "method": "How do you brew?",
+      "all": "Show all available coffee",
+      "espresso": "Espresso machine",
+      "filter": "Filter coffee",
+      "press": "French press",
+      "turkish": "Turkish pot",
+      "empty": "No matching available coffee in this selection. Our team can help you find an alternative.",
+      "results": "Available matches:",
+      "business": "Buying for a business? Request a quote"
+    },
+    "affiliate": {
+      "eyebrow": "Azouz Coffee partners",
+      "heading": "Share your love of coffee.",
+      "body": "For baristas, creators and coffee enthusiasts. Introduce your audience to Azouz Coffee and apply to earn commission on qualifying sales.",
+      "join": "Apply to join",
+      "join_body": "Tell us about your audience and the coffee you love. Our team reviews every application.",
+      "share": "Make it your own",
+      "share_body": "Approved partners receive a personal referral link and, where included in their approved offer, a discount code.",
+      "earn": "Earn on qualifying sales",
+      "earn_body": "Review tracked orders and commissions in your affiliate dashboard once your account is activated.",
+      "terms": "Program information",
+      "pending_terms": "Commission rates, customer discounts, the holding period and payout schedule will be shared for agreement before your account is activated. Submitting an application does not activate an affiliate account.",
+      "eligibility": "Only eligible net product sales qualify. Shipping, taxes and refunded amounts are excluded. Cancelled, fraudulent and refunded orders are not payable.",
+      "cod": "Cash-on-delivery commissions remain pending until payment is collected and verified, and the approved holding period has passed.",
+      "abuse": "Self-referrals, misleading promotions, spam and coupon abuse are not permitted. Applications and qualifying sales are subject to review.",
+      "portal": "Your partner portal",
+      "portal_body": "Apply through our affiliate portal. Existing partners can sign in there to view their referral link, eligible orders and commission status.",
+      "apply": "Apply or sign in",
+      "application": "Apply to become a partner",
+      "application_body": "Start with an application. Our team will contact you about the program and approved terms.",
+      "channel": "Your website or social profile",
+      "message": "Tell us about your audience",
+      "consent": "I agree that Azouz Coffee may contact me about this application. I understand that participation and commercial terms require approval.",
+      "submit": "Submit application"
     }
   }
 }

@@ -393,6 +393,11 @@ class VariantPicker extends HTMLElement {
       if (label) button.textContent = label;
     }
 
+      const availability = this.root.querySelector('[data-product-availability]');
+      if (availability) {
+        availability.textContent = variant.available ? availability.dataset.inStock : availability.dataset.soldOut;
+      }
+
     if (variant.url && window.history?.replaceState) {
       window.history.replaceState({}, '', variant.url);
     }
