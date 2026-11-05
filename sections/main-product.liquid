@@ -130,6 +130,7 @@
       <p class="main-product__price" data-product-price aria-live="polite">
         {%- render 'price', price: current.price, compare_at: current.compare_at_price -%}
       </p>
+      <p class="main-product__availability" data-product-availability data-in-stock="{{ 'retail.product.in_stock' | t | escape }}" data-sold-out="{{ sold_out_label | escape }}" aria-live="polite">{% if current.available %}{{ 'retail.product.in_stock' | t }}{% else %}{{ sold_out_label }}{% endif %}</p>
 
       {%- comment -%}
         Price per 100g, beside the price it qualifies. The three bags are 500g,
@@ -204,6 +205,9 @@
             <li class="main-product__assurance-item">
               <a href="{{ shop.refund_policy.url }}">{{ shop.refund_policy.title }}</a>
             </li>
+          {%- endif -%}
+          {%- if shop.shipping_policy -%}
+            <li class="main-product__assurance-item"><a href="{{ shop.shipping_policy.url }}">{{ shop.shipping_policy.title }}</a></li>
           {%- endif -%}
           {%- if whatsapp_url != blank -%}
             <li class="main-product__assurance-item">

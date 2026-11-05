@@ -1,0 +1,61 @@
+{%- assign guide_collection = section.settings.collection -%}
+<section id="coffee-guide" class="section coffee-guide" aria-labelledby="CoffeeGuide-{{ section.id }}">
+  <div class="container container--ultra coffee-guide__layout">
+    <div>
+      <h2 id="CoffeeGuide-{{ section.id }}">{{ 'retail.guide.heading' | t }}</h2>
+      <p class="lead">{{ 'retail.guide.body' | t }}</p>
+      <p>{{ 'retail.guide.verified' | t }}</p>
+      <p class="coffee-guide__actions">
+        <a class="anchor-arrow" href="/pages/contact">{{ 'retail.guide.ask' | t }} {% render 'icon', name: 'arrow-right' %}</a>
+        {%- capture guide_whatsapp -%}{% render 'whatsapp-url', message: 'Hi, please help me choose Azouz Coffee for home.' %}{%- endcapture -%}
+        {%- if guide_whatsapp != blank -%}<a class="anchor-arrow" href="{{ guide_whatsapp | strip }}">{{ 'retail.guide.whatsapp' | t }} {% render 'icon', name: 'arrow-right' %}</a>{%- endif -%}
+      </p>
+      <details class="accordion" lang="ar" dir="rtl">
+        <summary class="accordion__summary">مساعدة باللغة العربية</summary>
+        <div class="accordion__body">
+          <p>اختر طريقة التحضير لعرض القهوة المناسبة من منتجاتنا الحالية. الأسعار والتوفر موضحة في صفحة كل منتج.</p>
+          <p>للاستفسار عن الحموضة أو رسوم التوصيل أو الطلبات التجارية، تواصل مع فريقنا. لن نفترض معلومات غير مؤكدة.</p>
+          {%- capture arabic_whatsapp -%}{% render 'whatsapp-url', message: 'مرحباً، أحتاج مساعدة في اختيار القهوة.' %}{%- endcapture -%}
+          {%- if arabic_whatsapp != blank -%}<a href="{{ arabic_whatsapp | strip }}">تواصل معنا عبر واتساب</a>{%- endif -%}
+        </div>
+      </details>
+    </div>
+    <coffee-guide class="coffee-guide__finder">
+      <div class="coffee-guide__controls" hidden data-guide-controls>
+        <label class="field__label" for="BrewMethod-{{ section.id }}">{{ 'retail.guide.method' | t }}</label>
+        <select class="field__input" id="BrewMethod-{{ section.id }}" data-guide-method>
+          <option value="">{{ 'retail.guide.all' | t }}</option>
+          <option value="espresso">{{ 'retail.guide.espresso' | t }}</option>
+          <option value="filter">{{ 'retail.guide.filter' | t }}</option>
+          <option value="french press">{{ 'retail.guide.press' | t }}</option>
+          <option value="turkish">{{ 'retail.guide.turkish' | t }}</option>
+        </select>
+        <p class="coffee-guide__hint">{{ 'retail.guide.assistant_hint' | t }}</p>
+      </div>
+      <ul class="coffee-guide__results" role="list">
+        {%- for coffee in guide_collection.products limit: 50 -%}
+          {%- if coffee.available -%}
+            <li data-guide-product data-methods="{{ coffee.metafields.custom.brew_methods.value | join: ',' | downcase | escape }}">
+              <a class="coffee-guide__result" href="{{ coffee.url }}">
+                {%- if coffee.featured_image -%}{% render 'responsive-image', image: coffee.featured_image, alt: coffee.title, width: 160, sizes: '80px', class: 'coffee-guide__image' %}{%- endif -%}
+                <span><strong>{{ coffee.title }}</strong><span class="coffee-guide__method">{{ coffee.metafields.custom.brew_methods.value | join: ' · ' }}</span></span>
+                {% render 'price', price: coffee.price, show_from: coffee.price_varies %}
+                {% render 'icon', name: 'arrow-right' %}
+              </a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+      <p data-guide-empty hidden role="status">{{ 'retail.guide.empty' | t }}</p>
+      <p class="visually-hidden" data-guide-status aria-live="polite" data-count-label="{{ 'retail.guide.results' | t }}"></p>
+      <a class="coffee-guide__business" href="/pages/get-a-quote">{{ 'retail.guide.business' | t }} {% render 'icon', name: 'arrow-right' %}</a>
+    </coffee-guide>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Coffee buying guide",
+  "settings": [{ "type": "collection", "id": "collection", "label": "Coffee collection" }],
+  "presets": [{ "name": "Coffee buying guide" }]
+}
+{% endschema %}

@@ -1,12 +1,13 @@
 {%- liquid
   assign logo_height = settings.logo_height | default: 64
+  assign feature_link = section.settings.feature_link | default: '/#coffee-guide'
 
   # The header's own picker wins; the theme-level Brand logo is the fallback so
   # a merchant who sets it once in Theme settings sees it here.
   assign logo_source = section.settings.logo | default: settings.logo
 
   assign has_feature = false
-  if section.settings.feature_label != blank and section.settings.feature_link != blank
+  if section.settings.feature_label != blank and feature_link != blank
     assign has_feature = true
   endif
 -%}
@@ -50,7 +51,7 @@
 
     {%- if has_feature -%}
       <p class="header__feature">
-        <a class="anchor-arrow header__feature-link" href="{{ section.settings.feature_link }}">
+        <a class="anchor-arrow header__feature-link" href="{{ feature_link }}">
           {{ section.settings.feature_label }}
           {%- render 'icon', name: 'arrow-right' -%}
         </a>
@@ -59,6 +60,9 @@
 
     <nav class="header__nav" aria-label="{{ 'general.accessibility.primary_navigation' | t }}">
       <ul class="header__menu" role="list">
+        {%- if section.settings.retail_navigation -%}
+          {%- render 'retail-navigation' -%}
+        {%- else -%}
         {%- for link in section.settings.menu.links -%}
           <li class="header__item">
             {%- if link.links.size > 0 -%}
@@ -110,6 +114,7 @@
             {%- endif -%}
           </li>
         {%- endfor -%}
+        {%- endif -%}
       </ul>
     </nav>
 
@@ -167,6 +172,9 @@
       </summary>
       <div class="header__mobile-panel">
         <ul class="header__mobile-menu" role="list">
+          {%- if section.settings.retail_navigation -%}
+            {%- render 'retail-navigation', mobile: true -%}
+          {%- else -%}
           {%- for link in section.settings.menu.links -%}
             <li>
               <a class="header__mobile-link" href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
@@ -179,6 +187,7 @@
               {%- endif -%}
             </li>
           {%- endfor -%}
+          {%- endif -%}
           {%- comment -%}
             The standing invitation, and on a phone this is the only place it
             appears. Drawn as a button rather than as a seventh navigation link,
@@ -187,7 +196,7 @@
           {%- endcomment -%}
           {%- if has_feature -%}
             <li class="header__mobile-feature">
-              <a class="button" href="{{ section.settings.feature_link }}">{{ section.settings.feature_label }}</a>
+              <a class="button" href="{{ feature_link }}">{{ section.settings.feature_label }}</a>
             </li>
           {%- endif -%}
         </ul>
@@ -209,18 +218,19 @@
       "info": "Leave empty to use the bundled vector logo. Never display the full lockup below 57 px tall."
     },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "checkbox", "id": "retail_navigation", "label": "Use Shop Coffee first navigation", "default": true, "info": "Shop Coffee, Private Label, Wholesale, Our Story and Contact. Turn off to use the selected menu instead. Create a Contact page with the contact template." },
     {
       "type": "text",
       "id": "feature_label",
       "label": "Standing invitation",
-      "default": "Request a Sample",
+      "default": "Find your coffee",
       "info": "The one link that sits beside the logo. Leave empty to hide it."
     },
     {
       "type": "url",
       "id": "feature_link",
       "label": "Standing invitation link",
-      "default": "/pages/request-a-sample"
+      "info": "Leave empty to link to the homepage coffee buying guide."
     }
   ],
   "presets": [{ "name": "Header" }]

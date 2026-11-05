@@ -1,6 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "main": { "type": "main-product" }
+    "main": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "related": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "You may also like",
+        "collection": "all",
+        "exclude_current": true,
+        "products_to_show": 4,
+        "link_label": "Shop all coffee",
+        "link": "/collections/all"
+      }
+    }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "related"
+  ]
 }

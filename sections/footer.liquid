@@ -132,6 +132,7 @@
                 autocomplete="email"
                 required>
             </div>
+            <label class="retail-consent"><input type="checkbox" name="contact[accepts_marketing]" value="true" required><span>{{ 'general.newsletter.consent' | t }}{% if shop.privacy_policy %} <a href="{{ shop.privacy_policy.url }}">{{ shop.privacy_policy.title }}</a>{% endif %}</span></label>
             <button class="button footer__newsletter-submit" type="submit">{{ 'general.newsletter.submit' | t }}</button>
 
             {%- if form.posted_successfully? -%}
@@ -144,6 +145,11 @@
   </div>
 
   <div class="container container--ultra footer__close">
+    <nav class="footer__partnerships" aria-label="{{ 'retail.footer.partnerships' | t }}">
+      <a class="footer__link" href="/pages/affiliate-program">{{ 'retail.footer.affiliate' | t }}</a>
+      <a class="footer__link" href="{{ section.settings.franchise_link | default: '/pages/own-an-azouz-coffee' }}">{{ 'retail.footer.franchise' | t }}</a>
+      <a class="footer__link" href="/pages/contact">{{ 'retail.navigation.contact' | t }}</a>
+    </nav>
     <hr class="footer__rule">
 
     <div class="footer__legal">
@@ -187,6 +193,7 @@
       "info": "Link to service pages (Private Label, Wholesale, Shop). Avoid repeating the same enquiry CTAs used in page sections."
     },
     { "type": "checkbox", "id": "show_contact", "label": "Show contact details", "default": true },
+    { "type": "url", "id": "franchise_link", "label": "Franchise page", "info": "Defaults to the existing Own an Azouz Coffee page." },
     { "type": "text", "id": "phone", "label": "Phone" },
     {
       "type": "textarea",

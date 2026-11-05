@@ -12,7 +12,7 @@
   endif
 -%}
 
-<div class="standalone-heading"{{ section.shopify_attributes }}>
+<div class="standalone-heading"{% if section.settings.anchor != blank %} id="{{ section.settings.anchor | handleize }}"{% endif %}{{ section.shopify_attributes }}>
   <div class="container container--ultra">
     <div class="section-head">
       {%- if section.settings.eyebrow != blank -%}
@@ -38,6 +38,7 @@
   "name": "Section heading",
   "tag": "section",
   "settings": [
+    { "type": "text", "id": "anchor", "label": "Section anchor" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Our story" },
     { "type": "textarea", "id": "body", "label": "Intro", "info": "One or two sentences under the heading. Leave blank for a heading alone." },

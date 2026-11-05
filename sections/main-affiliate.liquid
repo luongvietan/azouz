@@ -1,0 +1,56 @@
+<section class="section affiliate">
+  <div class="container container--ultra affiliate__layout">
+    <div>
+      <span class="eyebrow">{{ 'retail.affiliate.eyebrow' | t }}</span>
+      <h1>{{ 'retail.affiliate.heading' | t }}</h1>
+      <p class="lead">{{ 'retail.affiliate.body' | t }}</p>
+      <ol class="affiliate__steps">
+        <li><strong>{{ 'retail.affiliate.join' | t }}</strong><p>{{ 'retail.affiliate.join_body' | t }}</p></li>
+        <li><strong>{{ 'retail.affiliate.share' | t }}</strong><p>{{ 'retail.affiliate.share_body' | t }}</p></li>
+        <li><strong>{{ 'retail.affiliate.earn' | t }}</strong><p>{{ 'retail.affiliate.earn_body' | t }}</p></li>
+      </ol>
+      <details class="accordion" open>
+        <summary class="accordion__summary">{{ 'retail.affiliate.terms' | t }}</summary>
+        <div class="accordion__body rte">
+          {%- if section.settings.approved_terms != blank -%}{{ section.settings.approved_terms }}{%- else -%}<p>{{ 'retail.affiliate.pending_terms' | t }}</p>{%- endif -%}
+          <p>{{ 'retail.affiliate.eligibility' | t }}</p>
+          <p>{{ 'retail.affiliate.cod' | t }}</p>
+          <p>{{ 'retail.affiliate.abuse' | t }}</p>
+        </div>
+      </details>
+    </div>
+    <div class="affiliate__application" id="apply">
+      {%- if section.settings.portal_url != blank -%}
+        <h2>{{ 'retail.affiliate.portal' | t }}</h2>
+        <p>{{ 'retail.affiliate.portal_body' | t }}</p>
+        <a class="button" href="{{ section.settings.portal_url }}">{{ 'retail.affiliate.apply' | t }}</a>
+      {%- else -%}
+        <h2>{{ 'retail.affiliate.application' | t }}</h2>
+        <p>{{ 'retail.affiliate.application_body' | t }}</p>
+        {%- assign form_id = 'AffiliateApplication-' | append: section.id -%}
+        {% form 'contact', id: form_id %}
+          {% render 'enquiry-feedback', form: form, uid: section.id %}
+          <input type="hidden" name="contact[Enquiry type]" value="Affiliate application">
+          <div class="retail-form">
+            <div class="field"><label class="field__label" for="AffiliateName-{{ section.id }}">{{ 'retail.form.name' | t }}</label><input class="field__input" id="AffiliateName-{{ section.id }}" name="contact[name]" autocomplete="name" value="{{ form.name | escape }}" required></div>
+            <div class="field"><label class="field__label" for="AffiliateEmail-{{ section.id }}">{{ 'retail.form.email' | t }}</label><input class="field__input" id="AffiliateEmail-{{ section.id }}" name="contact[email]" type="email" autocomplete="email" value="{{ form.email | escape }}" required></div>
+            <div class="field"><label class="field__label" for="AffiliateCountry-{{ section.id }}">{{ 'retail.form.country' | t }}</label><input class="field__input" id="AffiliateCountry-{{ section.id }}" name="contact[Country]" autocomplete="country-name" required></div>
+            <div class="field"><label class="field__label" for="AffiliateChannel-{{ section.id }}">{{ 'retail.affiliate.channel' | t }}</label><input class="field__input" id="AffiliateChannel-{{ section.id }}" name="contact[Social profile]" type="url" placeholder="https://" required></div>
+            <div class="field"><label class="field__label" for="AffiliateMessage-{{ section.id }}">{{ 'retail.affiliate.message' | t }}</label><textarea class="field__input" id="AffiliateMessage-{{ section.id }}" name="contact[body]" rows="4" required>{{ form.body | escape }}</textarea></div>
+            <label class="retail-consent"><input type="checkbox" name="contact[Application consent]" value="Agreed" required><span>{{ 'retail.affiliate.consent' | t }}{% if shop.privacy_policy %} <a href="{{ shop.privacy_policy.url }}">{{ shop.privacy_policy.title }}</a>{% endif %}</span></label>
+            <button class="button" type="submit">{{ 'retail.affiliate.submit' | t }}</button>
+          </div>
+        {% endform %}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Affiliate program",
+  "settings": [
+    { "type": "url", "id": "portal_url", "label": "UpPromote registration portal", "info": "Paste the verified registration URL after the program and terms are approved. Until then, applications go to the store contact email." },
+    { "type": "richtext", "id": "approved_terms", "label": "Approved commission and payout terms", "info": "Publish only approved rates, discount, holding period and payout rules." }
+  ]
+}
+{% endschema %}

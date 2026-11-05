@@ -1,0 +1,22 @@
+<section class="section">
+  <div class="container container--narrow">
+    <h1>{{ 'retail.contact.heading' | t }}</h1>
+    <p class="lead">{{ 'retail.contact.body' | t }}</p>
+    {%- capture contact_whatsapp -%}{% render 'whatsapp-url', message: 'Hello, I need help with Azouz Coffee.' %}{%- endcapture -%}
+    {%- if contact_whatsapp != blank -%}<p><a class="anchor-arrow" href="{{ contact_whatsapp | strip }}">{{ 'retail.contact.whatsapp' | t }} {% render 'icon', name: 'arrow-right' %}</a></p>{%- endif -%}
+    <p><a href="/pages/get-a-quote">{{ 'retail.guide.business' | t }}</a></p>
+    {% form 'contact' %}
+      {% render 'enquiry-feedback', form: form, uid: section.id %}
+      <div class="retail-form">
+        <div class="field"><label class="field__label" for="ContactName-{{ section.id }}">{{ 'retail.form.name' | t }}</label><input class="field__input" id="ContactName-{{ section.id }}" name="contact[name]" autocomplete="name" value="{{ form.name | escape }}" required></div>
+        <div class="field"><label class="field__label" for="ContactEmail-{{ section.id }}">{{ 'retail.form.email' | t }}</label><input class="field__input" id="ContactEmail-{{ section.id }}" type="email" name="contact[email]" autocomplete="email" value="{{ form.email | escape }}" required></div>
+        <div class="field"><label class="field__label" for="ContactPhone-{{ section.id }}">{{ 'retail.form.phone' | t }}</label><input class="field__input" id="ContactPhone-{{ section.id }}" type="tel" name="contact[phone]" autocomplete="tel"></div>
+        <div class="field"><label class="field__label" for="ContactBody-{{ section.id }}">{{ 'retail.contact.message' | t }}</label><textarea class="field__input" id="ContactBody-{{ section.id }}" name="contact[body]" rows="5" required>{{ form.body | escape }}</textarea></div>
+        <button class="button" type="submit">{{ 'retail.contact.submit' | t }}</button>
+      </div>
+    {% endform %}
+  </div>
+</section>
+{% schema %}
+{ "name": "Customer contact", "settings": [] }
+{% endschema %}
