@@ -139,6 +139,16 @@
         "background": "default"
       }
     },
+    "factory_media": {
+      "type": "factory-media",
+      "settings": {
+        "eyebrow": "Inside the roastery",
+        "heading": "From our factory",
+        "body": "<p>A look at the people, equipment and small moments behind every Azouz Coffee bag.</p>",
+        "image_alt": "Inside the Azouz Coffee factory",
+        "image_caption": "Inside the Azouz Coffee factory"
+      }
+    },
     "closing": {
       "type": "cta-band",
       "settings": {
@@ -166,6 +176,7 @@
     "marquee",
     "story_heading",
     "story",
+    "factory_media",
     "closing"
   ]
 }

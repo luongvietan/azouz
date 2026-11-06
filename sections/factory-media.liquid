@@ -1,0 +1,40 @@
+<section class="section factory-media" aria-labelledby="FactoryMedia-{{ section.id }}">
+  <div class="container container--ultra">
+    <div class="factory-media__intro">
+      <div>
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+        <h2 id="FactoryMedia-{{ section.id }}">{{ section.settings.heading }}</h2>
+      </div>
+      <div class="factory-media__copy rte">{{ section.settings.body }}</div>
+    </div>
+    <div class="factory-media__grid">
+      <figure class="factory-media__still">
+        <img src="{{ 'factory-still.jpg' | asset_url }}" alt="{{ section.settings.image_alt | escape }}" loading="lazy" width="960" height="1280">
+        <figcaption>{{ section.settings.image_caption }}</figcaption>
+      </figure>
+      {%- for index in (1..12) -%}
+        {%- assign number = index | prepend: '0' | slice: -2, 2 -%}
+        <figure class="factory-media__clip">
+          <video controls playsinline preload="metadata" aria-label="{{ 'retail.factory.clip' | t }} {{ index }}">
+            <source src="{{ 'factory-' | append: number | append: '.mp4' | asset_url }}" type="video/mp4">
+          </video>
+          <figcaption>{{ 'retail.factory.clip' | t }} {{ index }}</figcaption>
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Factory media",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Inside the roastery" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "From our factory" },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>A look at the people, equipment and small moments behind every Azouz Coffee bag.</p>" },
+    { "type": "text", "id": "image_alt", "label": "Still image alt text", "default": "Inside the Azouz Coffee factory" },
+    { "type": "text", "id": "image_caption", "label": "Still image caption", "default": "Inside the Azouz Coffee factory" }
+  ],
+  "presets": [{ "name": "Factory media" }]
+}
+{% endschema %}

@@ -356,6 +356,9 @@
       "message": "Tell us about your audience",
       "consent": "I agree that Azouz Coffee may contact me about this application. I understand that participation and commercial terms require approval.",
       "submit": "Submit application"
+    },
+    "factory": {
+      "clip": "Factory clip"
     }
   }
 }
