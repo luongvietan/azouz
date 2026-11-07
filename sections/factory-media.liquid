@@ -18,12 +18,12 @@
     </div>
     <div class="factory-media__grid">
       <figure class="factory-media__still">
-        <img src="{{ 'factory-01-poster.jpg' | asset_url }}" alt="{{ section.settings.image_alt | escape }}" loading="lazy" width="480" height="854">
+        <img src="{{ 'factory-still.jpg' | asset_url }}" alt="{{ section.settings.image_alt | escape }}" loading="lazy" width="960" height="1280">
         <figcaption>{{ section.settings.image_caption }}</figcaption>
       </figure>
       {%- for index in (1..12) -%}
         {%- assign number = index | prepend: '0' | slice: -2, 2 -%}
-        <figure class="factory-media__clip{% if index == 1 %} factory-media__clip--lead{% endif %}">
+        <figure class="factory-media__clip">
           <video controls playsinline preload="none" poster="{{ 'factory-' | append: number | append: '-poster.jpg' | asset_url }}" aria-label="{{ 'retail.factory.clip' | t }} {{ index }}">
             <source src="{{ 'factory-' | append: number | append: '.mp4' | asset_url }}" type="video/mp4">
           </video>
