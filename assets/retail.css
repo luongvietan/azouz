@@ -27,6 +27,8 @@
 .factory-media__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-md); }
 .factory-media figure { margin: 0; min-inline-size: 0; }
 .factory-media video, .factory-media img { display: block; inline-size: 100%; aspect-ratio: 9 / 16; object-fit: cover; background: var(--color-background); }
+.factory-media video { border-block-end: var(--rule-ink); }
+.factory-media video:focus-visible { outline: 3px solid var(--color-accent-deep); outline-offset: 3px; }
 .factory-media__still { grid-row: span 2; }
 .factory-media__still img { block-size: 100%; }
 .factory-media figcaption { margin-block-start: var(--space-xs); color: var(--color-text-muted); font-size: var(--text-sm); }

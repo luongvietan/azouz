@@ -1,4 +1,4 @@
-<section class="section factory-media" aria-labelledby="FactoryMedia-{{ section.id }}">
+<section id="factory-media" class="section factory-media" aria-labelledby="FactoryMedia-{{ section.id }}">
   <div class="container container--ultra">
     <div class="factory-media__intro">
       <div>
@@ -24,7 +24,7 @@
       {%- for index in (1..12) -%}
         {%- assign number = index | prepend: '0' | slice: -2, 2 -%}
         <figure class="factory-media__clip">
-          <video controls playsinline preload="metadata" aria-label="{{ 'retail.factory.clip' | t }} {{ index }}">
+          <video controls playsinline preload="none" poster="{{ 'factory-still.jpg' | asset_url }}" aria-label="{{ 'retail.factory.clip' | t }} {{ index }}">
             <source src="{{ 'factory-' | append: number | append: '.mp4' | asset_url }}" type="video/mp4">
           </video>
           <figcaption>{{ 'retail.factory.clip' | t }} {{ index }}</figcaption>
