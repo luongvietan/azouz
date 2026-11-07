@@ -23,8 +23,8 @@
       </figure>
       {%- for index in (1..12) -%}
         {%- assign number = index | prepend: '0' | slice: -2, 2 -%}
-        <figure class="factory-media__clip">
-          <video controls playsinline preload="none" poster="{{ 'factory-still.jpg' | asset_url }}" aria-label="{{ 'retail.factory.clip' | t }} {{ index }}">
+        <figure class="factory-media__clip{% if index == 1 %} factory-media__clip--lead{% endif %}">
+          <video controls playsinline preload="none" poster="{{ 'factory-' | append: number | append: '-poster.jpg' | asset_url }}" aria-label="{{ 'retail.factory.clip' | t }} {{ index }}">
             <source src="{{ 'factory-' | append: number | append: '.mp4' | asset_url }}" type="video/mp4">
           </video>
           <figcaption>{{ 'retail.factory.clip' | t }} {{ index }}</figcaption>
