@@ -20,8 +20,8 @@
 .factory-media__intro { display: grid; gap: var(--space-lg); margin-block-end: var(--space-xl); }
 .factory-media__intro h2 { margin-block-start: var(--space-xs); }
 .factory-media__copy { max-inline-size: 38rem; align-self: end; }
-.factory-media__process { margin-block-end: var(--space-xl); padding-block: var(--space-md); border-block: var(--hairline); }
-.factory-media__process h3 { margin-block-end: var(--space-sm); }
+.factory-media__process { margin-block-start: var(--space-xl); padding-block-start: var(--space-md); border-block-start: var(--hairline); }
+.factory-media__process h4 { margin-block-end: var(--space-sm); }
 .factory-media__process ol { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-md); margin: 0; padding-inline-start: 1.5rem; }
 .factory-media__process li { padding-inline-start: var(--space-xs); }
 .factory-media__feature { display: grid; grid-template-columns: minmax(0, 30rem) minmax(0, 1fr); align-items: center; gap: clamp(2rem, 6vw, 7rem); margin-block-start: var(--space-xl); }
