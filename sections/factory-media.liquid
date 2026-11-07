@@ -7,22 +7,22 @@
       </div>
       <div class="factory-media__copy rte">{{ section.settings.body }}</div>
     </div>
-    <div class="factory-media__process" aria-labelledby="FactoryProcess-{{ section.id }}">
-      <h3 id="FactoryProcess-{{ section.id }}">{{ 'retail.factory.process_title' | t }}</h3>
-      <ol>
-        <li>{{ 'retail.factory.step_1' | t }}</li>
-        <li>{{ 'retail.factory.step_2' | t }}</li>
-        <li>{{ 'retail.factory.step_3' | t }}</li>
-        <li>{{ 'retail.factory.step_4' | t }}</li>
-      </ol>
-    </div>
     <div class="factory-media__feature">
       <video class="factory-media__video" controls playsinline preload="metadata" poster="{{ 'factory-montage-poster.jpg' | asset_url }}" aria-label="{{ section.settings.montage_title }}">
-        <source src="{{ 'factory-montage.mp4' | asset_url }}" type="video/mp4">
+        <source src="{{ 'factory-montage-with-music.mp4' | asset_url }}" type="video/mp4">
       </video>
       <div class="factory-media__feature-copy">
         <h3>{{ section.settings.montage_title }}</h3>
         <p>{{ section.settings.montage_caption }}</p>
+        <div class="factory-media__process" aria-labelledby="FactoryProcess-{{ section.id }}">
+          <h4 id="FactoryProcess-{{ section.id }}">{{ 'retail.factory.process_title' | t }}</h4>
+          <ol>
+            <li>{{ 'retail.factory.step_1' | t }}</li>
+            <li>{{ 'retail.factory.step_2' | t }}</li>
+            <li>{{ 'retail.factory.step_3' | t }}</li>
+            <li>{{ 'retail.factory.step_4' | t }}</li>
+          </ol>
+        </div>
       </div>
     </div>
   </div>
