@@ -7,6 +7,15 @@
       </div>
       <div class="factory-media__copy rte">{{ section.settings.body }}</div>
     </div>
+    <div class="factory-media__process" aria-labelledby="FactoryProcess-{{ section.id }}">
+      <h3 id="FactoryProcess-{{ section.id }}">{{ 'retail.factory.process_title' | t }}</h3>
+      <ol>
+        <li>{{ 'retail.factory.step_1' | t }}</li>
+        <li>{{ 'retail.factory.step_2' | t }}</li>
+        <li>{{ 'retail.factory.step_3' | t }}</li>
+        <li>{{ 'retail.factory.step_4' | t }}</li>
+      </ol>
+    </div>
     <div class="factory-media__grid">
       <figure class="factory-media__still">
         <img src="{{ 'factory-still.jpg' | asset_url }}" alt="{{ section.settings.image_alt | escape }}" loading="lazy" width="960" height="1280">

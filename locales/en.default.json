@@ -358,7 +358,12 @@
       "submit": "Submit application"
     },
     "factory": {
-      "clip": "Factory clip"
+      "clip": "Factory clip",
+      "process_title": "From bean to roast",
+      "step_1": "Beans arrive in the white container.",
+      "step_2": "Beans move into the roaster.",
+      "step_3": "The beans roast inside the machine.",
+      "step_4": "Fresh coffee is released into the bucket."
     }
   }
 }
