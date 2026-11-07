@@ -16,20 +16,14 @@
         <li>{{ 'retail.factory.step_4' | t }}</li>
       </ol>
     </div>
-    <div class="factory-media__grid">
-      <figure class="factory-media__still">
-        <img src="{{ 'factory-still.jpg' | asset_url }}" alt="{{ section.settings.image_alt | escape }}" loading="lazy" width="960" height="1280">
-        <figcaption>{{ section.settings.image_caption }}</figcaption>
-      </figure>
-      {%- for index in (1..12) -%}
-        {%- assign number = index | prepend: '0' | slice: -2, 2 -%}
-        <figure class="factory-media__clip">
-          <video controls playsinline preload="none" poster="{{ 'factory-' | append: number | append: '-poster.jpg' | asset_url }}" aria-label="{{ 'retail.factory.clip' | t }} {{ index }}">
-            <source src="{{ 'factory-' | append: number | append: '.mp4' | asset_url }}" type="video/mp4">
-          </video>
-          <figcaption>{{ 'retail.factory.clip' | t }} {{ index }}</figcaption>
-        </figure>
-      {%- endfor -%}
+    <div class="factory-media__feature">
+      <video class="factory-media__video" controls playsinline preload="metadata" poster="{{ 'factory-montage-poster.jpg' | asset_url }}" aria-label="{{ section.settings.montage_title }}">
+        <source src="{{ 'factory-montage.mp4' | asset_url }}" type="video/mp4">
+      </video>
+      <div class="factory-media__feature-copy">
+        <h3>{{ section.settings.montage_title }}</h3>
+        <p>{{ section.settings.montage_caption }}</p>
+      </div>
     </div>
   </div>
 </section>
@@ -41,8 +35,8 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Inside the roastery" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "From our factory" },
     { "type": "richtext", "id": "body", "label": "Body", "default": "<p>A look at the people, equipment and small moments behind every Azouz Coffee bag.</p>" },
-    { "type": "text", "id": "image_alt", "label": "Still image alt text", "default": "Inside the Azouz Coffee factory" },
-    { "type": "text", "id": "image_caption", "label": "Still image caption", "default": "Inside the Azouz Coffee factory" }
+    { "type": "text", "id": "montage_title", "label": "Montage title", "default": "A short look inside the roastery" },
+    { "type": "textarea", "id": "montage_caption", "label": "Montage caption", "default": "A sequence from green beans to the roasted coffee ready for packing." }
   ],
   "presets": [{ "name": "Factory media" }]
 }

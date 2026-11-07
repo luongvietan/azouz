@@ -30,23 +30,23 @@
         "private_label": {
           "type": "link",
           "settings": {
+            "image": "shopify://shop_images/photo-private-label-silver.png",
+            "image_alt": "Four silver coffee pouches with different sample brand labels",
             "title": "Private Label Coffee",
             "body": "Create coffee under your own brand: custom blends, roasting, grinding and packaging.",
             "link_label": "Start Your Private Label",
-            "link": "/pages/private-label",
-            "image": "shopify://shop_images/photo-private-label-silver.png",
-            "image_alt": "Four silver coffee pouches with different sample brand labels"
+            "link": "/pages/private-label"
           }
         },
         "wholesale": {
           "type": "link",
           "settings": {
+            "image": "shopify://shop_images/photo-wholesale-espresso.png",
+            "image_alt": "Espresso machine, grinder and a one kilogram silver coffee bag on a café counter",
             "title": "Wholesale Coffee",
             "body": "Reliable coffee for cafés, restaurants, hotels and businesses. Espresso, Turkish, filter and specialty.",
             "link_label": "View Wholesale",
-            "link": "/pages/wholesale",
-            "image": "shopify://shop_images/photo-wholesale-espresso.png",
-            "image_alt": "Espresso machine, grinder and a one kilogram silver coffee bag on a café counter"
+            "link": "/pages/wholesale"
           }
         }
       },
@@ -84,12 +84,12 @@
     "story_heading": {
       "type": "section-heading",
       "settings": {
+        "anchor": "our-story",
         "eyebrow": "",
         "heading": "Our Story",
         "body": "Small-batch roasting, and a big, bold flavour. Fresh, ethically sourced coffee from bean to brew, delivered straight to your door.",
         "link_label": "",
-        "link": "",
-        "anchor": "our-story"
+        "link": ""
       }
     },
     "story": {
@@ -98,34 +98,34 @@
         "sourcing": {
           "type": "column",
           "settings": {
+            "image": "shopify://shop_images/photo-specialty-cupping.png",
             "image_alt": "Coffee beans and cupping bowls prepared for tasting",
             "title": "Sourcing",
             "body": "We buy green coffee for the blend it has to become, and we buy it from the same growers year after year.",
             "link_label": "Explore Wholesale Coffee",
-            "link": "/pages/wholesale",
-            "image": "shopify://shop_images/photo-specialty-cupping.png"
+            "link": "/pages/wholesale"
           }
         },
         "roasting": {
           "type": "column",
           "settings": {
+            "image": "shopify://shop_images/hero-roastery.jpg",
             "image_alt": "Roasted coffee falling from the roaster into the cooling tray",
             "title": "Roasting",
             "body": "Roasted in our own facility in Jordan, to a profile we develop with you and hold to from the first batch to the hundredth.",
             "link_label": "See what we can roast for you",
-            "link": "/pages/private-label",
-            "image": "shopify://shop_images/hero-roastery.jpg"
+            "link": "/pages/private-label"
           }
         },
         "packing": {
           "type": "column",
           "settings": {
+            "image": "shopify://shop_images/photo-private-label-silver.png",
             "image_alt": "Silver pouches showing different example private label coffee brands",
             "title": "Packing",
             "body": "Ground to your grind, filled to your weight and sealed in your bag. Whole bean, ground, or a full private-label range.",
             "link_label": "See packaging and sizes",
-            "link": "/pages/private-label",
-            "image": "shopify://shop_images/photo-private-label-silver.png"
+            "link": "/pages/private-label"
           }
         }
       },
@@ -144,9 +144,7 @@
       "settings": {
         "eyebrow": "Inside the roastery",
         "heading": "From our factory",
-        "body": "<p>A look at the people, equipment and small moments behind every Azouz Coffee bag.</p>",
-        "image_alt": "Inside the Azouz Coffee factory",
-        "image_caption": "Inside the Azouz Coffee factory"
+        "body": "<p>A look at the people, equipment and small moments behind every Azouz Coffee bag.</p>"
       }
     },
     "closing": {
