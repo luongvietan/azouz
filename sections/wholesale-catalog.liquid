@@ -1,0 +1,45 @@
+<section class="section wholesale-catalog">
+  <div class="container">
+    <h2 class="section-head__heading">{{ section.settings.heading | escape }}</h2>
+    <ul class="grid grid--4 wholesale-catalog__grid" role="list">
+      {%- for block in section.blocks -%}
+        <li class="wholesale-catalog__coffee" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            {%- assign alt = block.settings.image.alt | default: block.settings.title -%}
+            {%- render 'responsive-image', image: block.settings.image, alt: alt,
+              class: 'wholesale-catalog__image', width: 600,
+              sizes: '(min-width: 75em) 22vw, (min-width: 40em) 45vw, 90vw' -%}
+          {%- endif -%}
+          <h3>{{ block.settings.title | escape }}</h3>
+          {%- if block.settings.notes != blank -%}
+            <p>{{ block.settings.notes | escape }}</p>
+          {%- endif -%}
+          <a class="button button--secondary" href="{{ section.settings.contact_link | default: '/pages/contact' | escape }}" aria-label="Contact us about {{ block.settings.title | escape }}">Contact us</a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wholesale coffees",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Wholesale coffees" },
+    { "type": "url", "id": "contact_link", "label": "Contact page" }
+  ],
+  "blocks": [
+    {
+      "type": "coffee",
+      "name": "Coffee",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Coffee name", "default": "Coffee name" },
+        { "type": "image_picker", "id": "image", "label": "Bag photo" },
+        { "type": "text", "id": "notes", "label": "Tasting notes" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Wholesale coffees" }]
+}
+{% endschema %}

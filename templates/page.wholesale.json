@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -14,6 +23,29 @@
         "background": "default",
         "image": "shopify://shop_images/photo-wholesale-espresso.png"
       }
+    },
+    "wholesale_coffees": {
+      "type": "wholesale-catalog",
+      "blocks": {
+        "brazil_sweet": {
+          "type": "coffee",
+          "settings": { "title": "Brazil Sweet", "notes": "Sweet caramel, chocolate and nuts" }
+        },
+        "wadi_rum": {
+          "type": "coffee",
+          "settings": { "title": "Wadi Rum Blend", "notes": "Dark chocolate, caramel and spice" }
+        },
+        "colombia_popayan": {
+          "type": "coffee",
+          "settings": { "title": "Colombia Popayan", "notes": "Caramel, vanilla and mandarin" }
+        },
+        "colombia_espresso": {
+          "type": "coffee",
+          "settings": { "title": "Colombia Espresso Roast", "notes": "Caramel, chocolate and tropical fruit" }
+        }
+      },
+      "block_order": ["brazil_sweet", "wadi_rum", "colombia_popayan", "colombia_espresso"],
+      "settings": { "heading": "Wholesale coffees", "contact_link": "/pages/contact" }
     },
     "range": {
       "type": "coffee-range",
@@ -259,6 +291,7 @@
   },
   "order": [
     "hero",
+    "wholesale_coffees",
     "range",
     "filter_brewing",
     "blend",

@@ -1037,7 +1037,41 @@ cart-drawer[inert] {
 .product-grid > * { min-inline-size: 0; }
 
 .collection__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.collection__grid .product-card__image { object-fit: contain; }
+.collection__grid .product-card__image {
+  align-self: center;
+  inline-size: min(100%, 28rem);
+  block-size: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  background-color: var(--color-on-accent);
+}
+
+.wholesale-catalog__grid {
+  margin: var(--space-lg) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wholesale-catalog__coffee {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-inline-size: 0;
+}
+
+.wholesale-catalog__image {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  background-color: var(--color-on-accent);
+  border-radius: var(--radius-lg);
+}
+
+.wholesale-catalog__coffee .button {
+  align-self: start;
+  margin-block-start: auto;
+}
 
 /* A collection or search page opens straight onto its head, so the section's
    full top padding put the first coffee at the fold. */
@@ -1321,7 +1355,7 @@ cart-drawer[inert] {
    white than the bags, and on a square of either white one of them showed a
    visible box. The collection title steps down to a section-head size. */
 @media (min-width: 40em) {
-  .product-grid .product-card__image {
+  .product-grid:not(.collection__grid) .product-card__image {
     align-self: center;
     inline-size: auto;
     max-inline-size: 100%;
