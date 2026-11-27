@@ -1023,11 +1023,7 @@ cart-drawer[inert] {
   font-variant-numeric: tabular-nums;
 }
 
-/* ---------- Shop refinement, 13 October 2026 ----------
-   The collection and search grids follow the homepage's product row: as many
-   equal columns as there are coffees, up to the measure. A three-coffee shop
-   in a four-track index left a quarter of the row empty, with a column rule
-   running down the gap. */
+/* Search fills the available width. The shop has two products per row. */
 
 .product-grid {
   display: grid;
@@ -1039,6 +1035,9 @@ cart-drawer[inert] {
 }
 
 .product-grid > * { min-inline-size: 0; }
+
+.collection__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.collection__grid .product-card__image { object-fit: contain; }
 
 /* A collection or search page opens straight onto its head, so the section's
    full top padding put the first coffee at the fold. */
@@ -1281,13 +1280,15 @@ cart-drawer[inert] {
   .main-product__label .label-block__rule { margin-block: var(--space-sm); }
 }
 
-/* UI-2. Phone shop list. Each coffee was a 707px card, three screens for
-   three bags. Below 40em a card is a row: the bag on the inline start, its
-   label, pack, use and price beside it. */
+/* On phones, search keeps its side-by-side cards. Shop photos sit above
+   their labels to give each photo the full width of its column. */
 @media (max-width: 39.99em) {
   .product-grid { gap: var(--space-lg); }
+  .collection__grid { column-gap: var(--space-sm); }
+  .collection__grid .product-card__label { padding: var(--space-sm); }
+  .collection__grid .label-block__title { font-size: var(--text-base); }
 
-  .product-grid .product-card {
+  .product-grid:not(.collection__grid) .product-card {
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
     column-gap: var(--space-md);
@@ -1296,20 +1297,20 @@ cart-drawer[inert] {
     block-size: auto;
   }
 
-  .product-grid .product-card > * { grid-column: 2; min-inline-size: 0; }
+  .product-grid:not(.collection__grid) .product-card > * { grid-column: 2; min-inline-size: 0; }
 
-  .product-grid .product-card__image {
+  .product-grid:not(.collection__grid) .product-card__image {
     grid-column: 1;
     grid-row: 1 / span 6;
     align-self: start;
   }
 
-  .product-grid .product-card__label {
+  .product-grid:not(.collection__grid) .product-card__label {
     flex-grow: 0;
     padding: var(--space-sm) var(--space-md);
   }
 
-  .product-grid .product-card__meta { justify-content: flex-start; }
+  .product-grid:not(.collection__grid) .product-card__meta { justify-content: flex-start; }
 }
 
 /* UI-3. Desktop shop density. A 4:5 photograph 437px wide stood 546px tall
